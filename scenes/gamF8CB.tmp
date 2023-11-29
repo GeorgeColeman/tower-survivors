@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://3j2pogbqp1ch"]
+
+[ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_1tmb3"]
+[ext_resource type="Script" path="res://Scripts/Camera2D.gd" id="2_8rgoc"]
+[ext_resource type="Script" path="res://Scripts/map_generator.gd" id="4_08dee"]
+[ext_resource type="Script" path="res://Scripts/Control.gd" id="4_wit2i"]
+[ext_resource type="Resource" uid="uid://biby13u1nccff" path="res://GameConfig.tres" id="4_wr6jb"]
+[ext_resource type="Script" path="res://Scripts/map_drawer.gd" id="5_gej7i"]
+[ext_resource type="Script" path="res://Scenes/pathfinding.gd" id="8_m6juj"]
+[ext_resource type="Script" path="res://Scenes/mob_spawner.gd" id="8_mkckf"]
+
+[node name="Game" type="Node" node_paths=PackedStringArray("map_generator")]
+script = ExtResource("1_1tmb3")
+game_config = ExtResource("4_wr6jb")
+map_generator = NodePath("MapGenerator")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("2_8rgoc")
+speed = 500
+
+[node name="MapGenerator" type="Node" parent="."]
+script = ExtResource("4_08dee")
+width = 32
+height = 24
+
+[node name="MapDrawer" type="Node" parent="." node_paths=PackedStringArray("map_generator")]
+script = ExtResource("5_gej7i")
+game_config = ExtResource("4_wr6jb")
+map_generator = NodePath("../MapGenerator")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("start_game_button", "map_generator")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_wit2i")
+start_game_button = NodePath("Button")
+map_generator = NodePath("../../MapGenerator")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Start Game"
+
+[node name="MobSpawner" type="Node" parent="."]
+script = ExtResource("8_mkckf")
+
+[node name="Timer" type="Timer" parent="MobSpawner"]
+unique_name_in_owner = true
+
+[node name="PathfindingManager" type="Node2D" parent="."]
+script = ExtResource("8_m6juj")
+
+[node name="Line2D" type="Line2D" parent="PathfindingManager"]
+width = 4.0
+
+[connection signal="map_generated" from="MapGenerator" to="MobSpawner" method="_on_map_generator_map_generated"]
+[connection signal="map_generated" from="MapGenerator" to="PathfindingManager" method="_on_map_generator_map_generated"]
+[connection signal="timeout" from="MobSpawner/Timer" to="MobSpawner" method="_on_timer_timeout"]

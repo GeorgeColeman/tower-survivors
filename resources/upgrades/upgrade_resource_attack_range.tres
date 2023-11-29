@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeResourceAttackRange" load_steps=2 format=3 uid="uid://cv2nnslw1qldb"]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_resource_attack_range.gd" id="1_i5ocf"]
+
+[resource]
+script = ExtResource("1_i5ocf")
+attack_range_amount = 1
+name = "Attack Range"

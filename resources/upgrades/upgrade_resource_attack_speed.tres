@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeResourceAttackSpeed" load_steps=2 format=3 uid="uid://73vr4p6acdh4"]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_resource_attack_speed.gd" id="1_v2imo"]
+
+[resource]
+script = ExtResource("1_v2imo")
+attack_speed_amount = 0.2
+name = "Attack Speed"

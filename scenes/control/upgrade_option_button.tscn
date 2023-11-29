@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://l13dk6opal54"]
+
+[ext_resource type="Script" path="res://scripts/control/upgrade_option_button.gd" id="1_ebcko"]
+[ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="2_8etms"]
+
+[node name="UpgradeOptionButton" type="Button" node_paths=PackedStringArray("_description_label")]
+custom_minimum_size = Vector2(128, 0)
+script = ExtResource("1_ebcko")
+_description_label = NodePath("DescriptionLabel")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8etms")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="DescriptionLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Label"

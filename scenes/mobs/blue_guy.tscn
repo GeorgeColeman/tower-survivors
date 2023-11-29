@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://djk2oleao6ov0"]
+
+[ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_7wac0"]
+[ext_resource type="Texture2D" uid="uid://b708ye5eb3wlo" path="res://_mobs/sprites/blue_guy_sprite.tres" id="2_ms6s0"]
+
+[node name="Mob" instance=ExtResource("1_7wac0")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ms6s0")

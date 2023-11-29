@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://brnbvet1cma3"]
+
+[ext_resource type="PackedScene" uid="uid://c33nnn0mdl7j6" path="res://scenes/mobs/red_guy.tscn" id="1_ru1dr"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_il3k4"]
+
+[resource]
+script = ExtResource("2_il3k4")
+name = "Red Guy"
+mob_scene = ExtResource("1_ru1dr")
+move_speed = 0.5
+damage = 1
+hit_points = 30
+gold_value = 1

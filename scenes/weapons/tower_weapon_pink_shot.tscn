@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsr752k5tr3lq"]
+
+[ext_resource type="Script" path="res://tower/scripts/tower_weapon.gd" id="1_or4sk"]
+[ext_resource type="PackedScene" uid="uid://c202qjdokdk1c" path="res://scenes/projectiles/projectile_pink_shot.tscn" id="2_1b40u"]
+[ext_resource type="AudioStream" uid="uid://ob0y5ppog7d3" path="res://sound_effects/shoot_01.wav" id="3_0kxyo"]
+
+[node name="TowerWeapon" type="Node2D"]
+script = ExtResource("1_or4sk")
+projectile_scene = ExtResource("2_1b40u")
+attack_sfx = ExtResource("3_0kxyo")

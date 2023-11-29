@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeResourceMultiShot" load_steps=2 format=3 uid="uid://c3xpxdmbocwqc"]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_resource_multi_shot.gd" id="1_jtijh"]
+
+[resource]
+script = ExtResource("1_jtijh")
+extra_shots = 1
+name = "Multi Shot"

@@ -1,0 +1,119 @@
+[gd_scene load_steps=11 format=3 uid="uid://yk8qm26xsgwj"]
+
+[ext_resource type="Script" path="res://Scripts/Nodes/game_manager.gd" id="1_touec"]
+[ext_resource type="Script" path="res://Scripts/game_config.gd" id="2_t0w0s"]
+[ext_resource type="Script" path="res://Scripts/Nodes/camera_2d.gd" id="3_hkdu8"]
+[ext_resource type="Script" path="res://Scripts/Nodes/map_generator.gd" id="4_krp5a"]
+[ext_resource type="Script" path="res://Scripts/Nodes/map_drawer.gd" id="5_6uqvh"]
+[ext_resource type="Script" path="res://Scripts/Nodes/control.gd" id="6_pujan"]
+[ext_resource type="Script" path="res://Scripts/Nodes/mob_spawner.gd" id="7_nfp22"]
+[ext_resource type="Script" path="res://Scripts/pathfinding.gd" id="8_vkgkx"]
+
+[sub_resource type="Resource" id="Resource_f8rmf"]
+script = ExtResource("2_t0w0s")
+cell_pixel_width = 16
+cell_pixel_height = 16
+number_of_spawn_points = 8
+
+[sub_resource type="Resource" id="Resource_vkoo7"]
+script = ExtResource("2_t0w0s")
+cell_pixel_width = 16
+cell_pixel_height = 16
+number_of_spawn_points = 8
+
+[node name="Game" type="Node" node_paths=PackedStringArray("map_generator", "mob_spawner")]
+script = ExtResource("1_touec")
+game_config = SubResource("Resource_f8rmf")
+map_generator = NodePath("MapGenerator")
+mob_spawner = NodePath("MobSpawner")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("3_hkdu8")
+speed = 500
+
+[node name="MapGenerator" type="Node" parent="."]
+script = ExtResource("4_krp5a")
+game_config = SubResource("Resource_f8rmf")
+width = 32
+height = 24
+
+[node name="MapDrawer" type="Node" parent="." node_paths=PackedStringArray("map_generator")]
+script = ExtResource("5_6uqvh")
+game_config = SubResource("Resource_f8rmf")
+map_generator = NodePath("../MapGenerator")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "map_generator", "start_game_button", "check_box_draw_range_indicators")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_pujan")
+game_manager = NodePath("../..")
+map_generator = NodePath("../../MapGenerator")
+start_game_button = NodePath("ControlPreGame/Button")
+check_box_draw_range_indicators = NodePath("ControlInGame/CheckBoxDrawRangeIndicators")
+
+[node name="ControlPreGame" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/ControlPreGame"]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 31.0
+text = "Start Game"
+
+[node name="ControlInGame" type="Control" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckBoxDrawRangeIndicators" type="CheckBox" parent="CanvasLayer/Control/ControlInGame"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 203.0
+offset_bottom = 63.0
+text = "Draw Range Indicators"
+
+[node name="ProgressBarTowerHealth" type="ProgressBar" parent="CanvasLayer/Control/ControlInGame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
+grow_horizontal = 2
+value = 50.0
+
+[node name="MobSpawner" type="Node" parent="." node_paths=PackedStringArray("game_manager")]
+script = ExtResource("7_nfp22")
+game_manager = NodePath("..")
+
+[node name="Timer" type="Timer" parent="MobSpawner"]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="PathfindingManager" type="Node2D" parent="."]
+script = ExtResource("8_vkgkx")
+game_config = SubResource("Resource_vkoo7")
+
+[node name="Line2D" type="Line2D" parent="PathfindingManager"]
+width = 4.0
+
+[connection signal="map_generated" from="MapGenerator" to="MobSpawner" method="_on_map_generator_map_generated"]
+[connection signal="map_generated" from="MapGenerator" to="PathfindingManager" method="_on_map_generator_map_generated"]
+[connection signal="timeout" from="MobSpawner/Timer" to="MobSpawner" method="_on_timer_timeout"]

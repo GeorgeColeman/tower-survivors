@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://3j2pogbqp1ch"]
+
+[ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_1tmb3"]
+[ext_resource type="Script" path="res://Scripts/game_config.gd" id="2_t0w0s"]
+[ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="3_6bvw0"]
+[ext_resource type="Script" path="res://Scripts/map_generator.gd" id="4_08dee"]
+[ext_resource type="Resource" uid="uid://dcrbt4jha0xad" path="res://GameConfig.tres" id="4_wr6jb"]
+[ext_resource type="Script" path="res://Scripts/map_drawer.gd" id="5_gej7i"]
+[ext_resource type="Script" path="res://Scripts/control.gd" id="6_n07ye"]
+[ext_resource type="Script" path="res://Scripts/mob_spawner.gd" id="7_guywl"]
+[ext_resource type="Script" path="res://Scripts/pathfinding.gd" id="8_vkgkx"]
+
+[sub_resource type="Resource" id="Resource_f8rmf"]
+script = ExtResource("2_t0w0s")
+cell_pixel_width = 16
+cell_pixel_height = 16
+number_of_spawn_points = 8
+
+[node name="Game" type="Node" node_paths=PackedStringArray("map_generator")]
+script = ExtResource("1_1tmb3")
+game_config = SubResource("Resource_f8rmf")
+map_generator = NodePath("MapGenerator")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("3_6bvw0")
+speed = 500
+
+[node name="MapGenerator" type="Node" parent="."]
+script = ExtResource("4_08dee")
+game_config = SubResource("Resource_f8rmf")
+width = 32
+height = 24
+
+[node name="MapDrawer" type="Node" parent="." node_paths=PackedStringArray("map_generator")]
+script = ExtResource("5_gej7i")
+game_config = SubResource("Resource_f8rmf")
+map_generator = NodePath("../MapGenerator")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("start_game_button", "map_generator")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_n07ye")
+start_game_button = NodePath("Button")
+map_generator = NodePath("../../MapGenerator")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Start Game"
+
+[node name="MobSpawner" type="Node" parent="."]
+script = ExtResource("7_guywl")
+
+[node name="Timer" type="Timer" parent="MobSpawner"]
+unique_name_in_owner = true
+
+[node name="PathfindingManager" type="Node2D" parent="."]
+script = ExtResource("8_vkgkx")
+game_config = ExtResource("4_wr6jb")
+
+[node name="Line2D" type="Line2D" parent="PathfindingManager"]
+width = 4.0
+
+[connection signal="map_generated" from="MapGenerator" to="MobSpawner" method="_on_map_generator_map_generated"]
+[connection signal="map_generated" from="MapGenerator" to="PathfindingManager" method="_on_map_generator_map_generated"]
+[connection signal="timeout" from="MobSpawner/Timer" to="MobSpawner" method="_on_timer_timeout"]

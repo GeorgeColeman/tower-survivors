@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://p68neyshuiep"]
+
+[ext_resource type="PackedScene" uid="uid://domp5gsyo8bjo" path="res://scenes/mobs/green_guy.tscn" id="1_48ri7"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_7cdm7"]
+
+[resource]
+script = ExtResource("2_7cdm7")
+name = "Green Guy"
+mob_scene = ExtResource("1_48ri7")
+move_speed = 1.5
+damage = 1
+hit_points = 10
+gold_value = 1

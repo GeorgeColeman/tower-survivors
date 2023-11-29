@@ -1,0 +1,164 @@
+[gd_scene load_steps=17 format=3 uid="uid://dxnwaohgy5i6m"]
+
+[ext_resource type="Script" path="res://tower/scripts/tower.gd" id="1_xtyu2"]
+[ext_resource type="Texture2D" uid="uid://4cy8j14txxon" path="res://sprites/tower/tower_sprite_destroyed.tres" id="3_b6f4t"]
+[ext_resource type="PackedScene" uid="uid://dsr752k5tr3lq" path="res://scenes/weapons/tower_weapon_pink_shot.tscn" id="3_is7t4"]
+[ext_resource type="Texture2D" uid="uid://do82gitqvdnld" path="res://sprites/tower/tower.png" id="3_pu44v"]
+[ext_resource type="Texture2D" uid="uid://bnsilldphrild" path="res://sprites/control/white_atex.tres" id="4_tpelw"]
+[ext_resource type="Texture2D" uid="uid://cvsjadic6a406" path="res://sprites/control/black_atex.tres" id="5_yoolu"]
+[ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="6_rwcng"]
+[ext_resource type="Texture2D" uid="uid://bh2hw8jr4xxud" path="res://sprites/green_arrow.tres" id="7_bcyct"]
+[ext_resource type="Texture2D" uid="uid://yutewmyi0lhl" path="res://sprites/tower_glow/tower_glow_01.png" id="10_el7u4"]
+[ext_resource type="Texture2D" uid="uid://c76kt4n4vkmad" path="res://sprites/tower_glow/tower_glow_02.png" id="11_gegdi"]
+[ext_resource type="Texture2D" uid="uid://cyh4r31hgh081" path="res://sprites/tower_glow/tower_glow_03.png" id="12_r87bq"]
+
+[sub_resource type="Animation" id="Animation_3lv6w"]
+resource_name = "destroyed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_b6f4t")]
+}
+
+[sub_resource type="Animation" id="Animation_qr5nb"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_pu44v")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p7id1"]
+_data = {
+"destroy": SubResource("Animation_3lv6w"),
+"idle": SubResource("Animation_qr5nb")
+}
+
+[sub_resource type="Animation" id="Animation_78p6d"]
+resource_name = "glow_pulse"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_el7u4"), ExtResource("11_gegdi"), ExtResource("12_r87bq"), ExtResource("11_gegdi")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_usky4"]
+_data = {
+"glow_pulse": SubResource("Animation_78p6d")
+}
+
+[node name="Tower" type="Node2D"]
+script = ExtResource("1_xtyu2")
+starting_weapons = Array[PackedScene]([ExtResource("3_is7t4")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("3_pu44v")
+offset = Vector2(0, -16)
+region_rect = Rect2(0, 32, 32, 32)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="LabelKills" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_bottom = 0.1
+offset_left = -16.0
+offset_top = 12.0
+offset_right = 16.0
+offset_bottom = 38.0
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelLevel" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.7
+anchor_top = -0.15
+anchor_right = -0.7
+anchor_bottom = -0.15
+offset_left = -16.0
+offset_top = 12.0
+offset_right = 16.0
+offset_bottom = 38.0
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelProgressBar" type="TextureProgressBar" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -16.0
+offset_top = 17.0
+offset_right = 16.0
+offset_bottom = 21.0
+mouse_filter = 2
+value = 50.0
+texture_under = ExtResource("4_tpelw")
+texture_over = ExtResource("5_yoolu")
+texture_progress = ExtResource("6_rwcng")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_p7id1")
+}
+
+[node name="FiringPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -32)
+
+[node name="Glow" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -24)
+texture = ExtResource("12_r87bq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Glow"]
+autoplay = "glow_pulse"
+libraries = {
+"": SubResource("AnimationLibrary_usky4")
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+
+[node name="GreenArrow" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+texture = ExtResource("7_bcyct")

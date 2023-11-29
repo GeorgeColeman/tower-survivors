@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://s7vpiqx3aaob"]
+
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_mj6gn"]
+[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="2_ecjp1"]
+[ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="3_wi04p"]
+
+[node name="Mob" type="Node2D"]
+script = ExtResource("1_mj6gn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ecjp1")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("3_wi04p")
