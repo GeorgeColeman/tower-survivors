@@ -96,7 +96,8 @@ func _spawn_random_mob(spawn_point: SpawnPoint):
 
 	new_mob.set_resource(mob_data)
 #	new_mob.set_path(_map.spawn_point_path_dict[spawn_point], _map.center_cell)
-	var path = GameUtilities.get_point_path(spawn_point.cell.position, _map.center)
+#	var path = GameUtilities.get_point_path(spawn_point.cell.position, _map.center)
+	var path = GameUtilities.get_path_from_cell_to_cell(spawn_point.cell, _map.center_cell)
 	new_mob.set_path(path, _map.center_cell)
 
 

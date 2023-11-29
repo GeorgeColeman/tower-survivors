@@ -11,6 +11,7 @@ var astar_grid = AStarGrid2D.new()
 var grid_size: Vector2i
 var cell_size: Vector2i
 var offset = -Vector2.ONE * .5 * 16
+var cell_path_dict = {}
 
 
 var draw_pathfinding_grid = false:
@@ -35,6 +36,17 @@ func initialize_grid(width: int, height: int):
 	astar_grid.update()
 
 	queue_redraw()
+
+
+func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVector2Array:
+	if cell_path_dict.has(start_cell):
+#		print_debug("Using existing path")
+		return cell_path_dict[start_cell]
+
+	print_debug("Getting new path")
+	var path = astar_grid.get_point_path(start_cell.position, end_cell.position)
+	cell_path_dict[start_cell] = path
+	return path
 
 
 func _input(event):

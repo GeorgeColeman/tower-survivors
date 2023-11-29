@@ -20,6 +20,10 @@ func get_point_path(start, end) -> PackedVector2Array:
 	return _game_manager.pathfinding_manager.astar_grid.get_point_path(start, end)
 
 
+func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVector2Array:
+	return _game_manager.pathfinding_manager.get_path_from_cell_to_cell(start_cell, end_cell)
+
+
 func get_distance_between_nodes(node_a: Vector2i, node_b: Vector2i) -> float:
 	var cell_a = get_cell_at_vector2i(node_a)
 	var cell_b = get_cell_at_vector2i(node_b)
