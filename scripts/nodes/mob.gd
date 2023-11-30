@@ -29,6 +29,10 @@ var _base_move_speed: float:
 
 var _move_speed_modifier: float = 1
 
+var move_speed: float:
+	get:
+		return _base_move_speed * _move_speed_modifier
+
 var damage: int:
 	get:
 		return _mob_resource.damage
@@ -76,7 +80,7 @@ func add_move_speed_modifier(amount: float):
 	_move_speed_modifier += amount
 
 	# Update path follower
-	_path_follower.set_move_speed(_base_move_speed * _move_speed_modifier)
+	_path_follower.set_move_speed(move_speed)
 
 
 func set_path(path: PackedVector2Array, target_cell: Cell):

@@ -4,11 +4,19 @@ extends Node2D
 @onready var sprite_2d = $Sprite2D
 @onready var animated_sprite_2d = %AnimatedSprite2D
 
+@export var test_curve: Curve
+@export var arc_height = 16.0
+
 var _target_set = false
 var _target_mob: Mob
+var _target_position: Vector2
 var _damage: int
 var _is_destroyed = false
 var _on_hit_callbacks: Array[Callable]
+var _speed: float = 200
+
+var _approx_time_to_hit: float
+var _to_hit_progress: float
 
 
 func _process(_delta):
@@ -21,8 +29,17 @@ func _process(_delta):
 		return
 
 	global_position = global_position.move_toward(
-		_target_mob.position, 
-		100 * Game.speed_scaled_delta)
+		_target_mob.position,
+		_speed * Game.speed_scaled_delta
+	)
+
+	_to_hit_progress += Game.speed_scaled_delta
+
+	if _to_hit_progress > _approx_time_to_hit:
+		_to_hit_progress = _approx_time_to_hit
+
+	animated_sprite_2d.position.y = -test_curve.sample(
+		_to_hit_progress / _approx_time_to_hit) * arc_height
 
 	if global_position.distance_squared_to(_target_mob.position) < 1:
 		_destroy_with_animation()
@@ -35,7 +52,12 @@ func _process(_delta):
 
 func set_target(target_mob: Mob):
 	_target_mob = target_mob
+	_target_position = target_mob.position
 	_target_set = true
+
+	var distant_to_mob = global_position.distance_to(target_mob.position)
+
+	_approx_time_to_hit = distant_to_mob / _speed
 
 
 func add_on_hit_callback(on_hit_callback: Callable):

@@ -58,8 +58,7 @@ func _on_clicked_on_actor(actor):
 
 
 func _on_clicked_on_empty():
-#	control_upgrades.visible = false
-	pass
+	control_upgrade_options.visible = false
 
 
 func _on_tower_hit_points_changed(tower: Tower):
