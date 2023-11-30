@@ -446,9 +446,8 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Restart"
 
-[node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button")]
+[node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -459,6 +458,7 @@ script = ExtResource("24_ri8gj")
 continue_button = NodePath("VBoxContainer/ContinueButton")
 restart_button = NodePath("VBoxContainer/RestartButton")
 quit_button = NodePath("VBoxContainer/QuitButton")
+sfx_check_box = NodePath("OptionsContainer/VBoxContainer/SFXCheckBox")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlPause"]
 layout_mode = 1
@@ -512,6 +512,32 @@ text = "Restart"
 layout_mode = 2
 focus_mode = 0
 text = "Quit"
+
+[node name="OptionsContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlPause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 339.0
+offset_top = -15.5
+offset_right = 395.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlPause/OptionsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlPause/OptionsContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="SFXCheckBox" type="CheckBox" parent="CanvasLayer/ControlMain/ControlPause/OptionsContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "SFX"
 
 [node name="SoundEffectsPlayer" type="Node" parent="." node_paths=PackedStringArray("audio_stream_players")]
 script = ExtResource("25_6tpgp")

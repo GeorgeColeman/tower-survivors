@@ -43,7 +43,7 @@ func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVecto
 #		print_debug("Using existing path")
 		return cell_path_dict[start_cell]
 
-	print_debug("Getting new path")
+#	print_debug("Getting new path")
 	var path = astar_grid.get_point_path(start_cell.position, end_cell.position)
 	cell_path_dict[start_cell] = path
 	return path

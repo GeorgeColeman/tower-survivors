@@ -5,6 +5,8 @@ extends Control
 @export var restart_button: Button
 @export var quit_button: Button
 
+@export var sfx_check_box: CheckBox
+
 var _game: Game
 
 
@@ -18,6 +20,9 @@ func _ready():
 		Messenger.start_game_requested.emit())
 	quit_button.pressed.connect(func():
 		get_tree().quit())
+
+	sfx_check_box.toggled.connect(func(is_on: bool):
+		Audio.toggle_sfx(is_on))
 
 
 func _input(event):
