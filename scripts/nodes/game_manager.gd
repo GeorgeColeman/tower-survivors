@@ -9,6 +9,7 @@ extends Node
 
 @export var auto_start_game: bool = true
 
+@export var camera_2d_controller: Camera2DController
 @export var map_drawer: MapDrawer
 @export var mob_spawner: MobSpawner
 @export var tower_spawner: TowerSpawner
@@ -22,8 +23,6 @@ extends Node
 @export var control_in_game: ControlInGame
 @export var control_debug: ControlDebug
 @export var control_pause: ControlPause
-
-@onready var camera_2d = $Camera2D
 
 var game: Game
 var game_data: GameData
@@ -66,7 +65,10 @@ func start_game():
 	var tower = tower_spawner.instantiate_tower(map.center_cell)
 	game.set_tower(tower)
 
-	camera_2d.position = map.center * 16
+	camera_2d_controller.position = map.center * GameConstants.PIXEL_SCALE
+	camera_2d_controller.set_limits(
+		map.width * GameConstants.PIXEL_SCALE,
+		map.height * GameConstants.PIXEL_SCALE)
 
 	mob_spawner.start_game(game)
 

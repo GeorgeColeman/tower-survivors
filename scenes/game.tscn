@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
-[ext_resource type="Script" path="res://scripts/nodes/camera_2d.gd" id="3_hkdu8"]
+[ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -28,8 +28,9 @@
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("map_drawer", "mob_spawner", "tower_spawner", "pathfinding_manager", "cell_inspector", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "pathfinding_manager", "cell_inspector", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
+camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
 tower_spawner = NodePath("MapObjects/TowerSpawner")
@@ -44,7 +45,7 @@ control_pause = NodePath("CanvasLayer/ControlMain/ControlPause")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
-script = ExtResource("3_hkdu8")
+script = ExtResource("2_04hs5")
 speed = 500
 
 [node name="PathfindingManager" type="Node2D" parent="."]
@@ -448,6 +449,7 @@ text = "Restart"
 
 [node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
