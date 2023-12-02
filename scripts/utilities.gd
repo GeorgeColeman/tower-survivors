@@ -1,14 +1,12 @@
 class_name Utilities
 
-const PIXEL_SCALE = GameConstants.PIXEL_SCALE
-
 
 static func get_world_position(cell: Cell) -> Vector2:
-	return Vector2(cell.x, cell.y) * PIXEL_SCALE
+	return Vector2(cell.x, cell.y) * GameConstants.PIXEL_SCALE
 
 
 static func get_converted_position(position: Vector2) -> Vector2:
-	return position * PIXEL_SCALE
+	return position * GameConstants.PIXEL_SCALE
 
 
 static func get_random_unique_elements(array: Array, number_of_elements: int) -> Array:

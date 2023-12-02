@@ -120,7 +120,7 @@ func add_or_remove_upgrade_points(amount: int):
 	_upgrade_points += amount
 
 	green_arrow.visible = true if _upgrade_points > 0 else false
-	glow.visible = true if _upgrade_points > 0 else false
+	#glow.visible = true if _upgrade_points > 0 else false
 
 
 func _on_mob_killed(mob: Mob):

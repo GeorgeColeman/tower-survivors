@@ -56,8 +56,7 @@ func start_game():
 	var width: int = 32
 	var height: int = 32
 
-	var map_generator = MapGenerator.new()
-	var map = map_generator.generate_map(width, height)
+	var map = _generate_map(width, height)
 
 	game = Game.new(map, mob_spawner, game_data)
 	GameUtilities.set_game(game)
@@ -79,6 +78,15 @@ func start_game():
 
 	pathfinding_manager.initialize_grid(width, height)
 	map_drawer.draw_map(map)
+
+
+func _generate_map(width: int, height: int) -> Map:
+	var map_generator = MapGenerator.new()
+	var map = map_generator.generate_map(width, height)
+
+	MapUtilities.set_map(map)
+
+	return map
 
 
 func _on_cell_inspected(cell: Cell):

@@ -4,10 +4,10 @@ extends Control
 @export var game_manager: GameManager
 @export var start_game_button: Button
 
-@onready var control_pre_game: Control = %ControlPreGame
-@onready var control_in_game: Control = %ControlInGame
-@onready var control_game_over: Control = %ControlGameOver
-@onready var control_pause: Control = %ControlPause
+@export var control_pre_game: Control
+@export var control_in_game: Control
+@export var control_game_over: Control
+@export var control_pause: Control
 
 var _game: Game
 

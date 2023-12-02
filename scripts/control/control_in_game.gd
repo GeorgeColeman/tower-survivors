@@ -33,12 +33,6 @@ func _process(delta):
 	time_text.text = "%.0f" % _game.time
 
 
-#func _input(event):
-#	if event is InputEventKey:
-#		if event.keycode == KEY_ESCAPE && event.is_released():
-#			control_upgrade_options.visible = false
-
-
 func start_game(game: Game):
 	_game = game
 	game.tower.hit_points_changed.connect(_on_tower_hit_points_changed)

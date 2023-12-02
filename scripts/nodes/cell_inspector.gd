@@ -52,5 +52,5 @@ func _get_hovered_cell():
 
 	if cell != current_cell:
 		current_cell = cell
-		cell_marker_sprite.position = GameUtilities.get_world_position_of_cell(cell)
+		cell_marker_sprite.position = cell.scene_position
 		cell_marker_sprite.visible = true

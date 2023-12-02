@@ -20,6 +20,8 @@ GameUtilities="*res://scripts/autoloads/game_utilities.gd"
 Messenger="*res://scripts/autoloads/messenger.gd"
 ControlMouseDetector="*res://scripts/autoloads/control_mouse_detector.gd"
 Audio="*res://scripts/autoloads/audio.gd"
+Entities="*res://scripts/autoloads/entities.gd"
+MapUtilities="*res://scripts/autoloads/map_utilities.gd"
 
 [display]
 

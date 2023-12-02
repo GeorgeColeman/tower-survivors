@@ -25,15 +25,8 @@ func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVecto
 
 
 func get_distance_between_nodes(node_a: Vector2i, node_b: Vector2i) -> float:
-	var cell_a = get_cell_at_vector2i(node_a)
-	var cell_b = get_cell_at_vector2i(node_b)
+	var steps = abs(node_a.x - node_b.x) + abs(node_a.y - node_b.y)
 
-	return get_distance_between_cells(cell_a, cell_b)
-
-
-func get_distance_between_cells(cell_a: Cell, cell_b: Cell) -> float:
-	var steps = abs(cell_a.x - cell_b.x) + abs(cell_a.y - cell_b.y)
-#
 	if steps == 1:
 		return 1.0
 
@@ -72,10 +65,6 @@ func get_cell_at(vector: Vector2) -> Cell:
 	var x = floori((vector.x + 8) / 16)
 	var y = floori((vector.y + 8) / 16)
 	return _game.map.get_cell_at(x, y)
-
-
-func get_world_position_of_cell(cell: Cell) -> Vector2i:
-	return cell.position * 16
 
 
 func get_actors_at(cell: Cell) -> Array:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=32 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scripts/control/control_debug.gd" id="9_vxhso"]
 [ext_resource type="Texture2D" uid="uid://bs5m7yp8hqm1" path="res://sprites/control/progress.tres" id="10_0yt8x"]
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
+[ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
 [ext_resource type="Script" path="res://scripts/control/control_upgrade_options.gd" id="12_b3rp4"]
 [ext_resource type="Script" path="res://scripts/nodes/tower_spawner.gd" id="15_3y22w"]
@@ -27,6 +28,9 @@
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
+[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_sprite.tres" id="27_fmrjs"]
+[ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
+[ext_resource type="PackedScene" uid="uid://cja27s1erkeik" path="res://scenes/rock.tscn" id="29_gtkrp"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "pathfinding_manager", "cell_inspector", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
@@ -74,6 +78,10 @@ script = ExtResource("15_3y22w")
 z_index = -1
 script = ExtResource("5_6uqvh")
 
+[node name="EntityDrawer" type="Node2D" parent="MapObjects"]
+y_sort_enabled = true
+script = ExtResource("10_3qktf")
+
 [node name="CellInspector" type="Node2D" parent="."]
 script = ExtResource("8_m46x2")
 
@@ -90,7 +98,7 @@ floating_text_scene = ExtResource("24_27evh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ControlMain" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "start_game_button")]
+[node name="ControlMain" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "start_game_button", "control_pre_game", "control_in_game", "control_game_over", "control_pause")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,9 +109,12 @@ mouse_filter = 2
 script = ExtResource("5_c3t0l")
 game_manager = NodePath("../..")
 start_game_button = NodePath("ControlPreGame/Button")
+control_pre_game = NodePath("ControlPreGame")
+control_in_game = NodePath("ControlInGame")
+control_game_over = NodePath("ControlGameOver")
+control_pause = NodePath("ControlPause")
 
 [node name="ControlPreGame" type="Control" parent="CanvasLayer/ControlMain"]
-unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -119,7 +130,7 @@ offset_bottom = 31.0
 text = "Start Game"
 
 [node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain"]
-unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -397,7 +408,6 @@ layout_mode = 2
 text = "Show Damage Numbers"
 
 [node name="ControlGameOver" type="Control" parent="CanvasLayer/ControlMain"]
-unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -448,7 +458,6 @@ grow_vertical = 0
 text = "Restart"
 
 [node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box")]
-unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -541,6 +550,48 @@ layout_mode = 2
 button_pressed = true
 text = "SFX"
 
+[node name="ControlBuildMenu" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("build_rock_button")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2, 2)
+script = ExtResource("27_yobp5")
+build_rock_button = NodePath("Container/BuildRockButton")
+rock_scene = ExtResource("29_gtkrp")
+
+[node name="Container" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlBuildMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="BuildRockButton" type="Button" parent="CanvasLayer/ControlMain/ControlBuildMenu/Container"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+focus_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ControlMain/ControlBuildMenu/Container/BuildRockButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("27_fmrjs")
+
 [node name="SoundEffectsPlayer" type="Node" parent="." node_paths=PackedStringArray("audio_stream_players")]
 script = ExtResource("25_6tpgp")
 audio_stream_players = [NodePath("AudioStreamPlayer"), NodePath("AudioStreamPlayer2"), NodePath("AudioStreamPlayer3")]
@@ -557,3 +608,9 @@ stream = ExtResource("25_42f42")
 [node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="SoundEffectsPlayer"]
 unique_name_in_owner = true
 stream = ExtResource("25_42f42")
+
+[node name="ControlModeManager" type="Node2D" parent="."]
+
+[node name="ControlModeDefault" type="Node2D" parent="ControlModeManager"]
+
+[node name="ControlModeBuild" type="Node2D" parent="ControlModeManager"]

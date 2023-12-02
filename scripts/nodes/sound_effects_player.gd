@@ -4,7 +4,7 @@ extends Node
 @export var audio_stream_players: Array[AudioStreamPlayer]
 @export var mob_killed_sfx: AudioStream
 
-var sfx_is_on = true
+var sfx_is_on = false
 var _audio_player_dict = {}
 
 

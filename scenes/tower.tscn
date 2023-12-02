@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dxnwaohgy5i6m"]
+[gd_scene load_steps=18 format=3 uid="uid://dxnwaohgy5i6m"]
 
 [ext_resource type="Script" path="res://tower/scripts/tower.gd" id="1_xtyu2"]
 [ext_resource type="Texture2D" uid="uid://4cy8j14txxon" path="res://sprites/tower/tower_sprite_destroyed.tres" id="3_b6f4t"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cvsjadic6a406" path="res://sprites/control/black_atex.tres" id="5_yoolu"]
 [ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="6_rwcng"]
 [ext_resource type="Texture2D" uid="uid://bh2hw8jr4xxud" path="res://sprites/green_arrow.tres" id="7_bcyct"]
+[ext_resource type="Texture2D" uid="uid://c881130htrev8" path="res://sprites/tower_shadow.png" id="8_ae1pt"]
 [ext_resource type="Texture2D" uid="uid://yutewmyi0lhl" path="res://sprites/tower_glow/tower_glow_01.png" id="10_el7u4"]
 [ext_resource type="Texture2D" uid="uid://c76kt4n4vkmad" path="res://sprites/tower_glow/tower_glow_02.png" id="11_gegdi"]
 [ext_resource type="Texture2D" uid="uid://cyh4r31hgh081" path="res://sprites/tower_glow/tower_glow_03.png" id="12_r87bq"]
@@ -145,8 +146,13 @@ libraries = {
 unique_name_in_owner = true
 position = Vector2(0, -32)
 
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 5)
+texture = ExtResource("8_ae1pt")
+
 [node name="Glow" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -24)
 texture = ExtResource("12_r87bq")
 
