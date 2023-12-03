@@ -89,14 +89,20 @@ func _spawn_random_mob(spawn_point: SpawnPoint):
 	new_mob.entered_node.connect(_on_mob_entered_node)
 	new_mob.exited_node.connect(_on_mob_exited_node)
 	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
-	new_mob.was_hit_not_killed.connect(
-		func(mob: Mob): Audio.play_sfx(mob_hit_sfx))
-	new_mob.was_killed.connect(
-		func(mob: Mob): Audio.play_sfx(mob_killed_sfx))
+	new_mob.was_hit_not_killed.connect(func(mob: Mob):
+		Audio.play_sfx(mob_hit_sfx)
+	)
+	new_mob.was_killed.connect(func(mob: Mob):
+		Audio.play_sfx(mob_killed_sfx)
+	)
 
 	new_mob.set_resource(mob_data)
-#	new_mob.set_path(_map.spawn_point_path_dict[spawn_point], _map.center_cell)
-#	var path = GameUtilities.get_point_path(spawn_point.cell.position, _map.center)
+
+	new_mob._path_follower.path_interrupted.connect(func():
+		var path = GameUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
+		new_mob.set_path(path, _map.center_cell)
+	)
+
 	var path = GameUtilities.get_path_from_cell_to_cell(spawn_point.cell, _map.center_cell)
 	new_mob.set_path(path, _map.center_cell)
 

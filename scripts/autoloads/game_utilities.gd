@@ -1,5 +1,7 @@
 extends Node
 
+#signal on_set_game(game: Game)
+
 var game_is_set: bool:
 	get:
 		return _game != null
@@ -14,6 +16,8 @@ func set_game_manager(game_manager: GameManager):
 
 func set_game(game: Game):
 	_game = game
+
+	#on_set_game.emit(game)
 
 
 func get_point_path(start, end) -> PackedVector2Array:

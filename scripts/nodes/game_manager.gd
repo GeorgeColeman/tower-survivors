@@ -13,7 +13,8 @@ extends Node
 @export var map_drawer: MapDrawer
 @export var mob_spawner: MobSpawner
 @export var tower_spawner: TowerSpawner
-@export var pathfinding_manager: Pathfinding
+@export var entity_drawer: EntityDrawer
+@export var pathfinding_manager: PathfindingManager
 @export var cell_inspector: CellInspector
 @export var special_effects: SpecialEffects
 @export var sound_effects_player: SoundEffectsPlayer
@@ -70,6 +71,7 @@ func start_game():
 		map.height * GameConstants.PIXEL_SCALE)
 
 	mob_spawner.start_game(game)
+	entity_drawer.set_game(game)
 
 	main_control.start_game(game)
 	control_in_game.start_game(game)

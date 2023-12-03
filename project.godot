@@ -22,6 +22,7 @@ ControlMouseDetector="*res://scripts/autoloads/control_mouse_detector.gd"
 Audio="*res://scripts/autoloads/audio.gd"
 Entities="*res://scripts/autoloads/entities.gd"
 MapUtilities="*res://scripts/autoloads/map_utilities.gd"
+PathUtilities="*res://scripts/autoloads/path_utilities.gd"
 
 [display]
 

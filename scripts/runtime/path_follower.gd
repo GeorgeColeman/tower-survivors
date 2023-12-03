@@ -3,6 +3,7 @@ extends RefCounted
 
 signal exited_node(node: Vector2i)
 signal entered_node(node: Vector2i)
+signal path_interrupted()
 signal path_completed()
 
 var smooth_position: Vector2:
@@ -20,7 +21,7 @@ var _progress_to_next: float
 var current_node: Vector2i
 var next_node: Vector2i
 
-var _path_complete: bool
+var _has_active_path: bool
 
 
 func set_move_speed(move_speed: float):
@@ -28,7 +29,7 @@ func set_move_speed(move_speed: float):
 
 
 func process(delta):
-	if _path_complete:
+	if !_has_active_path:
 		return
 
 	_process_move(delta)
@@ -46,7 +47,7 @@ func set_path(new_path: PackedVector2Array):
 	_node_index = 0
 	_dist_to_next = 1
 	_progress_to_next = 1
-	_path_complete = false
+	_has_active_path = true
 
 	entered_node.emit(new_path[0])
 
@@ -76,12 +77,24 @@ func _enter_next():
 	current_node = next_node
 	next_node = path[_node_index]
 
+	if !PathUtilities.get_is_next_node_walkable(next_node):
+		exit_current()
+		_interrupt_path()
+		return
+
 	# Allows for correct speed when moving along diagonals
 	_dist_to_next = GameUtilities.get_distance_between_nodes(current_node, next_node)
 	_progress_to_next = 0
 
 
 func _complete_path():
-	_path_complete = true
+	_has_active_path = false
 
 	path_completed.emit()
+
+
+func _interrupt_path():
+	print_debug("Path was interrupted")
+	_has_active_path = false
+
+	path_interrupted.emit()

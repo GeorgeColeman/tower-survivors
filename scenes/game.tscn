@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=35 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/control/control_in_game.gd" id="7_j5a5t"]
 [ext_resource type="AudioStream" uid="uid://biyrj4fsaybv4" path="res://sound_effects/mob_hit.wav" id="7_nb2t7"]
 [ext_resource type="Script" path="res://scripts/nodes/mob_spawner.gd" id="7_nfp22"]
-[ext_resource type="Script" path="res://scripts/nodes/pathfinding.gd" id="8_af664"]
+[ext_resource type="Script" path="res://scripts/nodes/pathfinding_manager.gd" id="8_af664"]
 [ext_resource type="Texture2D" uid="uid://dnlrtp3aweov4" path="res://sprites/control/under.tres" id="8_arwt7"]
 [ext_resource type="Script" path="res://scripts/nodes/cell_inspector.gd" id="8_m46x2"]
 [ext_resource type="Texture2D" uid="uid://b2p2u10fovw7" path="res://sprites/hourglass.tres" id="9_6bjfq"]
@@ -31,13 +31,17 @@
 [ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_sprite.tres" id="27_fmrjs"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
 [ext_resource type="PackedScene" uid="uid://cja27s1erkeik" path="res://scenes/rock.tscn" id="29_gtkrp"]
+[ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
+[ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
+[ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "pathfinding_manager", "cell_inspector", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "entity_drawer", "pathfinding_manager", "cell_inspector", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
 tower_spawner = NodePath("MapObjects/TowerSpawner")
+entity_drawer = NodePath("MapObjects/EntityDrawer")
 pathfinding_manager = NodePath("PathfindingManager")
 cell_inspector = NodePath("CellInspector")
 special_effects = NodePath("SpecialEffects")
@@ -609,8 +613,13 @@ stream = ExtResource("25_42f42")
 unique_name_in_owner = true
 stream = ExtResource("25_42f42")
 
-[node name="ControlModeManager" type="Node2D" parent="."]
+[node name="ControlModeManager" type="Node2D" parent="." node_paths=PackedStringArray("control_mode_default", "control_mode_build")]
+script = ExtResource("32_1p01p")
+control_mode_default = NodePath("ControlModeDefault")
+control_mode_build = NodePath("ControlModeBuild")
 
 [node name="ControlModeDefault" type="Node2D" parent="ControlModeManager"]
+script = ExtResource("33_nxceh")
 
 [node name="ControlModeBuild" type="Node2D" parent="ControlModeManager"]
+script = ExtResource("34_v1kfp")
