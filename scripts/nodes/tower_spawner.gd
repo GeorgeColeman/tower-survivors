@@ -1,7 +1,7 @@
 class_name TowerSpawner
 extends Node2D
 
-var tower_scene: PackedScene = preload("res://Scenes/tower.tscn")
+@export var main_tower_scene: PackedScene
 
 var _main_tower: Tower
 
@@ -11,10 +11,10 @@ func instantiate_tower(cell: Cell) -> Tower:
 	if _main_tower:
 		_main_tower.uninstantiate()
 
-	var tower = tower_scene.instantiate() as Tower
+	var tower = main_tower_scene.instantiate() as Tower
 	add_child(tower)
 	tower.position = Utilities.get_world_position(cell)
-	tower.set_cell(cell)
+	tower.set_cell_and_init(cell)
 	_main_tower = tower
 
 	return tower
@@ -23,7 +23,6 @@ func instantiate_tower(cell: Cell) -> Tower:
 func get_towers_at(cell: Cell) -> Array:
 	if _main_tower != null:
 		if cell == _main_tower.cell:
-#			Messenger.clicked_on_tower.emit(_main_tower)
 			return [_main_tower]
 
 	return []

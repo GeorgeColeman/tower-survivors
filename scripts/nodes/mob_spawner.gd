@@ -12,6 +12,13 @@ var _cell_mob_dict = {}
 var _cell_spawn_point_dict = {}
 
 
+func get_spawn_points_at(cell: Cell) -> Array:
+	if !_cell_spawn_point_dict.has(cell):
+		return []
+
+	return [_cell_spawn_point_dict[cell]]
+
+
 func get_mob_targets(cells: Array[Cell]) -> Array[Mob]:
 	var mob_targets: Array[Mob] = []
 

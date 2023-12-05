@@ -5,19 +5,17 @@ signal gold_changed(current_gold: int)
 signal hit_points_changed(tower: Tower)
 signal was_killed()
 
+@export var main_sprite_2d: Sprite2D
 @export var starting_weapons: Array[PackedScene]
 @export var max_hit_points := 50 as int
+@export var gold_cost: int = 20
 @export var starting_upgrade_points := 1 as int
+@export var animation_player: AnimationPlayer
+@export var firing_point: Marker2D
+@export var level_progress_bar: TextureProgressBar
 
-@onready var sprite_2d: Sprite2D = %Sprite2D
-@onready var label_kills = %LabelKills
-@onready var label_level = %LabelLevel
-@onready var level_progress_bar = %LevelProgressBar
-@onready var green_arrow = %GreenArrow as Node2D
-@onready var animation_player = %AnimationPlayer as AnimationPlayer
-@onready var firing_point = %FiringPoint as Marker2D
-@onready var glow: Sprite2D = %Glow
-
+#@onready var green_arrow = %GreenArrow as Node2D
+#@onready var glow: Sprite2D = %Glow
 
 var perc_hit_points:
 	get:
@@ -57,7 +55,7 @@ var _current_upgrade_options: UpgradeOptions
 
 
 func _ready():
-#	sprite_2d.offset = GameUtilities.calculate_sprite_offset(sprite_2d)
+#	main_sprite_2d.offset = GameUtilities.calculate_sprite_offset(main_sprite_2d)
 	pass
 
 
@@ -92,7 +90,7 @@ func uninstantiate():
 	queue_free()
 
 
-func set_cell(cell: Cell):
+func set_cell_and_init(cell: Cell):
 	self.cell = cell
 	_current_hit_points = max_hit_points
 
@@ -104,14 +102,12 @@ func set_cell(cell: Cell):
 
 	Messenger.mob_killed.connect(_on_mob_killed)
 
-	label_kills.text = str(kills)
-	label_level.text = str(level)
-	level_progress_bar.value = perc_to_next_level
+	_update_level_progress_bar()
 
 	# Tween stuff: https://docs.godotengine.org/en/stable/classes/class_tween.html
-	_upgrade_tween = get_tree().create_tween().set_loops()
-	_upgrade_tween.tween_property(green_arrow, "position", Vector2.UP * 8, 1).set_trans(Tween.TRANS_SINE)
-	_upgrade_tween.tween_property(green_arrow, "position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
+	#_upgrade_tween = get_tree().create_tween().set_loops()
+	#_upgrade_tween.tween_property(green_arrow, "position", Vector2.UP * 8, 1).set_trans(Tween.TRANS_SINE)
+	#_upgrade_tween.tween_property(green_arrow, "position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
 
 	add_or_remove_upgrade_points(starting_upgrade_points)
 
@@ -119,7 +115,7 @@ func set_cell(cell: Cell):
 func add_or_remove_upgrade_points(amount: int):
 	_upgrade_points += amount
 
-	green_arrow.visible = true if _upgrade_points > 0 else false
+	#green_arrow.visible = true if _upgrade_points > 0 else false
 	#glow.visible = true if _upgrade_points > 0 else false
 
 
@@ -128,27 +124,30 @@ func _on_mob_killed(mob: Mob):
 	_add_kill()
 
 
+func _update_level_progress_bar():
+	if !level_progress_bar:
+		return
+
+	level_progress_bar.value = perc_to_next_level
+
+
 func _add_kill():
 	kills += 1
-	label_kills.text = str(kills)
 	experience += 1
 
 	# Check if the tower has leveled up
 	if experience >= exp_to_next_level:
 		_level_up()
 
-	level_progress_bar.value = perc_to_next_level
-
+	_update_level_progress_bar()
 
 func _level_up():
 	experience -= exp_to_next_level
 	var additional_exp = floori(exp_to_next_level * 0.1) + 5
 	exp_to_next_level += additional_exp
-	print_debug(
-		"FIXME: arbitrary additional exp formula. Exp to next: ", exp_to_next_level)
+	#print_debug("FIXME: arbitrary additional exp formula. Exp to next: ", exp_to_next_level)
 	level += 1
 	add_or_remove_upgrade_points(1)
-	label_level.text = str(level)
 	Messenger.request_floating_text("Tower leveled up. Current level: %s" % str(level))
 
 
@@ -169,7 +168,7 @@ func take_damage(amount: int):
 
 	hit_points_changed.emit(self)
 
-	TweenEffects.flash_white(sprite_2d, Color.WHITE)
+	TweenEffects.flash_white(main_sprite_2d, Color.WHITE)
 
 
 func _destroy():

@@ -1,6 +1,9 @@
 class_name ControlInGame
 extends Control
 
+@export var entity_info_panel: Panel
+@export var entity_name_label: Label
+
 @onready var tower_health_bar = %TowerHealthBar
 @onready var gold_text: Label = %GoldText
 @onready var time_text: Label = %TimeText
@@ -15,7 +18,7 @@ var _game: Game
 
 
 func _ready():
-	Messenger.clicked_on_actor.connect(_on_clicked_on_actor)
+	Messenger.clicked_on_entity.connect(_on_clicked_on_entity)
 	Messenger.clicked_on_empty.connect(_on_clicked_on_empty)
 
 	check_box_game_speed_01.pressed.connect(func(): _set_game_speed(1))
@@ -23,6 +26,7 @@ func _ready():
 	check_box_game_speed_05.pressed.connect(func(): _set_game_speed(5))
 	check_box_game_speed_10.pressed.connect(func(): _set_game_speed(10))
 
+	entity_info_panel.visible = false
 	control_upgrade_options.visible = false
 
 
@@ -41,17 +45,21 @@ func start_game(game: Game):
 	_update_gold_text(game.tower.current_gold)
 
 
-func _on_clicked_on_actor(actor):
-	if actor is Tower:
-		if !actor.has_upgrade_points:
+func _on_clicked_on_entity(entity):
+	entity_name_label.text = entity.name
+	entity_info_panel.visible = true
+
+	if entity is Tower:
+		if !entity.has_upgrade_points:
 			Messenger.request_floating_text("No upgrade points.")
 			return
 
-		control_upgrade_options.generate_upgrade_option_buttons(actor)
+		control_upgrade_options.generate_upgrade_option_buttons(entity)
 		control_upgrade_options.visible = true
 
 
 func _on_clicked_on_empty():
+	entity_info_panel.visible = false
 	control_upgrade_options.visible = false
 
 

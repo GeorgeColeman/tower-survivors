@@ -15,7 +15,6 @@ extends Node
 @export var tower_spawner: TowerSpawner
 @export var entity_drawer: EntityDrawer
 @export var pathfinding_manager: PathfindingManager
-@export var cell_inspector: CellInspector
 @export var special_effects: SpecialEffects
 @export var sound_effects_player: SoundEffectsPlayer
 
@@ -32,7 +31,6 @@ var game_data: GameData
 func _ready():
 	GameUtilities.set_game_manager(self)
 	Messenger.start_game_requested.connect(_on_request_start_game)
-	cell_inspector.cell_inspected.connect(_on_cell_inspected)
 
 	control_debug.set_game_manager(self)
 
@@ -89,20 +87,3 @@ func _generate_map(width: int, height: int) -> Map:
 	MapUtilities.set_map(map)
 
 	return map
-
-
-func _on_cell_inspected(cell: Cell):
-	if cell == null:
-		Messenger.clicked_on_empty.emit()
-		return
-
-	var actors = GameUtilities.get_actors_at(cell)
-
-	if actors.size() > 0:
-		Messenger.clicked_on_actor.emit(actors[0])
-		return
-
-	Messenger.clicked_on_empty.emit()
-
-
-

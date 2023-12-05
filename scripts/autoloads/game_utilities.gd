@@ -71,13 +71,19 @@ func get_cell_at(vector: Vector2) -> Cell:
 	return _game.map.get_cell_at(x, y)
 
 
-func get_actors_at(cell: Cell) -> Array:
-	var all_actors = []
+func get_entities_at(cell: Cell) -> Array:
+	var all_entities = []
 
 	var towers = _game_manager.tower_spawner.get_towers_at(cell)
-	all_actors.append_array(towers)
+	all_entities.append_array(towers)
+	
+	var entities = _game_manager.entity_drawer.get_entities_at(cell)
+	all_entities.append_array(entities)
 
-	return all_actors
+	var spawn_points = _game_manager.mob_spawner.get_spawn_points_at(cell)
+	all_entities.append_array(spawn_points)
+
+	return all_entities
 
 
 func get_upgrade_options(amount: int) -> UpgradeOptions:
