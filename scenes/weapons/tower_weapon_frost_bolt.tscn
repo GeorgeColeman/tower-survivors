@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://duota867iloj2"]
 
-[ext_resource type="Script" path="res://tower/scripts/tower_weapon.gd" id="1_yk220"]
+[ext_resource type="Script" path="res://scripts/tower_weapon.gd" id="1_yk220"]
 [ext_resource type="PackedScene" uid="uid://drjpxtu2lxu7m" path="res://scenes/projectiles/projectile_frost.tscn" id="2_dingu"]
 [ext_resource type="Script" path="res://resources/weapon_effects/weapon_effect_slow.gd" id="2_dtjcr"]
 

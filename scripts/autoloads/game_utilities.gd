@@ -1,6 +1,7 @@
 extends Node
 
 #signal on_set_game(game: Game)
+signal control_mode_build_requested(buildable_object_data: BuildableObjectData)
 
 var game_is_set: bool:
 	get:
@@ -18,6 +19,35 @@ func set_game(game: Game):
 	_game = game
 
 	#on_set_game.emit(game)
+
+
+func try_enter_build_mode(buildable_object_data: BuildableObjectData):
+	var check_gold = func() -> bool:
+		var has_enough_gold = _game.tower.current_gold >= buildable_object_data.gold_cost
+
+		if !has_enough_gold:
+			print_debug("Not enough gold")
+
+		return has_enough_gold
+
+	if !check_gold.call():
+		return
+
+	buildable_object_data.on_build_confirmed = func(cell: Cell):
+		if !check_gold.call():
+			return
+			
+		var params = SpawnEntityParams.new()
+
+		params.entity_scene = buildable_object_data.scene
+		params.cell = cell
+
+		Entities.spawn_entity(params)
+		
+		_game.tower.add_gold(-buildable_object_data.gold_cost)
+
+	control_mode_build_requested.emit(buildable_object_data)
+
 
 
 func get_point_path(start, end) -> PackedVector2Array:
@@ -76,7 +106,7 @@ func get_entities_at(cell: Cell) -> Array:
 
 	var towers = _game_manager.tower_spawner.get_towers_at(cell)
 	all_entities.append_array(towers)
-	
+
 	var entities = _game_manager.entity_drawer.get_entities_at(cell)
 	all_entities.append_array(entities)
 

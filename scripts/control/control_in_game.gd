@@ -1,8 +1,7 @@
 class_name ControlInGame
 extends Control
 
-@export var entity_info_panel: Panel
-@export var entity_name_label: Label
+@export var entity_info_panel: EntityInfoPanel
 
 @onready var tower_health_bar = %TowerHealthBar
 @onready var gold_text: Label = %GoldText
@@ -46,7 +45,7 @@ func start_game(game: Game):
 
 
 func _on_clicked_on_entity(entity):
-	entity_name_label.text = entity.name
+	entity_info_panel.set_entity(entity)
 	entity_info_panel.visible = true
 
 	if entity is Tower:

@@ -12,12 +12,14 @@ func _ready():
 
 func _on_mouse_entered_control():
 	cell_marker_sprite.visible = false
+	_current_cell = null
 	MapUtilities.mouse_hovered_outside_map.emit()
 
 
 func _on_mouse_exited_control():
 	cell_marker_sprite.visible = true
 	MapUtilities.mouse_hovered_inside_map.emit()
+	_get_hovered_cell()
 
 
 func _unhandled_input(event):

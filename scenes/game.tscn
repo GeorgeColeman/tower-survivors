@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=39 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://scripts/control/control_upgrade_options.gd" id="12_b3rp4"]
 [ext_resource type="Script" path="res://scripts/nodes/tower_spawner.gd" id="15_3y22w"]
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
+[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_sprite.tres" id="19_eyjq0"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
 [ext_resource type="Script" path="res://scripts/nodes/special_effects.gd" id="23_aqxf2"]
@@ -31,6 +32,7 @@
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
 [ext_resource type="PackedScene" uid="uid://cja27s1erkeik" path="res://scenes/rock.tscn" id="29_gtkrp"]
+[ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="31_7drxe"]
 [ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="31_cy2tq"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
@@ -148,6 +150,7 @@ scale = Vector2(2, 2)
 script = ExtResource("27_yobp5")
 button_containter = NodePath("Container")
 build_button_scene = ExtResource("20_2lk4p")
+rock_texture = ExtResource("19_eyjq0")
 rock_scene = ExtResource("29_gtkrp")
 candlestick_scene = ExtResource("31_cy2tq")
 control_manager = NodePath("../../../ControlModeManager")
@@ -166,7 +169,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "entity_name_label")]
+[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +179,6 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("EntityInfoPanel")
-entity_name_label = NodePath("EntityInfoPanel/EntityNameLabel")
 
 [node name="TowerHealthBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/ControlInGame"]
 unique_name_in_owner = true
@@ -362,7 +364,7 @@ focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x10"
 
-[node name="EntityInfoPanel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame"]
+[node name="EntityInfoPanel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame" node_paths=PackedStringArray("entity_name_label", "button_container")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -370,6 +372,9 @@ anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 200.0
 grow_horizontal = 0
+script = ExtResource("31_7drxe")
+entity_name_label = NodePath("EntityNameLabel")
+button_container = NodePath("ButtonContainer")
 
 [node name="EntityNameLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
 layout_mode = 1
@@ -383,6 +388,20 @@ grow_horizontal = 2
 text = "Entity Name"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers")]
 visible = false
@@ -635,5 +654,9 @@ control_mode_build = NodePath("ControlModeBuild")
 [node name="ControlModeDefault" type="Node" parent="ControlModeManager"]
 script = ExtResource("33_nxceh")
 
-[node name="ControlModeBuild" type="Node2D" parent="ControlModeManager"]
+[node name="ControlModeBuild" type="Node2D" parent="ControlModeManager" node_paths=PackedStringArray("preview_container")]
 script = ExtResource("34_v1kfp")
+preview_container = NodePath("PreviewContainer")
+
+[node name="PreviewContainer" type="Node2D" parent="ControlModeManager/ControlModeBuild"]
+y_sort_enabled = true
