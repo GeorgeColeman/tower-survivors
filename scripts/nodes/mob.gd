@@ -7,7 +7,11 @@ signal attacked_tower(mob: Mob)
 signal was_hit_not_killed(mob: Mob)
 signal was_killed(mob: Mob)
 
-@onready var sprite: Sprite2D = $Sprite2D
+@export var mob_name: String
+@export var features: Array[MobFeature]
+@export var sprite_2d: Sprite2D
+@export var hit_points_component: HitPointsComponent
+@export var visuals_container: Node2D
 
 var status_effects: StatusEffects
 
@@ -15,13 +19,17 @@ var cell: Cell:
 	get:
 		return GameUtilities.get_cell_at_vector2i(_path_follower.current_node)
 
+var _visuals_container: Node2D = self
+
 var _mob_resource: MobResource
 var _is_initialised: bool
 var _path_follower: PathFollower
 var _target_cell: Cell
-var _hit_points: int
+
 var _is_destroyed = false
 var _tint_colour = Color.WHITE
+
+var _facing_direction = FacingDirection.LEFT
 
 var _base_move_speed: float:
 	get:
@@ -57,23 +65,31 @@ func _process(_delta):
 
 func set_resource(mob_resource: MobResource):
 	_mob_resource = mob_resource
-	_hit_points = mob_resource.hit_points
+
+	hit_points_component.initialise(mob_resource.hit_points, mob_resource.is_boss())
 
 	_path_follower = PathFollower.new()
 	_path_follower.set_move_speed(_base_move_speed)
 
 	_path_follower.exited_node.connect(func(node): exited_node.emit(self, node))
-	_path_follower.entered_node.connect(func(node): entered_node.emit(self, node))
+	_path_follower.entered_node.connect(
+		func(node):
+			_update_facing_direction(node)
+			entered_node.emit(self, node)
+	)
 	_path_follower.path_completed.connect(_on_path_completed)
 
 	status_effects = StatusEffects.new()
+
+	for feature in features:
+		feature.register_owner(self)
 
 	_is_initialised = true
 
 
 func set_tint_colour(colour: Color):
 	_tint_colour = colour
-	sprite.modulate = _tint_colour
+	_visuals_container.modulate = _tint_colour
 
 
 func add_move_speed_modifier(amount: float):
@@ -86,6 +102,10 @@ func add_move_speed_modifier(amount: float):
 func set_path(path: PackedVector2Array, target_cell: Cell):
 	_path_follower.set_path(path)
 	_target_cell = target_cell
+
+	await get_tree().create_timer(0.5).timeout
+
+	_path_follower.start_path()
 
 
 func _on_path_completed():
@@ -103,19 +123,31 @@ func take_damage(damage_amount: int):
 	if _is_destroyed:
 		return
 
-	_hit_points -= damage_amount
+	hit_points_component.change_current(-damage_amount)
 
-	if _hit_points <= 0:
+	if hit_points_component.is_at_zero:
 		Messenger.mob_killed.emit(self)
 		# Ensure the mob exits its current node so mob spawner is made aware
 		_path_follower.exit_current()
 #		destroy()
 		_animated_destroy()
 	else:
-		TweenEffects.flash_white(sprite, _tint_colour)
+		TweenEffects.flash_white(_visuals_container, _tint_colour)
 		was_hit_not_killed.emit(self)
 
 	Messenger.floating_text_requested.emit(str(damage_amount), position, EffectType.DAMAGE_NUMBER)
+
+
+func _update_facing_direction(current_node: Vector2i):
+	if !_target_cell:
+		return
+
+	if current_node.x >= _target_cell.scene_position.x:
+		_facing_direction = FacingDirection.LEFT
+		sprite_2d.flip_h = false
+	else:
+		_facing_direction = FacingDirection.RIGHT
+		sprite_2d.flip_h = true
 
 
 func _attack_tower():
@@ -128,9 +160,21 @@ func destroy():
 	queue_free()
 
 
+func animated_spawn():
+	_visuals_container.modulate.a = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(_visuals_container, "modulate:a", 1, 0.5)
+
+
 func _animated_destroy():
 	_is_destroyed = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(sprite, "modulate", Color(0, 0, 0, 0), 0.5)
+	tween.tween_property(_visuals_container, "modulate", Color(0, 0, 0, 0), 0.5)
 	tween.tween_callback(queue_free)
 	was_killed.emit(self)
+
+
+enum FacingDirection {
+	LEFT,
+	RIGHT
+}

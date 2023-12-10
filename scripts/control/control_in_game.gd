@@ -3,7 +3,6 @@ extends Control
 
 @export var entity_info_panel: EntityInfoPanel
 
-@onready var tower_health_bar = %TowerHealthBar
 @onready var gold_text: Label = %GoldText
 @onready var time_text: Label = %TimeText
 @onready var control_upgrade_options: ControlUpgradeOptions = %ControlUpgradeOptions
@@ -14,6 +13,8 @@ extends Control
 @onready var check_box_game_speed_10: CheckBox = %CheckBoxGameSpeed10
 
 var _game: Game
+var _selected_entity
+var _entity_is_selected: bool
 
 
 func _ready():
@@ -33,18 +34,32 @@ func _process(delta):
 	if _game == null:
 		return
 
-	time_text.text = "%.0f" % _game.time
+	# Source: https://forum.godotengine.org/t/how-to-convert-seconds-into-ddmm-ss-format/8174/2
+	var seconds = _game.time as int % 60
+	var minutes = (_game.time as int / 60) % 60
+	#var hours = (_game.time as int / 60) / 60
+	
+	time_text.text = "%02d:%02d" % [minutes, seconds]
+
+	#time_text.text = "%.0f" % _game.time
+
+	# The selected entity has become null, most likely because it's been freed
+	if _entity_is_selected && _selected_entity == null:
+		_entity_is_selected = false
+		entity_info_panel.visible = false
+		control_upgrade_options.visible = false
 
 
 func start_game(game: Game):
 	_game = game
-	game.tower.hit_points_changed.connect(_on_tower_hit_points_changed)
-	game.tower.gold_changed.connect(_on_tower_gold_changed)
-	_update_bar_tower_health(game.tower)
-	_update_gold_text(game.tower.current_gold)
+	game.player.gold_changed.connect(_on_tower_gold_changed)
+	_update_gold_text(game.player.current_gold)
 
 
 func _on_clicked_on_entity(entity):
+	_selected_entity = entity
+	_entity_is_selected = true
+
 	entity_info_panel.set_entity(entity)
 	entity_info_panel.visible = true
 
@@ -62,16 +77,8 @@ func _on_clicked_on_empty():
 	control_upgrade_options.visible = false
 
 
-func _on_tower_hit_points_changed(tower: Tower):
-	_update_bar_tower_health(tower)
-
-
 func _on_tower_gold_changed(current_gold: int):
 	_update_gold_text(current_gold)
-
-
-func _update_bar_tower_health(tower: Tower):
-	tower_health_bar.value = tower.perc_hit_points * tower_health_bar.max_value
 
 
 func _update_gold_text(current_gold: int):

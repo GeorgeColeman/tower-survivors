@@ -1,11 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://s7vpiqx3aaob"]
+[gd_scene load_steps=5 format=3 uid="uid://s7vpiqx3aaob"]
 
 [ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_mj6gn"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="2_ecjp1"]
 [ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="3_wi04p"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="4_fdq6h"]
 
-[node name="Mob" type="Node2D"]
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "visuals_container")]
 script = ExtResource("1_mj6gn")
+sprite_2d = NodePath("Sprite2D")
+hit_points_component = NodePath("HitPoints2D")
+visuals_container = NodePath("Visuals")
+
+[node name="Features" type="Node" parent="."]
+
+[node name="HitPoints2D" parent="." instance=ExtResource("4_fdq6h")]
+
+[node name="Visuals" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ecjp1")

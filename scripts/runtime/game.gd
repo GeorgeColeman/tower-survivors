@@ -8,6 +8,7 @@ static var speed: float = 1
 static var speed_scaled_delta: float
 
 var map: Map
+var player: Player
 var tower: Tower
 var mob_spawner: MobSpawner
 var game_data: GameData
@@ -20,10 +21,10 @@ var _difficulty: float = 1
 var _unpause_speed: float = speed
 
 
-func _init(map: Map, mob_spawner: MobSpawner, game_data: GameData):
-	self.map = map
-	self.mob_spawner = mob_spawner
-	self.game_data = game_data
+func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
+	map = p_map
+	mob_spawner = p_mob_spawner
+	game_data = p_game_data
 
 
 func process(delta: float):

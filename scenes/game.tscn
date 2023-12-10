@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=37 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -10,12 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://biyrj4fsaybv4" path="res://sound_effects/mob_hit.wav" id="7_nb2t7"]
 [ext_resource type="Script" path="res://scripts/nodes/mob_spawner.gd" id="7_nfp22"]
 [ext_resource type="Script" path="res://scripts/nodes/pathfinding_manager.gd" id="8_af664"]
-[ext_resource type="Texture2D" uid="uid://dnlrtp3aweov4" path="res://sprites/control/under.tres" id="8_arwt7"]
 [ext_resource type="Script" path="res://scripts/nodes/cell_inspector.gd" id="8_m46x2"]
 [ext_resource type="Texture2D" uid="uid://b2p2u10fovw7" path="res://sprites/hourglass.tres" id="9_6bjfq"]
-[ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="9_su02w"]
 [ext_resource type="Script" path="res://scripts/control/control_debug.gd" id="9_vxhso"]
-[ext_resource type="Texture2D" uid="uid://bs5m7yp8hqm1" path="res://sprites/control/progress.tres" id="10_0yt8x"]
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
@@ -35,6 +32,7 @@
 [ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="31_7drxe"]
 [ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="31_cy2tq"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
+[ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="32_pnssa"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/main_tower.tscn" id="35_1q7gc"]
@@ -74,6 +72,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 script = ExtResource("7_nfp22")
 spawn_point_scene = ExtResource("10_ao74v")
+starting_spawn_points = 1
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
@@ -179,26 +178,6 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("EntityInfoPanel")
-
-[node name="TowerHealthBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/ControlInGame"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_bottom = 8.0
-grow_horizontal = 2
-scale = Vector2(2, 2)
-value = 50.0
-nine_patch_stretch = true
-stretch_margin_left = 1
-stretch_margin_top = 1
-stretch_margin_right = 1
-stretch_margin_bottom = 1
-texture_under = ExtResource("8_arwt7")
-texture_over = ExtResource("9_su02w")
-texture_progress = ExtResource("10_0yt8x")
 
 [node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame"]
 layout_mode = 1
@@ -403,7 +382,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers")]
+[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "spawn_boss_button")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -413,10 +392,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_vxhso")
-check_box_draw_range_indicators = NodePath("DebugTogglesContainer/CheckBoxDrawRangeIndicators")
-check_box_draw_pathfinding_grid = NodePath("DebugTogglesContainer/CheckBoxDrawPathfindingGrid")
-check_box_draw_mob_paths = NodePath("DebugTogglesContainer/CheckBoxDrawMobPaths")
-check_box_show_damage_numbers = NodePath("DebugTogglesContainer/CheckBoxShowDamageNumbers")
+check_box_draw_range_indicators = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawRangeIndicators")
+check_box_draw_pathfinding_grid = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawPathfindingGrid")
+check_box_draw_mob_paths = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawMobPaths")
+check_box_show_damage_numbers = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxShowDamageNumbers")
+spawn_boss_button = NodePath("DebugButtons/SpawnBossButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
 layout_mode = 1
@@ -436,7 +416,7 @@ layout_mode = 2
 text = "Debug Text
 And Some More"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+[node name="DebugButtons" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -446,43 +426,53 @@ offset_right = 40.0
 offset_bottom = 20.0
 grow_vertical = 2
 
-[node name="RestartGameButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/VBoxContainer"]
+[node name="RestartGameButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "[DEBUG] Restart"
 alignment = 0
 
-[node name="DamageTowerButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/VBoxContainer"]
+[node name="DamageTowerButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "[DEBUG] Damage Tower"
 alignment = 0
 
-[node name="KillTowerButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/VBoxContainer"]
+[node name="KillTowerButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "[DEBUG] Kill Tower"
 alignment = 0
 
-[node name="DebugTogglesContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
-layout_mode = 0
-offset_top = 32.0
-offset_right = 214.0
-offset_bottom = 168.0
+[node name="SpawnBossButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[DEBUG] Kill Tower"
+alignment = 0
 
-[node name="CheckBoxDrawRangeIndicators" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/DebugTogglesContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 115.0
+offset_right = 375.0
+offset_bottom = 251.0
+
+[node name="DebugTogglesContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2"]
+layout_mode = 2
+
+[node name="CheckBoxDrawRangeIndicators" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
 layout_mode = 2
 text = "Draw Range Indicators"
 
-[node name="CheckBoxDrawPathfindingGrid" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/DebugTogglesContainer"]
+[node name="CheckBoxDrawPathfindingGrid" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
 layout_mode = 2
 text = "Draw Pathfinding Grid"
 
-[node name="CheckBoxDrawMobPaths" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/DebugTogglesContainer"]
+[node name="CheckBoxDrawMobPaths" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
 layout_mode = 2
 text = "Draw Mob Paths"
 
-[node name="CheckBoxShowDamageNumbers" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/DebugTogglesContainer"]
+[node name="CheckBoxShowDamageNumbers" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
 layout_mode = 2
 text = "Show Damage Numbers"
 
@@ -628,6 +618,53 @@ text = "Options"
 layout_mode = 2
 button_pressed = true
 text = "SFX"
+
+[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_pnssa")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -287.0
+offset_right = 287.0
+offset_bottom = 137.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "LEVEL UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "TEMP: Dismiss Level Up"
 
 [node name="SoundEffectsPlayer" type="Node" parent="." node_paths=PackedStringArray("audio_stream_players")]
 script = ExtResource("25_6tpgp")

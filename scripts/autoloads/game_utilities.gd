@@ -23,7 +23,7 @@ func set_game(game: Game):
 
 func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 	var check_gold = func() -> bool:
-		var has_enough_gold = _game.tower.current_gold >= buildable_object_data.gold_cost
+		var has_enough_gold = _game.player.current_gold >= buildable_object_data.gold_cost
 
 		if !has_enough_gold:
 			print_debug("Not enough gold")
@@ -36,15 +36,15 @@ func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 	buildable_object_data.on_build_confirmed = func(cell: Cell):
 		if !check_gold.call():
 			return
-			
+
 		var params = SpawnEntityParams.new()
 
 		params.entity_scene = buildable_object_data.scene
 		params.cell = cell
 
 		Entities.spawn_entity(params)
-		
-		_game.tower.add_gold(-buildable_object_data.gold_cost)
+
+		_game.player.add_gold(-buildable_object_data.gold_cost)
 
 	control_mode_build_requested.emit(buildable_object_data)
 
@@ -117,7 +117,7 @@ func get_entities_at(cell: Cell) -> Array:
 
 
 func get_upgrade_options(amount: int) -> UpgradeOptions:
-	var options = Utilities.get_random_unique_elements(_game.game_data.upgrade_resources, 3)
+	var options = Utilities.get_random_unique_elements(_game.game_data.upgrade_resources, amount)
 
 	return UpgradeOptions.new(options)
 

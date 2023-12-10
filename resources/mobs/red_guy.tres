@@ -11,3 +11,5 @@ move_speed = 0.5
 damage = 1
 hit_points = 30
 gold_value = 1
+is_in_spawn_pool = true
+mob_flags = 1

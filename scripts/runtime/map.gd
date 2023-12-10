@@ -65,5 +65,21 @@ func get_cells_in_circle(centre_cell: Cell, radius: float) -> Array[Cell]:
 	return cells_in_circle
 
 
+func get_cell_neighbours(centre_cell: Cell) -> Array[Cell]:
+	var neighbours:Array[Cell]
+
+	var north_neighbour = get_cell_at(centre_cell.x, centre_cell.y + width)
+	var east_neighbour = get_cell_at(centre_cell.x + 1, centre_cell.y)
+	var south_neighbour = get_cell_at(centre_cell.x, centre_cell.y - width)
+	var west_neighbour = get_cell_at(centre_cell.x - 1, centre_cell.y)
+
+	if north_neighbour: neighbours.append(north_neighbour)
+	if east_neighbour: neighbours.append(east_neighbour)
+	if south_neighbour: neighbours.append(south_neighbour)
+	if west_neighbour: neighbours.append(west_neighbour)
+
+	return neighbours
+
+
 func distance_between(cell_a: Cell, cell_b: Cell) -> float:
 	return sqrt((cell_b.x - cell_a.x) ** 2 + (cell_b.y - cell_a.y) ** 2)

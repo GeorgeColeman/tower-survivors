@@ -47,9 +47,14 @@ func set_path(new_path: PackedVector2Array):
 	_node_index = 0
 	_dist_to_next = 1
 	_progress_to_next = 1
-	_has_active_path = true
+	#_has_active_path = true
 
 	entered_node.emit(new_path[0])
+
+
+func start_path():
+	_has_active_path = true
+
 
 
 func exit_current():

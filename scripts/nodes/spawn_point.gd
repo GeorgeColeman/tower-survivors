@@ -10,6 +10,7 @@ signal spawn_triggered(spawn_point: SpawnPoint)
 var cell: Cell
 
 var _spawn_cooldown: float
+var _spawn_delay: float
 
 
 func _ready():
@@ -17,8 +18,17 @@ func _ready():
 
 
 func _process(_delta):
+	if _spawn_delay > 0:
+		_spawn_delay -= Game.speed_scaled_delta
+
+		return
+
 	_spawn_cooldown -= Game.speed_scaled_delta
 
 	if _spawn_cooldown <= 0:
 		_spawn_cooldown = spawn_rate + randf_range(-spawn_rate_variance, spawn_rate_variance)
 		spawn_triggered.emit(self)
+
+
+func set_spawn_delay(delay: float):
+	_spawn_delay = delay

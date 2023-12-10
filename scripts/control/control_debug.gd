@@ -11,6 +11,8 @@ extends Control
 @onready var damage_tower_button = %DamageTowerButton
 @onready var kill_tower_button = %KillTowerButton
 
+@export var spawn_boss_button: Button
+
 var _game_manager: GameManager
 var _game: Game
 
@@ -35,6 +37,14 @@ func _ready():
 	check_box_draw_pathfinding_grid.toggled.connect(_on_toggle_draw_pathfinding_grid)
 	check_box_draw_mob_paths.toggled.connect(_on_toggle_draw_mob_paths)
 	check_box_show_damage_numbers.toggled.connect(_on_toggle_show_damage_numbers)
+
+	spawn_boss_button.pressed.connect(
+		func():
+			if !_game:
+				return
+
+			_game.mob_spawner.spawn_random_boss()
+	)
 
 	visible = false
 

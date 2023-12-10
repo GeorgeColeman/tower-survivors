@@ -62,8 +62,9 @@ func start_game():
 	game = Game.new(map, mob_spawner, game_data)
 	GameUtilities.set_game(game)
 
+	game.player = Player.new(starting_gold)
+
 	var tower = tower_spawner.instantiate_tower(map.center_cell)
-	tower.add_gold(starting_gold)
 	game.set_tower(tower)
 
 	camera_2d_controller.position = map.center * GameConstants.PIXEL_SCALE

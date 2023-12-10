@@ -8,7 +8,7 @@ var _was_unhandled_input: bool
 var _mouse_over_control: bool
 
 
-func _process(delta):
+func _process(_delta):
 	if _was_input:
 		if !_was_unhandled_input && !_mouse_over_control:
 			_mouse_over_control = true
