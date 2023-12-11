@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://r0umfv06co67"]
+
+[ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_s87i3"]
+[ext_resource type="Texture2D" uid="uid://cnqddjpp0vr" path="res://sprites/DawnLike/as_resource/slime_01.tres" id="2_vvdmo"]
+[ext_resource type="Texture2D" uid="uid://dapwx6u6u2q2r" path="res://sprites/DawnLike/as_resource/slime_02.tres" id="3_vjp73"]
+[ext_resource type="Script" path="res://resources/mob_features/mob_feature_spawn_mobs_on_death.gd" id="4_7difo"]
+[ext_resource type="Resource" uid="uid://nopdf2mv28j8" path="res://resources/mobs/small_slime.tres" id="5_es0lf"]
+
+[sub_resource type="Animation" id="Animation_jq7rh"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("2_vvdmo"), ExtResource("3_vjp73")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shadow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0, 0),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ivut4"]
+_data = {
+"idle": SubResource("Animation_jq7rh")
+}
+
+[node name="Slime" node_paths=PackedStringArray("features") instance=ExtResource("1_s87i3")]
+mob_name = "Slime"
+features = [NodePath("Features/SpawnMobsOnDeath")]
+
+[node name="SpawnMobsOnDeath" type="Node" parent="Features" index="0"]
+script = ExtResource("4_7difo")
+mob_to_spawn = ExtResource("5_es0lf")
+number = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_ivut4")
+}
+autoplay = "idle"
+
+[node name="Sprite2D" parent="." index="4"]
+texture = ExtResource("2_vvdmo")
+
+[node name="Shadow" parent="." index="5"]
+position = Vector2(0, 0)

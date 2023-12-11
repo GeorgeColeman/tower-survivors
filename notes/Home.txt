@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2023-12-11T11:26:53+10:30
+
+====== Home ======
+Created Monday 11 December 2023
+
+I am writing in a Zim notebook.

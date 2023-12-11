@@ -18,7 +18,7 @@ var is_paused: bool
 
 var _current_minute = 1 as int
 var _difficulty: float = 1
-var _unpause_speed: float = speed
+var _resume_speed: float = speed
 
 
 func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
@@ -41,13 +41,35 @@ func process(delta: float):
 func toggle_pause() -> bool:
 	if is_paused:
 		is_paused = false
-		speed = _unpause_speed
+		speed = _resume_speed
 	else:
 		is_paused = true
-		_unpause_speed = speed
+		_resume_speed = speed
 		speed = 0
 
 	return is_paused
+
+
+func set_player(p_player: Player):
+	player = p_player
+	player.levelled_up.connect(
+		func():
+			print_debug(GameUtilities.generate_upgrade_options(3).str)
+			pause_game()
+	)
+
+
+func pause_game():
+	if !is_paused:
+		_resume_speed = speed
+
+	is_paused = true
+	speed = 0
+
+
+func resume_game():
+	is_paused = false
+	speed = _resume_speed
 
 
 func set_tower(tower: Tower):

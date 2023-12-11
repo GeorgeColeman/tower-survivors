@@ -8,13 +8,27 @@ extends Control
 @export var control_in_game: Control
 @export var control_game_over: Control
 @export var control_pause: Control
+@export var control_level_up: ControlLevelUp
+@export var control_build_menu: ControlBuildMenu
 
 var _game: Game
 
 
 func start_game(game: Game):
 	_game = game
+
 	game.game_over.connect(_on_game_over)
+	game.player.levelled_up.connect(
+		func():
+			control_level_up.generate_upgrade_option_buttons(GameUtilities.generate_upgrade_options(3))
+			control_level_up.visible = true
+	)
+
+	control_level_up.dismissed.connect(
+		func():
+			control_level_up.visible = false
+			game.resume_game()
+	)
 
 	control_pre_game.visible = false
 	control_game_over.visible = false
@@ -28,13 +42,6 @@ func _ready():
 	control_pre_game.visible = true
 	control_in_game.visible = false
 	control_game_over.visible = false
-
-
-#func _input(event):
-#	if event is InputEventKey:
-#		if event.keycode == KEY_ESCAPE && event.is_released():
-#			var is_paused = _game.toggle_pause()
-#			control_pause.visible = is_paused
 
 
 func _on_game_over():

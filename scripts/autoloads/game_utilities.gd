@@ -82,7 +82,7 @@ func get_cells_in_circle_sorted_by_distance_from(origin_cell: Cell, radius: floa
 	return cells_in_circle
 
 
-func get_mob_targets(origin_cell: Cell, cells_in_range: Array[Cell],number_of_targets: int) -> Array[Mob]:
+func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Array[Mob]:
 	var all_mobs = _game.mob_spawner.get_mob_targets(cells_in_range)
 
 	if number_of_targets >= all_mobs.size():
@@ -120,6 +120,38 @@ func get_upgrade_options(amount: int) -> UpgradeOptions:
 	var options = Utilities.get_random_unique_elements(_game.game_data.upgrade_resources, amount)
 
 	return UpgradeOptions.new(options)
+
+
+func generate_upgrade_options(amount: int) -> UpgradeOptions:
+	var options: Array[UpgradeOption] = []
+
+	for upgrade in _game.game_data.upgrade_resources:
+		options.append(
+			UpgradeOption.new(
+				upgrade.name,
+				func():
+					upgrade.add_to_tower(_game.tower)
+		)
+		)
+
+	for tower in _game.game_data.towers:
+		var unpacked_tower = tower.instantiate() as Tower
+
+		options.append(
+			UpgradeOption.new(
+				unpacked_tower.name,
+				func():
+					_game_manager.main_control.control_build_menu.add_build_option(tower)
+					#print_debug("TODO: make tower buildable by player")
+		)
+		)
+
+	return UpgradeOptions.new(
+		Utilities.get_random_unique_elements(
+			options,
+			amount
+		)
+	)
 
 
 func calculate_sprite_offset(sprite_2d: Sprite2D) -> Vector2:

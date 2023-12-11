@@ -49,6 +49,10 @@ var gold_value: int:
 	get:
 		return _mob_resource.gold_value
 
+var experience_value: int:
+	get:
+		return _mob_resource.experience_value
+
 
 func _process(_delta):
 	if _is_destroyed:

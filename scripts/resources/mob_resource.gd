@@ -7,6 +7,7 @@ extends Resource
 @export var damage = 1 as int
 @export var hit_points = 10 as int
 @export var gold_value = 1 as int
+@export var experience_value = 1 as int
 @export_flags("IN_SPAWN_POOL", "BOSS") var mob_flags = 0
 
 enum MobFlag {

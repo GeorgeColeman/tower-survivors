@@ -2,6 +2,7 @@ class_name ControlInGame
 extends Control
 
 @export var entity_info_panel: EntityInfoPanel
+@export var experience_bar: TextureProgressBar
 
 @onready var gold_text: Label = %GoldText
 @onready var time_text: Label = %TimeText
@@ -38,7 +39,7 @@ func _process(delta):
 	var seconds = _game.time as int % 60
 	var minutes = (_game.time as int / 60) % 60
 	#var hours = (_game.time as int / 60) / 60
-	
+
 	time_text.text = "%02d:%02d" % [minutes, seconds]
 
 	#time_text.text = "%.0f" % _game.time
@@ -52,8 +53,23 @@ func _process(delta):
 
 func start_game(game: Game):
 	_game = game
-	game.player.gold_changed.connect(_on_tower_gold_changed)
+
+	game.player.gold_changed.connect(
+		func(current_gold: int):
+			_update_gold_text(current_gold)
+	)
+
+	game.player.experience_component.experience_added.connect(
+		func():
+			_update_experience_bar()
+	)
+
 	_update_gold_text(game.player.current_gold)
+	_update_experience_bar()
+
+
+func _update_experience_bar():
+	experience_bar.value = _game.player.experience_component.perc_to_next_level
 
 
 func _on_clicked_on_entity(entity):
@@ -68,17 +84,14 @@ func _on_clicked_on_entity(entity):
 			Messenger.request_floating_text("No upgrade points.")
 			return
 
-		control_upgrade_options.generate_upgrade_option_buttons(entity)
-		control_upgrade_options.visible = true
+		print_debug("TODO: clicking tower currently does nothing. Used to display upgrade options")
+		#control_upgrade_options.generate_upgrade_option_buttons(entity)
+		#control_upgrade_options.visible = true
 
 
 func _on_clicked_on_empty():
 	entity_info_panel.visible = false
 	control_upgrade_options.visible = false
-
-
-func _on_tower_gold_changed(current_gold: int):
-	_update_gold_text(current_gold)
 
 
 func _update_gold_text(current_gold: int):

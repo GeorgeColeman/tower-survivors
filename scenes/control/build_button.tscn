@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://38q1wkrg25ha"]
+
+[ext_resource type="Script" path="res://scripts/control/build_button.gd" id="1_hxw7i"]
+[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="3_bi1fe"]
+
+[node name="BuildButton" type="Button" node_paths=PackedStringArray("_main_texture", "gold_label", "gold_cost_area")]
+custom_minimum_size = Vector2(48, 48)
+focus_mode = 0
+script = ExtResource("1_hxw7i")
+_main_texture = NodePath("MainTexture")
+gold_label = NodePath("GoldCostArea/GoldLabel")
+gold_cost_area = NodePath("GoldCostArea")
+
+[node name="MainTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GoldCostArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="GoldTexture" type="TextureRect" parent="GoldCostArea"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -19.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_bi1fe")
+stretch_mode = 2
+
+[node name="GoldLabel" type="Label" parent="GoldCostArea"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -23.0
+offset_right = 43.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "99"

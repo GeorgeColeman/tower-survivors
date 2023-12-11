@@ -3,6 +3,7 @@ extends RefCounted
 
 var mob_resources: Array[MobResource]
 var upgrade_resources: Array[UpgradeResource]
+var towers: Array[PackedScene]
 
 var bosses: Array[MobResource]
 
@@ -35,6 +36,14 @@ func _load_resources():
 
 		if loaded is UpgradeResource:
 			upgrade_resources.append(loaded)
+
+	var towers = dir_contents("res://scenes/towers/")
+
+	for tower in towers:
+		var loaded = load(tower)
+
+		if loaded is PackedScene:
+			self.towers.append(loaded)
 
 #	var path = "res://resources"
 #	var dir = DirAccess.open(path)

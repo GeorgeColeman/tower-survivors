@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://bpc13taf5hvqd"]
+
+[ext_resource type="PackedScene" uid="uid://bpmomm3o6p6us" path="res://scenes/mobs/boss.tscn" id="1_ut43o"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_holno"]
+
+[resource]
+script = ExtResource("2_holno")
+name = "Boss"
+mob_scene = ExtResource("1_ut43o")
+move_speed = 0.25
+damage = 2
+hit_points = 300
+gold_value = 10
+mob_flags = 2

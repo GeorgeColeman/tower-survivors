@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://hl2t6wolbww7"]
+
+[ext_resource type="PackedScene" uid="uid://r0umfv06co67" path="res://scenes/mobs/slime.tscn" id="1_k7npv"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="1_q40nv"]
+
+[resource]
+script = ExtResource("1_q40nv")
+name = "Slime"
+mob_scene = ExtResource("1_k7npv")
+move_speed = 1.0
+damage = 1
+hit_points = 10
+gold_value = 1
+is_in_spawn_pool = true
+mob_flags = 1

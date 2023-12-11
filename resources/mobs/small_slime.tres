@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://nopdf2mv28j8"]
+
+[ext_resource type="PackedScene" uid="uid://cyyfjpgf22euu" path="res://scenes/mobs/small_slime.tscn" id="1_173fg"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_h14un"]
+
+[resource]
+script = ExtResource("2_h14un")
+name = "Small Slime"
+mob_scene = ExtResource("1_173fg")
+move_speed = 1.0
+damage = 1
+hit_points = 5
+gold_value = 1
+is_in_spawn_pool = false

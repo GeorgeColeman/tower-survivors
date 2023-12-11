@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://83v6636oqg5r"]
+
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_owajj"]
+[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_sprite.tres" id="3_gah3k"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_yfq1q"]
+
+[sub_resource type="Animation" id="Animation_ik65l"]
+resource_name = "destroy"
+
+[sub_resource type="Animation" id="Animation_ru1u1"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gigr3"]
+_data = {
+"destroy": SubResource("Animation_ik65l"),
+"idle": SubResource("Animation_ru1u1")
+}
+
+[node name="TowerRock" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
+script = ExtResource("1_owajj")
+hit_points_component = NodePath("HitPoints2D")
+main_sprite_2d = NodePath("Sprite2D")
+gold_cost = 5
+animation_player = NodePath("AnimationPlayer")
+firing_point = NodePath("FiringPoint")
+
+[node name="HitPoints2D" parent="." instance=ExtResource("3_yfq1q")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_gah3k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gigr3")
+}
+autoplay = "idle"
+
+[node name="FiringPoint" type="Marker2D" parent="."]

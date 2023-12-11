@@ -19,7 +19,6 @@
 [ext_resource type="Script" path="res://scripts/control/control_upgrade_options.gd" id="12_b3rp4"]
 [ext_resource type="Script" path="res://scripts/nodes/tower_spawner.gd" id="15_3y22w"]
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
-[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_sprite.tres" id="19_eyjq0"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
 [ext_resource type="Script" path="res://scripts/nodes/special_effects.gd" id="23_aqxf2"]
@@ -28,14 +27,15 @@
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
-[ext_resource type="PackedScene" uid="uid://cja27s1erkeik" path="res://scenes/rock.tscn" id="29_gtkrp"]
+[ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="29_bsd1r"]
+[ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="30_dsdif"]
 [ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="31_7drxe"]
-[ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="31_cy2tq"]
+[ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="31_igcql"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
 [ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="32_pnssa"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
-[ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/main_tower.tscn" id="35_1q7gc"]
+[ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="35_1q7gc"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
@@ -105,7 +105,7 @@ floating_text_scene = ExtResource("24_27evh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ControlMain" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "start_game_button", "control_pre_game", "control_in_game", "control_game_over", "control_pause")]
+[node name="ControlMain" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("game_manager", "start_game_button", "control_pre_game", "control_in_game", "control_game_over", "control_pause", "control_level_up", "control_build_menu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -120,6 +120,8 @@ control_pre_game = NodePath("ControlPreGame")
 control_in_game = NodePath("ControlInGame")
 control_game_over = NodePath("ControlGameOver")
 control_pause = NodePath("ControlPause")
+control_level_up = NodePath("ControlLevelUp")
+control_build_menu = NodePath("ControlBuildMenu")
 
 [node name="ControlPreGame" type="Control" parent="CanvasLayer/ControlMain"]
 visible = false
@@ -136,7 +138,7 @@ offset_right = 96.0
 offset_bottom = 31.0
 text = "Start Game"
 
-[node name="ControlBuildMenu" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("button_containter", "control_manager")]
+[node name="ControlBuildMenu" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("button_containter")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -149,10 +151,6 @@ scale = Vector2(2, 2)
 script = ExtResource("27_yobp5")
 button_containter = NodePath("Container")
 build_button_scene = ExtResource("20_2lk4p")
-rock_texture = ExtResource("19_eyjq0")
-rock_scene = ExtResource("29_gtkrp")
-candlestick_scene = ExtResource("31_cy2tq")
-control_manager = NodePath("../../../ControlModeManager")
 
 [node name="Container" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlBuildMenu"]
 layout_mode = 1
@@ -168,7 +166,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel")]
+[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,6 +176,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("EntityInfoPanel")
+experience_bar = NodePath("ExperienceBar")
 
 [node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame"]
 layout_mode = 1
@@ -382,6 +381,27 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ExperienceBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/ControlInGame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_right = 25.0
+offset_bottom = 10.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(25, 0)
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("29_bsd1r")
+texture_over = ExtResource("30_dsdif")
+texture_progress = ExtResource("31_igcql")
+
 [node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "spawn_boss_button")]
 visible = false
 layout_mode = 1
@@ -447,7 +467,7 @@ alignment = 0
 [node name="SpawnBossButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "[DEBUG] Kill Tower"
+text = "[DEBUG] Spawn Boss"
 alignment = 0
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
@@ -619,7 +639,7 @@ layout_mode = 2
 button_pressed = true
 text = "SFX"
 
-[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain"]
+[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("upgrade_options_container", "dismiss_button")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -628,6 +648,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_pnssa")
+upgrade_options_container = NodePath("UpgradeOptionsContainer")
+upgrade_option_button = ExtResource("6_wrk1s")
+dismiss_button = NodePath("Button")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
@@ -653,18 +676,32 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_top = -131.0
+offset_right = 95.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "TEMP: Dismiss Level Up"
+
+[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "TEMP: Dismiss Level Up"
 
 [node name="SoundEffectsPlayer" type="Node" parent="." node_paths=PackedStringArray("audio_stream_players")]
 script = ExtResource("25_6tpgp")

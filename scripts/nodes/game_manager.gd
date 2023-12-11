@@ -8,7 +8,6 @@ extends Node
 		Game.speed = value
 
 @export var starting_gold: int = 50
-
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
@@ -62,7 +61,7 @@ func start_game():
 	game = Game.new(map, mob_spawner, game_data)
 	GameUtilities.set_game(game)
 
-	game.player = Player.new(starting_gold)
+	game.set_player(Player.new(starting_gold))
 
 	var tower = tower_spawner.instantiate_tower(map.center_cell)
 	game.set_tower(tower)
