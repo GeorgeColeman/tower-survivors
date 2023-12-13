@@ -37,6 +37,11 @@ func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 		if !check_gold.call():
 			return
 
+		# Check cell for existing buildings
+		if Entities.get_is_cell_occupied(cell):
+			print_debug("Cell is occupied")
+			return
+
 		var params = SpawnEntityParams.new()
 
 		params.entity_scene = buildable_object_data.scene
@@ -47,7 +52,6 @@ func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 		_game.player.add_gold(-buildable_object_data.gold_cost)
 
 	control_mode_build_requested.emit(buildable_object_data)
-
 
 
 func get_point_path(start, end) -> PackedVector2Array:
@@ -91,16 +95,6 @@ func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Arra
 	return all_mobs.slice(0, number_of_targets)
 
 
-func get_cell_at_vector2i(vector: Vector2i) -> Cell:
-	return _game.map.get_cell_at_world(vector.x, vector.y)
-
-
-func get_cell_at(vector: Vector2) -> Cell:
-	var x = floori((vector.x + 8) / 16)
-	var y = floori((vector.y + 8) / 16)
-	return _game.map.get_cell_at(x, y)
-
-
 func get_entities_at(cell: Cell) -> Array:
 	var all_entities = []
 
@@ -141,8 +135,7 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 			UpgradeOption.new(
 				unpacked_tower.name,
 				func():
-					_game_manager.main_control.control_build_menu.add_build_option(tower)
-					#print_debug("TODO: make tower buildable by player")
+					_game.building_options.add_building_option(tower)
 		)
 		)
 

@@ -8,6 +8,7 @@ extends Node
 		Game.speed = value
 
 @export var starting_gold: int = 50
+@export var starting_buildings: Array[PackedScene] = []
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
@@ -81,6 +82,9 @@ func start_game():
 
 	pathfinding_manager.initialize_grid(width, height)
 	map_drawer.draw_map(map)
+	
+	for building in starting_buildings:
+		game.building_options.add_building_option(building)
 
 
 func _generate_map(width: int, height: int) -> Map:

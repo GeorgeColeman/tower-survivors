@@ -42,7 +42,7 @@ func _get_hovered_cell():
 	if !GameUtilities.game_is_set:
 		return
 
-	var cell = GameUtilities.get_cell_at(get_global_mouse_position())
+	var cell = MapUtilities.get_cell_at_scene_position(get_global_mouse_position())
 
 	if cell == null:
 		_current_cell = cell

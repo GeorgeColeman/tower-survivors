@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgjjd1ijfu02l"]
+
+[ext_resource type="PackedScene" uid="uid://wj2gmuoci80l" path="res://tower_test_3d.gltf" id="2_err7v"]
+[ext_resource type="Texture2D" uid="uid://ccxo130m7qxdh" path="res://sprites/mobs/red_guy_sprite.tres" id="2_xrb6g"]
+[ext_resource type="PackedScene" path="res://test_tower_02.gltf" id="4_t3t8x"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5i13v"]
+size = Vector2(10, 10)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -0.0478048, 4.49681, 4.83731)
+current = true
+size = 10.0
+
+[node name="blockbench_export2" parent="." instance=ExtResource("2_err7v")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.25, 0.433013, -0.5, 0.433013, 0.75, 0, -0.866025, 0.5, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_5i13v")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, 0)
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+texture = ExtResource("2_xrb6g")
+
+[node name="blockbench_export" parent="." instance=ExtResource("4_t3t8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77863, 0, 1.3677)

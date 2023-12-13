@@ -35,6 +35,8 @@ func start_game(game: Game):
 	control_in_game.visible = true
 	control_pause.visible = false
 
+	control_build_menu.set_game(game)
+
 
 func _ready():
 	start_game_button.button_down.connect(_on_start_game_button)

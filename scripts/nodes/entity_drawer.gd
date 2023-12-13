@@ -10,6 +10,9 @@ func _ready():
 
 
 func set_game(game: Game):
+	# A hacky way of ensuring the Entities utility autoload class has access to the entity dictionary
+	Entities.set_cell_entity_dict(_cell_entity_dict)
+
 	_erase_existing()
 
 

@@ -1,5 +1,5 @@
 class_name MobSpawner
-extends Node
+extends Node2D
 
 @export var spawn_point_scene: PackedScene
 @export var starting_spawn_points = 3 as int
@@ -10,6 +10,9 @@ extends Node
 
 var _game: Game
 var _map: Map
+
+var _valid_spawn_point_cells: Array[Cell] = []
+
 var _cell_mob_dict = {}
 var _cell_spawn_point_dict = {}
 
@@ -37,6 +40,11 @@ func _process(delta):
 		spawn_random_boss()
 		for spawn_point in _cell_spawn_point_dict.values():
 			spawn_point.set_spawn_delay(15)
+
+
+func _draw():
+	for point in _valid_spawn_point_cells:
+		draw_circle(point.scene_position, 8, Color.ORANGE)
 
 
 func get_spawn_points_at(cell: Cell) -> Array:
@@ -68,8 +76,31 @@ func start_game(game: Game):
 	for cell in _map.cells:
 		_cell_mob_dict[cell] = []
 
+	_get_valid_spawn_points()
+
 	for spawn_point in starting_spawn_points:
 		_spawn_new_spawn_point()
+
+
+func _get_valid_spawn_points():
+	var poisson_points = PoissonDiscSampling.generate_points_for_polygon(
+		PackedVector2Array([Vector2(0, 0), Vector2(0, 32), Vector2(32, 32), Vector2(32, 0)]),
+		4,
+		30
+	)
+
+	var min_dist_from_tower_sqr = 10 * 10
+
+	for point in poisson_points:
+		var cell = MapUtilities.get_cell_at_map_position(point)
+
+		if cell:
+			var dist_from_tower = cell.position.distance_squared_to(_game.tower.cell.position)
+
+			if dist_from_tower > min_dist_from_tower_sqr:
+				_valid_spawn_point_cells.append(cell)
+
+	#queue_redraw()
 
 
 func _erase_existing():
@@ -90,7 +121,8 @@ func _spawn_new_spawn_point():
 	new_spawn_point.spawn_triggered.connect(_on_spawn_triggered)
 	add_child(new_spawn_point)
 
-	var cells = Array(_map.border_cells)
+	var cells = Array(_valid_spawn_point_cells)
+	#var cells = Array(_map.border_cells)
 	cells.shuffle()
 
 	for cell in cells:

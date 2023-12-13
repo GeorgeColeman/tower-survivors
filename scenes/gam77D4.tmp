@@ -1,8 +1,7 @@
-[gd_scene load_steps=38 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=37 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
-[ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="2_r0ae0"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -38,21 +37,8 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="35_1q7gc"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node"]
 script = ExtResource("1_l43p6")
-starting_buildings = Array[PackedScene]([ExtResource("2_r0ae0")])
-camera_2d_controller = NodePath("Camera2D")
-map_drawer = NodePath("MapObjects/MapDrawer")
-mob_spawner = NodePath("MapObjects/MobSpawner")
-tower_spawner = NodePath("MapObjects/TowerSpawner")
-entity_drawer = NodePath("MapObjects/EntityDrawer")
-pathfinding_manager = NodePath("PathfindingManager")
-special_effects = NodePath("SpecialEffects")
-sound_effects_player = NodePath("SoundEffectsPlayer")
-main_control = NodePath("CanvasLayer/ControlMain")
-control_in_game = NodePath("CanvasLayer/ControlMain/ControlInGame")
-control_debug = NodePath("CanvasLayer/ControlMain/ControlDebug")
-control_pause = NodePath("CanvasLayer/ControlMain/ControlPause")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

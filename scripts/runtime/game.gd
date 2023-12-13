@@ -12,6 +12,7 @@ var player: Player
 var tower: Tower
 var mob_spawner: MobSpawner
 var game_data: GameData
+var building_options: BuildingOptions
 
 var time: float
 var is_paused: bool
@@ -25,6 +26,7 @@ func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	map = p_map
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
+	building_options = BuildingOptions.new()
 
 
 func process(delta: float):

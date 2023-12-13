@@ -14,3 +14,17 @@ func set_map(map: Map):
 
 func get_random_cell() -> Cell:
 	return _map.cells.pick_random()
+
+
+func get_cell_at_scene_position(vector: Vector2) -> Cell:
+	var x = floori((vector.x + 8) * GameConstants.UNITS_PER_PIXEL)
+	var y = floori((vector.y + 8) * GameConstants.UNITS_PER_PIXEL)
+
+	return _map.get_cell_at(x, y)
+
+
+func get_cell_at_map_position(vector: Vector2) -> Cell:
+	var x = floori(vector.x)
+	var y = floori(vector.y)
+
+	return _map.get_cell_at(x, y)
