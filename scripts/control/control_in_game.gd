@@ -6,7 +6,6 @@ extends Control
 
 @onready var gold_text: Label = %GoldText
 @onready var time_text: Label = %TimeText
-@onready var control_upgrade_options: ControlUpgradeOptions = %ControlUpgradeOptions
 
 @onready var check_box_game_speed_01: CheckBox = %CheckBoxGameSpeed01
 @onready var check_box_game_speed_02: CheckBox = %CheckBoxGameSpeed02
@@ -28,7 +27,6 @@ func _ready():
 	check_box_game_speed_10.pressed.connect(func(): _set_game_speed(10))
 
 	entity_info_panel.visible = false
-	control_upgrade_options.visible = false
 
 
 func _process(delta):
@@ -48,7 +46,6 @@ func _process(delta):
 	if _entity_is_selected && _selected_entity == null:
 		_entity_is_selected = false
 		entity_info_panel.visible = false
-		control_upgrade_options.visible = false
 
 
 func start_game(game: Game):
@@ -79,19 +76,9 @@ func _on_clicked_on_entity(entity):
 	entity_info_panel.set_entity(entity)
 	entity_info_panel.visible = true
 
-	if entity is Tower:
-		if !entity.has_upgrade_points:
-			Messenger.request_floating_text("No upgrade points.")
-			return
-
-		print_debug("TODO: clicking tower currently does nothing. Used to display upgrade options")
-		#control_upgrade_options.generate_upgrade_option_buttons(entity)
-		#control_upgrade_options.visible = true
-
 
 func _on_clicked_on_empty():
 	entity_info_panel.visible = false
-	control_upgrade_options.visible = false
 
 
 func _update_gold_text(current_gold: int):

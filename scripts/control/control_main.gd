@@ -20,7 +20,7 @@ func start_game(game: Game):
 	game.game_over.connect(_on_game_over)
 	game.player.levelled_up.connect(
 		func():
-			control_level_up.generate_upgrade_option_buttons(GameUtilities.generate_upgrade_options(3))
+			control_level_up.generate_upgrade_options()
 			control_level_up.visible = true
 	)
 

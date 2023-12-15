@@ -3,6 +3,8 @@ extends Node2D
 
 @export var main_tower_scene: PackedScene
 
+# <Cell, Tower>
+var _cell_tower_dict = {}
 var _main_tower: Tower
 
 

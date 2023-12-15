@@ -3,3 +3,4 @@ extends RefCounted
 
 var entity_scene: PackedScene
 var cell: Cell
+var spawned_entity

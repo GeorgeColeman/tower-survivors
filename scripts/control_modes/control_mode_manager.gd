@@ -12,8 +12,9 @@ func _ready():
 	GameUtilities.control_mode_build_requested.connect(_on_control_mode_build_requested)
 
 
-func _on_control_mode_build_requested(buildable_object_data: BuildableObjectData):
-	enter_build_mode(buildable_object_data)
+func _on_control_mode_build_requested(option: BuildingOption):
+	_set_current_control_mode(control_mode_build)
+	control_mode_build.set_building_option(option)
 
 
 func _unhandled_input(event):
@@ -22,11 +23,6 @@ func _unhandled_input(event):
 			return
 
 		_set_current_control_mode(control_mode_default)
-
-
-func enter_build_mode(buildable_object_data: BuildableObjectData):
-	_set_current_control_mode(control_mode_build)
-	control_mode_build.set_buildable_object_data(buildable_object_data)
 
 
 func _set_current_control_mode(control_mode: ControlMode):

@@ -26,6 +26,8 @@ func get_entities_at(cell: Cell) -> Array:
 func _on_requested_spawn_entity(params: SpawnEntityParams):
 	var new_entity = params.entity_scene.instantiate()
 
+	params.spawned_entity = new_entity
+
 	if new_entity is Node2D:
 		var cell = params.cell
 

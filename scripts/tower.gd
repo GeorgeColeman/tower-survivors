@@ -43,8 +43,13 @@ var tower_stats: TowerStats
 var _weapons: Array[TowerWeapon] = []
 var _upgrade_tween: Tween
 var _is_destroyed: bool
+var _rank: int = 1
 
 var _current_upgrade_options: UpgradeOptions
+
+var description: String:
+	get:
+		return "Rank %s" % _rank
 
 
 func _ready():
@@ -103,6 +108,10 @@ func set_cell_and_init(p_cell: Cell):
 	#_upgrade_tween.tween_property(green_arrow, "position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
 
 	add_or_remove_upgrade_points(starting_upgrade_points)
+
+
+func set_rank(value: int):
+	_rank = value
 
 
 func add_or_remove_upgrade_points(amount: int):

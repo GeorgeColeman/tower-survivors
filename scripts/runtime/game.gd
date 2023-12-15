@@ -28,6 +28,8 @@ func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
 
+	building_options.option_upgraded.connect(func(option: BuildingOption): print_debug("option added. TODO: rank up existing towers"))
+
 
 func process(delta: float):
 	# This is the only place we calculate delta based on game speed
@@ -56,7 +58,7 @@ func set_player(p_player: Player):
 	player = p_player
 	player.levelled_up.connect(
 		func():
-			print_debug(GameUtilities.generate_upgrade_options(3).str)
+			#print_debug(GameUtilities.generate_upgrade_options(3).str)
 			pause_game()
 	)
 

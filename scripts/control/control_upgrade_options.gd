@@ -1,3 +1,5 @@
+# DEFUNCT
+
 class_name ControlUpgradeOptions
 extends Control
 
@@ -7,10 +9,6 @@ extends Control
 @onready var reroll_upgrades_button: Button = %RerollUpgradesButton
 
 var _upgrade_options_buttons: Array[UpgradeOptionButton]
-
-
-func _ready():
-	reroll_upgrades_button.button_up.connect(func(): print_debug("TODO: reroll upgrades"))
 
 
 func generate_upgrade_option_buttons(tower: Tower):

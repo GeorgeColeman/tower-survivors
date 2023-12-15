@@ -12,7 +12,7 @@ func set_cell_entity_dict(dict):
 
 func spawn_entity(params: SpawnEntityParams):
 	spawn_entity_requested.emit(params)
-	
-	
+
+
 func get_is_cell_occupied(cell: Cell) -> bool:
 	return _cell_entity_dict.has(cell)

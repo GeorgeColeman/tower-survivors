@@ -82,9 +82,9 @@ func start_game():
 
 	pathfinding_manager.initialize_grid(width, height)
 	map_drawer.draw_map(map)
-	
+
 	for building in starting_buildings:
-		game.building_options.add_building_option(building)
+		game.building_options.add_building_option_packed(building)
 
 
 func _generate_map(width: int, height: int) -> Map:

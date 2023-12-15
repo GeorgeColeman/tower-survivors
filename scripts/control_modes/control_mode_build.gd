@@ -2,7 +2,7 @@ extends ControlMode
 
 @export var preview_container: Node2D
 
-var _buildable_object_data: BuildableObjectData
+var _building_option: BuildingOption
 var _current_preview: Node
 
 
@@ -16,12 +16,12 @@ func _on_mouse_hovered_outside_map():
 	preview_container.visible = false
 
 
-func set_buildable_object_data(buildable_object_data: BuildableObjectData):
+func set_building_option(option: BuildingOption):
 	_cleanup_existing_preview()
 
-	_buildable_object_data = buildable_object_data
+	_building_option = option
 
-	_current_preview = buildable_object_data.scene.instantiate()
+	_current_preview = option.scene.instantiate()
 	preview_container.add_child(_current_preview)
 
 
@@ -50,11 +50,4 @@ func _on_mouse_clicked_cell(cell: Cell):
 	if !is_active:
 		return
 
-	#var params = SpawnEntityParams.new()
-#
-	#params.entity_scene = _buildable_object_data.scene
-	#params.cell = cell
-#
-	#Entities.spawn_entity(params)
-
-	_buildable_object_data.confirm_build(cell)
+	_building_option.confirm_build(cell)

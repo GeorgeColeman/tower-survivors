@@ -1,7 +1,6 @@
 extends Node
 
-#signal on_set_game(game: Game)
-signal control_mode_build_requested(buildable_object_data: BuildableObjectData)
+signal control_mode_build_requested(option: BuildingOption)
 
 var game_is_set: bool:
 	get:
@@ -21,9 +20,9 @@ func set_game(game: Game):
 	#on_set_game.emit(game)
 
 
-func try_enter_build_mode(buildable_object_data: BuildableObjectData):
+func try_enter_build_mode(option: BuildingOption):
 	var check_gold = func() -> bool:
-		var has_enough_gold = _game.player.current_gold >= buildable_object_data.gold_cost
+		var has_enough_gold = _game.player.current_gold >= option.gold_cost
 
 		if !has_enough_gold:
 			print_debug("Not enough gold")
@@ -33,7 +32,7 @@ func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 	if !check_gold.call():
 		return
 
-	buildable_object_data.on_build_confirmed = func(cell: Cell):
+	option.on_build_confirmed = func(cell: Cell):
 		if !check_gold.call():
 			return
 
@@ -44,14 +43,22 @@ func try_enter_build_mode(buildable_object_data: BuildableObjectData):
 
 		var params = SpawnEntityParams.new()
 
-		params.entity_scene = buildable_object_data.scene
+		params.entity_scene = option.scene
 		params.cell = cell
+
+		#_game_manager.entity_drawer._on_requested_spawn_entity(params)
 
 		Entities.spawn_entity(params)
 
-		_game.player.add_gold(-buildable_object_data.gold_cost)
+		# HACK: we're doing this here because this is the only place we know
+		# about the spawned entity and the building option, which enables us
+		# to set the rank
+		if params.spawned_entity is Tower:
+			params.spawned_entity.set_rank(option.rank)
 
-	control_mode_build_requested.emit(buildable_object_data)
+		_game.player.add_gold(-option.gold_cost)
+
+	control_mode_build_requested.emit(option)
 
 
 func get_point_path(start, end) -> PackedVector2Array:
@@ -131,11 +138,24 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 	for tower in _game.game_data.towers:
 		var unpacked_tower = tower.instantiate() as Tower
 
+		# Check if the building option already exists
+		var existing_option = _game.building_options.get_building_option(tower)
+
+		if existing_option:
+			options.append(
+				UpgradeOption.new(
+					"*UPGRADE* %s" % unpacked_tower.name,
+					func(): existing_option.upgrade()
+				)
+			)
+
+			continue
+
 		options.append(
 			UpgradeOption.new(
 				unpacked_tower.name,
 				func():
-					_game.building_options.add_building_option(tower)
+					_game.building_options.add_building_option_packed(tower)
 		)
 		)
 

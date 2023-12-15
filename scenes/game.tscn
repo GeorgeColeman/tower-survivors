@@ -249,7 +249,7 @@ text = "Time"
 vertical_alignment = 1
 
 [node name="ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
-unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -344,7 +344,7 @@ focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x10"
 
-[node name="EntityInfoPanel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame" node_paths=PackedStringArray("entity_name_label", "button_container")]
+[node name="EntityInfoPanel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame" node_paths=PackedStringArray("entity_name_label", "button_container", "_description_label")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -355,6 +355,7 @@ grow_horizontal = 0
 script = ExtResource("31_7drxe")
 entity_name_label = NodePath("EntityNameLabel")
 button_container = NodePath("ButtonContainer")
+_description_label = NodePath("DescriptionLabel")
 
 [node name="EntityNameLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
 layout_mode = 1
@@ -369,19 +370,35 @@ text = "Entity Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+[node name="DescriptionLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -48.0
+offset_top = -11.5
+offset_right = 48.0
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+text = "Description"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="ExperienceBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/ControlInGame"]
 layout_mode = 1
@@ -641,7 +658,7 @@ layout_mode = 2
 button_pressed = true
 text = "SFX"
 
-[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("upgrade_options_container", "dismiss_button")]
+[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("upgrade_options_container", "dismiss_button", "_reroll_button")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -653,6 +670,7 @@ script = ExtResource("32_pnssa")
 upgrade_options_container = NodePath("UpgradeOptionsContainer")
 upgrade_option_button = ExtResource("6_wrk1s")
 dismiss_button = NodePath("Button")
+_reroll_button = NodePath("RerollButton")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
@@ -690,6 +708,21 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "TEMP: Dismiss Level Up"
+
+[node name="RerollButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_top = -238.0
+offset_right = 95.0
+offset_bottom = -207.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Reroll"
 
 [node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
