@@ -13,7 +13,7 @@ func draw_map(map: Map):
 		var position = map.index_to_coordinates(cell.i)
 		var new_cell = cell_scene.instantiate()
 		add_child(new_cell)
-		new_cell.position = Utilities.get_converted_position(position)
+		new_cell.position = cell.scene_position
 		_cell_nodes.append(new_cell)
 
 

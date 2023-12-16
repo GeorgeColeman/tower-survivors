@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://1ss8t5om6pbw"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_lbbqk"]
+[ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="1_qgjma"]
+
+[resource]
+script = ExtResource("1_lbbqk")
+name = "Rock"
+scene = ExtResource("1_qgjma")
+gold_cost = 20

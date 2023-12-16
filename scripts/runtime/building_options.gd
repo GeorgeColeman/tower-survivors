@@ -1,6 +1,7 @@
-# -----------------------------------------
-# Contains all available building optioins.
-# -----------------------------------------
+# --------------------------------------------
+# Contains all available building options.
+# Also acts as a factory for building options.
+# --------------------------------------------
 
 class_name BuildingOptions
 extends RefCounted
@@ -17,6 +18,7 @@ func add_building_option_packed(scene: PackedScene):
 
 	if unpacked is Tower:
 		_add_building_option(BuildingOption.new(
+			unpacked.id,
 			scene,
 			unpacked.main_sprite_2d.texture,
 			unpacked.gold_cost

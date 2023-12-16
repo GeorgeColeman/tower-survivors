@@ -15,7 +15,7 @@ func instantiate_tower(cell: Cell) -> Tower:
 
 	var tower = main_tower_scene.instantiate() as Tower
 	add_child(tower)
-	tower.position = Utilities.get_world_position(cell)
+	tower.position = cell.scene_position
 	tower.set_cell_and_init(cell)
 	_main_tower = tower
 

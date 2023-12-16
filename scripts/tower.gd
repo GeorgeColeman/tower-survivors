@@ -5,6 +5,7 @@ signal was_killed()
 
 @export var hit_points_component: HitPointsComponent
 
+@export var id: int
 @export var main_sprite_2d: Sprite2D
 @export var starting_weapons: Array[PackedScene]
 @export var max_hit_points := 50 as int
@@ -112,6 +113,10 @@ func set_cell_and_init(p_cell: Cell):
 
 func set_rank(value: int):
 	_rank = value
+
+
+func add_rank(amount: int):
+	_rank += amount
 
 
 func add_or_remove_upgrade_points(amount: int):

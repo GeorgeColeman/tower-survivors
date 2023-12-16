@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://n3qgq6ny0baj"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_5uoyk"]
+[ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="1_icopl"]
+
+[resource]
+script = ExtResource("1_5uoyk")
+name = "Main"
+scene = ExtResource("1_icopl")
+gold_cost = 1000

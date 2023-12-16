@@ -132,7 +132,7 @@ func _spawn_new_spawn_point():
 
 		var chosen_cell = cell
 		new_spawn_point.cell = chosen_cell
-		new_spawn_point.position = Utilities.get_world_position(chosen_cell)
+		new_spawn_point.position = chosen_cell.scene_position
 		_cell_spawn_point_dict[chosen_cell] = new_spawn_point
 
 		break
