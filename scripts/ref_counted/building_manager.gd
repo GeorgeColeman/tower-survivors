@@ -1,7 +1,6 @@
 class_name BuildingManager
 extends RefCounted
 
-var _tower_spawner: TowerSpawner
 var _entity_drawer: EntityDrawer
 var _building_options: BuildingOptions
 

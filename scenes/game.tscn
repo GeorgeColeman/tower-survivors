@@ -1,8 +1,9 @@
-[gd_scene load_steps=38 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=39 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="2_r0ae0"]
+[ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="3_exiwc"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -17,8 +18,8 @@
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
+[ext_resource type="Resource" uid="uid://dx7vejuhcrm4n" path="res://resources/cell_types/cell_type_resource_desert.tres" id="12_1we2j"]
 [ext_resource type="Script" path="res://scripts/control/control_upgrade_options.gd" id="12_b3rp4"]
-[ext_resource type="Script" path="res://scripts/nodes/tower_spawner.gd" id="15_3y22w"]
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
@@ -38,13 +39,13 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="35_1q7gc"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "tower_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
-starting_buildings = Array[PackedScene]([ExtResource("2_r0ae0")])
+starting_main_tower = ExtResource("35_1q7gc")
+starting_buildings = Array[PackedScene]([ExtResource("2_r0ae0"), ExtResource("3_exiwc")])
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
-tower_spawner = NodePath("MapObjects/TowerSpawner")
 entity_drawer = NodePath("MapObjects/EntityDrawer")
 pathfinding_manager = NodePath("PathfindingManager")
 special_effects = NodePath("SpecialEffects")
@@ -78,14 +79,10 @@ starting_spawn_points = 1
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
-[node name="TowerSpawner" type="Node2D" parent="MapObjects"]
-y_sort_enabled = true
-script = ExtResource("15_3y22w")
-main_tower_scene = ExtResource("35_1q7gc")
-
 [node name="MapDrawer" type="Node2D" parent="MapObjects"]
 z_index = -1
 script = ExtResource("5_6uqvh")
+cell_type = ExtResource("12_1we2j")
 
 [node name="EntityDrawer" type="Node2D" parent="MapObjects"]
 y_sort_enabled = true

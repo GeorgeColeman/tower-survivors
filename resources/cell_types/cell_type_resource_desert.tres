@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CellTypeResource" load_steps=7 format=3 uid="uid://dx7vejuhcrm4n"]
+
+[ext_resource type="Texture2D" uid="uid://dtib35n8hrup7" path="res://sprites/cells/desert_cell_alt_01.tres" id="1_1o81s"]
+[ext_resource type="Script" path="res://scripts/resources/cell_type_resource.gd" id="1_jnlvc"]
+[ext_resource type="Texture2D" uid="uid://b7sktgo16lh32" path="res://sprites/cells/desert_cell_alt_02.tres" id="2_q30f4"]
+[ext_resource type="Texture2D" uid="uid://ggkeewhgvfxs" path="res://sprites/cells/desert_cell_alt_03.tres" id="3_ppib3"]
+[ext_resource type="Texture2D" uid="uid://b75sikmqex1sh" path="res://sprites/cells/desert_cell_alt_04.tres" id="4_bmnm7"]
+[ext_resource type="Texture2D" uid="uid://nvbmpi7x02al" path="res://sprites/cells/desert_cell_main.tres" id="4_ueg1p"]
+
+[resource]
+script = ExtResource("1_jnlvc")
+main_texture = ExtResource("4_ueg1p")
+alt_texture = Array[Texture2D]([ExtResource("1_1o81s"), ExtResource("2_q30f4"), ExtResource("3_ppib3"), ExtResource("4_bmnm7"), ExtResource("4_bmnm7")])

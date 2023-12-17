@@ -64,7 +64,29 @@ func initialize_grid(width: int, height: int):
 	queue_redraw()
 
 
+func _get_walkable_neighbour(cell: Cell) -> Cell:
+	var neighbours = MapUtilities.get_cell_neighbours(cell)
+	neighbours.shuffle()
+
+	for neighbour in neighbours:
+		if is_point_walkable(neighbour.scene_position):
+			return neighbour
+
+	return null
+
+
 func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVector2Array:
+	# NOTE: this is not sufficient because walkable neighbour may not be the closest point
+	# to the agent.
+	if !is_point_walkable(end_cell.scene_position):
+		#print_debug("End cell isn't walkable")
+
+		end_cell = _get_walkable_neighbour(end_cell)
+
+		if !end_cell:
+			return []
+			#print_debug("No end cell could be found")
+
 	#var a_1 = [start_cell, end_cell]
 	#var a_2 = [start_cell, end_cell]
 	#

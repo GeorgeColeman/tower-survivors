@@ -30,7 +30,6 @@ func _process(delta):
 		return
 
 	if _game.time > _current_minute * 60:
-		#print_debug("A minute has passed")
 		_current_minute += 1
 
 		# Spawning a boss every 2 minutes
@@ -42,9 +41,9 @@ func _process(delta):
 			spawn_point.set_spawn_delay(15)
 
 
-func _draw():
-	for point in _valid_spawn_point_cells:
-		draw_circle(point.scene_position, 8, Color.ORANGE)
+#func _draw():
+	#for point in _valid_spawn_point_cells:
+		#draw_circle(point.scene_position, 8, Color.ORANGE)
 
 
 func get_spawn_points_at(cell: Cell) -> Array:

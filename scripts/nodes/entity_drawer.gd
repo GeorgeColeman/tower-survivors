@@ -7,6 +7,8 @@ var _cell_entity_dict = {}
 # <int, Array[Tower]>
 var _tower_dict = {}
 
+var _passive_upgrades: Array[UpgradeResource] = []
+
 
 func _ready():
 	Entities.spawn_entity_requested.connect(_on_requested_spawn_entity)
@@ -19,6 +21,15 @@ func set_game(game: Game):
 	game.building_options.option_upgraded.connect(_on_building_option_upgraded)
 
 	_erase_existing()
+
+
+func add_passive_upgrade(upgrade_resource: UpgradeResource):
+	_passive_upgrades.append(upgrade_resource)
+
+	# Upgrade existing towers
+	for towers in _tower_dict.values():
+		for tower in towers:
+			upgrade_resource.add_to_tower(tower)
 
 
 func _on_building_option_upgraded(option: BuildingOption):
@@ -71,6 +82,10 @@ func _register_as_tower(tower: Tower, cell: Cell):
 		_tower_dict[tower.id].append(tower)
 
 	tower.set_cell_and_init(cell)
+
+	# Add existing passive perks to new tower
+	for perk in _passive_upgrades:
+		perk.add_to_tower(tower)
 
 	tower.was_killed.connect(
 		func():

@@ -8,13 +8,13 @@ extends Node
 		Game.speed = value
 
 @export var starting_gold: int = 50
+@export var starting_main_tower: PackedScene
 @export var starting_buildings: Array[PackedScene] = []
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
 @export var map_drawer: MapDrawer
 @export var mob_spawner: MobSpawner
-@export var tower_spawner: TowerSpawner
 @export var entity_drawer: EntityDrawer
 @export var pathfinding_manager: PathfindingManager
 @export var special_effects: SpecialEffects
@@ -64,16 +64,24 @@ func start_game():
 
 	game.set_player(Player.new(starting_gold))
 
-	var tower = tower_spawner.instantiate_tower(map.center_cell)
-	game.set_tower(tower)
-
 	camera_2d_controller.position = map.center * GameConstants.PIXEL_SCALE
 	camera_2d_controller.set_limits(
 		map.width * GameConstants.PIXEL_SCALE,
 		map.height * GameConstants.PIXEL_SCALE)
 
-	mob_spawner.start_game(game)
 	entity_drawer.set_game(game)
+
+	var params = SpawnEntityParams.new()
+	params.entity_scene = starting_main_tower
+	params.cell = map.center_cell
+	Entities.spawn_entity(params)
+
+	game.set_main_tower(params.spawned_entity)
+#
+	#var tower = tower_spawner.instantiate_tower(map.center_cell)
+	#game.set_main_tower(tower)
+
+	mob_spawner.start_game(game)
 
 	main_control.start_game(game)
 	control_in_game.start_game(game)

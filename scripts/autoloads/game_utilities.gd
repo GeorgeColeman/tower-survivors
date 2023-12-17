@@ -131,7 +131,7 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 			UpgradeOption.new(
 				upgrade.name,
 				func():
-					upgrade.add_to_tower(_game.tower)
+					_game_manager.entity_drawer.add_passive_upgrade(upgrade)
 		)
 		)
 

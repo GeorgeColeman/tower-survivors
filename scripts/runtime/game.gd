@@ -74,9 +74,9 @@ func resume_game():
 	speed = _resume_speed
 
 
-func set_tower(tower: Tower):
-	self.tower = tower
-	tower.was_killed.connect(_on_tower_was_killed)
+func set_main_tower(p_tower: Tower):
+	tower = p_tower
+	p_tower.was_killed.connect(_on_main_tower_was_killed)
 
 
 func add_difficulty(amount: float):
@@ -86,5 +86,5 @@ func add_difficulty(amount: float):
 	Messenger.request_floating_text("Game difficulty increased. Current difficulty: %s." % str(_difficulty))
 
 
-func _on_tower_was_killed():
+func _on_main_tower_was_killed():
 	game_over.emit()

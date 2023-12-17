@@ -28,3 +28,7 @@ func get_cell_at_map_position(vector: Vector2) -> Cell:
 	var y = floori(vector.y)
 
 	return _map.get_cell_at(x, y)
+
+
+func get_cell_neighbours(cell: Cell) -> Array[Cell]:
+	return _map.get_cell_neighbours(cell)
