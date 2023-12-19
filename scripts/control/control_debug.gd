@@ -11,7 +11,10 @@ extends Control
 @onready var damage_tower_button = %DamageTowerButton
 @onready var kill_tower_button = %KillTowerButton
 
+@export_group("Buttons")
 @export var spawn_boss_button: Button
+@export var level_up_button: Button
+@export var add_gold_button: Button
 
 var _game_manager: GameManager
 var _game: Game
@@ -44,6 +47,20 @@ func _ready():
 				return
 
 			_game.mob_spawner.spawn_random_boss()
+	)
+
+	level_up_button.pressed.connect(
+		func():
+			if !_game: return
+
+			_game.player.experience_component.DEBUG_manual_level_up()
+	)
+
+	add_gold_button.pressed.connect(
+		func():
+			if !_game: return
+
+			_game.player.add_gold(100)
 	)
 
 	visible = false

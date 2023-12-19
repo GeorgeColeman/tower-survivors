@@ -208,4 +208,8 @@ func _on_mob_exited_node(mob: Mob, node: Vector2i):
 
 
 func _on_mob_attacked_tower(mob: Mob):
+	if !_game.tower:
+		print_debug("No tower to attack")
+		return
+
 	_game.tower.take_damage(mob.damage)

@@ -18,7 +18,6 @@ var status_effects: StatusEffects
 var cell: Cell:
 	get:
 		return MapUtilities.get_cell_at_scene_position(_path_follower.current_node)
-		#return GameUtilities.get_cell_at_vector2i(_path_follower.current_node)
 
 var _visuals_container: Node2D = self
 
@@ -114,9 +113,9 @@ func set_path(path: PackedVector2Array, target_cell: Cell):
 
 
 func _on_path_completed():
-	var is_at_target_position = MapUtilities.get_cell_at_scene_position(position) == _target_cell
+	var is_near_target = MapUtilities.get_cell_neighbours(_target_cell).has(cell)
 
-	if is_at_target_position:
+	if is_near_target:
 		_attack_tower()
 	else:
 		print_debug(

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c881130htrev8"
-path="res://.godot/imported/tower_shadow.png-dbaf19ed2b8147e8407dddacf6da926c.ctex"
+uid="uid://b6cwmkp2dplxk"
+path="res://.godot/imported/missing.png-cc16bfa524d82f2fc4beef4878f8de3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/tower_shadow.png"
-dest_files=["res://.godot/imported/tower_shadow.png-dbaf19ed2b8147e8407dddacf6da926c.ctex"]
+source_file="res://sprites/missing.png"
+dest_files=["res://.godot/imported/missing.png-cc16bfa524d82f2fc4beef4878f8de3f.ctex"]
 
 [params]
 

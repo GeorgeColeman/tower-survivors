@@ -1,9 +1,7 @@
-[gd_scene load_steps=39 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=38 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
-[ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="2_r0ae0"]
-[ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="3_exiwc"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -18,9 +16,10 @@
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
-[ext_resource type="Resource" uid="uid://dx7vejuhcrm4n" path="res://resources/cell_types/cell_type_resource_desert.tres" id="12_1we2j"]
-[ext_resource type="Script" path="res://scripts/control/control_upgrade_options.gd" id="12_b3rp4"]
+[ext_resource type="Resource" uid="uid://dx7vejuhcrm4n" path="res://resources/cell_types/cell_type_desert.tres" id="12_1we2j"]
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
+[ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
+[ext_resource type="Texture2D" uid="uid://b1b4akgjhn8x4" path="res://sprites/markers.png" id="17_66h4r"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
 [ext_resource type="Script" path="res://scripts/nodes/special_effects.gd" id="23_aqxf2"]
@@ -41,8 +40,8 @@
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
+starting_gold = 0
 starting_main_tower = ExtResource("35_1q7gc")
-starting_buildings = Array[PackedScene]([ExtResource("2_r0ae0"), ExtResource("3_exiwc")])
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
@@ -88,15 +87,25 @@ cell_type = ExtResource("12_1we2j")
 y_sort_enabled = true
 script = ExtResource("10_3qktf")
 
-[node name="CellInspector" type="Node2D" parent="."]
+[node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")
+cell_marker_sprite = NodePath("CellMarkerSprite")
 
 [node name="CellMarkerSprite" type="Sprite2D" parent="CellInspector"]
-unique_name_in_owner = true
 z_index = 1
 texture = ExtResource("15_62lxk")
 region_enabled = true
 region_rect = Rect2(32, 16, 16, 16)
+
+[node name="SelectionDrawer" type="Node2D" parent="." node_paths=PackedStringArray("_marker")]
+script = ExtResource("16_frr1h")
+_marker = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="SelectionDrawer"]
+z_index = 1
+texture = ExtResource("17_66h4r")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="SpecialEffects" type="Node2D" parent="."]
 script = ExtResource("23_aqxf2")
@@ -245,7 +254,7 @@ grow_vertical = 2
 text = "Time"
 vertical_alignment = 1
 
-[node name="ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
+[node name="REFERENCE_ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -258,10 +267,8 @@ offset_top = -128.0
 offset_right = 128.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("12_b3rp4")
-upgrade_option_button = ExtResource("6_wrk1s")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -269,20 +276,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions/PanelContainer"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions/PanelContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
 layout_mode = 1
 offset_right = 124.0
 offset_bottom = 26.0
 text = "Pick an upgrade"
 
-[node name="RerollUpgradesButton" type="Button" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
+[node name="RerollUpgradesButton" type="Button" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
@@ -294,7 +301,7 @@ grow_horizontal = 0
 text = "Reroll
 "
 
-[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/ControlUpgradeOptions/PanelContainer/VBoxContainer"]
+[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -418,8 +425,7 @@ texture_under = ExtResource("29_bsd1r")
 texture_over = ExtResource("30_dsdif")
 texture_progress = ExtResource("31_igcql")
 
-[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "spawn_boss_button")]
-visible = false
+[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "spawn_boss_button", "level_up_button", "add_gold_button")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -433,6 +439,8 @@ check_box_draw_pathfinding_grid = NodePath("PanelContainer2/DebugTogglesContaine
 check_box_draw_mob_paths = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawMobPaths")
 check_box_show_damage_numbers = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxShowDamageNumbers")
 spawn_boss_button = NodePath("DebugButtons/SpawnBossButton")
+level_up_button = NodePath("DebugButtons/LevelUpButton")
+add_gold_button = NodePath("DebugButtons/AddGoldButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
 layout_mode = 1
@@ -481,9 +489,18 @@ text = "[DEBUG] Kill Tower"
 alignment = 0
 
 [node name="SpawnBossButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
-unique_name_in_owner = true
 layout_mode = 2
 text = "[DEBUG] Spawn Boss"
+alignment = 0
+
+[node name="LevelUpButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
+layout_mode = 2
+text = "[DEBUG] Level Up"
+alignment = 0
+
+[node name="AddGoldButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
+layout_mode = 2
+text = "[DEBUG] Add Gold"
 alignment = 0
 
 [node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
@@ -714,9 +731,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -94.0
-offset_top = -238.0
+offset_top = -196.0
 offset_right = 95.0
-offset_bottom = -207.0
+offset_bottom = -165.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Reroll"

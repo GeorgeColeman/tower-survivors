@@ -13,6 +13,7 @@ var tower: Tower
 var mob_spawner: MobSpawner
 var game_data: GameData
 var building_options: BuildingOptions
+var upgrades_manager: UpgradesManager
 
 var time: float
 var is_paused: bool
@@ -27,6 +28,9 @@ func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
+	upgrades_manager = UpgradesManager.new(p_game_data, building_options)
+
+	Entities.set_game(self)
 
 
 func process(delta: float):
@@ -56,9 +60,13 @@ func set_player(p_player: Player):
 	player = p_player
 	player.levelled_up.connect(
 		func():
-			#print_debug(GameUtilities.generate_upgrade_options(3).str)
 			pause_game()
+			generate_new_upgrade_options_for_player()
 	)
+
+
+func generate_new_upgrade_options_for_player():
+		player.set_upgrade_options(upgrades_manager.generate_upgrade_options(3))
 
 
 func pause_game():

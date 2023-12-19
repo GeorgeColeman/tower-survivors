@@ -17,11 +17,16 @@ var _game: Game
 func start_game(game: Game):
 	_game = game
 
-	game.game_over.connect(_on_game_over)
-	game.player.levelled_up.connect(
+	control_level_up.reroll_requested.connect(
 		func():
-			control_level_up.generate_upgrade_options()
-			control_level_up.visible = true
+			game.generate_new_upgrade_options_for_player()
+	)
+
+	game.game_over.connect(_on_game_over)
+	game.player.levelled_up.connect(func(): control_level_up.visible = true)
+	game.player.upgrade_options_set.connect(
+		func(options):
+			control_level_up.generate_upgrade_option_buttons(options)
 	)
 
 	control_level_up.dismissed.connect(

@@ -56,8 +56,10 @@ func start_path():
 	_has_active_path = true
 
 
-
 func exit_current():
+	if _node_index >= path.size():
+		print_debug(_node_index, " :: ", path.size())
+
 	exited_node.emit(path[_node_index])
 
 
@@ -94,7 +96,7 @@ func _enter_next():
 
 func _complete_path():
 	_has_active_path = false
-
+	current_node = next_node
 	path_completed.emit()
 
 

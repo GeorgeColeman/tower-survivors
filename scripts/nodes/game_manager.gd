@@ -77,9 +77,6 @@ func start_game():
 	Entities.spawn_entity(params)
 
 	game.set_main_tower(params.spawned_entity)
-#
-	#var tower = tower_spawner.instantiate_tower(map.center_cell)
-	#game.set_main_tower(tower)
 
 	mob_spawner.start_game(game)
 

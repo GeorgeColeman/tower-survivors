@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var cell_marker_sprite = %CellMarkerSprite
+@export var cell_marker_sprite: Sprite2D
 
 var _current_cell: Cell
 
@@ -36,6 +36,8 @@ func _unhandled_input(event):
 
 		MapUtilities.mouse_clicked_cell.emit(_current_cell)
 #		print_debug("Mouse button released over cell: ", _current_cell)
+
+		#print_debug(MapUtilities.get_cell_neighbours(_current_cell))
 
 
 func _get_hovered_cell():

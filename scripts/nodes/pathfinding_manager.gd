@@ -13,6 +13,8 @@ var cell_size: Vector2i
 var offset = -Vector2.ONE * .5 * 16
 var cell_path_dict = {}
 
+var _find_existing_path: bool = false
+
 # <Cell, bool>
 var _node_update_dict = {}
 var _update_nodes = false
@@ -87,10 +89,8 @@ func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVecto
 			return []
 			#print_debug("No end cell could be found")
 
-	#var a_1 = [start_cell, end_cell]
-	#var a_2 = [start_cell, end_cell]
-	#
-	#print_debug(a_1 == a_2)		# TRUE
+	if !_find_existing_path:
+		return _get_new_path(start_cell, end_cell)
 
 	if cell_path_dict.has(start_cell):
 		# Verify path

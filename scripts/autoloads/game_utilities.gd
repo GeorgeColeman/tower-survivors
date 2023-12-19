@@ -105,9 +105,6 @@ func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Arra
 func get_entities_at(cell: Cell) -> Array:
 	var all_entities = []
 
-	var towers = _game_manager.tower_spawner.get_towers_at(cell)
-	all_entities.append_array(towers)
-
 	var entities = _game_manager.entity_drawer.get_entities_at(cell)
 	all_entities.append_array(entities)
 
@@ -115,56 +112,6 @@ func get_entities_at(cell: Cell) -> Array:
 	all_entities.append_array(spawn_points)
 
 	return all_entities
-
-
-func get_upgrade_options(amount: int) -> UpgradeOptions:
-	var options = Utilities.get_random_unique_elements(_game.game_data.upgrade_resources, amount)
-
-	return UpgradeOptions.new(options)
-
-
-func generate_upgrade_options(amount: int) -> UpgradeOptions:
-	var options: Array[UpgradeOption] = []
-
-	for upgrade in _game.game_data.upgrade_resources:
-		options.append(
-			UpgradeOption.new(
-				upgrade.name,
-				func():
-					_game_manager.entity_drawer.add_passive_upgrade(upgrade)
-		)
-		)
-
-	for tower in _game.game_data.towers:
-		var unpacked_tower = tower.instantiate() as Tower
-
-		# Check if the building option already exists
-		var existing_option = _game.building_options.get_building_option(tower)
-
-		if existing_option:
-			options.append(
-				UpgradeOption.new(
-					"*UPGRADE* %s" % unpacked_tower.name,
-					func(): existing_option.upgrade()
-				)
-			)
-
-			continue
-
-		options.append(
-			UpgradeOption.new(
-				unpacked_tower.name,
-				func():
-					_game.building_options.add_building_option_packed(tower)
-		)
-		)
-
-	return UpgradeOptions.new(
-		Utilities.get_random_unique_elements(
-			options,
-			amount
-		)
-	)
 
 
 func calculate_sprite_offset(sprite_2d: Sprite2D) -> Vector2:

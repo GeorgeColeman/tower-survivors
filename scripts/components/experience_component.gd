@@ -11,6 +11,10 @@ var perc_to_next_level: float:
 		return (experience as float / exp_to_next_level) * 100
 
 
+func DEBUG_manual_level_up():
+	add_experience(exp_to_next_level)
+
+
 func add_experience(amount: int):
 	experience += amount
 

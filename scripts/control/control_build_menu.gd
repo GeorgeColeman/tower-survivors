@@ -14,7 +14,7 @@ func set_game(game: Game):
 
 
 func add_build_option(option: BuildingOption):
-	var blueprint = option.scene.instantiate() as Tower
+	#var blueprint = option.scene.instantiate() as Tower
 	var button = _instantiate_build_button(
 		func():
 			GameUtilities.try_enter_build_mode(option)

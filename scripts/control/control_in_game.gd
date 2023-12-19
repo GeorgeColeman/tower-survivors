@@ -13,6 +13,7 @@ extends Control
 @onready var check_box_game_speed_10: CheckBox = %CheckBoxGameSpeed10
 
 var _game: Game
+
 var _selected_entity
 var _entity_is_selected: bool
 
@@ -29,7 +30,7 @@ func _ready():
 	entity_info_panel.visible = false
 
 
-func _process(delta):
+func _process(_delta):
 	if _game == null:
 		return
 
