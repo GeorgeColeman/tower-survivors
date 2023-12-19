@@ -1,6 +1,6 @@
 extends Node
 
-signal spawn_entity_requested(params: SpawnEntityParams)
+signal entity_added(params: SpawnEntityParams)
 
 var towers: Array[Tower] = []
 
@@ -26,7 +26,7 @@ func set_cell_entity_dict(dict):
 
 
 func spawn_entity(params: SpawnEntityParams):
-	spawn_entity_requested.emit(params)
+	entity_added.emit(params)
 
 	if params.spawned_entity is Tower:
 		_register_tower(params.spawned_entity)

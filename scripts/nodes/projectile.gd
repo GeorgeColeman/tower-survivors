@@ -1,8 +1,7 @@
 class_name Projectile
 extends Node2D
 
-@onready var sprite_2d = $Sprite2D
-@onready var animated_sprite_2d = %AnimatedSprite2D
+@export var animated_sprite_2d: AnimatedSprite2D
 
 @export var test_curve: Curve
 @export var arc_height = 16.0

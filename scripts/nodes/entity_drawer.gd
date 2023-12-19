@@ -9,7 +9,7 @@ var _tower_dict = {}
 
 
 func _ready():
-	Entities.spawn_entity_requested.connect(_on_requested_spawn_entity)
+	Entities.entity_added.connect(_on_requested_spawn_entity)
 
 
 func set_game(game: Game):
@@ -42,6 +42,8 @@ func get_entities_at(cell: Cell) -> Array:
 
 func _on_requested_spawn_entity(params: SpawnEntityParams):
 	var new_entity = params.entity_scene.instantiate()
+
+	#new_entity = new_entity.duplicate()
 
 	params.spawned_entity = new_entity
 

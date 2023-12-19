@@ -1,12 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dxnwaohgy5i6m"]
+[gd_scene load_steps=9 format=3 uid="uid://dxnwaohgy5i6m"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_gcd8g"]
 [ext_resource type="PackedScene" uid="uid://dsr752k5tr3lq" path="res://scenes/weapons/tower_weapon_pink_shot.tscn" id="3_is7t4"]
 [ext_resource type="Texture2D" uid="uid://do82gitqvdnld" path="res://sprites/towers/tower.png" id="3_pu44v"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_wb1lh"]
-[ext_resource type="Texture2D" uid="uid://bnsilldphrild" path="res://sprites/control/white_atex.tres" id="4_tpelw"]
-[ext_resource type="Texture2D" uid="uid://cvsjadic6a406" path="res://sprites/control/black_atex.tres" id="5_yoolu"]
-[ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="6_rwcng"]
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="8_u1gcg"]
 
 [sub_resource type="Animation" id="Animation_3lv6w"]
@@ -46,14 +43,14 @@ _data = {
 "idle": SubResource("Animation_qr5nb")
 }
 
-[node name="Tower" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point", "level_progress_bar")]
+[node name="TowerMain" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
 script = ExtResource("1_gcd8g")
 hit_points_component = NodePath("HitPoints2D")
 main_sprite_2d = NodePath("Sprite2D")
 starting_weapons = Array[PackedScene]([ExtResource("3_is7t4")])
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
-level_progress_bar = NodePath("Control/LevelProgressBar")
+_flags = 1
 
 [node name="HitPoints2D" parent="." instance=ExtResource("3_wb1lh")]
 
@@ -61,26 +58,6 @@ level_progress_bar = NodePath("Control/LevelProgressBar")
 texture = ExtResource("3_pu44v")
 offset = Vector2(0, -16)
 region_rect = Rect2(0, 32, 32, 32)
-
-[node name="Control" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-
-[node name="LevelProgressBar" type="TextureProgressBar" parent="Control"]
-layout_mode = 0
-offset_left = -16.0
-offset_top = 17.0
-offset_right = 16.0
-offset_bottom = 21.0
-mouse_filter = 2
-value = 50.0
-texture_under = ExtResource("4_tpelw")
-texture_over = ExtResource("5_yoolu")
-texture_progress = ExtResource("6_rwcng")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

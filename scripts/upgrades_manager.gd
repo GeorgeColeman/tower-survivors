@@ -46,6 +46,9 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 
 			continue
 
+		if !unpacked_tower.is_possible_new_tower_upgrade_perk:
+			continue
+
 		options.append(
 			UpgradeOption.new(
 				unpacked_tower.name,

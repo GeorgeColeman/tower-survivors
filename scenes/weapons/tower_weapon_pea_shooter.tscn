@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://2n6c2cklxfu2"]
+
+[ext_resource type="Script" path="res://scripts/tower_weapon.gd" id="1_yoeek"]
+[ext_resource type="PackedScene" uid="uid://byqu2s14q0prb" path="res://scenes/projectiles/projectile_bullet.tscn" id="2_874vk"]
+
+[node name="TowerWeaponPeaShooter" type="Node2D"]
+script = ExtResource("1_yoeek")
+projectile_scene = ExtResource("2_874vk")
+attacks_per_second = 2.0
+attack_range = 10
+damage = 4

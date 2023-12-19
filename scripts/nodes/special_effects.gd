@@ -13,7 +13,7 @@ func _ready():
 	Messenger.floating_text_requested.connect(_instantiate_floating_text)
 
 
-func _instantiate_floating_text(message: String, position: Vector2, effect_type: int):
+func _instantiate_floating_text(message: String, p_position: Vector2, effect_type: int):
 	match effect_type:
 		EffectType.DAMAGE_NUMBER:
 			if !show_damage_text:
@@ -23,7 +23,7 @@ func _instantiate_floating_text(message: String, position: Vector2, effect_type:
 	add_child(new_floating_text)
 
 	var offset = -Vector2(new_floating_text.size * 0.5)
-	new_floating_text.position = position + offset
+	new_floating_text.position = p_position + offset
 	new_floating_text.text = message
 
 	# Tween docs: https://docs.godotengine.org/en/stable/classes/class_tween.html

@@ -12,7 +12,7 @@ signal was_killed()
 @export var gold_cost: int = 20
 @export var animation_player: AnimationPlayer
 @export var firing_point: Marker2D
-@export var level_progress_bar: TextureProgressBar
+@export_flags("IS_MAIN_TOWER") var _flags = 0
 
 var draw_range_indicators = false:
 	set(value):
@@ -32,6 +32,10 @@ var _rank: int = 1
 var description: String:
 	get:
 		return "Rank %s" % _rank
+
+var is_possible_new_tower_upgrade_perk: bool:
+	get:
+		return !_has_flag(TowerFlags.IS_MAIN_TOWER)
 
 
 func _ready():
@@ -54,8 +58,6 @@ func set_cell_and_init(p_cell: Cell):
 		var new_weapon = weapon.instantiate() as TowerWeapon
 		_attach_weapon(new_weapon)
 
-	#Messenger.mob_killed.connect(_on_mob_killed)
-
 
 func set_rank(value: int):
 	_rank = value
@@ -63,14 +65,6 @@ func set_rank(value: int):
 
 func add_rank(amount: int):
 	_rank += amount
-
-
-#func _on_mob_killed(mob: Mob):
-	#_add_kill()
-#
-#
-#func _add_kill():
-	#kills += 1
 
 
 func _attach_weapon(weapon: TowerWeapon):
@@ -99,3 +93,12 @@ func _destroy():
 	# Deactivate weapons
 	for weapon in _weapons:
 		weapon.is_active = false
+
+
+func _has_flag(flag: TowerFlags):
+	return _flags & flag != 0
+
+
+enum TowerFlags {
+	IS_MAIN_TOWER = 1 << 0
+}

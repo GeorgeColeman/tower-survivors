@@ -9,6 +9,8 @@ var bosses: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
+var proto_towers: Array[Tower]
+
 
 func _init():
 	_load_resources()
@@ -44,6 +46,11 @@ func _load_resources():
 
 		if loaded is PackedScene:
 			self.towers.append(loaded)
+
+			var unpacked = loaded.instantiate()
+
+			if unpacked is Tower:
+				proto_towers.append(unpacked)
 
 #	var path = "res://resources"
 #	var dir = DirAccess.open(path)

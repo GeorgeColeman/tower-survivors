@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://eciubf0mjopx"]
+
+[ext_resource type="Texture2D" uid="uid://dp0k1i57r8c5e" path="res://sprites/towers/bunker.png" id="1_jehed"]
+
+[resource]
+atlas = ExtResource("1_jehed")
+region = Rect2(0, 8, 16, 24)

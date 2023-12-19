@@ -77,8 +77,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Projectile" type="Node2D"]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
 script = ExtResource("1_kb4qm")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
 test_curve = SubResource("Curve_7yni5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -88,6 +89,6 @@ region_enabled = true
 region_rect = Rect2(16, 16, 4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_nsm8b")
+animation = &"die"
 autoplay = "default"

@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=3 uid="uid://byqu2s14q0prb"]
+
+[ext_resource type="Script" path="res://scripts/nodes/projectile.gd" id="1_p266n"]
+[ext_resource type="Texture2D" uid="uid://c1v36qaxvs1bb" path="res://sprites/projectiles/projectile_bullet.png" id="2_wt3np"]
+
+[sub_resource type="Curve" id="Curve_7yni5"]
+_data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpbm5"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_giftq"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnahl"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ga2ig"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiwjx"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ltvt"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmvph"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3dbq"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqyyv"]
+atlas = ExtResource("2_wt3np")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsm8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpbm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_giftq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnahl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ga2ig")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fiwjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ltvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmvph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3dbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqyyv")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}]
+
+[node name="ProjectileBullet" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
+script = ExtResource("1_p266n")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
+test_curve = SubResource("Curve_7yni5")
+arc_height = 4.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nsm8b")
+animation = &"die"
+autoplay = "default"

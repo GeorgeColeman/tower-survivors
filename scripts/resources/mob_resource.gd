@@ -10,19 +10,20 @@ extends Resource
 @export var experience_value = 1 as int
 @export_flags("IN_SPAWN_POOL", "BOSS") var mob_flags = 0
 
-enum MobFlag {
-	IN_SPAWN_POOL = 1 << 0,
-	BOSS = 1 << 1
-}
-
 
 func is_in_spawn_pool():
-	return _has_flag(MobFlag.IN_SPAWN_POOL)
+	return _has_flag(MobFlags.IN_SPAWN_POOL)
 
 
 func is_boss():
 	return _has_flag(1 << 1)
 
 
-func _has_flag(mob_flag: MobFlag):
+func _has_flag(mob_flag: MobFlags):
 	return mob_flags & mob_flag != 0
+
+
+enum MobFlags {
+	IN_SPAWN_POOL = 1 << 0,
+	BOSS = 1 << 1
+}
