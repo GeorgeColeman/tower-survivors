@@ -10,7 +10,7 @@ signal pathfinding_grid_was_modified()
 var astar_grid = AStarGrid2D.new()
 var grid_size: Vector2i
 var cell_size: Vector2i
-var offset = -Vector2.ONE * .5 * 16
+var offset: Vector2
 var cell_path_dict = {}
 
 var _find_existing_path: bool = false
@@ -53,9 +53,10 @@ func _process(delta):
 	_node_update_dict.clear()
 
 
-func initialize_grid(width: int, height: int):
-	cell_size = Vector2i(16, 16)
+func initialize_grid(width: int, height: int, pixel_scale: int):
+	cell_size = Vector2i(pixel_scale, pixel_scale)
 	grid_size = Vector2i(width, height)
+	offset = -Vector2.ONE * .5 * pixel_scale
 
 	astar_grid.region.size = grid_size
 	astar_grid.cell_size = cell_size

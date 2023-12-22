@@ -6,9 +6,9 @@ signal clicked_on_entity(actor)
 signal clicked_on_empty()
 
 signal start_game_requested()
-signal floating_text_requested(message: String, position: Vector2, effect_type: int)
 
 
-func request_floating_text(message: String):
+func log_game_event(message: String):
 	var game_event = GameEvent.new(message)
+
 	game_event_occured.emit(game_event)

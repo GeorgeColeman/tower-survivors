@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kwca76t47hoc"
-path="res://.godot/imported/frost_projectile.png-b97c80886e5e3d0d881f6968c9cb9d9e.ctex"
+uid="uid://ckvafnxukxvj2"
+path="res://.godot/imported/pink_projectile.png-d0f7be53e1d568c313c0dc92ce5b9429.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/frost_projectile.png"
-dest_files=["res://.godot/imported/frost_projectile.png-b97c80886e5e3d0d881f6968c9cb9d9e.ctex"]
+source_file="res://sprites/projectiles/pink_projectile.png"
+dest_files=["res://.godot/imported/pink_projectile.png-d0f7be53e1d568c313c0dc92ce5b9429.ctex"]
 
 [params]
 

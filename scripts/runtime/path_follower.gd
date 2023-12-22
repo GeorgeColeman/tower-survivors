@@ -36,10 +36,11 @@ func process(delta):
 
 
 func set_path(new_path: PackedVector2Array):
+	path = new_path
+
 	if new_path.size() == 0:
 		push_warning("WARNING: path length is 0")
-
-	path = new_path
+		return
 
 	current_node = new_path[0]
 	next_node = new_path[0]
@@ -53,6 +54,10 @@ func set_path(new_path: PackedVector2Array):
 
 
 func start_path():
+	if path.size() == 0:
+		push_warning("Path size is 0 - unable to start path")
+		return
+
 	_has_active_path = true
 
 

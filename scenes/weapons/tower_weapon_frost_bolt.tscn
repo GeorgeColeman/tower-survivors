@@ -1,16 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://duota867iloj2"]
+[gd_scene load_steps=4 format=3 uid="uid://duota867iloj2"]
 
 [ext_resource type="Script" path="res://scripts/tower_weapon.gd" id="1_yk220"]
 [ext_resource type="PackedScene" uid="uid://drjpxtu2lxu7m" path="res://scenes/projectiles/projectile_frost.tscn" id="2_dingu"]
-[ext_resource type="Script" path="res://resources/weapon_effects/weapon_effect_slow.gd" id="2_dtjcr"]
-
-[sub_resource type="Resource" id="Resource_dhi3v"]
-resource_name = "Slow"
-script = ExtResource("2_dtjcr")
-slow_amount = 0.5
-slow_duration = 1.0
-name = "Slow"
-apply_type = 0
+[ext_resource type="Resource" uid="uid://bdutatuvd14sr" path="res://resources/weapon_effects/weapon_effect_slow.tres" id="3_e72ss"]
 
 [node name="TowerWeapon" type="Node2D"]
 script = ExtResource("1_yk220")
@@ -18,4 +10,4 @@ projectile_scene = ExtResource("2_dingu")
 attacks_per_second = 0.5
 attack_range = 10
 damage = 2
-weapon_effects = Array[Resource("res://resources/weapon_effects/weapon_effect.gd")]([SubResource("Resource_dhi3v")])
+weapon_effects = Array[Resource("res://resources/weapon_effects/weapon_effect.gd")]([ExtResource("3_e72ss")])

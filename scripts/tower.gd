@@ -31,7 +31,12 @@ var _rank: int = 1
 
 var description: String:
 	get:
-		return "Rank %s" % _rank
+		var d = "Rank %s" % _rank
+
+		if _weapons.size() > 0:
+			d += str("\n", _weapons[0].stats_description)
+
+		return d
 
 var is_possible_new_tower_upgrade_perk: bool:
 	get:

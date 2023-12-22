@@ -2,7 +2,6 @@ class_name Projectile
 extends Node2D
 
 @export var animated_sprite_2d: AnimatedSprite2D
-
 @export var test_curve: Curve
 @export var arc_height = 16.0
 
@@ -46,7 +45,7 @@ func _process(_delta):
 		for on_hit in _on_hit_callbacks:
 			on_hit.call()
 
-		_target_mob.take_damage(_damage)
+		_target_mob.take_damage(DamageInfoFactory.new_damage_info(_damage))
 
 
 func set_target(target_mob: Mob):

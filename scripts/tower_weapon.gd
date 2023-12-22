@@ -29,6 +29,16 @@ var draw_range_indicators = false:
 		draw_range_indicators = value
 		queue_redraw()
 
+var stats_description: String:
+	get:
+		return "Damage: {total_damage}\nRange: {total_range}\nAttack Speed: {total_as}".format(
+			{
+				"total_damage": str(damage + _bonus_damage),
+				"total_range": str(attack_range + _bonus_attack_range),
+				"total_as": str(attacks_per_second + _bonus_attacks_per_second)
+			}
+		)
+
 
 func _draw():
 	if not draw_range_indicators:
@@ -94,7 +104,9 @@ func _spawn_projectile_to_target(target: Mob):
 
 	for effect in weapon_effects:
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
-			projectile.add_on_hit_callback(func(): effect.apply_to_mob(target))
+			projectile.add_on_hit_callback(
+				func(): effect.apply_to_mob(target)
+			)
 
 
 func set_bonus_damage(value: int):
@@ -104,7 +116,6 @@ func set_bonus_damage(value: int):
 func set_bonus_attack_speed(value: float):
 	_bonus_attack_speed = value
 	_bonus_attacks_per_second = 1 * _bonus_attack_speed
-#	print_debug("Bonus attack speed set. Attacks per second: ", attacks_per_second + _bonus_attacks_per_second)
 
 
 func set_multi_shot(value: int):
@@ -113,5 +124,6 @@ func set_multi_shot(value: int):
 
 func set_bonus_range(value: int):
 	_bonus_attack_range = value
+
 	# Recalculate cells in range
 	_set_cells_in_range()

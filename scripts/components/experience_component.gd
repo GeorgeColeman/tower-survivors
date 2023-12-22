@@ -31,6 +31,6 @@ func _level_up():
 	exp_to_next_level += additional_exp
 	#print_debug("FIXME: arbitrary additional exp formula. Exp to next: ", exp_to_next_level)
 	level += 1
-	Messenger.request_floating_text("Level up. Current level: %s" % str(level))
+	Messenger.log_game_event("Level up. Current level: %s" % str(level))
 
 	levelled_up.emit()

@@ -21,6 +21,8 @@ var _game: Game
 
 
 func _ready():
+	#_dict_vs_instance_test()
+
 	Messenger.game_event_occured.connect(_on_game_event_occured)
 	game_events_text.text = ""
 	restart_game_button.pressed.connect(func(): Messenger.start_game_requested.emit())
@@ -66,6 +68,47 @@ func _ready():
 	visible = false
 
 
+#func _dict_vs_instance_test():
+	#var iterations: int = 1_000_000
+#
+	#var dict_runtime = Utilities.get_function_runtime(
+		#func():
+			#for i in iterations:
+				#var damage_info_dict = {}
+				#damage_info_dict["damage_type"] = "fire"
+				#damage_info_dict["damage_amount"] = 4
+				#var damage_type = damage_info_dict["damage_type"]
+				#var damage_amount = damage_info_dict["damage_amount"]
+	#)
+#
+	#print_debug("Dictionaries in: ", dict_runtime)
+#
+	#var instance_runtime = Utilities.get_function_runtime(
+		#func():
+			#for i in iterations:
+				#var damage_info = DamageInfo.new()
+				#damage_info.damage_type = "fire"
+				#damage_info.damage_amount = 4
+				#var damage_type = damage_info.damage_type
+				#var damage_amount = damage_info.damage_amount
+	#)
+#
+	#print_debug("Instances in: ", instance_runtime)
+	#
+	#var damage_info = DamageInfo.new()
+	#
+	#var cached_instance_runtime = Utilities.get_function_runtime(
+		#func():
+			#for i in iterations:
+				#damage_info.damage_type = "fire"
+				#damage_info.damage_amount = 4
+				#var damage_type = damage_info.damage_type
+				#var damage_amount = damage_info.damage_amount
+	#)
+#
+	#print_debug("Cached instances in: ", cached_instance_runtime)
+
+
 func _input(event):
 	if event is InputEventKey:
 		if event.is_released() && event.keycode == KEY_TAB:
@@ -108,4 +151,4 @@ func _on_toggle_draw_mob_paths(button_pressed: bool):
 
 
 func _on_toggle_show_damage_numbers(button_pressed: bool):
-	_game_manager.special_effects.show_damage_text = button_pressed
+	_game_manager.vfx_drawer_2d.show_damage_text = button_pressed

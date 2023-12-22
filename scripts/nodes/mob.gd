@@ -122,12 +122,16 @@ func _on_path_completed():
 			"WARNING: Mob reached the end of the path, but is not at the target position")
 
 
-func take_damage(damage_amount: int):
+func take_damage(damage_info: DamageInfo):
 	# Prevent the mob from exiting its node twice if it takes damage and is destroyed on the same frame
 	if _is_destroyed:
 		return
 
-	hit_points_component.change_current(-damage_amount)
+	hit_points_component.change_current(-damage_info.damage_amount)
+
+	match damage_info.damage_type:
+		DamageInfo.DamageType.FIRE:
+			VFXRequestFactory.request_fire_burst(position)
 
 	if hit_points_component.is_at_zero:
 		Messenger.mob_killed.emit(self)
@@ -139,7 +143,7 @@ func take_damage(damage_amount: int):
 		TweenEffects.flash_white(_visuals_container, _tint_colour)
 		was_hit_not_killed.emit(self)
 
-	Messenger.floating_text_requested.emit(str(damage_amount), position, EffectType.DAMAGE_NUMBER)
+	VFXRequestFactory.request_damage_number(position, str(damage_info.damage_amount))
 
 
 func _update_facing_direction(current_node: Vector2i):

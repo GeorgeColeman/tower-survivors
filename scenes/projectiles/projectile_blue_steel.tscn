@@ -28,7 +28,6 @@ region_enabled = true
 region_rect = Rect2(16, 20, 4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_1q38h")
 animation = &"die"
 autoplay = "default"

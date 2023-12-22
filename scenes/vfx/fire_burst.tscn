@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://diy4r2ea45ict"]
+
+[ext_resource type="Texture2D" uid="uid://bvd56xkvo624e" path="res://sprites/effects/effect_fire_burst.png" id="1_td32c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbj64"]
+atlas = ExtResource("1_td32c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af62v"]
+atlas = ExtResource("1_td32c")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8s32"]
+atlas = ExtResource("1_td32c")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0f215"]
+atlas = ExtResource("1_td32c")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osr8g"]
+atlas = ExtResource("1_td32c")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m524b"]
+atlas = ExtResource("1_td32c")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hja4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbj64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af62v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8s32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0f215")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osr8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m524b")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 18.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_0hja4")
+autoplay = "default"

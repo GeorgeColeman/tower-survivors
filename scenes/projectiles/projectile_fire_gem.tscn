@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqaam0ia1yni8"]
+
+[ext_resource type="Script" path="res://scripts/nodes/projectile.gd" id="1_7pjc1"]
+[ext_resource type="Texture2D" uid="uid://dxvxb16lxkr8q" path="res://sprites/projectiles/projectile_fire.png" id="2_uueob"]
+
+[sub_resource type="Curve" id="Curve_7yni5"]
+_data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nsm8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_uueob")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_uueob")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}]
+
+[node name="ProjectileFireGem" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
+script = ExtResource("1_7pjc1")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
+test_curve = SubResource("Curve_7yni5")
+arc_height = 6.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nsm8b")
+animation = &"die"
+autoplay = "default"

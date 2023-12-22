@@ -17,7 +17,7 @@ extends Node
 @export var mob_spawner: MobSpawner
 @export var entity_drawer: EntityDrawer
 @export var pathfinding_manager: PathfindingManager
-@export var special_effects: SpecialEffects
+@export var vfx_drawer_2d: VFXDrawer2D
 @export var sound_effects_player: SoundEffectsPlayer
 
 @export_group("Control")
@@ -85,7 +85,7 @@ func start_game():
 	control_debug.start_game(game)
 	control_pause.start_game(game)
 
-	pathfinding_manager.initialize_grid(width, height)
+	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 	map_drawer.draw_map(map)
 
 	for building in starting_buildings:

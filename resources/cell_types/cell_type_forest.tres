@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CellTypeResource" load_steps=3 format=3 uid="uid://cxucl4iolnd4y"]
+
+[ext_resource type="Texture2D" uid="uid://bywik1w63o1td" path="res://sprites/cells/forest_cells.png" id="1_6wfep"]
+[ext_resource type="Script" path="res://scripts/resources/cell_type_resource.gd" id="6_rkq4i"]
+
+[resource]
+script = ExtResource("6_rkq4i")
+main_texture = ExtResource("1_6wfep")
+alt_texture = Array[Texture2D]([])

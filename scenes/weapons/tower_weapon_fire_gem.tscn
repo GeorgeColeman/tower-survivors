@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3htelxt34goy"]
+
+[ext_resource type="Script" path="res://scripts/tower_weapon.gd" id="1_xtlsu"]
+[ext_resource type="PackedScene" uid="uid://cqaam0ia1yni8" path="res://scenes/projectiles/projectile_fire_gem.tscn" id="2_pjbvh"]
+[ext_resource type="Resource" uid="uid://dyc0tuuos6gdw" path="res://resources/weapon_effects/weapon_effect_burn.tres" id="3_laaxr"]
+
+[node name="TowerWeaponFireGem" type="Node2D"]
+script = ExtResource("1_xtlsu")
+projectile_scene = ExtResource("2_pjbvh")
+attacks_per_second = 0.25
+attack_range = 12
+damage = 2
+weapon_effects = Array[Resource("res://resources/weapon_effects/weapon_effect.gd")]([ExtResource("3_laaxr")])

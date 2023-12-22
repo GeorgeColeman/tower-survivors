@@ -91,7 +91,7 @@ func add_difficulty(amount: float):
 	_difficulty += amount
 	difficulty_changed.emit(_difficulty)
 
-	Messenger.request_floating_text("Game difficulty increased. Current difficulty: %s." % str(_difficulty))
+	Messenger.log_game_event("Game difficulty increased. Current difficulty: %s." % str(_difficulty))
 
 
 func _on_main_tower_was_killed():

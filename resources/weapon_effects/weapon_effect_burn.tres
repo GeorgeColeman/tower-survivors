@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponEffectBurn" load_steps=2 format=3 uid="uid://dyc0tuuos6gdw"]
+
+[ext_resource type="Script" path="res://resources/weapon_effects/weapon_effect_burn.gd" id="1_w4at8"]
+
+[resource]
+script = ExtResource("1_w4at8")
+total_damage = 12
+name = ""
+apply_type = 0

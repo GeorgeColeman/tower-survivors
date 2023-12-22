@@ -1,7 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=40 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
+[ext_resource type="PackedScene" uid="uid://cy3w3dkih0ytn" path="res://scenes/towers/tower_obsidian_spire.tscn" id="3_3dnbk"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -20,9 +21,10 @@
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="Texture2D" uid="uid://b1b4akgjhn8x4" path="res://sprites/markers.png" id="17_66h4r"]
+[ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
-[ext_resource type="Script" path="res://scripts/nodes/special_effects.gd" id="23_aqxf2"]
+[ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
 [ext_resource type="PackedScene" uid="uid://cck72le1by1qn" path="res://scenes/floating_text.tscn" id="24_27evh"]
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
@@ -38,16 +40,17 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="35_1q7gc"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "special_effects", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
-starting_gold = 0
+starting_gold = 1000
 starting_main_tower = ExtResource("35_1q7gc")
+starting_buildings = Array[PackedScene]([ExtResource("3_3dnbk")])
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
 entity_drawer = NodePath("MapObjects/EntityDrawer")
 pathfinding_manager = NodePath("PathfindingManager")
-special_effects = NodePath("SpecialEffects")
+vfx_drawer_2d = NodePath("VFXDrawer2D")
 sound_effects_player = NodePath("SoundEffectsPlayer")
 main_control = NodePath("CanvasLayer/ControlMain")
 control_in_game = NodePath("CanvasLayer/ControlMain/ControlInGame")
@@ -107,9 +110,10 @@ texture = ExtResource("17_66h4r")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="SpecialEffects" type="Node2D" parent="."]
+[node name="VFXDrawer2D" type="Node2D" parent="."]
 script = ExtResource("23_aqxf2")
 floating_text_scene = ExtResource("24_27evh")
+fire_burst_scene = ExtResource("19_7l3ok")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -353,8 +357,8 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 200.0
+offset_left = -300.0
+offset_bottom = 400.0
 grow_horizontal = 0
 script = ExtResource("31_7drxe")
 entity_name_label = NodePath("EntityNameLabel")

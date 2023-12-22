@@ -3,8 +3,11 @@ extends RefCounted
 
 var name: String
 var duration: float
-var add: Callable
-var remove: Callable
+var properties = {}
+
+var add: Callable = func(): pass
+var remove: Callable = func(): pass
+var update: Callable = func(delta: float): pass
 
 var is_expired: bool
 
@@ -16,6 +19,8 @@ func process(delta: float):
 		return
 
 	_elapsed += delta
+
+	update.call(delta)
 
 	if _elapsed >= duration:
 		is_expired = true

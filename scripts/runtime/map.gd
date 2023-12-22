@@ -44,11 +44,12 @@ func get_cell_at(x: int, y: int) -> Cell:
 
 
 func get_cell_at_world(x: int, y: int) -> Cell:
-	if x % 16 != 0 || y % 16 != 0:
-		print_debug("X or y are not divisible by 16")
+	var pixel_scale = GameConstants.PIXEL_SCALE
+	if x % pixel_scale != 0 || y % pixel_scale != 0:
+		print_debug("X or y are not divisible by the pixel scale: ", pixel_scale)
 
-	var local_x = x / 16
-	var local_y = y / 16
+	var local_x = x / pixel_scale
+	var local_y = y / pixel_scale
 
 	return get_cell_at(local_x, local_y)
 

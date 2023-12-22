@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_gcd8g"]
 [ext_resource type="PackedScene" uid="uid://dsr752k5tr3lq" path="res://scenes/weapons/tower_weapon_pink_shot.tscn" id="3_is7t4"]
-[ext_resource type="Texture2D" uid="uid://do82gitqvdnld" path="res://sprites/towers/tower.png" id="3_pu44v"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_wb1lh"]
+[ext_resource type="Texture2D" uid="uid://ba7og1ecccw6o" path="res://sprites/towers/big_tower_test.png" id="4_2bqgb"]
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="8_u1gcg"]
 
 [sub_resource type="Animation" id="Animation_3lv6w"]
@@ -34,7 +34,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_pu44v")]
+"values": [ExtResource("4_2bqgb")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p7id1"]
@@ -55,7 +55,7 @@ _flags = 1
 [node name="HitPoints2D" parent="." instance=ExtResource("3_wb1lh")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_pu44v")
+texture = ExtResource("4_2bqgb")
 offset = Vector2(0, -16)
 region_rect = Rect2(0, 32, 32, 32)
 

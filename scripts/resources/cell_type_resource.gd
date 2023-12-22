@@ -6,6 +6,9 @@ extends Resource
 
 
 func get_random_texture() -> Texture2D:
+	if alt_texture.size() == 0:
+		return main_texture
+
 	var rand = randi_range(0, 50)
 
 	if rand < 50:
