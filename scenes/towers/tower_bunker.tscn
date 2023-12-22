@@ -21,6 +21,7 @@ _data = {
 script = ExtResource("1_6d20n")
 hit_points_component = NodePath("HitPoints2D")
 id = 2
+tower_name = "Bunker"
 main_sprite_2d = NodePath("Sprite2D")
 starting_weapons = Array[PackedScene]([ExtResource("2_hkflh")])
 animation_player = NodePath("AnimationPlayer")

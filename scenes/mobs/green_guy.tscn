@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://domp5gsyo8bjo"]
 
 [ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_wxrwe"]
-[ext_resource type="Texture2D" uid="uid://c0ibm76nt7ok3" path="res://_mobs/sprites/green_guy_sprite.tres" id="2_drxlu"]
+[ext_resource type="Texture2D" uid="uid://c0ibm76nt7ok3" path="res://sprites/mobs/green_guy_sprite.tres" id="2_drxlu"]
 
 [node name="Mob" instance=ExtResource("1_wxrwe")]
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="3"]
 texture = ExtResource("2_drxlu")

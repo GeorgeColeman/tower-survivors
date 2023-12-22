@@ -21,6 +21,7 @@ _data = {
 script = ExtResource("1_klfs0")
 hit_points_component = NodePath("HitPoints2D")
 id = 2
+tower_name = "Obsidian Spire"
 main_sprite_2d = NodePath("Sprite2D")
 starting_weapons = Array[PackedScene]([ExtResource("2_mlmg8")])
 animation_player = NodePath("AnimationPlayer")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://dmeng2ec7dtwf"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_dec3u"]
+[ext_resource type="Texture2D" uid="uid://cdqg05j8yx3ii" path="res://sprites/towers/candlestick.png" id="1_vlvgx"]
+[ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="2_fp4f0"]
+
+[resource]
+script = ExtResource("1_dec3u")
+id = 2
+name = "Candletick"
+main_texture = ExtResource("1_vlvgx")
+hit_points = 50
+gold_cost = 20
+scene = ExtResource("2_fp4f0")

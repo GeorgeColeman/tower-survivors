@@ -4,6 +4,7 @@ extends RefCounted
 var name: String
 var category: String
 var description: String
+var texture: Texture2D
 
 var _apply_callback: = func(): pass
 

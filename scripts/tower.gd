@@ -6,6 +6,7 @@ signal was_killed()
 @export var hit_points_component: HitPointsComponent
 
 @export var id: int
+@export var tower_name: String
 @export var main_sprite_2d: Sprite2D
 @export var starting_weapons: Array[PackedScene]
 @export var max_hit_points := 50 as int
@@ -37,6 +38,18 @@ var description: String:
 			d += str("\n", _weapons[0].stats_description)
 
 		return d
+
+var weapons_description: String:
+	get:
+		var s = ""
+
+		# TODO: fix this hack. We are instantiating the tower's weapons
+		# every time we need information about them.
+		for weapon in starting_weapons:
+			var new_weapon = weapon.instantiate() as TowerWeapon
+			s += str(new_weapon.stats_description, "\n")
+
+		return s.substr(0, s.length() - 1)
 
 var is_possible_new_tower_upgrade_perk: bool:
 	get:

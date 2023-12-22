@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://ct388gpq1i5kl"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_2n8eo"]
+[ext_resource type="Texture2D" uid="uid://ba7og1ecccw6o" path="res://sprites/towers/big_tower_test.png" id="1_q8mq4"]
+[ext_resource type="PackedScene" uid="uid://dxnwaohgy5i6m" path="res://scenes/towers/tower_main.tscn" id="2_35pgd"]
+
+[resource]
+script = ExtResource("1_2n8eo")
+id = 0
+name = "Main"
+main_texture = ExtResource("1_q8mq4")
+hit_points = 50
+gold_cost = 20
+scene = ExtResource("2_35pgd")

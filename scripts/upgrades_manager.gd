@@ -18,46 +18,23 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 	var options: Array[UpgradeOption] = []
 
 	for upgrade in _game_data.upgrade_resources:
-		options.append(
-			UpgradeOption.new(
-				upgrade.name,
-				"Passive Upgrade",
-				"Adds a passive upgrade to all towers",
-				func():
-					_add_passive_upgrade(upgrade)
-		)
-		)
+		options.append(_passive_upgrade_option(upgrade))
 
 	for tower in _game_data.towers:
 		var unpacked_tower = tower.instantiate() as Tower
 
 		# Check if the building option already exists
-		var existing_option = _building_options.get_building_option(tower)
+		var existing_option: BuildingOption = _building_options.get_building_option(tower)
 
 		if existing_option:
-			options.append(
-				UpgradeOption.new(
-					unpacked_tower.name,
-					"Rank Up Tower",
-					"Increases the power of an existing tower.",
-					func(): existing_option.upgrade()
-				)
-			)
+			options.append(_tower_rank_up_option(unpacked_tower, existing_option))
 
 			continue
 
 		if !unpacked_tower.is_possible_new_tower_upgrade_perk:
 			continue
 
-		options.append(
-			UpgradeOption.new(
-				unpacked_tower.name,
-				"New Tower",
-				"Adds a new tower to build.",
-				func():
-					_building_options.add_building_option_packed(tower)
-		)
-		)
+		options.append(_new_tower_upgrade_option(unpacked_tower, tower))
 
 	return UpgradeOptions.new(
 		Utilities.get_random_unique_elements(
@@ -65,6 +42,47 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 			amount
 		)
 	)
+
+
+func _passive_upgrade_option(upgrade: UpgradeResource) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		upgrade.name,
+		"Passive Upgrade",
+		"Adds a passive upgrade to all towers",
+		func():
+			_add_passive_upgrade(upgrade)
+	)
+
+	option.texture = upgrade.main_texture
+
+	return option
+
+
+func _tower_rank_up_option(tower: Tower, existing: BuildingOption) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		tower.tower_name,
+		"Rank Up Tower",
+		str("Rank: ", existing.rank, " > Rank: ", existing.rank + 1),
+		func(): existing.upgrade()
+	)
+
+	option.texture = tower.main_sprite_2d.texture
+
+	return option
+
+
+func _new_tower_upgrade_option(tower: Tower, tower_packed: PackedScene) -> UpgradeOption:
+	var option = UpgradeOption.new(
+			tower.tower_name,
+			"New Tower",
+			tower.weapons_description,
+			func():
+				_building_options.add_building_option_packed(tower_packed)
+	)
+
+	option.texture = tower.main_sprite_2d.texture
+
+	return option
 
 
 func _add_passive_upgrade(upgrade_resource: UpgradeResource):

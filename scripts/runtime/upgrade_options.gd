@@ -5,7 +5,7 @@ var options: Array
 var option_is_chosen: bool
 
 # https://docs.godotengine.org/en/stable/classes/class_string.html
-var str: String:
+var options_listed: String:
 	get:
 		var s = ""
 
@@ -13,6 +13,7 @@ var str: String:
 			s += option.name + ", "
 
 		return s.substr(0, s.length() - 2)
+
 
 func _init(options: Array):
 	self.options = options

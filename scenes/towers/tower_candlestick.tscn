@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d240mk65qdcoo"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_qj4ef"]
-[ext_resource type="Texture2D" uid="uid://cdqg05j8yx3ii" path="res://sprites/towers/candlestalk.png" id="2_au0hp"]
+[ext_resource type="Texture2D" uid="uid://cdqg05j8yx3ii" path="res://sprites/towers/candlestick.png" id="2_au0hp"]
 [ext_resource type="PackedScene" uid="uid://dsr752k5tr3lq" path="res://scenes/weapons/tower_weapon_pink_shot.tscn" id="2_yfh8l"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_4mv5s"]
 
@@ -21,6 +21,7 @@ _data = {
 script = ExtResource("1_qj4ef")
 hit_points_component = NodePath("HitPoints2D")
 id = 2
+tower_name = "Candlestick"
 main_sprite_2d = NodePath("Sprite2D")
 starting_weapons = Array[PackedScene]([ExtResource("2_yfh8l")])
 animation_player = NodePath("AnimationPlayer")

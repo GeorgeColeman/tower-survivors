@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://b7ihyawh1f20p"]
+
+[ext_resource type="Texture2D" uid="uid://dmu72fay33xrd" path="res://sprites/towers/tower_obsidian_spire.png" id="1_4vor6"]
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_lhfbn"]
+[ext_resource type="PackedScene" uid="uid://cy3w3dkih0ytn" path="res://scenes/towers/tower_obsidian_spire.tscn" id="2_hsrgy"]
+
+[resource]
+script = ExtResource("1_lhfbn")
+id = 4
+name = "Obsidian Spire"
+main_texture = ExtResource("1_4vor6")
+hit_points = 50
+gold_cost = 20
+scene = ExtResource("2_hsrgy")

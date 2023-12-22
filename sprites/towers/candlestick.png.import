@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdqg05j8yx3ii"
-path="res://.godot/imported/candlestalk.png-f24112d0cf0b6f403d372c34f173bc5c.ctex"
+path="res://.godot/imported/candlestick.png-0d63d553d183fe89fa9deaa29bd03a23.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/towers/candlestalk.png"
-dest_files=["res://.godot/imported/candlestalk.png-f24112d0cf0b6f403d372c34f173bc5c.ctex"]
+source_file="res://sprites/towers/candlestick.png"
+dest_files=["res://.godot/imported/candlestick.png-0d63d553d183fe89fa9deaa29bd03a23.ctex"]
 
 [params]
 

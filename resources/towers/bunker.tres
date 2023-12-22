@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://didlugr4cfwpr"]
+
+[ext_resource type="Texture2D" uid="uid://eciubf0mjopx" path="res://sprites/towers/bunker_atex.tres" id="1_wqrjf"]
+[ext_resource type="PackedScene" uid="uid://dlo18b0teg2ka" path="res://scenes/towers/tower_bunker.tscn" id="2_62yas"]
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="2_imeqa"]
+
+[resource]
+script = ExtResource("2_imeqa")
+id = 3
+name = "Bunker"
+main_texture = ExtResource("1_wqrjf")
+hit_points = 50
+gold_cost = 20
+scene = ExtResource("2_62yas")
