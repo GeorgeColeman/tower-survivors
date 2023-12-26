@@ -3,6 +3,11 @@ extends WeaponEffect
 
 @export var total_damage: int
 
+
+func _init(damage: int, apply_type: Enums.WeaponEffectApplyType):
+	pass
+
+
 func apply_to_mob(mob: Mob):
 	var status_effect = StatusEffectFactory.new_burn_status_effect(
 		mob,
