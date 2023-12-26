@@ -13,18 +13,16 @@ func _ready():
 
 func _process(_delta):
 	# The selected entity has become null, most likely because it's been freed
-	if _entity_is_selected && _selected_entity == null:
+	if _entity_is_selected && _selected_entity.entity == null:
 		_entity_is_selected = false
 
 
-func _on_clicked_on_entity(entity):
-	_selected_entity = entity
+func _on_clicked_on_entity(entity_info: EntityInfo):
+	_selected_entity = entity_info
 	_entity_is_selected = true
 
 	_marker.visible = true
-
-	if entity is Node2D:
-		_marker.position = entity.position
+	_marker.position = entity_info.position
 
 
 func _on_clicked_on_empty():

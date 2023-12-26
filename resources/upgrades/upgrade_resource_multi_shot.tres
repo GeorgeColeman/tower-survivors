@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="UpgradeResourceMultiShot" load_steps=2 format=3 uid="uid://c3xpxdmbocwqc"]
+[gd_resource type="Resource" script_class="UpgradeResourceMultiShot" load_steps=3 format=3 uid="uid://c3xpxdmbocwqc"]
 
 [ext_resource type="Script" path="res://scripts/resources/upgrade_resource_multi_shot.gd" id="1_jtijh"]
+[ext_resource type="Texture2D" uid="uid://bfbfxn3qb78n" path="res://sprites/passive_upgrade_icons/bent_fork.tres" id="1_lpfkt"]
 
 [resource]
 script = ExtResource("1_jtijh")
 extra_shots = 1
-name = "Multi Shot"
+name = "Bent Fork"
+main_texture = ExtResource("1_lpfkt")

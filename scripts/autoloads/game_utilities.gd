@@ -102,14 +102,30 @@ func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Arra
 	return all_mobs.slice(0, number_of_targets)
 
 
-func get_entities_at(cell: Cell) -> Array:
-	var all_entities = []
+func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
+	var all_entities: Array[EntityInfo] = []
 
 	var entities = _game_manager.entity_drawer.get_entities_at(cell)
-	all_entities.append_array(entities)
+	#all_entities.append_array(entities)
+
+	for entity in entities:
+		if entity is Tower:
+			all_entities.append(
+				EntityInfo.new(entity, entity.tower_name, entity.description, entity.position)
+			)
 
 	var spawn_points = _game_manager.mob_spawner.get_spawn_points_at(cell)
-	all_entities.append_array(spawn_points)
+	#all_entities.append_array(spawn_points)
+
+	for spawn_point in spawn_points:
+		all_entities.append(
+			EntityInfo.new(
+				spawn_point,
+				 "Spawn Point",
+				 "TODO: spawn point description",
+				 spawn_point.position
+			)
+		)
 
 	return all_entities
 

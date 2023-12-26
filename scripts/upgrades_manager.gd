@@ -48,7 +48,7 @@ func _passive_upgrade_option(upgrade: UpgradeResource) -> UpgradeOption:
 	var option = UpgradeOption.new(
 		upgrade.name,
 		"Passive Upgrade",
-		"Adds a passive upgrade to all towers",
+		upgrade.get_description(),
 		func():
 			_add_passive_upgrade(upgrade)
 	)

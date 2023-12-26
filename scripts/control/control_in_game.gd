@@ -44,7 +44,7 @@ func _process(_delta):
 	#time_text.text = "%.0f" % _game.time
 
 	# The selected entity has become null, most likely because it's been freed
-	if _entity_is_selected && _selected_entity == null:
+	if _entity_is_selected && _selected_entity.entity == null:
 		_entity_is_selected = false
 		entity_info_panel.visible = false
 

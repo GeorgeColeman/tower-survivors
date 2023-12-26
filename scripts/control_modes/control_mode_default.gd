@@ -18,7 +18,7 @@ func _on_mouse_clicked_cell(cell: Cell):
 		Messenger.clicked_on_empty.emit()
 		return
 
-	var entites = GameUtilities.get_entities_at(cell)
+	var entites = GameUtilities.get_entity_info_at(cell)
 
 	if entites.size() > 0:
 		Messenger.clicked_on_entity.emit(entites[0])

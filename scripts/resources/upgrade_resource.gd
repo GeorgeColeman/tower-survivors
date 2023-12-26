@@ -7,3 +7,7 @@ extends Resource
 
 func add_to_tower(_tower: Tower):
 	pass
+
+
+func get_description():
+	return "NO_DESCRTIPTION"

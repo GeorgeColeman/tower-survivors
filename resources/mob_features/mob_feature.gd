@@ -2,5 +2,5 @@ class_name MobFeature
 extends Node
 
 
-func register_owner(mob: Mob):
+func register_owner(_mob: Mob):
 	pass

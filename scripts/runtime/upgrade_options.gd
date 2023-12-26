@@ -15,5 +15,5 @@ var options_listed: String:
 		return s.substr(0, s.length() - 2)
 
 
-func _init(options: Array):
-	self.options = options
+func _init(p_options: Array):
+	options = p_options

@@ -7,7 +7,7 @@ var properties = {}
 
 var add: Callable = func(): pass
 var remove: Callable = func(): pass
-var update: Callable = func(delta: float): pass
+var update: Callable = func(_delta: float): pass
 
 var is_expired: bool
 
