@@ -8,7 +8,7 @@ signal was_killed()
 @export var id: int
 @export var tower_name: String
 @export var main_sprite_2d: Sprite2D
-@export var starting_weapons: Array[PackedScene]
+@export var weapon_ids: Array[String] = []
 @export var max_hit_points := 50 as int
 @export var gold_cost: int = 20
 @export var animation_player: AnimationPlayer
@@ -43,11 +43,8 @@ var weapons_description: String:
 	get:
 		var s = ""
 
-		# TODO: fix this hack. We are instantiating the tower's weapons
-		# every time we need information about them.
-		for weapon in starting_weapons:
-			var new_weapon = weapon.instantiate() as TowerWeapon
-			s += str(new_weapon.stats_description, "\n")
+		for weapon in _weapons:
+			s += str(weapon.stats_description, "\n")
 
 		return s.substr(0, s.length() - 1)
 
@@ -66,15 +63,27 @@ func uninstantiate():
 	queue_free()
 
 
+func init_weapons():
+	for weapon in weapon_ids:
+		var weapon_data: TowerWeaponData = GameData.get_tower_weapon_data(weapon)
+
+		if !weapon_data:
+			return
+
+		var weapon_node = TowerWeapon.new()
+		weapon_node.set_data(weapon_data)
+
+		_attach_weapon(weapon_node)
+
+
 func set_cell_and_init(p_cell: Cell):
 	cell = p_cell
 
 	hit_points_component.initialise(max_hit_points, true)
 	tower_stats = TowerStats.new(_weapons)
 
-	for weapon in starting_weapons:
-		var new_weapon = weapon.instantiate() as TowerWeapon
-		_attach_weapon(new_weapon)
+	for weapon in _weapons:
+		weapon.set_cell(p_cell)
 
 
 func set_rank(value: int):
@@ -88,7 +97,10 @@ func add_rank(amount: int):
 func _attach_weapon(weapon: TowerWeapon):
 	add_child(weapon)
 	weapon.is_active = true
-	weapon.set_cell(cell)
+
+	if cell:
+		weapon.set_cell(cell)
+
 	weapon.set_firing_point(firing_point.position)
 	_weapons.append(weapon)
 

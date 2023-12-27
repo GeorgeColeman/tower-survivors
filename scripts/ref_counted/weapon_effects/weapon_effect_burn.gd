@@ -1,11 +1,12 @@
 class_name WeaponEffectBurn
 extends WeaponEffect
 
-@export var total_damage: int
+var total_damage: int
 
 
-func _init(damage: int, apply_type: Enums.WeaponEffectApplyType):
-	pass
+func _init(damage: int, p_apply_type: Enums.WeaponEffectApplyType):
+	total_damage = damage
+	apply_type = p_apply_type
 
 
 func apply_to_mob(mob: Mob):

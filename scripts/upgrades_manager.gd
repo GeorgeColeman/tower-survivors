@@ -22,6 +22,9 @@ func generate_upgrade_options(amount: int) -> UpgradeOptions:
 
 	for tower in _game_data.towers:
 		var unpacked_tower = tower.instantiate() as Tower
+		
+		# Initialise weapons so we can get weapon info for the description
+		unpacked_tower.init_weapons()
 
 		# Check if the building option already exists
 		var existing_option: BuildingOption = _building_options.get_building_option(tower)

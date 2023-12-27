@@ -1,14 +1,20 @@
+# ---------------------------------------------------
+# A node that simulates a weapon attached to a tower.
+# ---------------------------------------------------
+
 class_name TowerWeapon
 extends Node2D
 
-@export var projectile_scene: PackedScene
-@export var attacks_per_second = 1 as float
-@export var attack_range = 8 as int
-@export var damage = 10 as int
-@export var weapon_effects: Array[WeaponEffect]
-@export var attack_sfx: AudioStream
+var _data: TowerWeaponData
+
+var projectile_scene: PackedScene
+var attacks_per_second: float
+var attack_range: int
+var damage: int
+var attack_sfx: AudioStream
 
 var is_active = false
+var weapon_effects: Array[WeaponEffect]
 
 var _cell: Cell
 var _cells_in_range: Array[Cell] = []
@@ -38,6 +44,16 @@ var stats_description: String:
 				"total_as": str(attacks_per_second + _bonus_attacks_per_second)
 			}
 		)
+
+
+func set_data(data: TowerWeaponData):
+	_data = data
+
+	projectile_scene = data.proj_scene
+	attacks_per_second = data.attack_speed
+	attack_range = data.attack_range
+	damage = data.damage
+	attack_sfx = data.sfx
 
 
 func _draw():

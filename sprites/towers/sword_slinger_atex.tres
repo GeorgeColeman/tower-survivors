@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://u0flc6sea6m3"]
+
+[ext_resource type="Texture2D" uid="uid://rdoyyef0n4l1" path="res://sprites/towers/sword_slinger.png" id="1_qbjy7"]
+
+[resource]
+atlas = ExtResource("1_qbjy7")
+region = Rect2(0, 0, 24, 48)

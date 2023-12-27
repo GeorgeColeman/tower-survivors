@@ -1,8 +1,9 @@
-[gd_scene load_steps=40 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=41 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="PackedScene" uid="uid://cy3w3dkih0ytn" path="res://scenes/towers/tower_obsidian_spire.tscn" id="3_3dnbk"]
+[ext_resource type="PackedScene" uid="uid://dnw7oo20m1hr2" path="res://scenes/towers/tower_sword_slinger.tscn" id="4_pdddu"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
@@ -44,7 +45,7 @@
 script = ExtResource("1_l43p6")
 starting_gold = 1000
 starting_main_tower = ExtResource("35_1q7gc")
-starting_buildings = Array[PackedScene]([ExtResource("3_3dnbk")])
+starting_buildings = Array[PackedScene]([ExtResource("3_3dnbk"), ExtResource("4_pdddu")])
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")

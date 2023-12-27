@@ -66,6 +66,11 @@ func set_damage(value: int):
 	_damage = value
 
 
+# TODO: use this
+func set_speed(speed: float):
+	_speed = speed
+
+
 func _destroy_with_animation():
 	# Source: https://ask.godotengine.org/56667/how-do-queue_free-but-only-after-animation-has-fully-played
 	_is_destroyed = true

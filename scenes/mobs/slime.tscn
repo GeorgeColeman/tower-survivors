@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://r0umfv06co67"]
+[gd_scene load_steps=9 format=3 uid="uid://r0umfv06co67"]
 
 [ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_s87i3"]
 [ext_resource type="Texture2D" uid="uid://cnqddjpp0vr" path="res://sprites/DawnLike/as_resource/slime_01.tres" id="2_vvdmo"]
@@ -39,8 +39,10 @@ _data = {
 "idle": SubResource("Animation_jq7rh")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lbm2i"]
+radius = 6.0
+
 [node name="Slime" node_paths=PackedStringArray("features") instance=ExtResource("1_s87i3")]
-mob_name = "Slime"
 features = [NodePath("Features/SpawnMobsOnDeath")]
 
 [node name="SpawnMobsOnDeath" type="Node" parent="Features" index="0"]
@@ -59,3 +61,8 @@ texture = ExtResource("2_vvdmo")
 
 [node name="Shadow" parent="." index="5"]
 position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="." index="6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("CircleShape2D_lbm2i")

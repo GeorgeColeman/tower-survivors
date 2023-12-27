@@ -17,7 +17,7 @@ func _physics_process(delta):
 	_move_camera(delta)
 
 
-func _process(delta):
+func _process(_delta):
 	_get_keyboard_input()
 
 

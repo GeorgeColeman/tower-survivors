@@ -7,7 +7,6 @@ signal attacked_tower(mob: Mob)
 signal was_hit_not_killed(mob: Mob)
 signal was_killed(mob: Mob)
 
-@export var mob_name: String
 @export var features: Array[MobFeature]
 @export var sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent

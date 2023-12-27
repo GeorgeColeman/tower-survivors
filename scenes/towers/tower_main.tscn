@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxnwaohgy5i6m"]
+[gd_scene load_steps=8 format=3 uid="uid://dxnwaohgy5i6m"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_gcd8g"]
-[ext_resource type="PackedScene" uid="uid://dsr752k5tr3lq" path="res://scenes/weapons/tower_weapon_pink_shot.tscn" id="3_is7t4"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_wb1lh"]
 [ext_resource type="Texture2D" uid="uid://ba7og1ecccw6o" path="res://sprites/towers/big_tower_test.png" id="4_2bqgb"]
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="8_u1gcg"]
@@ -48,7 +47,7 @@ script = ExtResource("1_gcd8g")
 hit_points_component = NodePath("HitPoints2D")
 tower_name = "Main"
 main_sprite_2d = NodePath("Sprite2D")
-starting_weapons = Array[PackedScene]([ExtResource("3_is7t4")])
+weapon_ids = Array[String](["pink_shot"])
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 _flags = 1

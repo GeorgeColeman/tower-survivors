@@ -76,6 +76,7 @@ func _register_as_tower(tower: Tower, cell: Cell):
 	else:
 		_tower_dict[tower.id].append(tower)
 
+	tower.init_weapons()
 	tower.set_cell_and_init(cell)
 
 	tower.was_killed.connect(

@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cy3w3dkih0ytn"]
+[gd_scene load_steps=7 format=3 uid="uid://cy3w3dkih0ytn"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_klfs0"]
-[ext_resource type="PackedScene" uid="uid://d3htelxt34goy" path="res://scenes/weapons/tower_weapon_fire_gem.tscn" id="2_mlmg8"]
 [ext_resource type="Texture2D" uid="uid://dmu72fay33xrd" path="res://sprites/towers/tower_obsidian_spire.png" id="3_icgtv"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_pu8kk"]
 
@@ -23,7 +22,7 @@ hit_points_component = NodePath("HitPoints2D")
 id = 2
 tower_name = "Obsidian Spire"
 main_sprite_2d = NodePath("Sprite2D")
-starting_weapons = Array[PackedScene]([ExtResource("2_mlmg8")])
+weapon_ids = Array[String](["fire_gem"])
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 

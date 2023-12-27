@@ -31,8 +31,6 @@ var game_data: GameData
 
 
 func _ready():
-	_config_test()
-
 	GameUtilities.set_game_manager(self)
 	Messenger.start_game_requested.connect(_on_request_start_game)
 
@@ -42,47 +40,6 @@ func _ready():
 
 	if auto_start_game:
 		start_game()
-
-
-func _config_test():
-	var config = ConfigFile.new()
-	var err = config.load("res://config/tower_weapons.cfg")
-
-	if err != OK:
-		push_warning("Err is not ok")
-
-		return
-
-	for element in config.get_sections():
-		#print_debug(element)
-		var damage = config.get_value(element, "damage")
-		var effects = config.get_value(element, "effects")
-		var scene_path = config.get_value(element, "proj_scene_path")
-
-		if effects.has("type"):
-			match effects["type"]:
-				"burn":
-					var eff = WeaponEffectBurn.new(
-						effects["damage"],
-						Enums.get_weapon_effect_apply_type(effects["apply_type"])
-					)
-					print_debug(eff)
-				"slow":
-					var eff = WeaponEffectSlow.new(
-						effects["factor"],
-						effects["duration"],
-						Enums.get_weapon_effect_apply_type(effects["apply_type"])
-					)
-					print_debug(eff)
-
-		#var scene: PackedScene = load(scene_path)
-		#print_debug(scene)
-#
-		#var node = scene.instantiate()
-		#add_child(node)
-
-		#print_debug(effects.has("apply_type"))
-		#print_debug(str(element, " :: ", damage, " :: ", effects))
 
 
 func _on_request_start_game():

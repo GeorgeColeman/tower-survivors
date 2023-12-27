@@ -1,11 +1,15 @@
 class_name WeaponEffectSlow
 extends WeaponEffect
 
-@export_range(0, 1) var slow_amount: float
-@export var slow_duration: float = 1
+var slow_amount: float
+var slow_duration: float = 1
 
-func _init(factor: float, duration: float, apply_type: Enums.WeaponEffectApplyType):
-	pass
+
+func _init(factor: float, duration: float, p_apply_type: Enums.WeaponEffectApplyType):
+	slow_amount = factor
+	slow_duration = duration
+	apply_type = p_apply_type
+
 
 func apply_to_mob(mob: Mob):
 	var status_effect = StatusEffectFactory.new_slow_status_effect(

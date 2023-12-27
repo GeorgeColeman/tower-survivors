@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlo18b0teg2ka"]
+[gd_scene load_steps=7 format=3 uid="uid://dlo18b0teg2ka"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_6d20n"]
-[ext_resource type="PackedScene" uid="uid://2n6c2cklxfu2" path="res://scenes/weapons/tower_weapon_pea_shooter.tscn" id="2_hkflh"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_gamrs"]
 [ext_resource type="Texture2D" uid="uid://eciubf0mjopx" path="res://sprites/towers/bunker_atex.tres" id="4_6ac6a"]
 
@@ -23,7 +22,7 @@ hit_points_component = NodePath("HitPoints2D")
 id = 2
 tower_name = "Bunker"
 main_sprite_2d = NodePath("Sprite2D")
-starting_weapons = Array[PackedScene]([ExtResource("2_hkflh")])
+weapon_ids = Array[String](["pea_shooter"])
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 
