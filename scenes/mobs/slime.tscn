@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://r0umfv06co67"]
+[gd_scene load_steps=10 format=3 uid="uid://r0umfv06co67"]
 
 [ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_s87i3"]
 [ext_resource type="Texture2D" uid="uid://cnqddjpp0vr" path="res://sprites/DawnLike/as_resource/slime_01.tres" id="2_vvdmo"]
 [ext_resource type="Texture2D" uid="uid://dapwx6u6u2q2r" path="res://sprites/DawnLike/as_resource/slime_02.tres" id="3_vjp73"]
 [ext_resource type="Script" path="res://resources/mob_features/mob_feature_spawn_mobs_on_death.gd" id="4_7difo"]
 [ext_resource type="Resource" uid="uid://nopdf2mv28j8" path="res://resources/mobs/small_slime.tres" id="5_es0lf"]
+[ext_resource type="Script" path="res://scripts/mob_body.gd" id="6_lp6tt"]
 
 [sub_resource type="Animation" id="Animation_jq7rh"]
 resource_name = "idle"
@@ -42,8 +43,9 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_lbm2i"]
 radius = 6.0
 
-[node name="Slime" node_paths=PackedStringArray("features") instance=ExtResource("1_s87i3")]
+[node name="Slime" node_paths=PackedStringArray("features", "mob_body") instance=ExtResource("1_s87i3")]
 features = [NodePath("Features/SpawnMobsOnDeath")]
+mob_body = NodePath("MobBody")
 
 [node name="SpawnMobsOnDeath" type="Node" parent="Features" index="0"]
 script = ExtResource("4_7difo")
@@ -62,7 +64,8 @@ texture = ExtResource("2_vvdmo")
 [node name="Shadow" parent="." index="5"]
 position = Vector2(0, 0)
 
-[node name="Area2D" type="Area2D" parent="." index="6"]
+[node name="MobBody" type="Area2D" parent="." index="6"]
+script = ExtResource("6_lp6tt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
 shape = SubResource("CircleShape2D_lbm2i")

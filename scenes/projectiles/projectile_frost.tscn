@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://drjpxtu2lxu7m"]
 
-[ext_resource type="Script" path="res://scripts/nodes/projectile.gd" id="1_0yivm"]
+[ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_seek.gd" id="1_0yivm"]
 [ext_resource type="Texture2D" uid="uid://kwca76t47hoc" path="res://sprites/projectiles/frost_projectile.png" id="2_wi4vb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nsm8b"]

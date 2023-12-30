@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://c202qjdokdk1c"]
 
-[ext_resource type="Script" path="res://scripts/nodes/projectile.gd" id="1_kb4qm"]
+[ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_seek.gd" id="1_kb4qm"]
 [ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="2_77q0p"]
 [ext_resource type="Texture2D" uid="uid://ckvafnxukxvj2" path="res://sprites/projectiles/pink_projectile.png" id="3_iqa1f"]
 

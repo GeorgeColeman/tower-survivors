@@ -5,6 +5,7 @@ class_name TowerWeaponData
 extends RefCounted
 
 var id: String
+var targeting_type: Enums.TargetingType
 var damage: int
 var attack_speed: float
 var attack_range: int
@@ -15,6 +16,7 @@ var sfx: AudioStream
 
 func _init(
 	p_id: String,
+	p_targeting_type: Enums.TargetingType,
 	p_damage: int,
 	p_attack_speed: float,
 	p_range: int,
@@ -23,6 +25,7 @@ func _init(
 	p_sfx: AudioStream
 ):
 	id = p_id
+	targeting_type = p_targeting_type
 	damage = p_damage
 	attack_speed = p_attack_speed
 	attack_range = p_range

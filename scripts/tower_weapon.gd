@@ -112,8 +112,15 @@ func _attack():
 
 
 func _spawn_projectile_to_target(target: Mob):
+	#match _data.targeting_type:
+		#Enums.TargetingType.SEEKING:
+			#print_debug("Seeking")
+		#Enums.TargetingType.LINE:
+			#print_debug("Line")
+
 	var projectile = projectile_scene.instantiate() as Projectile
 	add_child(projectile)
+
 	projectile.position = _firing_point
 	projectile.set_target(target)
 	projectile.set_damage(damage + _bonus_damage)

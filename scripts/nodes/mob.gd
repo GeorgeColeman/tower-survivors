@@ -11,6 +11,7 @@ signal was_killed(mob: Mob)
 @export var sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent
 @export var visuals_container: Node2D
+@export var mob_body: MobBody
 
 var status_effects: StatusEffects
 
@@ -86,6 +87,12 @@ func set_resource(mob_resource: MobResource):
 
 	for feature in features:
 		feature.register_owner(self)
+
+	if mob_body:
+		mob_body.damaged.connect(
+			func(damage_info: DamageInfo):
+				take_damage(damage_info)
+		)
 
 	_is_initialised = true
 

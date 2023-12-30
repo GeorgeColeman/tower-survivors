@@ -92,7 +92,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
 
-		print_debug(targeting_type)
+		#print_debug(targeting_type)
 
 		var sfx: AudioStream
 
@@ -117,6 +117,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 
 		data.append(TowerWeaponData.new(
 			section,
+			Enums.TargetingType.get(targeting_type),
 			damage,
 			attack_speed,
 			range,

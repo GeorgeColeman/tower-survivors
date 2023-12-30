@@ -1,5 +1,5 @@
-class_name Projectile
-extends Node2D
+#class_name ProjectileSeek
+extends Projectile
 
 @export var animated_sprite_2d: AnimatedSprite2D
 @export var test_curve: Curve
