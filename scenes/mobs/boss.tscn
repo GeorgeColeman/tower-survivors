@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpmomm3o6p6us"]
+[gd_scene load_steps=8 format=3 uid="uid://bpmomm3o6p6us"]
 
 [ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_pfyia"]
 [ext_resource type="Texture2D" uid="uid://c0kiaw5dfac8v" path="res://sprites/DawnLike/as_resource/boss_01.tres" id="2_vxffh"]
 [ext_resource type="Texture2D" uid="uid://bjcqm0o5vg8x1" path="res://sprites/DawnLike/as_resource/boss_02.tres" id="3_6s0rf"]
+[ext_resource type="Script" path="res://scripts/mob_body.gd" id="4_7bhpj"]
 
 [sub_resource type="Animation" id="Animation_jq7rh"]
 resource_name = "idle"
@@ -25,11 +26,23 @@ _data = {
 "idle": SubResource("Animation_jq7rh")
 }
 
-[node name="Boss" instance=ExtResource("1_pfyia")]
-mob_name = "Slime"
+[sub_resource type="CircleShape2D" id="CircleShape2D_csfmm"]
+radius = 8.0
+
+[node name="Boss" node_paths=PackedStringArray("mob_body") instance=ExtResource("1_pfyia")]
+mob_body = NodePath("MobBody")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_ivut4")
 }
 autoplay = "idle"
+
+[node name="Sprite2D" parent="." index="4"]
+texture = ExtResource("2_vxffh")
+
+[node name="MobBody" type="Area2D" parent="." index="6"]
+script = ExtResource("4_7bhpj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
+shape = SubResource("CircleShape2D_csfmm")

@@ -66,7 +66,7 @@ func set_player(p_player: Player):
 
 
 func generate_new_upgrade_options_for_player():
-		player.set_upgrade_options(upgrades_manager.generate_upgrade_options(3))
+	player.set_upgrade_options(upgrades_manager.generate_upgrade_options(self, 3))
 
 
 func pause_game():

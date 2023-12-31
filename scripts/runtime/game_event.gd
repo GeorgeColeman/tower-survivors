@@ -4,5 +4,5 @@ extends RefCounted
 var message: String
 
 
-func _init(message: String):
-	self.message = message
+func _init(p_message: String):
+	message = p_message

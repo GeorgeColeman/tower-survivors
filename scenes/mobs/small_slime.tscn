@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyyfjpgf22euu"]
+[gd_scene load_steps=8 format=3 uid="uid://cyyfjpgf22euu"]
 
 [ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_s3fdf"]
 [ext_resource type="Texture2D" uid="uid://53fuhdd3im20" path="res://sprites/DawnLike/as_resource/small_slime_01.tres" id="2_6h0d5"]
 [ext_resource type="Texture2D" uid="uid://xh31w6qvoshc" path="res://sprites/DawnLike/as_resource/small_slime_02.tres" id="3_40gqm"]
+[ext_resource type="Script" path="res://scripts/mob_body.gd" id="4_nxct7"]
 
 [sub_resource type="Animation" id="Animation_jq7rh"]
 resource_name = "idle"
@@ -37,17 +38,26 @@ _data = {
 "idle": SubResource("Animation_jq7rh")
 }
 
-[node name="SmallSlime" instance=ExtResource("1_s3fdf")]
-mob_name = "Small Slime"
+[sub_resource type="CircleShape2D" id="CircleShape2D_dantr"]
+radius = 6.0
 
-[node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("2_6h0d5")
-
-[node name="Shadow" parent="." index="1"]
-position = Vector2(0, 0)
+[node name="SmallSlime" node_paths=PackedStringArray("mob_body") instance=ExtResource("1_s3fdf")]
+mob_body = NodePath("MobBody")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_ivut4")
 }
 autoplay = "idle"
+
+[node name="Sprite2D" parent="." index="4"]
+texture = ExtResource("2_6h0d5")
+
+[node name="Shadow" parent="." index="5"]
+position = Vector2(0, 0)
+
+[node name="MobBody" type="Area2D" parent="." index="6"]
+script = ExtResource("4_nxct7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
+shape = SubResource("CircleShape2D_dantr")

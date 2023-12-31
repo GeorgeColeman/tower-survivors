@@ -4,7 +4,7 @@ extends Node2D
 # <Cell, Array[Node2D]>
 var _cell_entity_dict = {}
 
-# <int, Array[Tower]>
+# <String, Array[Tower]>
 var _tower_dict = {}
 
 
@@ -26,10 +26,10 @@ func _on_building_option_upgraded(option: BuildingOption):
 		return
 
 	# No towers of this type exist yet
-	if !_tower_dict.has(option.id):
+	if !_tower_dict.has(option.name):
 		return
 
-	for tower in _tower_dict[option.id]:
+	for tower in _tower_dict[option.name]:
 		tower.add_rank(1)
 
 
@@ -71,10 +71,10 @@ func _spawn_node(node_2d: Node2D, cell: Cell):
 
 
 func _register_as_tower(tower: Tower, cell: Cell):
-	if !_tower_dict.has(tower.id):
-		_tower_dict[tower.id] = [tower]
+	if !_tower_dict.has(tower.tower_name):
+		_tower_dict[tower.tower_name] = [tower]
 	else:
-		_tower_dict[tower.id].append(tower)
+		_tower_dict[tower.tower_name].append(tower)
 
 	tower.init_weapons()
 	tower.set_cell_and_init(cell)

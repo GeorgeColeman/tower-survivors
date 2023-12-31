@@ -84,6 +84,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 		return []
 
 	for section in config.get_sections():
+		var name = config.get_value(section, "name")
 		var targeting_type = config.get_value(section, "targeting_type")
 		var damage = config.get_value(section, "damage")
 		var attack_speed = config.get_value(section, "attack_speed")
@@ -117,6 +118,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 
 		data.append(TowerWeaponData.new(
 			section,
+			name,
 			Enums.TargetingType.get(targeting_type),
 			damage,
 			attack_speed,

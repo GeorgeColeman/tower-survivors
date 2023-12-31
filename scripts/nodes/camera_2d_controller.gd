@@ -8,9 +8,9 @@ var _limit_right: float
 var _limit_bottom: float
 
 
-func set_limits(limit_right: float, limit_bottom: float):
-	_limit_right = limit_right
-	_limit_bottom = limit_bottom
+func set_limits(p_limit_right: float, p_limit_bottom: float):
+	_limit_right = p_limit_right
+	_limit_bottom = p_limit_bottom
 
 
 func _physics_process(delta):

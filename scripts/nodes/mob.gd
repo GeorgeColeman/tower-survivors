@@ -26,6 +26,9 @@ var _is_initialised: bool
 var _path_follower: PathFollower
 var _target_cell: Cell
 
+var _invulnerable_time = 0.0
+var _is_invulnerable = false
+
 var _is_destroyed = false
 var _tint_colour = Color.WHITE
 
@@ -61,6 +64,12 @@ func _process(_delta):
 	if !_is_initialised:
 		return
 
+	if _invulnerable_time > 0:
+		_invulnerable_time -= Game.speed_scaled_delta
+
+		if _invulnerable_time <= 0:
+			_is_invulnerable = false
+
 	_path_follower.process(Game.speed_scaled_delta)
 	position = _path_follower.smooth_position
 
@@ -88,11 +97,10 @@ func set_resource(mob_resource: MobResource):
 	for feature in features:
 		feature.register_owner(self)
 
-	if mob_body:
-		mob_body.damaged.connect(
-			func(damage_info: DamageInfo):
-				take_damage(damage_info)
-		)
+	mob_body.damaged.connect(
+		func(damage_info: DamageInfo):
+			take_damage(damage_info)
+	)
 
 	_is_initialised = true
 
@@ -128,9 +136,19 @@ func _on_path_completed():
 			"WARNING: Mob reached the end of the path, but is not at the target position")
 
 
+func set_invulnerable_time(time: float):
+	_invulnerable_time = time
+
+	if time > 0:
+		_is_invulnerable = true
+
+
 func take_damage(damage_info: DamageInfo):
 	# Prevent the mob from exiting its node twice if it takes damage and is destroyed on the same frame
 	if _is_destroyed:
+		return
+
+	if _is_invulnerable:
 		return
 
 	hit_points_component.change_current(-damage_info.damage_amount)

@@ -18,7 +18,7 @@ func add_building_option_packed(scene: PackedScene):
 
 	if unpacked is Tower:
 		_add_building_option(BuildingOption.new(
-			unpacked.id,
+			unpacked.tower_name,
 			scene,
 			unpacked.main_sprite_2d.texture,
 			unpacked.gold_cost

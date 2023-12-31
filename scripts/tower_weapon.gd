@@ -7,6 +7,9 @@ extends Node2D
 
 var _data: TowerWeaponData
 
+var id: String
+var weapon_name: String
+
 var projectile_scene: PackedScene
 var attacks_per_second: float
 var attack_range: int
@@ -49,6 +52,9 @@ var stats_description: String:
 func set_data(data: TowerWeaponData):
 	_data = data
 
+	id = data.id
+	weapon_name = data.name
+	weapon_effects = data.weapon_effects
 	projectile_scene = data.proj_scene
 	attacks_per_second = data.attack_speed
 	attack_range = data.attack_range
@@ -128,7 +134,8 @@ func _spawn_projectile_to_target(target: Mob):
 	for effect in weapon_effects:
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
 			projectile.add_on_hit_callback(
-				func(): effect.apply_to_mob(target)
+				func():
+					effect.apply_to_mob(target)
 			)
 
 

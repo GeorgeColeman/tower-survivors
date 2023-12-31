@@ -159,7 +159,7 @@ func spawn_random_boss():
 	)
 
 
-func spawn_mob(mob_resource: MobResource, cell: Cell):
+func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	var new_mob: Mob = mob_resource.mob_scene.instantiate()
 	var position = cell.scene_position
 
@@ -170,18 +170,18 @@ func spawn_mob(mob_resource: MobResource, cell: Cell):
 	new_mob.entered_node.connect(_on_mob_entered_node)
 	new_mob.exited_node.connect(_on_mob_exited_node)
 	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
-	new_mob.was_hit_not_killed.connect(func(mob: Mob):
+	new_mob.was_hit_not_killed.connect(func(_mob: Mob):
 		Audio.play_sfx(mob_hit_sfx)
 	)
-	new_mob.was_killed.connect(func(mob: Mob):
+	new_mob.was_killed.connect(func(_mob: Mob):
 		Audio.play_sfx(mob_killed_sfx)
 	)
 
 	new_mob.set_resource(mob_resource)
 
 	new_mob._path_follower.path_interrupted.connect(func():
-		var path = GameUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
-		new_mob.set_path(path, _map.center_cell)
+		var new_path = GameUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
+		new_mob.set_path(new_path, _map.center_cell)
 	)
 
 	#await get_tree().create_timer(0.5).timeout
@@ -190,6 +190,8 @@ func spawn_mob(mob_resource: MobResource, cell: Cell):
 	new_mob.set_path(path, _map.center_cell)
 
 	new_mob.animated_spawn()
+	
+	return new_mob
 
 
 func _on_mob_entered_node(mob: Mob, node: Vector2i):

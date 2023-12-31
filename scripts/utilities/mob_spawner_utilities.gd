@@ -11,15 +11,19 @@ func _init(mob_spawner: MobSpawner):
 	_mob_spawner = mob_spawner
 
 
-static func spawn_mobs_in_random_neighbouring_tiles(mob_resource: MobResource, number: int, cell: Cell):
+static func spawn_mobs_in_random_neighbouring_tiles(
+	mob_resource: MobResource,
+	number: int,
+	cell: Cell
+) -> Array[Mob]:
+	var mobs: Array[Mob] = []
 	for i in number:
 		var neighbours = _instance._mob_spawner._map.get_cell_neighbours(cell)
 
-		_instance._mob_spawner.spawn_mob(
+		mobs.append(_instance._mob_spawner.spawn_mob(
 			mob_resource,
 			neighbours[randi_range(0, neighbours.size() - 1)]
-		)
+		))
 
-	#print_debug("TODO: spawn mobs using instance member: ", _instance._mob_spawner)
-	pass
+	return mobs
 

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CellTypeResource" load_steps=6 format=3 uid="uid://dbkahic4f5k57"]
+
+[ext_resource type="Script" path="res://scripts/resources/cell_type_resource.gd" id="1_q5n7s"]
+[ext_resource type="Texture2D" uid="uid://blwbd048prxoe" path="res://sprites/cells/wasteland/cell_wasteland_24x24_alt_01.tres" id="1_wifyb"]
+[ext_resource type="Texture2D" uid="uid://b16kpuxdb1sp8" path="res://sprites/cells/wasteland/cell_wasteland_24x24_alt_02.tres" id="2_whlxx"]
+[ext_resource type="Texture2D" uid="uid://dmiw5j2b414jc" path="res://sprites/cells/wasteland/cell_wasteland_24x24_alt_03.tres" id="3_4wtd0"]
+[ext_resource type="Texture2D" uid="uid://dftt11ktmison" path="res://sprites/cells/wasteland/cell_wasteland_24x24_main.tres" id="4_k8vhi"]
+
+[resource]
+script = ExtResource("1_q5n7s")
+main_texture = ExtResource("4_k8vhi")
+alt_texture = Array[Texture2D]([ExtResource("1_wifyb"), ExtResource("2_whlxx"), ExtResource("3_4wtd0")])

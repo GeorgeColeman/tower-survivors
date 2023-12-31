@@ -5,7 +5,6 @@ signal was_killed()
 
 @export var hit_points_component: HitPointsComponent
 
-@export var id: int
 @export var tower_name: String
 @export var main_sprite_2d: Sprite2D
 @export var weapon_ids: Array[String] = []
@@ -14,6 +13,7 @@ signal was_killed()
 @export var animation_player: AnimationPlayer
 @export var firing_point: Marker2D
 @export_flags("IS_MAIN_TOWER") var _flags = 0
+@export var show_hit_points_bar: bool = true
 
 var draw_range_indicators = false:
 	set(value):
@@ -25,6 +25,9 @@ var draw_range_indicators = false:
 var kills: int
 var cell: Cell
 var tower_stats: TowerStats
+
+# <String, TowerWeapon>
+var weapon_dict = {}
 
 var _weapons: Array[TowerWeapon] = []
 var _is_destroyed: bool
@@ -79,7 +82,7 @@ func init_weapons():
 func set_cell_and_init(p_cell: Cell):
 	cell = p_cell
 
-	hit_points_component.initialise(max_hit_points, true)
+	hit_points_component.initialise(max_hit_points, show_hit_points_bar)
 	tower_stats = TowerStats.new(_weapons)
 
 	for weapon in _weapons:
@@ -94,6 +97,13 @@ func add_rank(amount: int):
 	_rank += amount
 
 
+func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):
+	var weapon_node = TowerWeapon.new()
+	weapon_node.set_data(weapon_data)
+
+	_attach_weapon(weapon_node)
+
+
 func _attach_weapon(weapon: TowerWeapon):
 	add_child(weapon)
 	weapon.is_active = true
@@ -103,6 +113,13 @@ func _attach_weapon(weapon: TowerWeapon):
 
 	weapon.set_firing_point(firing_point.position)
 	_weapons.append(weapon)
+
+	if weapon_dict.has(weapon.id):
+		print_debug("WARNING: weapon dict already has ", weapon.id)
+
+		return
+
+	weapon_dict[weapon.id] = weapon
 
 
 func take_damage(amount: int):
@@ -118,7 +135,8 @@ func _destroy():
 	_is_destroyed = true
 	was_killed.emit()
 
-	animation_player.play("destroy")
+	if animation_player:
+		animation_player.play("destroy")
 
 	# Deactivate weapons
 	for weapon in _weapons:

@@ -19,7 +19,6 @@ _data = {
 [node name="TowerBunker" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
 script = ExtResource("1_6d20n")
 hit_points_component = NodePath("HitPoints2D")
-id = 2
 tower_name = "Bunker"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["pea_shooter"])

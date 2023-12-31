@@ -16,7 +16,7 @@ func is_in_spawn_pool():
 
 
 func is_boss():
-	return _has_flag(1 << 1)
+	return _has_flag(MobFlags.BOSS)
 
 
 func _has_flag(mob_flag: MobFlags):

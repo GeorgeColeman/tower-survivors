@@ -30,7 +30,7 @@ animations = [{
 script = ExtResource("1_7pjc1")
 animated_sprite_2d = NodePath("AnimatedSprite2D")
 test_curve = SubResource("Curve_7yni5")
-arc_height = 6.0
+arc_height = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nsm8b")

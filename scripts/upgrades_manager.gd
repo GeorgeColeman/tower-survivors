@@ -1,5 +1,5 @@
 class_name UpgradesManager
-extends Node
+extends RefCounted
 
 signal passive_upgrade_added(upgrade: UpgradeResource)
 
@@ -14,30 +14,43 @@ func _init(game_data: GameData, building_options: BuildingOptions):
 	_building_options = building_options
 
 
-func generate_upgrade_options(amount: int) -> UpgradeOptions:
+func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 	var options: Array[UpgradeOption] = []
 
 	for upgrade in _game_data.upgrade_resources:
 		options.append(_passive_upgrade_option(upgrade))
 
-	for tower in _game_data.towers:
-		var unpacked_tower = tower.instantiate() as Tower
-		
-		# Initialise weapons so we can get weapon info for the description
-		unpacked_tower.init_weapons()
+	if GameRules.WEAPON_PERKS:
+		# Apply the weapon perks to this tower
+		var main_tower = game.tower
 
-		# Check if the building option already exists
-		var existing_option: BuildingOption = _building_options.get_building_option(tower)
+		for weapon in _game_data.tower_weapon_data:
+			# Get rank up perk if tower already has the weapon
+			if main_tower.weapon_dict.has(weapon.id):
+				options.append(_rank_up_weapon_option(main_tower.weapon_dict[weapon.id]))
+			else:
+				options.append(_new_weapon_option(main_tower, weapon))
 
-		if existing_option:
-			options.append(_tower_rank_up_option(unpacked_tower, existing_option))
 
-			continue
+	if GameRules.TOWER_PERKS:
+		for tower in _game_data.towers:
+			var unpacked_tower = tower.instantiate() as Tower
 
-		if !unpacked_tower.is_possible_new_tower_upgrade_perk:
-			continue
+			# Initialise weapons so we can get weapon info for the description
+			unpacked_tower.init_weapons()
 
-		options.append(_new_tower_upgrade_option(unpacked_tower, tower))
+			# Check if the building option already exists
+			var existing_option: BuildingOption = _building_options.get_building_option(tower)
+
+			if existing_option:
+				options.append(_tower_rank_up_option(unpacked_tower, existing_option))
+
+				continue
+
+			if !unpacked_tower.is_possible_new_tower_upgrade_perk:
+				continue
+
+			options.append(_new_tower_upgrade_option(unpacked_tower, tower))
 
 	return UpgradeOptions.new(
 		Utilities.get_random_unique_elements(
@@ -57,6 +70,30 @@ func _passive_upgrade_option(upgrade: UpgradeResource) -> UpgradeOption:
 	)
 
 	option.texture = upgrade.main_texture
+
+	return option
+
+
+func _new_weapon_option(tower: Tower, weapon_data: TowerWeaponData) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		weapon_data.name,
+		"CATEGORY UNUSED",
+		"TODO: weapon data description",
+		func():
+			tower.attach_weapon_from_weapon_data(weapon_data)
+	)
+
+	return option
+
+
+func _rank_up_weapon_option(weapon: TowerWeapon) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		weapon.weapon_name,
+		"CATEGORY UNUSED",
+		"TODO: weapon rank up description",
+		func():
+			print_debug("TODO: upgrade existing weapon")
+	)
 
 	return option
 

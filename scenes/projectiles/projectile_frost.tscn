@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://drjpxtu2lxu7m"]
+[gd_scene load_steps=5 format=3 uid="uid://drjpxtu2lxu7m"]
 
 [ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_seek.gd" id="1_0yivm"]
 [ext_resource type="Texture2D" uid="uid://kwca76t47hoc" path="res://sprites/projectiles/frost_projectile.png" id="2_wi4vb"]
+
+[sub_resource type="Curve" id="Curve_uhq46"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nsm8b"]
 animations = [{
@@ -22,9 +26,11 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Projectile" type="Node2D"]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
 script = ExtResource("1_0yivm")
-arc_height = null
+animated_sprite_2d = NodePath("AnimatedSprite2D")
+test_curve = SubResource("Curve_uhq46")
+arc_height = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -32,7 +38,5 @@ texture = ExtResource("2_wi4vb")
 region_rect = Rect2(16, 16, 4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_nsm8b")
-animation = &"die"
 autoplay = "default"

@@ -20,14 +20,9 @@ func _ready():
 		func(area: Area2D):
 			#print_debug("Area entered: ", area)
 			if area is MobBody:
-				area.take_damage(DamageInfoFactory.new_damage_info(_damage))
+				#area.take_damage(DamageInfoFactory.new_damage_info(_damage))
+				area.take_damage_deferred(DamageInfoFactory.new_damage_info(_damage))
 				#print_debug("Hit mob body")
-	)
-	_area_2d.body_entered.connect(
-		func(body: Node2D):
-			#print_debug("Body entered: ", body)
-			if body is MobBody:
-				print_debug("Hit mob body")
 	)
 
 

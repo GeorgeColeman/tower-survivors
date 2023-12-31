@@ -51,6 +51,7 @@ weapon_ids = Array[String](["pink_shot"])
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 _flags = 1
+show_hit_points_bar = false
 
 [node name="HitPoints2D" parent="." instance=ExtResource("3_wb1lh")]
 
