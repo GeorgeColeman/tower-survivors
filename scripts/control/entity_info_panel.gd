@@ -1,6 +1,6 @@
-# ------------------------------------
-# Displays information about an entity
-# ------------------------------------
+# -------------------------------------
+# Displays information about an entity.
+# -------------------------------------
 
 class_name EntityInfoPanel
 extends Panel

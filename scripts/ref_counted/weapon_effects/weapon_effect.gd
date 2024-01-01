@@ -5,5 +5,5 @@ var name: String
 var apply_type: Enums.WeaponEffectApplyType
 
 
-func apply_to_mob(mob: Mob):
+func apply_to_mob(_mob: Mob):
 	pass

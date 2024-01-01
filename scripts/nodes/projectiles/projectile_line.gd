@@ -6,9 +6,11 @@ extends Projectile
 
 @export var _area_2d: Area2D
 
-@export var _duration: float = 1.5
+#@export var _duration: float = 1.5
 @export var _speed: float = 100
 
+var _range: int
+var _duration: float
 var _direction: Vector2
 var _life_time: float
 
@@ -45,3 +47,9 @@ func add_on_hit_callback(_on_hit_callback: Callable):
 
 func set_damage(value: int):
 	_damage = value
+	
+
+func set_range(value: int):
+	_range = value
+	
+	_duration = _range / (_speed * GameConstants.UNITS_PER_PIXEL)

@@ -2,7 +2,7 @@ extends Node
 
 signal game_event_occured(game_event: GameEvent)
 signal mob_killed(mob: Mob)
-signal clicked_on_entity(actor)
+signal clicked_on_entity(entity_info: EntityInfo)
 signal clicked_on_empty()
 
 signal start_game_requested()

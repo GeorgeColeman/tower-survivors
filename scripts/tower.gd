@@ -37,8 +37,8 @@ var description: String:
 	get:
 		var d = "Rank %s" % _rank
 
-		if _weapons.size() > 0:
-			d += str("\n", _weapons[0].stats_description)
+		for weapon in _weapons:
+			d += str("\n\n", weapon.weapon_name, "\n", weapon.description)
 
 		return d
 
@@ -47,7 +47,7 @@ var weapons_description: String:
 		var s = ""
 
 		for weapon in _weapons:
-			s += str(weapon.stats_description, "\n")
+			s += str(weapon.description, "\n")
 
 		return s.substr(0, s.length() - 1)
 

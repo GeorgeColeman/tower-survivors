@@ -19,6 +19,8 @@ var attack_sfx: AudioStream
 var is_active = false
 var weapon_effects: Array[WeaponEffect]
 
+var rank: int = 1
+
 var _cell: Cell
 var _cells_in_range: Array[Cell] = []
 var _attack_cooldown: float
@@ -38,15 +40,7 @@ var draw_range_indicators = false:
 		draw_range_indicators = value
 		queue_redraw()
 
-var stats_description: String:
-	get:
-		return "Damage: {total_damage}\nRange: {total_range}\nAttack Speed: {total_as}".format(
-			{
-				"total_damage": str(damage + _bonus_damage),
-				"total_range": str(attack_range + _bonus_attack_range),
-				"total_as": str(attacks_per_second + _bonus_attacks_per_second)
-			}
-		)
+var description: String
 
 
 func set_data(data: TowerWeaponData):
@@ -60,6 +54,8 @@ func set_data(data: TowerWeaponData):
 	attack_range = data.attack_range
 	damage = data.damage
 	attack_sfx = data.sfx
+
+	_update_description()
 
 
 func _draw():
@@ -96,6 +92,19 @@ func set_firing_point(point: Vector2):
 	_firing_point = point
 
 
+func rank_up():
+	rank += 1
+
+	_update_description()
+
+
+func _update_description():
+	description = "Rank %s" % rank
+	description += "\nDamage: %s" % (damage + _bonus_damage)
+	description += "\nRange: %s" % (attack_range + _bonus_attack_range)
+	description += "\nAttack Speed: %s" % (attacks_per_second + _bonus_attacks_per_second)
+
+
 func _set_cells_in_range():
 	_cells_in_range = GameUtilities.get_cells_in_circle_sorted_by_distance_from(
 		_cell, attack_range + _bonus_attack_range)
@@ -130,6 +139,7 @@ func _spawn_projectile_to_target(target: Mob):
 	projectile.position = _firing_point
 	projectile.set_target(target)
 	projectile.set_damage(damage + _bonus_damage)
+	projectile.set_range(attack_range + _bonus_attack_range)
 
 	for effect in weapon_effects:
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
@@ -142,10 +152,14 @@ func _spawn_projectile_to_target(target: Mob):
 func set_bonus_damage(value: int):
 	_bonus_damage = value
 
+	_update_description()
+
 
 func set_bonus_attack_speed(value: float):
 	_bonus_attack_speed = value
 	_bonus_attacks_per_second = 1 * _bonus_attack_speed
+
+	_update_description()
 
 
 func set_multi_shot(value: int):
@@ -157,3 +171,4 @@ func set_bonus_range(value: int):
 
 	# Recalculate cells in range
 	_set_cells_in_range()
+	_update_description()

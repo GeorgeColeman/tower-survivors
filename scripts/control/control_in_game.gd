@@ -36,7 +36,7 @@ func _process(_delta):
 
 	# Source: https://forum.godotengine.org/t/how-to-convert-seconds-into-ddmm-ss-format/8174/2
 	var seconds = _game.time as int % 60
-	var minutes = (_game.time as int / 60) % 60
+	var minutes = (_game.time / 60) as int % 60
 	#var hours = (_game.time as int / 60) / 60
 
 	time_text.text = "%02d:%02d" % [minutes, seconds]

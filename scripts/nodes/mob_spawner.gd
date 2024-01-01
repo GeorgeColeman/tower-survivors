@@ -25,7 +25,7 @@ func _ready():
 	_mob_spawner_utilities = MobSpawnerUtilities.new(self)
 
 
-func _process(delta):
+func _process(_delta):
 	if !_game:
 		return
 
@@ -161,12 +161,10 @@ func spawn_random_boss():
 
 func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	var new_mob: Mob = mob_resource.mob_scene.instantiate()
-	var position = cell.scene_position
 
 	add_child(new_mob)
 
-	new_mob.position = position
-
+	new_mob.position = cell.scene_position
 	new_mob.entered_node.connect(_on_mob_entered_node)
 	new_mob.exited_node.connect(_on_mob_exited_node)
 	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
@@ -190,7 +188,7 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	new_mob.set_path(path, _map.center_cell)
 
 	new_mob.animated_spawn()
-	
+
 	return new_mob
 
 

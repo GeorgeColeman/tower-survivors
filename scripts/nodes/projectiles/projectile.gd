@@ -13,3 +13,7 @@ func add_on_hit_callback(_on_hit_callback: Callable):
 
 func set_damage(_value: int):
 	pass
+
+
+func set_range(_value: int):
+	pass

@@ -90,9 +90,9 @@ func _rank_up_weapon_option(weapon: TowerWeapon) -> UpgradeOption:
 	var option = UpgradeOption.new(
 		weapon.weapon_name,
 		"CATEGORY UNUSED",
-		"TODO: weapon rank up description",
+		"Rank %s > Rank %s" % [weapon.rank, weapon.rank + 1],
 		func():
-			print_debug("TODO: upgrade existing weapon")
+			weapon.rank_up()
 	)
 
 	return option
@@ -103,7 +103,8 @@ func _tower_rank_up_option(tower: Tower, existing: BuildingOption) -> UpgradeOpt
 		tower.tower_name,
 		"Rank Up Tower",
 		str("Rank: ", existing.rank, " > Rank: ", existing.rank + 1),
-		func(): existing.upgrade()
+		func():
+			existing.upgrade()
 	)
 
 	option.texture = tower.main_sprite_2d.texture

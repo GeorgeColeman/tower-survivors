@@ -47,13 +47,13 @@ func _load_resources():
 		if loaded is UpgradeResource:
 			upgrade_resources.append(loaded)
 
-	var towers = dir_contents("res://scenes/towers/")
+	var _towers = dir_contents("res://scenes/towers/")
 
-	for tower in towers:
+	for tower in _towers:
 		var loaded = load(tower)
 
 		if loaded is PackedScene:
-			self.towers.append(loaded)
+			towers.append(loaded)
 
 			var unpacked = loaded.instantiate()
 
@@ -88,7 +88,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 		var targeting_type = config.get_value(section, "targeting_type")
 		var damage = config.get_value(section, "damage")
 		var attack_speed = config.get_value(section, "attack_speed")
-		var range = config.get_value(section, "range")
+		var attack_range = config.get_value(section, "range")
 		var effects = config.get_value(section, "effects")
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
@@ -122,7 +122,7 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 			Enums.TargetingType.get(targeting_type),
 			damage,
 			attack_speed,
-			range,
+			attack_range,
 			weapon_effects,
 			load(scene_path),
 			sfx
