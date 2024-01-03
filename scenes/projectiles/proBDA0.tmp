@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://cesv1myp26fi4"]
+
+[ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_line.gd" id="1_64egx"]
+[ext_resource type="Script" path="res://scenes/projectiles/tween_rotate.gd" id="2_a46du"]
+[ext_resource type="Texture2D" uid="uid://bu8wwrc3mqenf" path="res://sprites/projectiles/proj_sling_sword.png" id="2_e3fxy"]
+[ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="2_i05i3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3mh1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e3fxy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_i05i3")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}]
+
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("_area_2d")]
+script = ExtResource("1_64egx")
+_area_2d = NodePath("RotatingBody/Area2D")
+
+[node name="RotatingBody" type="Node2D" parent="."]
+script = ExtResource("2_a46du")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RotatingBody"]
+sprite_frames = SubResource("SpriteFrames_3mh1o")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="RotatingBody"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RotatingBody/Area2D"]
+polygon = PackedVector2Array(-10, 7, -7, -1, -5, -3, 7, -10, 10, -10, 10, -7, 3, 5, 1, 7, -7, 10, -10, 10)

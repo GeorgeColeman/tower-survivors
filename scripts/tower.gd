@@ -47,9 +47,9 @@ var weapons_description: String:
 		var s = ""
 
 		for weapon in _weapons:
-			s += str(weapon.description, "\n")
+			s += str(weapon.weapon_name, "\n", weapon.description, "\n\n")
 
-		return s.substr(0, s.length() - 1)
+		return s.substr(0, s.length() - 2)
 
 var is_possible_new_tower_upgrade_perk: bool:
 	get:

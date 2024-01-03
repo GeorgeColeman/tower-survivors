@@ -30,10 +30,9 @@ var _bonus_damage: int
 var _bonus_attack_speed: float
 var _bonus_attacks_per_second: float
 var _bonus_attack_range: int
-var _multi_shot: int
-var _number_of_shots: int:
-	get:
-		return 1 + _multi_shot
+
+var _multi_shot_chance: float
+var _multi_shot_number_of_shots: int
 
 var draw_range_indicators = false:
 	set(value):
@@ -99,8 +98,9 @@ func rank_up():
 
 
 func _update_description():
-	description = "Rank %s" % rank
-	description += "\nDamage: %s" % (damage + _bonus_damage)
+	#description = "Rank %s" % rank
+	#description += "\nDamage: %s" % (damage + _bonus_damage)
+	description = "Damage: %s" % (damage + _bonus_damage)
 	description += "\nRange: %s" % (attack_range + _bonus_attack_range)
 	description += "\nAttack Speed: %s" % (attacks_per_second + _bonus_attacks_per_second)
 
@@ -115,7 +115,10 @@ func _attack():
 	# Reset the attack cooldown
 	_attack_cooldown = 1 / (attacks_per_second + _bonus_attacks_per_second)
 
-	var targets = GameUtilities.get_mob_targets(_cells_in_range, _number_of_shots)
+	var multi_shot = _multi_shot_chance >= randf()
+	var number_of_shots = 1 + _multi_shot_number_of_shots if multi_shot else 1
+
+	var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
 
 	for target in targets:
 		_spawn_projectile_to_target(target)
@@ -162,8 +165,12 @@ func set_bonus_attack_speed(value: float):
 	_update_description()
 
 
-func set_multi_shot(value: int):
-	_multi_shot = value
+func set_multi_shot_chance(value: float):
+	_multi_shot_chance = value
+
+
+func set_multi_shot_number_of_shots(value: int):
+	_multi_shot_number_of_shots = value
 
 
 func set_bonus_range(value: int):

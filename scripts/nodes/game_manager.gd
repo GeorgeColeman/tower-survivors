@@ -1,12 +1,6 @@
 class_name GameManager
 extends Node
 
-@export var game_speed: float = 1:
-	get:
-		return Game.speed
-	set(value):
-		Game.speed = value
-
 @export var starting_gold: int = 50
 @export var starting_main_tower: PackedScene
 @export var starting_buildings: Array[PackedScene] = []
@@ -74,12 +68,11 @@ func start_game():
 	var params = SpawnEntityParams.new()
 	params.entity_scene = starting_main_tower
 	params.cell = map.center_cell
-	Entities.spawn_entity(params)
 
+	game.entities.spawn_entity(params)
 	game.set_main_tower(params.spawned_entity)
 
 	mob_spawner.start_game(game)
-
 	main_control.start_game(game)
 	control_in_game.start_game(game)
 	control_debug.start_game(game)
@@ -90,6 +83,14 @@ func start_game():
 
 	for building in starting_buildings:
 		game.building_options.add_building_option_packed(building)
+
+	game.speed_changed.connect(
+		func(speed: float):
+			var tweens = get_tree().get_processed_tweens()
+
+			for tween in tweens:
+				tween.set_speed_scale(speed)
+	)
 
 
 func _generate_map(width: int, height: int) -> Map:

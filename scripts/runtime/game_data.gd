@@ -2,7 +2,7 @@ class_name GameData
 extends RefCounted
 
 static var tower_weapon_data: Array[TowerWeaponData]
-# <string, TowerWeaponData>
+# <String, TowerWeaponData>
 static var _tower_weapon_data_dict = {}
 
 var mob_resources: Array[MobResource]
@@ -13,8 +13,8 @@ var bosses: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
-var proto_towers: Array[Tower]
-
+# <String, PassivePerk>
+var passives_dict = {}
 
 func _init():
 	_load_resources()
@@ -55,24 +55,11 @@ func _load_resources():
 		if loaded is PackedScene:
 			towers.append(loaded)
 
-			var unpacked = loaded.instantiate()
+	var passives = PassivePerkDataResolver.get_passive_perk_data()
 
-			if unpacked is Tower:
-				proto_towers.append(unpacked)
+	for passive in passives:
+		passives_dict[passive.name] = passive
 
-#	var path = "res://resources"
-#	var dir = DirAccess.open(path)
-#	var files = dir.get_files()
-#	for file in files:
-#		var loaded = load(str(path, "/", file))
-#
-#		print(loaded)
-#
-#		if loaded is MobResource:
-#			mob_resources.append(loaded)
-#
-#		if loaded is UpgradeResource:
-#			upgrade_resources.append(loaded)
 
 
 func _load_tower_weapon_data() -> Array[TowerWeaponData]:

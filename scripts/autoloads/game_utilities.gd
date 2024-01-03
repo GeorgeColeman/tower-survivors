@@ -17,8 +17,6 @@ func set_game_manager(game_manager: GameManager):
 func set_game(game: Game):
 	_game = game
 
-	#on_set_game.emit(game)
-
 
 func try_enter_build_mode(option: BuildingOption):
 	var check_gold = func() -> bool:
@@ -37,7 +35,7 @@ func try_enter_build_mode(option: BuildingOption):
 			return
 
 		# Check cell for existing buildings
-		if Entities.get_is_cell_occupied(cell):
+		if _game.entities.get_is_cell_occupied(cell):
 			print_debug("Cell is occupied")
 			return
 
@@ -46,9 +44,7 @@ func try_enter_build_mode(option: BuildingOption):
 		params.entity_scene = option.scene
 		params.cell = cell
 
-		#_game_manager.entity_drawer._on_requested_spawn_entity(params)
-
-		Entities.spawn_entity(params)
+		_game.entities.spawn_entity(params)
 
 		# HACK: we're doing this here because this is the only place we know
 		# about the spawned entity and the building option, which enables us
@@ -105,7 +101,7 @@ func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Arra
 func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 	var all_entities: Array[EntityInfo] = []
 
-	var entities = _game_manager.entity_drawer.get_entities_at(cell)
+	var entities = _game.entities.get_entities_at(cell)
 	#all_entities.append_array(entities)
 
 	for entity in entities:

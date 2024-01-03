@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cob2s77syvxq2"]
+
+[ext_resource type="Texture2D" uid="uid://cxeft5kuucvcf" path="res://sprites/camps/mob_camps_24x24.png" id="1_wd4gh"]
+
+[resource]
+atlas = ExtResource("1_wd4gh")
+region = Rect2(24, 24, 24, 24)

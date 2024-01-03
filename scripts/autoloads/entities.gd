@@ -1,28 +1,35 @@
+class_name Entities
 extends Node
 
 signal entity_added(params: SpawnEntityParams)
 
 var towers: Array[Tower] = []
 
-var _upgrades_manager: UpgradesManager
+var _game: Game
 
 # <Cell, Node>
 var _cell_entity_dict = {}
 
 
-func set_game(game: Game):
-	_upgrades_manager = game.upgrades_manager
-
-	_upgrades_manager.passive_upgrade_added.connect(
-		func(upgrade: UpgradeResource):
-			# Upgrade existing towers
-			for tower in towers:
-				upgrade.add_to_tower(tower)
-	)
+func _init(game: Game):
+	_game = game
 
 
-func set_cell_entity_dict(dict):
-	_cell_entity_dict = dict
+func get_entities_at(cell: Cell) -> Array:
+	if !_cell_entity_dict.has(cell):
+		return []
+
+	return _cell_entity_dict[cell]
+
+
+func apply_perk_to_existing_towers(perk: Perk):
+	for tower in towers:
+		perk.apply_to_tower(tower)
+
+
+func apply_passive_rank_to_existing_towers(passive: PassivePerk):
+	for tower in towers:
+		passive.apply_current_rank_to_tower(tower)
 
 
 func spawn_entity(params: SpawnEntityParams):
@@ -35,11 +42,29 @@ func spawn_entity(params: SpawnEntityParams):
 func _register_tower(tower: Tower):
 	towers.append(tower)
 
-	# Add existing passive perks to new tower
-	for perk in _upgrades_manager.upgrades:
-		perk.add_to_tower(tower)
+	var cell = tower.cell
 
-	tower.was_killed.connect(func(): towers.erase(tower))
+	# TEMP: assuming all towers are solid
+	PathUtilities.updated_cell_is_solid.emit(cell, true)
+
+	if !_cell_entity_dict.has(cell):
+		_cell_entity_dict[cell] = []
+
+	_cell_entity_dict[cell].append(tower)
+
+	# Add existing perks to new tower
+	for perk in _game.player.upgrades.perks:
+		perk.apply_to_tower(tower)
+
+	for passive in _game.player.upgrades.passives_dict.values():
+		passive.apply_all_ranks_to_tower(tower)
+
+	tower.was_killed.connect(
+		func():
+			_cell_entity_dict[cell].erase(tower)
+			PathUtilities.updated_cell_is_solid.emit(cell, false)
+			towers.erase(tower)
+	)
 
 
 func get_is_cell_occupied(cell: Cell) -> bool:

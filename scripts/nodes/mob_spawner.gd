@@ -115,6 +115,10 @@ func _erase_existing():
 	_cell_spawn_point_dict.clear()
 
 
+func spawn_new_spawn_point():
+	_spawn_new_spawn_point()
+
+
 func _spawn_new_spawn_point():
 	var new_spawn_point = spawn_point_scene.instantiate() as SpawnPoint
 	new_spawn_point.spawn_triggered.connect(_on_spawn_triggered)

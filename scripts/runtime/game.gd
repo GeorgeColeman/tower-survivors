@@ -1,41 +1,45 @@
 class_name Game
 extends RefCounted
 
+signal speed_changed(speed: float)
 signal difficulty_changed(difficulty: float)
 signal game_over()
 
-static var speed: float = 1
+static var speed: float
 static var speed_scaled_delta: float
 
 var map: Map
 var player: Player
 var tower: Tower
+var entities: Entities
 var mob_spawner: MobSpawner
 var game_data: GameData
 var building_options: BuildingOptions
-var upgrades_manager: UpgradesManager
+var upgrades_manager: UpgradeOptionsGenerator
 
 var time: float
 var is_paused: bool
 
+var _speed: float
 var _current_minute = 1 as int
 var _difficulty: float = 1
-var _resume_speed: float = speed
+var _resume_speed: float = _speed
 
 
 func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	map = p_map
+	entities = Entities.new(self)
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
-	upgrades_manager = UpgradesManager.new(p_game_data, building_options)
+	upgrades_manager = UpgradeOptionsGenerator.new()
 
-	Entities.set_game(self)
+	set_speed(1)
 
 
 func process(delta: float):
 	# This is the only place we calculate delta based on game speed
-	speed_scaled_delta = delta * speed
+	speed_scaled_delta = delta * _speed
 
 	time += speed_scaled_delta
 
@@ -44,14 +48,18 @@ func process(delta: float):
 		add_difficulty(1)
 
 
+func set_speed(p_speed: float):
+	_speed = p_speed
+	speed = p_speed
+
+	speed_changed.emit(p_speed)
+
+
 func toggle_pause() -> bool:
 	if is_paused:
-		is_paused = false
-		speed = _resume_speed
+		resume_game()
 	else:
-		is_paused = true
-		_resume_speed = speed
-		speed = 0
+		pause_game()
 
 	return is_paused
 
@@ -63,23 +71,31 @@ func set_player(p_player: Player):
 			pause_game()
 			generate_new_upgrade_options_for_player()
 	)
+	player.upgrades.perk_added.connect(
+		func(perk: Perk):
+			entities.apply_perk_to_existing_towers(perk)
+	)
+	player.upgrades.passive_rank_added.connect(
+		func(passive: PassivePerk):
+			entities.apply_passive_rank_to_existing_towers(passive)
+	)
 
 
 func generate_new_upgrade_options_for_player():
-	player.set_upgrade_options(upgrades_manager.generate_upgrade_options(self, 3))
+	player.upgrades.set_upgrade_options(upgrades_manager.generate_upgrade_options(self, 3))
 
 
 func pause_game():
 	if !is_paused:
-		_resume_speed = speed
+		_resume_speed = _speed
 
 	is_paused = true
-	speed = 0
+	set_speed(0)
 
 
 func resume_game():
 	is_paused = false
-	speed = _resume_speed
+	set_speed(_resume_speed)
 
 
 func set_main_tower(p_tower: Tower):

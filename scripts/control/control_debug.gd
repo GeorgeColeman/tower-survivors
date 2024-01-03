@@ -6,23 +6,22 @@ extends Control
 @export var check_box_draw_mob_paths: CheckBox
 @export var check_box_show_damage_numbers: CheckBox
 
-@onready var game_events_text = %GameEventsText
-@onready var restart_game_button = %RestartGameButton
-@onready var damage_tower_button = %DamageTowerButton
-@onready var kill_tower_button = %KillTowerButton
+@export var game_events_text: Label
 
 @export_group("Buttons")
+@export var restart_game_button: Button
+@export var damage_tower_button: Button
+@export var kill_tower_button: Button
 @export var spawn_boss_button: Button
 @export var level_up_button: Button
 @export var add_gold_button: Button
+@export var spawn_new_spawn_point_button: Button
 
 var _game_manager: GameManager
 var _game: Game
 
 
 func _ready():
-	#_dict_vs_instance_test()
-
 	Messenger.game_event_occured.connect(_on_game_event_occured)
 	game_events_text.text = ""
 	restart_game_button.pressed.connect(func(): Messenger.start_game_requested.emit())
@@ -63,6 +62,13 @@ func _ready():
 			if !_game: return
 
 			_game.player.add_gold(100)
+	)
+
+	spawn_new_spawn_point_button.pressed.connect(
+		func():
+			if !_game_manager: return
+
+			_game_manager.mob_spawner.spawn_new_spawn_point()
 	)
 
 	visible = false

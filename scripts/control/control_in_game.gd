@@ -90,4 +90,4 @@ func _set_game_speed(speed: float):
 	if !_game:
 		return
 
-	_game.speed = speed
+	_game.set_speed(speed)
