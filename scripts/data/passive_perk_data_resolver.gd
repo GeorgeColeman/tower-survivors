@@ -43,6 +43,10 @@ static func _get_ranks(rank_data) -> Array[PassivePerk.Rank]:
 				"multi_shot_chance":
 					_resolve_multi_shot_chance(rank, element[key])
 
+		# Remove the leading new line from rank description
+		if rank.description.length() > 1:
+			rank.description = rank.description.substr(1, rank.description.length())
+
 		ranks.append(rank)
 
 	return ranks
@@ -54,7 +58,8 @@ static func _resolve_multi_shot_number(rank: PassivePerk.Rank, variant):
 
 		return
 
-	rank.description += "\nIncreases the multi shot number of all towers by %s" % variant
+	#rank.description += "\nIncreases the multi shot number of all towers by %s" % variant
+	rank.description += "\nAll towers +%s multi shot" % variant
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
@@ -68,7 +73,8 @@ static func _resolve_multi_shot_chance(rank: PassivePerk.Rank, variant):
 
 		return
 
-	rank.description += "\nIncreases the multi shot chance of all towers by %s%%" % (variant * 100)
+	#rank.description += "\nIncreases the multi shot chance of all towers by %s%%" % (variant * 100)
+	rank.description += "\nAll towers +%s%% multi shot chance" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):

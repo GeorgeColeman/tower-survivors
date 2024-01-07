@@ -19,20 +19,12 @@ func set_game(game: Game):
 
 
 func try_enter_build_mode(option: BuildingOption):
-	var check_gold = func() -> bool:
-		var has_enough_gold = _game.player.current_gold >= option.gold_cost
-
-		if !has_enough_gold:
-			print_debug("Not enough gold")
-
-		return has_enough_gold
-
-	if !check_gold.call():
+	if !_game.player.can_afford_building_option(option):
 		return
 
 	option.on_build_confirmed = func(cell: Cell):
-		if !check_gold.call():
-			return
+		if !_game.player.can_afford_building_option(option):
+				return
 
 		# Check cell for existing buildings
 		if _game.entities.get_is_cell_occupied(cell):
@@ -52,7 +44,7 @@ func try_enter_build_mode(option: BuildingOption):
 		if params.spawned_entity is Tower:
 			params.spawned_entity.set_rank(option.rank)
 
-		_game.player.add_gold(-option.gold_cost)
+		_game.player.spend_resources_for_building(option)
 
 	control_mode_build_requested.emit(option)
 

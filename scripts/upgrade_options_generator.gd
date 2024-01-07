@@ -22,29 +22,7 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 
 
 	if GameRules.TOWER_PERKS:
-		for tower in game.game_data.towers:
-			var unpacked_tower = tower.instantiate() as Tower
-
-			# Initialise weapons so we can get weapon info for the description
-			unpacked_tower.init_weapons()
-
-			# Check if the building option already exists
-			var existing_option: BuildingOption = game.building_options.get_building_option(tower)
-
-
-			if existing_option:
-				options.append(PerkFactory.rank_up_tower(unpacked_tower, existing_option))
-
-				continue
-
-			if !unpacked_tower.is_possible_new_tower_upgrade_perk:
-				continue
-
-			options.append(PerkFactory.new_tower(
-				unpacked_tower,
-				func():
-					game.building_options.add_building_option_packed(tower)
-			))
+		options.append_array(_get_tower_options(game))
 
 	return UpgradeOptions.new(
 		Utilities.get_random_unique_elements(
@@ -52,6 +30,38 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 			amount
 		)
 	)
+
+
+func _get_tower_options(game: Game) -> Array[UpgradeOption]:
+	var options: Array[UpgradeOption] = []
+
+	# Add main tower rank up option
+	options.append(PerkFactory.rank_up_specific_tower(game.tower))
+
+	for tower in game.game_data.towers:
+		var unpacked_tower = tower.instantiate() as Tower
+
+		# Initialise weapons so we can get weapon info for the description
+		unpacked_tower.init_weapons()
+
+		# Check if the building option already exists
+		var existing_option: BuildingOption = game.building_options.get_building_option(tower)
+
+		if existing_option:
+			options.append(PerkFactory.rank_up_tower(unpacked_tower, existing_option))
+
+			continue
+
+		if !unpacked_tower.is_possible_new_tower_upgrade_perk:
+			continue
+
+		options.append(PerkFactory.new_tower(
+			unpacked_tower,
+			func():
+				game.building_options.add_building_option_packed(tower)
+		))
+
+	return options
 
 
 func _get_passive_options(game: Game) -> Array[UpgradeOption]:

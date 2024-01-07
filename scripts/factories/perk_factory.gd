@@ -92,6 +92,21 @@ static func rank_up_tower(tower: Tower, existing: BuildingOption) -> UpgradeOpti
 	return option
 
 
+static func rank_up_specific_tower(tower: Tower) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		tower.tower_name,
+		"Rank %s" % (tower._rank + 1),
+		"Rank Up Tower",
+		"TODO: tower rank up description",
+		func():
+			tower.add_rank(1)
+	)
+
+	option.texture = tower.main_sprite_2d.texture
+
+	return option
+
+
 static func new_tower(tower: Tower, apply_callback: Callable) -> UpgradeOption:
 	var option = UpgradeOption.new(
 			tower.tower_name,

@@ -2,6 +2,8 @@ class_name GameManager
 extends Node
 
 @export var starting_gold: int = 50
+@export var starting_cores: int = 1
+
 @export var starting_main_tower: PackedScene
 @export var starting_buildings: Array[PackedScene] = []
 @export var auto_start_game: bool = true
@@ -56,7 +58,7 @@ func start_game():
 	game = Game.new(map, mob_spawner, game_data)
 	GameUtilities.set_game(game)
 
-	game.set_player(Player.new(starting_gold))
+	game.set_player(_create_player())
 
 	camera_2d_controller.position = map.center * GameConstants.PIXEL_SCALE
 	camera_2d_controller.set_limits(
@@ -91,6 +93,10 @@ func start_game():
 			for tween in tweens:
 				tween.set_speed_scale(speed)
 	)
+
+
+func _create_player() -> Player:
+	return Player.new(starting_gold, starting_cores)
 
 
 func _generate_map(width: int, height: int) -> Map:

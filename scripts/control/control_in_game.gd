@@ -4,8 +4,9 @@ extends Control
 @export var entity_info_panel: EntityInfoPanel
 @export var experience_bar: TextureProgressBar
 
-@onready var gold_text: Label = %GoldText
-@onready var time_text: Label = %TimeText
+@export var gold_label: Label
+@export var time_label: Label
+@export var cores_label: Label
 
 @onready var check_box_game_speed_01: CheckBox = %CheckBoxGameSpeed01
 @onready var check_box_game_speed_02: CheckBox = %CheckBoxGameSpeed02
@@ -39,7 +40,7 @@ func _process(_delta):
 	var minutes = (_game.time / 60) as int % 60
 	#var hours = (_game.time as int / 60) / 60
 
-	time_text.text = "%02d:%02d" % [minutes, seconds]
+	time_label.text = "%02d:%02d" % [minutes, seconds]
 
 	#time_text.text = "%.0f" % _game.time
 
@@ -57,12 +58,18 @@ func start_game(game: Game):
 			_update_gold_text(current_gold)
 	)
 
+	game.player.cores_changed.connect(
+		func(cores: int):
+			_update_cores_text(cores)
+	)
+
 	game.player.experience_component.experience_added.connect(
 		func():
 			_update_experience_bar()
 	)
 
 	_update_gold_text(game.player.current_gold)
+	_update_cores_text(game.player.cores)
 	_update_experience_bar()
 
 
@@ -83,7 +90,11 @@ func _on_clicked_on_empty():
 
 
 func _update_gold_text(current_gold: int):
-	gold_text.text = str(current_gold)
+	gold_label.text = str(current_gold)
+
+
+func _update_cores_text(cores: int):
+	cores_label.text = str(cores)
 
 
 func _set_game_speed(speed: float):
