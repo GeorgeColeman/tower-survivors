@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://buxgkwql10vdc"]
+
+[ext_resource type="PackedScene" uid="uid://cv3f6617vaew0" path="res://scenes/mobs/flyball.tscn" id="1_tlbcm"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_nd5em"]
+
+[resource]
+script = ExtResource("2_nd5em")
+name = "Flyball"
+mob_scene = ExtResource("1_tlbcm")
+move_speed = 1.0
+damage = 2
+hit_points = 100
+gold_value = 5
+experience_value = 10
+mob_flags = 4

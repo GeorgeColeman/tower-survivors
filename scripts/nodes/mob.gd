@@ -10,7 +10,7 @@ signal was_killed(mob: Mob)
 @export var features: Array[MobFeature]
 @export var sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent
-@export var visuals_container: Node2D
+#@export var visuals_container: Node2D
 @export var mob_body: MobBody
 
 var status_effects: StatusEffects
@@ -55,6 +55,8 @@ var gold_value: int:
 var experience_value: int:
 	get:
 		return _mob_resource.experience_value
+
+var core_value: int
 
 
 func _process(_delta):
@@ -101,6 +103,9 @@ func set_resource(mob_resource: MobResource):
 		func(damage_info: DamageInfo):
 			take_damage(damage_info)
 	)
+	
+	if mob_resource.is_boss() || mob_resource.is_elite():			# TEMP: hardcoding
+		core_value = 1
 
 	_is_initialised = true
 
@@ -158,7 +163,7 @@ func take_damage(damage_info: DamageInfo):
 			VFXRequestFactory.request_fire_burst(position)
 
 	if hit_points_component.is_at_zero:
-		Messenger.mob_killed.emit(self)
+		Messenger.mob_killed.emit(self)			# TODO: not sure if I like this
 		# Ensure the mob exits its current node so mob spawner is made aware
 		_path_follower.exit_current()
 #		destroy()

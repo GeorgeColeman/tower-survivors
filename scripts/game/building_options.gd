@@ -13,26 +13,26 @@ signal option_upgraded(option: BuildingOption)
 var _scene_option_dict = {}
 
 
-func add_building_option_packed(scene: PackedScene):
+func add_building_option(scene: PackedScene, player: Player):
 	var unpacked = scene.instantiate()
 
 	if unpacked is Tower:
-		_add_building_option(BuildingOption.new(
+		var option = BuildingOption.new(
 			unpacked.tower_name,
 			scene,
 			unpacked.main_sprite_2d.texture,
 			unpacked.gold_cost
-		))
+		)
 
+		_scene_option_dict[option.scene] = option
 
-func _add_building_option(option: BuildingOption):
-	_scene_option_dict[option.scene] = option
+		option.upgraded.connect(
+			func(): option_upgraded.emit(option)
+		)
 
-	option.upgraded.connect(
-		func(): option_upgraded.emit(option)
-	)
+		option.update_can_build(player)
 
-	option_added.emit(option)
+		option_added.emit(option)
 
 
 func get_building_option(scene: PackedScene) -> BuildingOption:
@@ -40,3 +40,8 @@ func get_building_option(scene: PackedScene) -> BuildingOption:
 		return _scene_option_dict[scene]
 
 	return null
+
+
+func update_build_options_can_build(player: Player):
+	for option in _scene_option_dict.values():
+		option.update_can_build(player)

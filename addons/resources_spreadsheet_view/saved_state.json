@@ -46,7 +46,8 @@
     "res://scenes/towers/",
     "res://scenes/mobs/",
     "res://resources/towers/",
-    "res://resources/upgrades/"
+    "res://resources/upgrades/",
+    "res://resources/mobs/"
   ],
   "table_functions": {
     "filter": [

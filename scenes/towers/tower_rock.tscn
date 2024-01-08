@@ -19,7 +19,6 @@ _data = {
 [node name="TowerRock" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
 script = ExtResource("1_owajj")
 hit_points_component = NodePath("HitPoints2D")
-id = 1
 tower_name = "Rock"
 main_sprite_2d = NodePath("Sprite2D")
 gold_cost = 5

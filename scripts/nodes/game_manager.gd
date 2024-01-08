@@ -84,7 +84,7 @@ func start_game():
 	map_drawer.draw_map(map)
 
 	for building in starting_buildings:
-		game.building_options.add_building_option_packed(building)
+		game.building_options.add_building_option(building, game.player)
 
 	game.speed_changed.connect(
 		func(speed: float):

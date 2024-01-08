@@ -4,14 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_11lq7"]
 [ext_resource type="Texture2D" uid="uid://b5ky6gam3vy1y" path="res://sprites/towers/tower_arcane_citadel.png" id="3_x4xaf"]
 
-[node name="Root" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
+[node name="Root" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "firing_point")]
 script = ExtResource("1_um7at")
 hit_points_component = NodePath("HitPoints2D")
 tower_name = "Arcane Citadel"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["pink_shot"])
 gold_cost = 0
-animation_player = NodePath("")
 firing_point = NodePath("FiringPoint")
 _flags = 1
 show_hit_points_bar = false
@@ -20,7 +19,7 @@ show_hit_points_bar = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_x4xaf")
-offset = Vector2(0, -16)
+offset = Vector2(0, -12)
 region_rect = Rect2(0, 32, 32, 32)
 
 [node name="FiringPoint" type="Marker2D" parent="."]

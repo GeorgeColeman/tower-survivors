@@ -52,7 +52,6 @@ animations = [{
 [node name="Root" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
 script = ExtResource("1_blqxr")
 hit_points_component = NodePath("HitPoints2D")
-id = 5
 tower_name = "Sword Slinger"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["sling_sword"])
@@ -80,3 +79,4 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_wdie5")
 autoplay = "default"
 frame_progress = 0.223104
+offset = Vector2(0, -12)

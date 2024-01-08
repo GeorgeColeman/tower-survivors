@@ -1,17 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://l13dk6opal54"]
+[gd_scene load_steps=5 format=3 uid="uid://l13dk6opal54"]
 
 [ext_resource type="Script" path="res://scripts/control/upgrade_option_button.gd" id="1_ebcko"]
-[ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="2_8etms"]
+[ext_resource type="Texture2D" uid="uid://mb6nvb4a1il2" path="res://sprites/gui/gui_basic_panel.tres" id="2_2q0wp"]
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="3_sp5oa"]
+[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://new_theme.tres" id="4_sbl5d"]
 
 [node name="UpgradeOptionButton" type="Button" node_paths=PackedStringArray("_name_label", "_rank_label", "_description_label", "_main_texure")]
 custom_minimum_size = Vector2(300, 400)
 offset_right = 192.0
 offset_bottom = 256.0
+flat = true
 script = ExtResource("1_ebcko")
 _name_label = NodePath("NameLabel")
 _rank_label = NodePath("RankLabel")
-_description_label = NodePath("DescriptionLabel")
+_description_label = NodePath("Control2/DescriptionLabel")
 _main_texure = NodePath("Control/MainTexture")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -21,11 +23,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_8etms")
-patch_margin_left = 2
-patch_margin_top = 2
-patch_margin_right = 2
-patch_margin_bottom = 2
+texture = ExtResource("2_2q0wp")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 1
@@ -54,20 +56,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Rank"
 horizontal_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(184, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 178.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Description"
-autowrap_mode = 2
-
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -95,3 +83,40 @@ offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_sp5oa")
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="DescriptionLabel" type="Label" parent="Control2"]
+custom_minimum_size = Vector2(184, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("4_sbl5d")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Description"
+autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_sbl5d")
+text = "Description"

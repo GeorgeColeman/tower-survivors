@@ -27,12 +27,18 @@ func _init(starting_gold: int, starting_cores: int):
 
 
 func add_gold(amount: int):
+	if amount == 0:
+		return
+
 	current_gold += amount
 
 	gold_changed.emit(current_gold)
 
 
 func add_cores(amount: int):
+	if amount == 0:
+		return
+
 	cores += amount
 
 	cores_changed.emit(cores)
@@ -43,7 +49,7 @@ func can_afford_building_option(building_option: BuildingOption) -> bool:
 		var has_gold = current_gold >= building_option.gold_cost
 
 		if !has_gold:
-			print_debug("Not enough gold")
+			#print_debug("Not enough gold")
 
 			return false
 
@@ -51,7 +57,7 @@ func can_afford_building_option(building_option: BuildingOption) -> bool:
 		var has_cores = cores >= 1		# TEMP: magic number
 
 		if !has_cores:
-			print_debug("Not enough cores")
+			#print_debug("Not enough cores")
 
 			return false
 
@@ -68,4 +74,5 @@ func spend_resources_for_building(building_option: BuildingOption):
 
 func _on_mob_killed(mob: Mob):
 	add_gold(mob.gold_value)
+	add_cores(mob.core_value)
 	experience_component.add_experience(mob.experience_value)

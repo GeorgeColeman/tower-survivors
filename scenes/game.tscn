@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=43 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="PackedScene" uid="uid://c4367v7nq7pas" path="res://scenes/towers/tower_arcane_citadel.tscn" id="2_0f711"]
@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
 [ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
-[ext_resource type="Texture2D" uid="uid://wefb8xe38by7" path="res://sprites/placeholder_sprites.png" id="15_62lxk"]
+[ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker_24x24.tres" id="13_ei8da"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="Texture2D" uid="uid://b1b4akgjhn8x4" path="res://sprites/markers.png" id="17_66h4r"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
@@ -30,10 +30,12 @@
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
+[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://new_theme.tres" id="29_1kk1u"]
 [ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="29_bsd1r"]
 [ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="30_dsdif"]
 [ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="31_7drxe"]
 [ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="31_igcql"]
+[ext_resource type="Texture2D" uid="uid://cwhxgc1ylsjpr" path="res://sprites/icons/core.tres" id="31_n0d7l"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
 [ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="32_pnssa"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
@@ -96,8 +98,7 @@ cell_marker_sprite = NodePath("CellMarkerSprite")
 
 [node name="CellMarkerSprite" type="Sprite2D" parent="CellInspector"]
 z_index = 1
-texture = ExtResource("15_62lxk")
-region_enabled = true
+texture = ExtResource("13_ei8da")
 region_rect = Rect2(32, 16, 16, 16)
 
 [node name="SelectionDrawer" type="Node2D" parent="." node_paths=PackedStringArray("_marker")]
@@ -178,7 +179,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar")]
+[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar", "gold_label", "time_label", "cores_label")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,74 +190,9 @@ mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("EntityInfoPanel")
 experience_bar = NodePath("ExperienceBar")
-
-[node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 64.0
-offset_right = 192.0
-offset_bottom = 20.0
-grow_horizontal = 2
-
-[node name="GoldSprite" type="TextureRect" parent="CanvasLayer/ControlMain/ControlInGame/PanelGold"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = -8.0
-offset_right = 18.0
-offset_bottom = 8.0
-grow_vertical = 2
-texture = ExtResource("6_52e18")
-
-[node name="GoldText" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/PanelGold"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Gold"
-vertical_alignment = 1
-
-[node name="PanelTime" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 192.0
-offset_right = 320.0
-offset_bottom = 20.0
-grow_horizontal = 2
-
-[node name="HourglassSprite" type="TextureRect" parent="CanvasLayer/ControlMain/ControlInGame/PanelTime"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = -8.0
-offset_right = 18.0
-offset_bottom = 8.0
-grow_vertical = 2
-texture = ExtResource("9_6bjfq")
-
-[node name="TimeText" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/PanelTime"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Time"
-vertical_alignment = 1
+gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
+time_label = NodePath("ResourceElementsContainer/PanelTime/Label")
+cores_label = NodePath("ResourceElementsContainer/PanelCores/Label")
 
 [node name="REFERENCE_ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
 visible = false
@@ -429,6 +365,100 @@ stretch_margin_bottom = 1
 texture_under = ExtResource("29_bsd1r")
 texture_over = ExtResource("30_dsdif")
 texture_progress = ExtResource("31_igcql")
+
+[node name="ResourceElementsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 58.0
+offset_right = 319.0
+offset_bottom = 28.0
+grow_horizontal = 2
+
+[node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelGold"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -8.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_vertical = 2
+texture = ExtResource("6_52e18")
+
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelGold"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("29_1kk1u")
+text = "Gold"
+vertical_alignment = 1
+
+[node name="PanelTime" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelTime"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -8.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_vertical = 2
+texture = ExtResource("9_6bjfq")
+
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelTime"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("29_1kk1u")
+text = "Time"
+vertical_alignment = 1
+
+[node name="PanelCores" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelCores"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -8.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_vertical = 2
+texture = ExtResource("31_n0d7l")
+
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer/PanelCores"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("29_1kk1u")
+text = "Cores"
+vertical_alignment = 1
 
 [node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "game_events_text", "restart_game_button", "damage_tower_button", "kill_tower_button", "spawn_boss_button", "level_up_button", "add_gold_button", "spawn_new_spawn_point_button")]
 layout_mode = 1

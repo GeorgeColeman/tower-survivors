@@ -81,7 +81,7 @@ func get_cells_in_circle_sorted_by_distance_from(origin_cell: Cell, radius: floa
 	return cells_in_circle
 
 
-func get_mob_targets(cells_in_range: Array[Cell],number_of_targets: int) -> Array[Mob]:
+func get_mob_targets(cells_in_range: Array[Cell], number_of_targets: int) -> Array[Mob]:
 	var all_mobs = _game.mob_spawner.get_mob_targets(cells_in_range)
 
 	if number_of_targets >= all_mobs.size():

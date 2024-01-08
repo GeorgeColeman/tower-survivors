@@ -5,6 +5,7 @@ extends Button
 @export var _gold_label: Label
 @export var _gold_cost_area: Control
 @export var _rank_label: Label
+@export var _no_build_overlay_texture: TextureRect
 
 
 func set_building_option(option: BuildingOption):
@@ -15,6 +16,15 @@ func set_building_option(option: BuildingOption):
 	if option.gold_cost == 0:
 		_gold_cost_area.visible = false
 
+	_no_build_overlay_texture.visible = !option.can_build
+
+
 	option.upgraded.connect(
-		func(): _rank_label.text = str(option.rank)
+		func():
+			_rank_label.text = str(option.rank)
+	)
+
+	option.can_build_updated.connect(
+		func(can_build: bool):
+			_no_build_overlay_texture.visible = !can_build
 	)

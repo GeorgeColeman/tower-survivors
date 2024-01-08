@@ -58,7 +58,7 @@ func _get_tower_options(game: Game) -> Array[UpgradeOption]:
 		options.append(PerkFactory.new_tower(
 			unpacked_tower,
 			func():
-				game.building_options.add_building_option_packed(tower)
+				game.building_options.add_building_option(tower, game.player)
 		))
 
 	return options

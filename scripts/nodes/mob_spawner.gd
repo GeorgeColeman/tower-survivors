@@ -67,7 +67,10 @@ func start_game(game: Game):
 	_erase_existing()
 
 	_game = game
-	_game.difficulty_changed.connect(_on_difficulty_changed)
+
+	_game.difficulty.changed.connect(_on_difficulty_changed)
+	_game.difficulty.spawn_elite_triggered.connect(spawn_random_elite)
+
 	_map = game.map
 
 	_current_minute = 1
@@ -156,9 +159,17 @@ func _spawn_random_mob(spawn_point: SpawnPoint):
 
 
 func spawn_random_boss():
-	#print_debug("Spawning random boss")
 	spawn_mob(
 		_game.game_data.bosses.pick_random(),
+		_cell_spawn_point_dict.values().pick_random().cell
+	)
+
+
+func spawn_random_elite():
+	#print_debug("Spawning random elite")
+	
+	spawn_mob(
+		_game.game_data.elites.pick_random(),
 		_cell_spawn_point_dict.values().pick_random().cell
 	)
 
@@ -172,11 +183,13 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	new_mob.entered_node.connect(_on_mob_entered_node)
 	new_mob.exited_node.connect(_on_mob_exited_node)
 	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
-	new_mob.was_hit_not_killed.connect(func(_mob: Mob):
-		Audio.play_sfx(mob_hit_sfx)
+	new_mob.was_hit_not_killed.connect(
+		func(_mob: Mob):
+			Audio.play_sfx(mob_hit_sfx)
 	)
-	new_mob.was_killed.connect(func(_mob: Mob):
-		Audio.play_sfx(mob_killed_sfx)
+	new_mob.was_killed.connect(
+		func(_mob: Mob):
+			Audio.play_sfx(mob_killed_sfx)
 	)
 
 	new_mob.set_resource(mob_resource)

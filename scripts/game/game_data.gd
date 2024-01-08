@@ -10,6 +10,7 @@ var upgrade_resources: Array[UpgradeResource]
 var towers: Array[PackedScene]
 
 var bosses: Array[MobResource]
+var elites: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
@@ -38,6 +39,9 @@ func _load_resources():
 
 			if loaded.is_boss():
 				bosses.append(loaded)
+
+			if loaded.is_elite():
+				elites.append(loaded)
 
 	var upgrades = dir_contents("res://resources/upgrades/")
 
