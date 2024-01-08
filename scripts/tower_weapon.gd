@@ -118,7 +118,8 @@ func _attack():
 	var multi_shot = _multi_shot_chance >= randf()
 	var number_of_shots = 1 + _multi_shot_number_of_shots if multi_shot else 1
 
-	var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
+	var targets = GameUtilities.get_mob_targets_closest_to_main_tower(_cells_in_range, number_of_shots)
+	#var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
 
 	for target in targets:
 		_spawn_projectile_to_target(target)

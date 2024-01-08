@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://bitwxootwrthq"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_k7kxy"]
+[ext_resource type="PackedScene" uid="uid://cy3w3dkih0ytn" path="res://scenes/towers/tower_obsidian_spire.tscn" id="2_cdw0v"]
+
+[resource]
+script = ExtResource("1_k7kxy")
+name = "Obsidian Spire"
+tower_scene = ExtResource("2_cdw0v")
+weapons = Array[String](["pink_shot"])
+hit_points = 50
+gold_cost = 20
+_flags = 0

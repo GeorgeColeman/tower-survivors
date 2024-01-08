@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_6d20n"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_gamrs"]
-[ext_resource type="Texture2D" uid="uid://eciubf0mjopx" path="res://sprites/towers/bunker_atex.tres" id="4_6ac6a"]
+[ext_resource type="Texture2D" uid="uid://eciubf0mjopx" path="res://sprites/towers/bunker.tres" id="4_6ac6a"]
 
 [sub_resource type="Animation" id="Animation_ik65l"]
 resource_name = "destroy"
@@ -16,12 +16,12 @@ _data = {
 "idle": SubResource("Animation_ru1u1")
 }
 
-[node name="TowerBunker" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
+[node name="TowerBunker" type="Node2D" node_paths=PackedStringArray("main_sprite_2d", "hit_points_component", "animation_player", "firing_point")]
 script = ExtResource("1_6d20n")
-hit_points_component = NodePath("HitPoints2D")
 tower_name = "Bunker"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["pea_shooter"])
+hit_points_component = NodePath("HitPoints2D")
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 

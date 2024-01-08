@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cbwdwvy87kn11"]
+
+[ext_resource type="Texture2D" uid="uid://bydxmxbo5qgph" path="res://sprites/towers/crystal_chamber.png" id="1_tv54e"]
+
+[resource]
+atlas = ExtResource("1_tv54e")
+region = Rect2(0, 0, 24, 48)

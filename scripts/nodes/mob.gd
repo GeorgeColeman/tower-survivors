@@ -81,7 +81,8 @@ func _process(_delta):
 func set_resource(mob_resource: MobResource):
 	_mob_resource = mob_resource
 
-	hit_points_component.initialise(mob_resource.hit_points, mob_resource.is_boss())
+	var show_hit_points_bar = mob_resource.is_boss() || mob_resource.is_elite()
+	hit_points_component.initialise(mob_resource.hit_points, show_hit_points_bar)
 
 	_path_follower = PathFollower.new()
 	_path_follower.set_move_speed(_base_move_speed)

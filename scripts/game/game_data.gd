@@ -7,6 +7,7 @@ static var _tower_weapon_data_dict = {}
 
 var mob_resources: Array[MobResource]
 var upgrade_resources: Array[UpgradeResource]
+
 var towers: Array[PackedScene]
 
 var bosses: Array[MobResource]
@@ -14,8 +15,14 @@ var elites: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
+# <String, TowerResource>
+var tower_dict = {}
+
 # <String, PassivePerk>
 var passives_dict = {}
+
+# <String, PlayerCharacter>
+var player_character_dict = {}
 
 func _init():
 	_load_resources()
@@ -51,6 +58,14 @@ func _load_resources():
 		if loaded is UpgradeResource:
 			upgrade_resources.append(loaded)
 
+	var tower_resources = dir_contents("res://resources/towers/")
+
+	for tower_resource in tower_resources:
+		var loaded = load(tower_resource)
+
+		if loaded is TowerResource:
+			tower_dict[loaded.name] = loaded
+
 	var _towers = dir_contents("res://scenes/towers/")
 
 	for tower in _towers:
@@ -63,6 +78,11 @@ func _load_resources():
 
 	for passive in passives:
 		passives_dict[passive.name] = passive
+
+	var player_characters = PlayerCharacterDataResolver.get_player_characters(self)
+
+	for character in player_characters:
+		player_character_dict[character.name] = character
 
 
 
@@ -83,8 +103,6 @@ func _load_tower_weapon_data() -> Array[TowerWeaponData]:
 		var effects = config.get_value(section, "effects")
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
-
-		#print_debug(targeting_type)
 
 		var sfx: AudioStream
 
@@ -129,6 +147,15 @@ static func get_tower_weapon_data(id: String) -> TowerWeaponData:
 		return null
 
 	return _tower_weapon_data_dict[id]
+
+
+func try_get_tower_resource(tower_name: String) -> TowerResource:
+	if !tower_dict.has(tower_name):
+		print_debug("WARNING: no tower with name %s. Returning null" % tower_name)
+
+		return null
+
+	return tower_dict[tower_name]
 
 
 func get_random_mob_resource() -> MobResource:

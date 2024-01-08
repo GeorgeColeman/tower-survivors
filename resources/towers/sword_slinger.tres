@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://c8g1ghq2ehc0d"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_d56k2"]
+[ext_resource type="PackedScene" uid="uid://dnw7oo20m1hr2" path="res://scenes/towers/tower_sword_slinger.tscn" id="2_mjpig"]
+
+[resource]
+script = ExtResource("1_d56k2")
+name = "Sword Slinger"
+tower_scene = ExtResource("2_mjpig")
+weapons = Array[String](["sling_sword"])
+hit_points = 50
+gold_cost = 20
+_flags = 0

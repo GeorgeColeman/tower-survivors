@@ -16,12 +16,12 @@ _data = {
 "idle": SubResource("Animation_ru1u1")
 }
 
-[node name="TowerObsidianSpire" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
+[node name="TowerObsidianSpire" type="Node2D" node_paths=PackedStringArray("main_sprite_2d", "hit_points_component", "animation_player", "firing_point")]
 script = ExtResource("1_klfs0")
-hit_points_component = NodePath("HitPoints2D")
 tower_name = "Obsidian Spire"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["fire_gem"])
+hit_points_component = NodePath("HitPoints2D")
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 

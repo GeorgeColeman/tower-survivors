@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://dal8i5ls45ja6"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_v4d0h"]
+[ext_resource type="PackedScene" uid="uid://dlo18b0teg2ka" path="res://scenes/towers/tower_bunker.tscn" id="2_x2l7b"]
+
+[resource]
+script = ExtResource("1_v4d0h")
+name = "Bunker"
+tower_scene = ExtResource("2_x2l7b")
+weapons = Array[String](["pea_shooter"])
+hit_points = 50
+gold_cost = 20
+_flags = 0

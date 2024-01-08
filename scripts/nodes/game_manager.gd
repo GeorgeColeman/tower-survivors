@@ -4,8 +4,9 @@ extends Node
 @export var starting_gold: int = 50
 @export var starting_cores: int = 1
 
-@export var starting_main_tower: PackedScene
-@export var starting_buildings: Array[PackedScene] = []
+@export var starting_character: String
+#@export var starting_main_tower: PackedScene
+#@export var starting_buildings: Array[PackedScene] = []
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
@@ -67,8 +68,10 @@ func start_game():
 
 	entity_drawer.set_game(game)
 
+	var player_character: PlayerCharacter = game_data.player_character_dict[starting_character]
+
 	var params = SpawnEntityParams.new()
-	params.entity_scene = starting_main_tower
+	params.entity_scene = player_character.main_tower.tower_scene
 	params.cell = map.center_cell
 
 	game.entities.spawn_entity(params)
@@ -83,8 +86,12 @@ func start_game():
 	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 	map_drawer.draw_map(map)
 
-	for building in starting_buildings:
-		game.building_options.add_building_option(building, game.player)
+	for tower in player_character.starting_towers:
+		print_debug(tower.tower_scene)
+		game.building_options.add_building_option(tower.tower_scene, game.player)
+
+	#for building in starting_buildings:
+		#game.building_options.add_building_option(building, game.player)
 
 	game.speed_changed.connect(
 		func(speed: float):

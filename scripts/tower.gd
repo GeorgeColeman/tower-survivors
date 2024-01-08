@@ -3,13 +3,13 @@ extends Node2D
 
 signal was_killed()
 
-@export var hit_points_component: HitPointsComponent
-
 @export var tower_name: String
+@export var graphics: Node2D
 @export var main_sprite_2d: Sprite2D
 @export var weapon_ids: Array[String] = []
 @export var max_hit_points := 50 as int
 @export var gold_cost: int = 20
+@export var hit_points_component: HitPointsComponent
 @export var animation_player: AnimationPlayer
 @export var firing_point: Marker2D
 @export_flags("IS_MAIN_TOWER") var _flags = 0
@@ -129,6 +129,12 @@ func take_damage(amount: int):
 		_destroy()
 
 	TweenEffects.flash_white(main_sprite_2d, Color.WHITE)
+
+	if graphics:
+		TweenEffects.flash_white(graphics, Color.WHITE)
+	else:
+		print_debug("TODO: graphics node for tower: %s" % tower_name)
+
 
 
 func _destroy():

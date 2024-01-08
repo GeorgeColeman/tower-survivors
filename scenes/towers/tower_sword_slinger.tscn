@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_blqxr"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_8dru1"]
-[ext_resource type="Texture2D" uid="uid://u0flc6sea6m3" path="res://sprites/towers/sword_slinger_atex.tres" id="3_fm5e3"]
+[ext_resource type="Texture2D" uid="uid://u0flc6sea6m3" path="res://sprites/towers/sword_slinger.tres" id="3_fm5e3"]
 [ext_resource type="Texture2D" uid="uid://rdoyyef0n4l1" path="res://sprites/towers/sword_slinger.png" id="4_o8cge"]
 
 [sub_resource type="Animation" id="Animation_ik65l"]
@@ -49,12 +49,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Root" type="Node2D" node_paths=PackedStringArray("hit_points_component", "main_sprite_2d", "animation_player", "firing_point")]
+[node name="Root" type="Node2D" node_paths=PackedStringArray("main_sprite_2d", "hit_points_component", "animation_player", "firing_point")]
 script = ExtResource("1_blqxr")
-hit_points_component = NodePath("HitPoints2D")
 tower_name = "Sword Slinger"
 main_sprite_2d = NodePath("Sprite2D")
 weapon_ids = Array[String](["sling_sword"])
+hit_points_component = NodePath("HitPoints2D")
 animation_player = NodePath("AnimationPlayer")
 firing_point = NodePath("FiringPoint")
 

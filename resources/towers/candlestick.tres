@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://xuh4alcfc5bu"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_kvcxm"]
+[ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="2_dpud0"]
+
+[resource]
+script = ExtResource("1_kvcxm")
+name = "Candlestick"
+tower_scene = ExtResource("2_dpud0")
+weapons = Array[String](["pink_shot"])
+hit_points = 50
+gold_cost = 20
+_flags = 0

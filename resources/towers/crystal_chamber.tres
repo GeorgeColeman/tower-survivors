@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://fw2ceeriu2xu"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_cg1wm"]
+[ext_resource type="PackedScene" uid="uid://d07hryohekbus" path="res://scenes/towers/tower_crystal_chamber.tscn" id="2_piw2t"]
+
+[resource]
+script = ExtResource("1_cg1wm")
+name = "Crystal Chamber"
+tower_scene = ExtResource("2_piw2t")
+weapons = Array[String](["pink_shot"])
+hit_points = 50
+gold_cost = 20
+_flags = 1

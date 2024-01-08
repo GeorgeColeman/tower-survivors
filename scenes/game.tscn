@@ -1,7 +1,6 @@
-[gd_scene load_steps=43 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=42 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
-[ext_resource type="PackedScene" uid="uid://c4367v7nq7pas" path="res://scenes/towers/tower_arcane_citadel.tscn" id="2_0f711"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
@@ -46,7 +45,7 @@
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
-starting_main_tower = ExtResource("2_0f711")
+starting_character = "Adept"
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")

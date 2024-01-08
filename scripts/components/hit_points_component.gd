@@ -17,11 +17,11 @@ var _perc_hit_points:
 		return _current_hit_points as float / _max_hit_points
 
 
-func initialise(hit_points: int, show_health_bar: bool):
+func initialise(hit_points: int, show_hit_points_bar: bool):
 	_max_hit_points = hit_points
 	_current_hit_points = hit_points
 
-	hit_points_bar.visible = show_health_bar
+	hit_points_bar.visible = show_hit_points_bar
 
 	_update_hit_points_bar()
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://bpbwnicukjjh4"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_752ss"]
+[ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="2_xovg6"]
+
+[resource]
+script = ExtResource("1_752ss")
+name = "Rock"
+tower_scene = ExtResource("2_xovg6")
+weapons = Array[String]([])
+hit_points = 50
+gold_cost = 5
+_flags = 0

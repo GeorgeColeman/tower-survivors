@@ -90,6 +90,26 @@ func get_mob_targets(cells_in_range: Array[Cell], number_of_targets: int) -> Arr
 	return all_mobs.slice(0, number_of_targets)
 
 
+func get_mob_targets_closest_to_main_tower(
+	cells_in_range: Array[Cell],
+	number_of_targets: int
+	) -> Array[Mob]:
+	var all_mobs = _game.mob_spawner.get_mob_targets(cells_in_range)
+
+	if number_of_targets >= all_mobs.size():
+		return all_mobs
+
+	all_mobs.sort_custom(
+		func(mob_a: Mob, mob_b: Mob):
+			var dist_a = mob_a.position.distance_squared_to(_game.tower.position)
+			var dist_b = mob_b.position.distance_squared_to(_game.tower.position)
+			return dist_b > dist_a
+			#return dist_a > dist_b
+	)
+
+	return all_mobs.slice(0, number_of_targets)
+
+
 func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 	var all_entities: Array[EntityInfo] = []
 
