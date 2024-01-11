@@ -22,11 +22,6 @@ func get_entities_at(cell: Cell) -> Array:
 	return _cell_entity_dict[cell]
 
 
-func apply_perk_to_existing_towers(perk: Perk):
-	for tower in towers:
-		perk.apply_to_tower(tower)
-
-
 func apply_passive_rank_to_existing_towers(passive: PassivePerk):
 	for tower in towers:
 		passive.apply_current_rank_to_tower(tower)
@@ -51,10 +46,6 @@ func _register_tower(tower: Tower):
 		_cell_entity_dict[cell] = []
 
 	_cell_entity_dict[cell].append(tower)
-
-	# Add existing perks to new tower
-	for perk in _game.player.upgrades.perks:
-		perk.apply_to_tower(tower)
 
 	for passive in _game.player.upgrades.passives_dict.values():
 		passive.apply_all_ranks_to_tower(tower)

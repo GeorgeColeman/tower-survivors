@@ -74,11 +74,6 @@ func set_player(p_player: Player):
 			generate_new_upgrade_options_for_player()
 	)
 
-	player.upgrades.perk_added.connect(
-		func(perk: Perk):
-			entities.apply_perk_to_existing_towers(perk)
-	)
-
 	player.upgrades.passive_rank_added.connect(
 		func(passive: PassivePerk):
 			entities.apply_passive_rank_to_existing_towers(passive)

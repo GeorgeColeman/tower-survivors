@@ -23,9 +23,6 @@ func clone() -> PassivePerk:
 	passive.ranks = ranks
 	passive._current_rank_index = 0
 
-	#for rank in ranks:
-		#print_debug(rank.number)
-
 	return passive
 
 

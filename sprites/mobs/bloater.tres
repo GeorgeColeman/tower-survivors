@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c5a427s6j44rg"]
+
+[ext_resource type="Texture2D" uid="uid://ex1yyn6doy32" path="res://sprites/mobs/bloater.png" id="1_68ib2"]
+
+[resource]
+atlas = ExtResource("1_68ib2")
+region = Rect2(0, 0, 24, 24)

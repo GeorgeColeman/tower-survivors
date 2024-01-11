@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://deossnoegyy66"]
+
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_w7nux"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_ge7bh"]
+[ext_resource type="Texture2D" uid="uid://chvmsljdsak5t" path="res://sprites/vfx/red_glow.tres" id="2_v8rc8"]
+[ext_resource type="Texture2D" uid="uid://c5a427s6j44rg" path="res://sprites/mobs/bloater.tres" id="3_1756v"]
+[ext_resource type="Script" path="res://scripts/mob_body.gd" id="4_1oviw"]
+[ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="5_f378j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7qjav"]
+radius = 7.0
+
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "mob_body")]
+script = ExtResource("1_w7nux")
+sprite_2d = NodePath("Visuals/Sprite2D")
+hit_points_component = NodePath("HitPoints2D")
+mob_body = NodePath("MobBody")
+
+[node name="Features" type="Node" parent="."]
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_ge7bh")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Glow" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_v8rc8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("3_1756v")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("5_f378j")
+
+[node name="MobBody" type="Area2D" parent="."]
+script = ExtResource("4_1oviw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody"]
+shape = SubResource("CircleShape2D_7qjav")

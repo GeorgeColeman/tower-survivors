@@ -17,7 +17,7 @@ func process(delta: float):
 	while _time >= _current_second:
 		_current_second += 1
 
-		_chance_to_spawn_elite += 0.05
+		_chance_to_spawn_elite += 0.025
 
 		# Spawn elite is rolled every 4 seconds
 		if _current_second % 4 == 0:

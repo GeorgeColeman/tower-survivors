@@ -1,21 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cv3f6617vaew0"]
+[gd_scene load_steps=8 format=3 uid="uid://cv3f6617vaew0"]
 
-[ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_y2byw"]
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_857aq"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_3gdpb"]
 [ext_resource type="Texture2D" uid="uid://dyoeti5mdqfcm" path="res://sprites/mobs/flyball.tres" id="2_j1xaf"]
+[ext_resource type="Texture2D" uid="uid://dh63hxuhkpakt" path="res://sprites/vfx/blue_glow_24x24.tres" id="2_pskei"]
 [ext_resource type="Script" path="res://scripts/mob_body.gd" id="3_c6pxl"]
+[ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="5_dd5co"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qjav"]
 radius = 7.0
 
-[node name="Mob" node_paths=PackedStringArray("mob_body") instance=ExtResource("1_y2byw")]
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "mob_body")]
+script = ExtResource("1_857aq")
+sprite_2d = NodePath("Visuals/Sprite2D")
+hit_points_component = NodePath("HitPoints2D")
 mob_body = NodePath("MobBody")
 
-[node name="Sprite2D" parent="." index="3"]
-texture = ExtResource("2_j1xaf")
-region_rect = Rect2(0, 0, 16, 16)
+[node name="Features" type="Node" parent="."]
 
-[node name="MobBody" type="Area2D" parent="." index="5"]
+[node name="HitPoints2D" parent="." instance=ExtResource("2_3gdpb")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Glow" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_pskei")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_j1xaf")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("5_dd5co")
+
+[node name="MobBody" type="Area2D" parent="."]
 script = ExtResource("3_c6pxl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody"]
 shape = SubResource("CircleShape2D_7qjav")

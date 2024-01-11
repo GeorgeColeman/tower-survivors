@@ -1,7 +1,7 @@
 class_name ControlDebug
 extends Control
 
-@export var check_box_draw_range_indicators: CheckBox
+#@export var check_box_draw_range_indicators: CheckBox
 @export var check_box_draw_pathfinding_grid: CheckBox
 @export var check_box_draw_mob_paths: CheckBox
 @export var check_box_show_damage_numbers: CheckBox
@@ -37,7 +37,7 @@ func _ready():
 
 		_game.tower.take_damage(999))
 
-	check_box_draw_range_indicators.toggled.connect(_on_toggle_draw_range_indicators)
+	#check_box_draw_range_indicators.toggled.connect(_on_toggle_draw_range_indicators)
 	check_box_draw_pathfinding_grid.toggled.connect(_on_toggle_draw_pathfinding_grid)
 	check_box_draw_mob_paths.toggled.connect(_on_toggle_draw_mob_paths)
 	check_box_show_damage_numbers.toggled.connect(_on_toggle_show_damage_numbers)
@@ -144,8 +144,8 @@ func _on_game_event_occured(game_event: GameEvent):
 	_add_game_event_line(game_event.message)
 
 
-func _on_toggle_draw_range_indicators(button_pressed: bool):
-	_game.tower.draw_range_indicators = button_pressed
+#func _on_toggle_draw_range_indicators(button_pressed: bool):
+	#_game.tower.draw_range_indicators = button_pressed
 
 
 func _on_toggle_draw_pathfinding_grid(button_pressed: bool):

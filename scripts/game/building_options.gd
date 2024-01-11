@@ -9,39 +9,43 @@ extends RefCounted
 signal option_added(option: BuildingOption)
 signal option_upgraded(option: BuildingOption)
 
-# <PackedScene, BuildingOption>
-var _scene_option_dict = {}
+var _option_dict = {}						# <String, BuildingOption>
 
 
-func add_building_option(scene: PackedScene, player: Player):
-	var unpacked = scene.instantiate()
+func add_building_option(
+	tower_resource: TowerResource,
+	tower_proto: Tower,
+	tower_scene: PackedScene,
+	player: Player
+):
+	var option = BuildingOption.new(
+		tower_resource.name,
+		tower_scene,
+		tower_proto.main_sprite_2d.texture,
+		tower_resource.gold_cost
+	)
 
-	if unpacked is Tower:
-		var option = BuildingOption.new(
-			unpacked.tower_name,
-			scene,
-			unpacked.main_sprite_2d.texture,
-			unpacked.gold_cost
-		)
+	option.tower_resource = tower_resource
+	option.tower_proto = tower_proto
 
-		_scene_option_dict[option.scene] = option
+	_option_dict[tower_resource.name] = option
 
-		option.upgraded.connect(
-			func(): option_upgraded.emit(option)
-		)
+	option.upgraded.connect(
+		func(): option_upgraded.emit(option)
+	)
 
-		option.update_can_build(player)
+	option.update_can_build(player)
 
-		option_added.emit(option)
+	option_added.emit(option)
 
 
-func get_building_option(scene: PackedScene) -> BuildingOption:
-	if _scene_option_dict.has(scene):
-		return _scene_option_dict[scene]
+func get_building_option(key: String) -> BuildingOption:
+	if _option_dict.has(key):
+		return _option_dict[key]
 
 	return null
 
 
 func update_build_options_can_build(player: Player):
-	for option in _scene_option_dict.values():
+	for option in _option_dict.values():
 		option.update_can_build(player)

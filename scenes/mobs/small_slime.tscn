@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyyfjpgf22euu"]
+[gd_scene load_steps=10 format=3 uid="uid://cyyfjpgf22euu"]
 
-[ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_s3fdf"]
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_qxwhr"]
 [ext_resource type="Texture2D" uid="uid://53fuhdd3im20" path="res://sprites/DawnLike/as_resource/small_slime_01.tres" id="2_6h0d5"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_vvo6y"]
 [ext_resource type="Texture2D" uid="uid://xh31w6qvoshc" path="res://sprites/DawnLike/as_resource/small_slime_02.tres" id="3_40gqm"]
 [ext_resource type="Script" path="res://scripts/mob_body.gd" id="4_nxct7"]
+[ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="5_hilbj"]
 
 [sub_resource type="Animation" id="Animation_jq7rh"]
 resource_name = "idle"
@@ -11,7 +13,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Visuals/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -41,23 +43,35 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_dantr"]
 radius = 6.0
 
-[node name="SmallSlime" node_paths=PackedStringArray("mob_body") instance=ExtResource("1_s3fdf")]
+[node name="SmallSlime" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "mob_body")]
+script = ExtResource("1_qxwhr")
+sprite_2d = NodePath("Visuals/Sprite2D")
+hit_points_component = NodePath("HitPoints2D")
 mob_body = NodePath("MobBody")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+[node name="Features" type="Node" parent="."]
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_vvo6y")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ivut4")
 }
 autoplay = "idle"
 
-[node name="Sprite2D" parent="." index="4"]
-texture = ExtResource("2_6h0d5")
+[node name="Visuals" type="Node2D" parent="."]
 
-[node name="Shadow" parent="." index="5"]
-position = Vector2(0, 0)
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("3_40gqm")
 
-[node name="MobBody" type="Area2D" parent="." index="6"]
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, -1)
+texture = ExtResource("5_hilbj")
+
+[node name="MobBody" type="Area2D" parent="."]
 script = ExtResource("4_nxct7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody"]
 shape = SubResource("CircleShape2D_dantr")

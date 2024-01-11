@@ -1,4 +1,3 @@
-# TODO: make this class pure. Is only upgrade generator.
 class_name UpgradeOptionsGenerator
 extends RefCounted
 
@@ -7,7 +6,6 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 	var options: Array[UpgradeOption] = []
 
 	options.append_array(_get_passive_options(game))
-	#options.append_array(_get_old_upgrades(game))
 
 	if GameRules.WEAPON_PERKS:
 		# Apply the weapon perks to this tower
@@ -38,27 +36,31 @@ func _get_tower_options(game: Game) -> Array[UpgradeOption]:
 	# Add main tower rank up option
 	options.append(PerkFactory.rank_up_specific_tower(game.tower))
 
-	for tower in game.game_data.towers:
-		var unpacked_tower = tower.instantiate() as Tower
-
-		# Initialise weapons so we can get weapon info for the description
-		unpacked_tower.init_weapons()
+	for tower_resource: TowerResource in game.game_data.tower_resource_dict.values():
+		var tower_proto = game.game_data.tower_proto_dict[tower_resource.name]
 
 		# Check if the building option already exists
-		var existing_option: BuildingOption = game.building_options.get_building_option(tower)
+		var existing_option: BuildingOption = game.building_options.get_building_option(
+			tower_resource.name
+		)
 
 		if existing_option:
-			options.append(PerkFactory.rank_up_tower(unpacked_tower, existing_option))
+			options.append(PerkFactory.rank_up_tower(tower_proto, existing_option))
 
 			continue
 
-		if !unpacked_tower.is_possible_new_tower_upgrade_perk:
+		if !tower_proto.is_possible_new_tower_upgrade_perk:
 			continue
 
 		options.append(PerkFactory.new_tower(
-			unpacked_tower,
+			tower_proto,
 			func():
-				game.building_options.add_building_option(tower, game.player)
+				game.building_options.add_building_option(
+					tower_resource,
+					tower_proto,
+					tower_resource.tower_scene,
+					game.player
+				)
 		))
 
 	return options
@@ -75,20 +77,5 @@ func _get_passive_options(game: Game) -> Array[UpgradeOption]:
 				options.append(PerkFactory.rank_up_passive(passive_key, game.player))
 		else:
 			options.append(PerkFactory.new_passive(passive, game.player))
-
-	return options
-
-
-func _get_old_upgrades(game: Game) -> Array[UpgradeOption]:
-	var options: Array[UpgradeOption] = []
-
-	for upgrade in game.game_data.upgrade_resources:
-		options.append(PerkFactory.passive_upgrade(
-			upgrade,
-			func():
-				var perk = Perk.new()
-				perk.upgrade_resource = upgrade
-				game.player.upgrades.add_perk(perk)
-		))
 
 	return options

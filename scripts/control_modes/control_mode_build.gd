@@ -42,8 +42,9 @@ func _on_mouse_entered_cell(cell: Cell):
 		return
 
 	preview_container.visible = true
-
 	preview_container.position = cell.scene_position
+
+	GameUtilities.draw_cells_in_proto_tower_attack_range(cell, _building_option.tower_proto)
 
 
 func _on_mouse_clicked_cell(cell: Cell):

@@ -1,12 +1,15 @@
-# ------------------------------------------------------------------
-# Contains information about a building (tower) the player can build
-# ------------------------------------------------------------------
+# -------------------------------------------------------
+# Contains information about a tower the player can build
+# -------------------------------------------------------
 
 class_name BuildingOption
 extends RefCounted
 
 signal upgraded()
 signal can_build_updated(can_build: bool)
+
+var tower_resource: TowerResource
+var tower_proto: Tower
 
 var name: String
 var scene: PackedScene

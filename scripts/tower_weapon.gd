@@ -34,11 +34,6 @@ var _bonus_attack_range: int
 var _multi_shot_chance: float
 var _multi_shot_number_of_shots: int
 
-var draw_range_indicators = false:
-	set(value):
-		draw_range_indicators = value
-		queue_redraw()
-
 var description: String
 
 
@@ -55,21 +50,6 @@ func set_data(data: TowerWeaponData):
 	attack_sfx = data.sfx
 
 	_update_description()
-
-
-func _draw():
-	if not draw_range_indicators:
-		return
-
-	draw_arc(Vector2.ZERO, (attack_range + _bonus_attack_range) * 16, 0, TAU, 15, Color.CYAN)
-
-	var color = Color.CYAN
-	color.a = 0.5
-
-	var offset := Vector2(global_position.x + 4, global_position.y + 4)
-
-	for cell in _cells_in_range:
-		draw_rect(Rect2(cell.position * 16 - offset, Vector2.ONE * 8), color)
 
 
 func _process(_delta: float):
@@ -108,7 +88,6 @@ func _update_description():
 func _set_cells_in_range():
 	_cells_in_range = GameUtilities.get_cells_in_circle_sorted_by_distance_from(
 		_cell, attack_range + _bonus_attack_range)
-	queue_redraw()
 
 
 func _attack():

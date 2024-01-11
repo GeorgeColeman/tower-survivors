@@ -15,13 +15,6 @@ signal was_killed()
 @export_flags("IS_MAIN_TOWER") var _flags = 0
 @export var show_hit_points_bar: bool = true
 
-var draw_range_indicators = false:
-	set(value):
-		draw_range_indicators = value
-
-		for weapon in _weapons:
-			weapon.draw_range_indicators = value
-
 var kills: int
 var cell: Cell
 var tower_stats: TowerStats
@@ -87,6 +80,14 @@ func set_cell_and_init(p_cell: Cell):
 
 	for weapon in _weapons:
 		weapon.set_cell(p_cell)
+
+
+func get_attack_range() -> int:
+	return _weapons[0].attack_range
+
+
+func get_cells_in_attack_range() -> Array[Cell]:
+	return _weapons[0]._cells_in_range
 
 
 func set_rank(value: int):

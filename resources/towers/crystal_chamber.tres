@@ -7,7 +7,7 @@
 script = ExtResource("1_cg1wm")
 name = "Crystal Chamber"
 tower_scene = ExtResource("2_piw2t")
-weapons = Array[String](["pink_shot"])
+weapons = Array[String](["crystal_canon"])
 hit_points = 50
 gold_cost = 20
 _flags = 1

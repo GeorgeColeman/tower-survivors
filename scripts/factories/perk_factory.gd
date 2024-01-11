@@ -37,20 +37,6 @@ static func rank_up_passive(passive_key: String, player: Player) -> UpgradeOptio
 	return option
 
 
-static func passive_upgrade(upgrade: UpgradeResource, apply_callback: Callable) -> UpgradeOption:
-	var option = UpgradeOption.new(
-		upgrade.name,
-		"TODO: passive perk ranks",
-		"Passive Upgrade",
-		upgrade.get_description(),
-		apply_callback
-	)
-
-	option.texture = upgrade.main_texture
-
-	return option
-
-
 static func new_weapon(tower: Tower, weapon_data: TowerWeaponData) -> UpgradeOption:
 	var option = UpgradeOption.new(
 		weapon_data.name,

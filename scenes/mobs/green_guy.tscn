@@ -1,20 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://domp5gsyo8bjo"]
+[gd_scene load_steps=7 format=3 uid="uid://domp5gsyo8bjo"]
 
-[ext_resource type="PackedScene" uid="uid://s7vpiqx3aaob" path="res://scenes/mobs/mob.tscn" id="1_wxrwe"]
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_e75bf"]
 [ext_resource type="Texture2D" uid="uid://c0ibm76nt7ok3" path="res://sprites/mobs/green_guy_sprite.tres" id="2_drxlu"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_it7ji"]
 [ext_resource type="Script" path="res://scripts/mob_body.gd" id="3_vd13n"]
+[ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="4_k0dmd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w430h"]
 radius = 6.0
 
-[node name="Mob" node_paths=PackedStringArray("mob_body") instance=ExtResource("1_wxrwe")]
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "mob_body")]
+script = ExtResource("1_e75bf")
+sprite_2d = NodePath("Visuals/Sprite2D")
+hit_points_component = NodePath("HitPoints2D")
 mob_body = NodePath("MobBody")
 
-[node name="Sprite2D" parent="." index="3"]
+[node name="Features" type="Node" parent="."]
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_it7ji")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("2_drxlu")
 
-[node name="MobBody" type="Area2D" parent="." index="5"]
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("4_k0dmd")
+
+[node name="MobBody" type="Area2D" parent="."]
 script = ExtResource("3_vd13n")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody"]
 shape = SubResource("CircleShape2D_w430h")

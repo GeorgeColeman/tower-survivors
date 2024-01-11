@@ -26,8 +26,6 @@ static func get_player_characters(game_data: GameData) -> Array[PlayerCharacter]
 
 		for tower_name in starting_tower_names:
 			var tower = game_data.try_get_tower_resource(tower_name)
-
-			print_debug(tower.name)
 			
 			if tower:
 				player_character.starting_towers.append(tower)

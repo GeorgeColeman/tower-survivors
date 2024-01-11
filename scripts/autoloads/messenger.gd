@@ -4,6 +4,8 @@ signal game_event_occured(game_event: GameEvent)
 signal mob_killed(mob: Mob)
 signal clicked_on_entity(entity_info: EntityInfo)
 signal clicked_on_empty()
+signal draw_tower_attack_range_requested(tower: Tower)
+signal draw_cell_area_requested(cell_area: Array[Cell])
 
 signal start_game_requested()
 

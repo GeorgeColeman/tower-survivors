@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5gud02u8ef3f"]
+[gd_scene load_steps=4 format=3 uid="uid://b5gud02u8ef3f"]
 
 [ext_resource type="Script" path="res://scripts/components/hit_points_component.gd" id="1_mts2n"]
 [ext_resource type="Texture2D" uid="uid://dnlrtp3aweov4" path="res://sprites/control/under.tres" id="2_h3r0f"]
-[ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="3_0ui7j"]
 [ext_resource type="Texture2D" uid="uid://bs5m7yp8hqm1" path="res://sprites/control/progress_red.tres" id="4_t7din"]
 
 [node name="HitPoints2D" type="Node2D" node_paths=PackedStringArray("hit_points_bar")]
@@ -18,11 +17,10 @@ offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="HitPointsBar" type="TextureProgressBar" parent="Control"]
-visible = false
 layout_mode = 0
-offset_left = -10.0
-offset_top = 12.0
-offset_right = 10.0
+offset_left = -6.0
+offset_top = 14.0
+offset_right = 6.0
 offset_bottom = 16.0
 mouse_filter = 2
 value = 50.0
@@ -32,5 +30,4 @@ stretch_margin_top = 1
 stretch_margin_right = 1
 stretch_margin_bottom = 1
 texture_under = ExtResource("2_h3r0f")
-texture_over = ExtResource("3_0ui7j")
 texture_progress = ExtResource("4_t7din")

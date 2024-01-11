@@ -461,7 +461,7 @@ theme = ExtResource("29_1kk1u")
 text = "Cores"
 vertical_alignment = 1
 
-[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "game_events_text", "restart_game_button", "damage_tower_button", "kill_tower_button", "spawn_boss_button", "level_up_button", "add_gold_button", "spawn_new_spawn_point_button")]
+[node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_range_indicators", "check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "game_events_text", "restart_game_button", "damage_tower_button", "kill_tower_button", "spawn_boss_button", "level_up_button", "add_gold_button", "spawn_new_spawn_point_button")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -470,6 +470,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_vxhso")
+check_box_draw_range_indicators = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawRangeIndicators")
 check_box_draw_pathfinding_grid = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawPathfindingGrid")
 check_box_draw_mob_paths = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawMobPaths")
 check_box_show_damage_numbers = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxShowDamageNumbers")

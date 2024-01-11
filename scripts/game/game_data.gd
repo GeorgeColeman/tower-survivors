@@ -15,8 +15,8 @@ var elites: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
-# <String, TowerResource>
-var tower_dict = {}
+var tower_resource_dict = {}					# <String, TowerResource>
+var tower_proto_dict = {}						# <String, Tower>
 
 # <String, PassivePerk>
 var passives_dict = {}
@@ -30,6 +30,8 @@ func _init():
 
 	for data in tower_weapon_data:
 		_tower_weapon_data_dict[data.id] = data
+
+	_build_prototypes()
 
 
 func _load_resources():
@@ -58,21 +60,7 @@ func _load_resources():
 		if loaded is UpgradeResource:
 			upgrade_resources.append(loaded)
 
-	var tower_resources = dir_contents("res://resources/towers/")
-
-	for tower_resource in tower_resources:
-		var loaded = load(tower_resource)
-
-		if loaded is TowerResource:
-			tower_dict[loaded.name] = loaded
-
-	var _towers = dir_contents("res://scenes/towers/")
-
-	for tower in _towers:
-		var loaded = load(tower)
-
-		if loaded is PackedScene:
-			towers.append(loaded)
+	_load_towers()
 
 	var passives = PassivePerkDataResolver.get_passive_perk_data()
 
@@ -84,6 +72,33 @@ func _load_resources():
 	for character in player_characters:
 		player_character_dict[character.name] = character
 
+
+func _build_prototypes():
+	for key in tower_resource_dict:
+		var tower_resource = tower_resource_dict[key]
+		var unpacked_tower: Tower = tower_resource.tower_scene.instantiate()
+
+		unpacked_tower.init_weapons()
+
+		tower_proto_dict[key] = unpacked_tower
+
+
+func _load_towers():
+	var tower_resources = dir_contents("res://resources/towers/")
+
+	for tower_resource in tower_resources:
+		var loaded = load(tower_resource)
+
+		if loaded is TowerResource:
+			tower_resource_dict[loaded.name] = loaded
+
+	var _towers = dir_contents("res://scenes/towers/")
+
+	for tower in _towers:
+		var loaded = load(tower)
+
+		if loaded is PackedScene:
+			towers.append(loaded)
 
 
 func _load_tower_weapon_data() -> Array[TowerWeaponData]:
@@ -150,12 +165,12 @@ static func get_tower_weapon_data(id: String) -> TowerWeaponData:
 
 
 func try_get_tower_resource(tower_name: String) -> TowerResource:
-	if !tower_dict.has(tower_name):
+	if !tower_resource_dict.has(tower_name):
 		print_debug("WARNING: no tower with name %s. Returning null" % tower_name)
 
 		return null
 
-	return tower_dict[tower_name]
+	return tower_resource_dict[tower_name]
 
 
 func get_random_mob_resource() -> MobResource:

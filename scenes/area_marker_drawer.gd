@@ -10,7 +10,7 @@ func _ready():
 		func(entity_info: EntityInfo):
 			print_debug("TEMP: we need a more intelligent way of detecting when a tower is selected")
 			if entity_info.entity is Tower:
-				draw_cell_area_markers(entity_info.entity._weapons[0]._cells_in_range)
+				draw_cell_area_markers(entity_info.entity.get_cells_in_attack_range())
 			else:
 				clear_markers()
 	)
@@ -19,6 +19,8 @@ func _ready():
 		func():
 			clear_markers()
 	)
+	
+	Messenger.draw_cell_area_requested.connect(draw_cell_area_markers)
 
 
 func draw_cell_area_markers(cells: Array[Cell]):
