@@ -40,10 +40,10 @@ static func new_slow_status_effect(
 	status_effect.duration = slow_duration
 
 	status_effect.add = func():
-		mob.add_move_speed_modifier(-slow_amount)
+		mob.movement.add_move_speed_modifier(-slow_amount)
 		mob.set_tint_colour(Color.AQUA * 1.5)
 	status_effect.remove = func():
-		mob.add_move_speed_modifier(slow_amount)
+		mob.movement.add_move_speed_modifier(slow_amount)
 		mob.set_tint_colour(Color.WHITE)
 
 #	status_effect.add = func(mob: Mob):

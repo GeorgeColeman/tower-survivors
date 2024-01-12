@@ -167,7 +167,7 @@ func spawn_random_boss():
 
 func spawn_random_elite():
 	#print_debug("Spawning random elite")
-	
+
 	spawn_mob(
 		_game.game_data.elites.pick_random(),
 		_cell_spawn_point_dict.values().pick_random().cell
@@ -180,8 +180,8 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	add_child(new_mob)
 
 	new_mob.position = cell.scene_position
-	new_mob.entered_node.connect(_on_mob_entered_node)
-	new_mob.exited_node.connect(_on_mob_exited_node)
+	new_mob.exited_cell.connect(_on_mob_exited_cell)
+	new_mob.entered_cell.connect(_on_mob_entered_cell)
 	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
 	new_mob.was_hit_not_killed.connect(
 		func(_mob: Mob):
@@ -194,29 +194,26 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 
 	new_mob.set_resource(mob_resource)
 
-	new_mob._path_follower.path_interrupted.connect(func():
+	new_mob.movement.path_interrupted.connect(func():
 		var new_path = GameUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
-		new_mob.set_path(new_path, _map.center_cell)
+		new_mob.movement.set_path(new_path, _map.center_cell)
 	)
 
 	#await get_tree().create_timer(0.5).timeout
 
 	var path = GameUtilities.get_path_from_cell_to_cell(cell, _map.center_cell)
-	new_mob.set_path(path, _map.center_cell)
+	new_mob.movement.set_path(path, _map.center_cell)
 
 	new_mob.animated_spawn()
 
 	return new_mob
 
 
-func _on_mob_entered_node(mob: Mob, node: Vector2i):
-	var cell = _map.get_cell_at_world(node.x, node.y)
+func _on_mob_entered_cell(mob: Mob, cell: Cell):
 	_cell_mob_dict[cell].append(mob)
 
 
-func _on_mob_exited_node(mob: Mob, node: Vector2i):
-	var cell = _map.get_cell_at_world(node.x, node.y)
-
+func _on_mob_exited_cell(mob: Mob, cell: Cell):
 	if !_cell_mob_dict[cell].has(mob):
 		print_debug("WARNING: cell mob dict doesn't contain the mob ", mob)
 		return

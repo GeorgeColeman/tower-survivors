@@ -67,10 +67,10 @@ func get_distance_between_nodes(node_a: Vector2i, node_b: Vector2i) -> float:
 
 
 func draw_cells_in_proto_tower_attack_range(centre_cell: Cell, tower_proto: Tower):
-	var range = tower_proto.get_attack_range() + _game.tower.tower_stats._bonus_attack_range
+	var attack_range = tower_proto.get_attack_range() + _game.tower.tower_stats._bonus_attack_range
 
 	Messenger.draw_cell_area_requested.emit(
-		get_cells_in_circle(centre_cell, range)
+		get_cells_in_circle(centre_cell, attack_range)
 	)
 
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://38q1wkrg25ha"]
 
 [ext_resource type="Script" path="res://scripts/control/build_button.gd" id="1_hxw7i"]
-[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="3_bi1fe"]
+[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="3_bi1fe"]
 [ext_resource type="Texture2D" uid="uid://bqrytwuvadvud" path="res://sprites/gui/gui_red.tres" id="3_isknm"]
 
 [node name="BuildButton" type="Button" node_paths=PackedStringArray("_main_texture", "_gold_label", "_gold_cost_area", "_rank_label", "_no_build_overlay_texture")]

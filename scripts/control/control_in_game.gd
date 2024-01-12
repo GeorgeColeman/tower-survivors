@@ -8,20 +8,25 @@ extends Control
 @export var time_label: Label
 @export var cores_label: Label
 
-@onready var check_box_game_speed_01: CheckBox = %CheckBoxGameSpeed01
-@onready var check_box_game_speed_02: CheckBox = %CheckBoxGameSpeed02
-@onready var check_box_game_speed_05: CheckBox = %CheckBoxGameSpeed05
-@onready var check_box_game_speed_10: CheckBox = %CheckBoxGameSpeed10
+@export var buy_core_button: Button
+
+@export_group("Game Speed Controls")
+@export var check_box_game_speed_01: CheckBox
+@export var check_box_game_speed_02: CheckBox
+@export var check_box_game_speed_05: CheckBox
+@export var check_box_game_speed_10: CheckBox
 
 var _game: Game
 
-var _selected_entity
+var _selected_entity: EntityInfo
 var _entity_is_selected: bool
 
 
 func _ready():
 	Messenger.clicked_on_entity.connect(_on_clicked_on_entity)
 	Messenger.clicked_on_empty.connect(_on_clicked_on_empty)
+
+	buy_core_button.pressed.connect(_on_buy_core_button_pressed)
 
 	check_box_game_speed_01.pressed.connect(func(): _set_game_speed(1))
 	check_box_game_speed_02.pressed.connect(func(): _set_game_speed(2))
@@ -77,7 +82,7 @@ func _update_experience_bar():
 	experience_bar.value = _game.player.experience_component.perc_to_next_level
 
 
-func _on_clicked_on_entity(entity):
+func _on_clicked_on_entity(entity: EntityInfo):
 	_selected_entity = entity
 	_entity_is_selected = true
 
@@ -87,6 +92,10 @@ func _on_clicked_on_entity(entity):
 
 func _on_clicked_on_empty():
 	entity_info_panel.visible = false
+
+
+func _on_buy_core_button_pressed():
+	_game.player.try_buy_core()
 
 
 func _update_gold_text(current_gold: int):

@@ -17,6 +17,15 @@ static func get_passive_perk_data() -> Array[PassivePerk]:
 
 		var passive_perk_data = PassivePerk.new()
 
+		if !texture:
+			texture = "res://sprites/missing.png"
+			#print_debug("No texture")
+			
+
+		
+		#if !tex:
+			#print_debug("No texture")
+
 		passive_perk_data.name = name
 		passive_perk_data.texture = load(texture)
 		passive_perk_data.ranks = _get_ranks(ranks)

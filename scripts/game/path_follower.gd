@@ -13,8 +13,8 @@ var smooth_position: Vector2:
 var path: PackedVector2Array
 
 var _move_speed: float
+var _next_node_index: int
 
-var _node_index: int
 var _dist_to_next: float
 var _progress_to_next: float
 
@@ -39,33 +39,44 @@ func set_path(new_path: PackedVector2Array):
 	path = new_path
 
 	if new_path.size() == 0:
-		push_warning("WARNING: path length is 0")
+		push_warning("Path size is 0")
+
 		return
 
 	current_node = new_path[0]
-	next_node = new_path[0]
 
-	_node_index = 0
-	_dist_to_next = 1
-	_progress_to_next = 1
-	#_has_active_path = true
+	entered_node.emit(current_node)
 
-	entered_node.emit(new_path[0])
+	if new_path.size() <= 1:
+		push_warning("Path size is less than or equal to 1")
+
+		return
+
+	next_node = new_path[1]
+
+	_next_node_index = 1
+	
+	_dist_to_next = GameUtilities.get_distance_between_nodes(current_node, next_node)
+	_progress_to_next = 0
+
 
 
 func start_path():
 	if path.size() == 0:
-		push_warning("Path size is 0 - unable to start path")
+		push_warning("Path size is 0")
+
 		return
 
 	_has_active_path = true
 
 
 func exit_current():
-	if _node_index >= path.size():
-		print_debug(_node_index, " :: ", path.size())
-
-	exited_node.emit(path[_node_index])
+	exited_node.emit(current_node)
+	
+	#if _node_index >= path.size():
+		#print_debug(_node_index, " :: ", path.size())
+#
+	#exited_node.emit(path[_node_index])
 
 
 func _process_move(delta):
@@ -76,22 +87,24 @@ func _process_move(delta):
 
 
 func _enter_next():
-	exited_node.emit(path[_node_index])
+	exited_node.emit(path[_next_node_index - 1])
+	entered_node.emit(path[_next_node_index])
 
-	_node_index += 1
-
-	if _node_index >= path.size():
-		_complete_path()
-		return
-
-	entered_node.emit(path[_node_index])
+	_next_node_index += 1
 
 	current_node = next_node
-	next_node = path[_node_index]
+
+	if _next_node_index >= path.size():
+		_complete_path()
+
+		return
+	else:
+		next_node = path[_next_node_index]
 
 	if !PathUtilities.get_is_next_node_walkable(next_node):
 		exit_current()
 		_interrupt_path()
+
 		return
 
 	# Allows for correct speed when moving along diagonals

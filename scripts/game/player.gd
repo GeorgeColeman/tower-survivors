@@ -44,6 +44,20 @@ func add_cores(amount: int):
 	cores_changed.emit(cores)
 
 
+func try_buy_core():
+	var core_gold_cost = 25				# FIXME: hardcoding
+
+	var has_gold = current_gold >= core_gold_cost
+
+	if !has_gold:
+		print_debug("Not enough gold, returning")
+
+		return
+
+	add_gold(-core_gold_cost)
+	add_cores(1)
+
+
 func can_afford_building_option(building_option: BuildingOption) -> bool:
 	if GameRules.GOLD_TO_BUILD:
 		var has_gold = current_gold >= building_option.gold_cost

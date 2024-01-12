@@ -70,10 +70,8 @@ func get_cell_neighbours(centre_cell: Cell) -> Array[Cell]:
 	var neighbours: Array[Cell] = []
 
 	var north_neighbour = get_cell_at(centre_cell.x, centre_cell.y + 1)
-	#var north_neighbour = get_cell_at(centre_cell.x, centre_cell.y + width)
 	var east_neighbour = get_cell_at(centre_cell.x + 1, centre_cell.y)
 	var south_neighbour = get_cell_at(centre_cell.x, centre_cell.y - 1)
-	#var south_neighbour = get_cell_at(centre_cell.x, centre_cell.y - width)
 	var west_neighbour = get_cell_at(centre_cell.x - 1, centre_cell.y)
 
 	if north_neighbour: neighbours.append(north_neighbour)

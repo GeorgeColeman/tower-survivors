@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
-[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin_sprite.tres" id="6_52e18"]
+[ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="6_52e18"]
 [ext_resource type="PackedScene" uid="uid://l13dk6opal54" path="res://scenes/control/upgrade_option_button.tscn" id="6_wrk1s"]
 [ext_resource type="Script" path="res://scripts/control/control_in_game.gd" id="7_j5a5t"]
 [ext_resource type="AudioStream" uid="uid://biyrj4fsaybv4" path="res://sound_effects/mob_hit.wav" id="7_nb2t7"]
@@ -45,9 +45,7 @@
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
-starting_cores = null
 starting_character = "Adept"
-auto_start_game = null
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
@@ -180,7 +178,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar", "gold_label", "time_label", "cores_label")]
+[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar", "gold_label", "time_label", "cores_label", "buy_core_button", "check_box_game_speed_01", "check_box_game_speed_02", "check_box_game_speed_05", "check_box_game_speed_10")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,6 +192,11 @@ experience_bar = NodePath("ExperienceBar")
 gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
 time_label = NodePath("ResourceElementsContainer/PanelTime/Label")
 cores_label = NodePath("ResourceElementsContainer/PanelCores/Label")
+buy_core_button = NodePath("BuyCoreButton")
+check_box_game_speed_01 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed01")
+check_box_game_speed_02 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed02")
+check_box_game_speed_05 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed05")
+check_box_game_speed_10 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed10")
 
 [node name="REFERENCE_ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
 visible = false
@@ -261,7 +264,6 @@ layout_mode = 2
 text = "Game Speed"
 
 [node name="CheckBoxGameSpeed01" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 button_pressed = true
@@ -269,21 +271,18 @@ button_group = ExtResource("21_5fiwn")
 text = "x1"
 
 [node name="CheckBoxGameSpeed02" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x2"
 
 [node name="CheckBoxGameSpeed05" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x5"
 
 [node name="CheckBoxGameSpeed10" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
@@ -461,7 +460,35 @@ theme = ExtResource("29_1kk1u")
 text = "Cores"
 vertical_alignment = 1
 
+[node name="BuyCoreButton" type="Button" parent="CanvasLayer/ControlMain/ControlInGame"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -96.0
+offset_right = 96.0
+grow_vertical = 0
+theme = ExtResource("29_1kk1u")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/ControlMain/ControlInGame/BuyCoreButton"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("29_1kk1u")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center]1[img]res://sprites/icons/core.tres[/img]
+for
+25 [img]res://sprites/coin.tres[/img]"
+autowrap_mode = 0
+
 [node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "game_events_text", "restart_game_button", "damage_tower_button", "kill_tower_button", "spawn_boss_button", "level_up_button", "add_gold_button", "spawn_new_spawn_point_button")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -724,8 +751,8 @@ grow_vertical = 2
 script = ExtResource("32_pnssa")
 upgrade_options_container = NodePath("UpgradeOptionsContainer")
 upgrade_option_button = ExtResource("6_wrk1s")
-dismiss_button = NodePath("Button")
-_reroll_button = NodePath("RerollButton")
+dismiss_button = NodePath("VBoxContainer/Button")
+_reroll_button = NodePath("VBoxContainer/RerollButton")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
@@ -749,36 +776,6 @@ text = "LEVEL UP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -94.0
-offset_top = -131.0
-offset_right = 95.0
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "TEMP: Dismiss Level Up"
-
-[node name="RerollButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -94.0
-offset_top = -196.0
-offset_right = 95.0
-offset_bottom = -165.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Reroll"
-
 [node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
 layout_mode = 1
 anchors_preset = 8
@@ -792,6 +789,27 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
+layout_mode = 2
+text = "TEMP: Dismiss Level Up"
+
+[node name="RerollButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
+layout_mode = 2
+text = "Reroll"
 
 [node name="SoundEffectsPlayer" type="Node" parent="."]
 script = ExtResource("25_6tpgp")

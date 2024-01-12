@@ -1,8 +1,8 @@
 class_name Mob
 extends Node2D
 
-signal exited_node(mob: Mob, node: Vector2i)
-signal entered_node(mob: Mob, node: Vector2i)
+signal exited_cell(mob: Mob, cell: Cell)
+signal entered_cell(mob: Mob, cell: Cell)
 signal attacked_tower(mob: Mob)
 signal was_hit_not_killed(mob: Mob)
 signal was_killed(mob: Mob)
@@ -10,39 +10,25 @@ signal was_killed(mob: Mob)
 @export var features: Array[MobFeature]
 @export var sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent
-#@export var visuals_container: Node2D
 @export var mob_body: MobBody
 
+var movement: Movement
 var status_effects: StatusEffects
 
 var cell: Cell:
 	get:
-		return MapUtilities.get_cell_at_scene_position(_path_follower.current_node)
+		return movement.cell
 
 var _visuals_container: Node2D = self
 
 var _mob_resource: MobResource
 var _is_initialised: bool
-var _path_follower: PathFollower
-var _target_cell: Cell
 
 var _invulnerable_time = 0.0
 var _is_invulnerable = false
 
 var _is_destroyed = false
 var _tint_colour = Color.WHITE
-
-var _facing_direction = FacingDirection.LEFT
-
-var _base_move_speed: float:
-	get:
-		return _mob_resource.move_speed
-
-var _move_speed_modifier: float = 1
-
-var move_speed: float:
-	get:
-		return _base_move_speed * _move_speed_modifier
 
 var damage: int:
 	get:
@@ -72,8 +58,8 @@ func _process(_delta):
 		if _invulnerable_time <= 0:
 			_is_invulnerable = false
 
-	_path_follower.process(Game.speed_scaled_delta)
-	position = _path_follower.smooth_position
+	movement.process(_delta)
+	position = movement.smooth_position
 
 	status_effects.process(Game.speed_scaled_delta)
 
@@ -84,16 +70,28 @@ func set_resource(mob_resource: MobResource):
 	var show_hit_points_bar = mob_resource.is_boss() || mob_resource.is_elite()
 	hit_points_component.initialise(mob_resource.hit_points, show_hit_points_bar)
 
-	_path_follower = PathFollower.new()
-	_path_follower.set_move_speed(_base_move_speed)
+	movement = Movement.new(mob_resource.move_speed)
 
-	_path_follower.exited_node.connect(func(node): exited_node.emit(self, node))
-	_path_follower.entered_node.connect(
-		func(node):
-			_update_facing_direction(node)
-			entered_node.emit(self, node)
+	movement.exited_cell.connect(
+		func(new_cell: Cell):
+			exited_cell.emit(self, new_cell)
 	)
-	_path_follower.path_completed.connect(_on_path_completed)
+
+	movement.entered_cell.connect(
+		func(new_cell: Cell):
+			entered_cell.emit(self, new_cell)
+	)
+
+	movement.facing_direction_changed.connect(
+		func(facing_direction: Movement.FacingDirection):
+			match facing_direction:
+				Movement.FacingDirection.LEFT:
+					sprite_2d.flip_h = false
+				Movement.FacingDirection.RIGHT:
+					sprite_2d.flip_h = true
+	)
+
+	movement.path_completed.connect(_on_path_completed)
 
 	status_effects = StatusEffects.new()
 
@@ -104,7 +102,7 @@ func set_resource(mob_resource: MobResource):
 		func(damage_info: DamageInfo):
 			take_damage(damage_info)
 	)
-	
+
 	if mob_resource.is_boss() || mob_resource.is_elite():			# TEMP: hardcoding
 		core_value = 1
 
@@ -114,32 +112,6 @@ func set_resource(mob_resource: MobResource):
 func set_tint_colour(colour: Color):
 	_tint_colour = colour
 	_visuals_container.modulate = _tint_colour
-
-
-func add_move_speed_modifier(amount: float):
-	_move_speed_modifier += amount
-
-	# Update path follower
-	_path_follower.set_move_speed(move_speed)
-
-
-func set_path(path: PackedVector2Array, target_cell: Cell):
-	_path_follower.set_path(path)
-	_target_cell = target_cell
-
-	await get_tree().create_timer(0.5).timeout
-
-	_path_follower.start_path()
-
-
-func _on_path_completed():
-	var is_near_target = MapUtilities.get_cell_neighbours(_target_cell).has(cell)
-
-	if is_near_target:
-		_attack_tower()
-	else:
-		print_debug(
-			"WARNING: Mob reached the end of the path, but is not at the target position")
 
 
 func set_invulnerable_time(time: float):
@@ -166,7 +138,6 @@ func take_damage(damage_info: DamageInfo):
 	if hit_points_component.is_at_zero:
 		Messenger.mob_killed.emit(self)			# TODO: not sure if I like this
 		# Ensure the mob exits its current node so mob spawner is made aware
-		_path_follower.exit_current()
 #		destroy()
 		_animated_destroy()
 	else:
@@ -176,16 +147,11 @@ func take_damage(damage_info: DamageInfo):
 	VFXRequestFactory.request_damage_number(position, str(damage_info.damage_amount))
 
 
-func _update_facing_direction(current_node: Vector2i):
-	if !_target_cell:
-		return
-
-	if current_node.x >= _target_cell.scene_position.x:
-		_facing_direction = FacingDirection.LEFT
-		sprite_2d.flip_h = false
+func _on_path_completed():
+	if movement.is_near_target:
+		_attack_tower()
 	else:
-		_facing_direction = FacingDirection.RIGHT
-		sprite_2d.flip_h = true
+		print_debug("WARNING: path complete, but not near target")
 
 
 func _attack_tower():
@@ -194,6 +160,7 @@ func _attack_tower():
 
 
 func destroy():
+	movement.destroy()
 	_is_destroyed = true
 	queue_free()
 
@@ -205,14 +172,9 @@ func animated_spawn():
 
 
 func _animated_destroy():
+	movement.destroy()
 	_is_destroyed = true
 	var tween = get_tree().create_tween()
 	tween.tween_property(_visuals_container, "modulate", Color(0, 0, 0, 0), 0.5)
 	tween.tween_callback(queue_free)
 	was_killed.emit(self)
-
-
-enum FacingDirection {
-	LEFT,
-	RIGHT
-}

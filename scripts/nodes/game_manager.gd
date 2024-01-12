@@ -5,8 +5,6 @@ extends Node
 @export var starting_cores: int = 1
 
 @export var starting_character: String
-#@export var starting_main_tower: PackedScene
-#@export var starting_buildings: Array[PackedScene] = []
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
