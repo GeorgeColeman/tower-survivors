@@ -6,19 +6,38 @@ class_name Upgrades
 extends RefCounted
 
 signal upgrade_options_set(options: UpgradeOptions)
-#signal perk_added(perk: Perk)
 signal passive_rank_added(passive: PassivePerk)
 
-#var perks: Array[Perk] = []
 var passives_dict = {}					# <String, PassivePerk>
+var upgrades_listed: String
 
 var _current_upgrade_options: UpgradeOptions
+var _added_upgrades: Array[UpgradeOption]
 
 
 func set_upgrade_options(options: UpgradeOptions):
 	_current_upgrade_options = options
 
 	upgrade_options_set.emit(options)
+
+
+func add_upgrade(upgrade: UpgradeOption):
+	upgrade.apply()
+
+	_added_upgrades.append(upgrade)
+
+	if _added_upgrades.size() == 1:
+		upgrades_listed += upgrade.name
+
+		if upgrade.rank:
+			upgrades_listed += ", %s" % upgrade.rank
+	else:
+		upgrades_listed += str("\n%s" % upgrade.name)
+
+		if upgrade.rank:
+			upgrades_listed += ", %s" % upgrade.rank
+
+	print_debug(upgrades_listed)
 
 
 func can_rank_up_passive(passive_key: String) -> bool:

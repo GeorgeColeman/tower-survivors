@@ -17,6 +17,15 @@ func draw_map(map: Map):
 		new_cell.position = cell.scene_position
 		_cell_nodes.append(new_cell)
 
+		if map.mountains[cell.i]:
+			var mountain = Sprite2D.new()
+			mountain.texture = load("res://sprites/map/mountain.tres")
+			mountain.z_index = 1
+			add_child(mountain)
+			mountain.position = cell.scene_position
+			_cell_nodes.append(mountain)
+			#print_debug("TODO: mountain here -- ", cell.i)
+
 
 func _erase_existing():
 	for cell in _cell_nodes:

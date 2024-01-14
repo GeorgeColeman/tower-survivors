@@ -6,4 +6,5 @@ extends Resource
 @export var weapons: Array[String]
 @export var hit_points: int
 @export var gold_cost: int
+@export var core_cost: int
 @export_flags("IS_MAIN_TOWER") var _flags

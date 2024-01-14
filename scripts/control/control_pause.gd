@@ -7,6 +7,8 @@ extends Control
 
 @export var sfx_check_box: CheckBox
 
+@export var upgrades_label: Label
+
 var _game: Game
 
 
@@ -29,8 +31,22 @@ func _input(event):
 	if event is InputEventKey:
 		if event.keycode == KEY_ESCAPE && event.is_released():
 			var is_paused = _game.toggle_pause()
-			visible = is_paused
+
+			if is_paused:
+				_open()
+			else:
+				_close()
 
 
 func start_game(game: Game):
 	_game = game
+
+
+func _open():
+	upgrades_label.text = "Upgrades\n\n%s" % _game.player.upgrades.upgrades_listed
+
+	visible = true
+
+
+func _close():
+	visible = false

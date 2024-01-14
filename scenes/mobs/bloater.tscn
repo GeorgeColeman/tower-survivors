@@ -23,6 +23,7 @@ mob_body = NodePath("MobBody")
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Glow" type="Sprite2D" parent="Visuals"]
+visible = false
 texture = ExtResource("2_v8rc8")
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]

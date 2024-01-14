@@ -10,4 +10,5 @@ tower_scene = ExtResource("2_xovg6")
 weapons = Array[String]([])
 hit_points = 50
 gold_cost = 5
+core_cost = 0
 _flags = 0

@@ -83,6 +83,9 @@ func set_cell_and_init(p_cell: Cell):
 
 
 func get_attack_range() -> int:
+	if _weapons.size() == 0:
+		return 0
+
 	return _weapons[0].attack_range
 
 

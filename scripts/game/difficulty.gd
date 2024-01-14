@@ -6,6 +6,7 @@ signal spawn_elite_triggered()
 
 var _time: float
 var _current_second: int = 1
+var _current_minute: int = 1
 var _difficulty: float = 1
 
 var _chance_to_spawn_elite: float = -1.0
@@ -13,6 +14,12 @@ var _chance_to_spawn_elite: float = -1.0
 
 func process(delta: float):
 	_time += delta
+
+	if _time > _current_minute * 60:
+		_current_minute += 1
+		
+		if (_current_minute - 1) % 2 == 0:
+			_increase_by(1)
 
 	while _time >= _current_second:
 		_current_second += 1
@@ -27,7 +34,7 @@ func process(delta: float):
 		#print_debug("Second passed")
 
 
-func increase_by(amount: float):
+func _increase_by(amount: float):
 	_difficulty += amount
 	changed.emit(_difficulty)
 

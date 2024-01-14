@@ -14,6 +14,7 @@ signal was_killed(mob: Mob)
 
 var movement: Movement
 var status_effects: StatusEffects
+var attack_component: AttackComponent
 
 var cell: Cell:
 	get:
@@ -44,6 +45,8 @@ var experience_value: int:
 
 var core_value: int
 
+var _attacks_per_second: float = 1.0
+
 
 func _process(_delta):
 	if _is_destroyed:
@@ -58,10 +61,11 @@ func _process(_delta):
 		if _invulnerable_time <= 0:
 			_is_invulnerable = false
 
-	movement.process(_delta)
+	movement.process(Game.speed_scaled_delta)
 	position = movement.smooth_position
 
 	status_effects.process(Game.speed_scaled_delta)
+	attack_component.process(Game.speed_scaled_delta)
 
 
 func set_resource(mob_resource: MobResource):
@@ -105,6 +109,8 @@ func set_resource(mob_resource: MobResource):
 
 	if mob_resource.is_boss() || mob_resource.is_elite():			# TEMP: hardcoding
 		core_value = 1
+
+	attack_component = AttackComponent.new(mob_resource.damage, _attacks_per_second)
 
 	_is_initialised = true
 
@@ -156,7 +162,7 @@ func _on_path_completed():
 
 func _attack_tower():
 	attacked_tower.emit(self)
-	destroy()
+	#destroy()
 
 
 func destroy():

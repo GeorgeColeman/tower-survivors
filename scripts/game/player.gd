@@ -20,7 +20,7 @@ func _init(starting_gold: int, starting_cores: int):
 
 	experience_component.levelled_up.connect(
 		func():
-			levelled_up.emit()
+			_level_up()
 	)
 
 	Messenger.mob_killed.connect(_on_mob_killed)
@@ -68,7 +68,7 @@ func can_afford_building_option(building_option: BuildingOption) -> bool:
 			return false
 
 	if GameRules.CORES_TO_BUILD:
-		var has_cores = cores >= 1		# TEMP: magic number
+		var has_cores = cores >= building_option.tower_resource.core_cost
 
 		if !has_cores:
 			#print_debug("Not enough cores")
@@ -83,10 +83,21 @@ func spend_resources_for_building(building_option: BuildingOption):
 		add_gold(-building_option.gold_cost)
 
 	if GameRules.CORES_TO_BUILD:
-		add_cores(-1)		# TEMP: magic number
+		add_cores(-building_option.tower_resource.core_cost)
 
 
 func _on_mob_killed(mob: Mob):
 	add_gold(mob.gold_value)
-	add_cores(mob.core_value)
+
+	if GameRules.MOBS_DROP_CORES:
+		add_cores(mob.core_value)
+
 	experience_component.add_experience(mob.experience_value)
+
+
+func _level_up():
+	if GameRules.CORE_ON_LEVEL_UP:
+		add_cores(1)
+
+	levelled_up.emit()
+

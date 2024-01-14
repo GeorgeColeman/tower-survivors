@@ -40,7 +40,7 @@ func _register_tower(tower: Tower):
 	var cell = tower.cell
 
 	# TEMP: assuming all towers are solid
-	PathUtilities.updated_cell_is_solid.emit(cell, true)
+	PathUtilities.update_cell_is_solid(cell, true)
 
 	if !_cell_entity_dict.has(cell):
 		_cell_entity_dict[cell] = []
@@ -53,7 +53,7 @@ func _register_tower(tower: Tower):
 	tower.was_killed.connect(
 		func():
 			_cell_entity_dict[cell].erase(tower)
-			PathUtilities.updated_cell_is_solid.emit(cell, false)
+			PathUtilities.update_cell_is_solid(cell, false)
 			towers.erase(tower)
 	)
 

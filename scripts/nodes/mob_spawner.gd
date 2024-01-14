@@ -224,6 +224,9 @@ func _on_mob_exited_cell(mob: Mob, cell: Cell):
 func _on_mob_attacked_tower(mob: Mob):
 	if !_game.tower:
 		print_debug("No tower to attack")
+
 		return
 
-	_game.tower.take_damage(mob.damage)
+	mob.attack_component.start_attacking(_game.tower)
+
+	#_game.tower.take_damage(mob.damage)

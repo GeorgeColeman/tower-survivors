@@ -9,25 +9,38 @@ var border_cells: Array[Cell]
 var center_cell: Cell
 var center: Vector2
 
+var mountains: Array[bool] = []
+
 var _center_x: int
 var _center_y: int
 
+var _noise: Array[float]
+var _mountain_height: float = 0.75
 
-func _init(_width: int, _height: int, _cells: Array[Cell]):
-	width = _width
-	height = _height
-	cells = _cells
+
+func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float]):
+	width = p_width
+	height = p_height
+	cells = p_cells
 	_center_x = floori(width * .5)
 	_center_y = floori(height * .5)
 	center = Vector2(_center_x, _center_y)
 	center_cell = get_cell_at(_center_x, _center_y)
 
 	border_cells = []
+	mountains.resize(width * height)
 
 	for y in height:
 		for x in width:
+			var index = x + y * width
+
 			if y == 0 || x == 0 || y == height - 1 || x == width - 1:
-				border_cells.append(cells[x + y * width])
+				border_cells.append(cells[index])
+
+			mountains[index] = (noise[index] >= _mountain_height)
+			
+			if mountains[index]:
+				PathUtilities.update_cell_is_solid(p_cells[index], true)
 
 
 func index_to_coordinates(index: int):

@@ -56,8 +56,8 @@ func _on_entered_node(node: Vector2i):
 	entered_cell.emit(new_cell)
 
 
-func process(_delta):
-	_path_follower.process(Game.speed_scaled_delta)
+func process(delta):
+	_path_follower.process(delta)
 
 
 func add_move_speed_modifier(amount: float):

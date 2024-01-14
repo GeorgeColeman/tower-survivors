@@ -1,6 +1,8 @@
 class_name UpgradeOption
 extends RefCounted
 
+# TODO: 'NEW' is the 'flair', not the rank
+
 var name: String
 var rank: String
 var category: String

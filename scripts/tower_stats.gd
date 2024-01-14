@@ -7,9 +7,11 @@ var _bonus_damage: int
 var _bonus_attack_speed: float
 var _bonus_attack_range: int
 
-var _multi_shot_chance: float
 var _multi_shot: int
+var _multi_shot_chance: float
 
+var _burst_shot: int
+var _burst_shot_chance: float
 
 func _init(weapons: Array[TowerWeapon]):
 	_weapons = weapons
@@ -41,6 +43,21 @@ func add_multi_shot(amount: int):
 
 	for weapon in _weapons:
 		weapon.set_multi_shot_number_of_shots(_multi_shot)
+
+
+func add_burst_shot(amount: int):
+	_burst_shot += amount
+
+	for weapon in _weapons:
+		weapon.set_burst_shot_number_of_shots(_burst_shot)
+
+
+func add_burst_shot_chance(amount: float):
+	_burst_shot_chance += amount
+	
+	for weapon in _weapons:
+		weapon.set_burst_shot_chance(_burst_shot_chance)
+
 
 
 func add_bonus_attack_range(amount: int):

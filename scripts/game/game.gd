@@ -21,7 +21,6 @@ var time: float
 var is_paused: bool
 
 var _speed: float
-var _current_minute = 1 as int
 var _resume_speed: float = _speed
 
 
@@ -44,10 +43,6 @@ func process(delta: float):
 	time += speed_scaled_delta
 
 	difficulty.process(speed_scaled_delta)
-
-	if time > _current_minute * 60:
-		_current_minute += 1
-		difficulty.increase_by(1)
 
 
 func set_speed(p_speed: float):

@@ -19,12 +19,6 @@ static func get_passive_perk_data() -> Array[PassivePerk]:
 
 		if !texture:
 			texture = "res://sprites/missing.png"
-			#print_debug("No texture")
-			
-
-		
-		#if !tex:
-			#print_debug("No texture")
 
 		passive_perk_data.name = name
 		passive_perk_data.texture = load(texture)
@@ -55,6 +49,10 @@ static func _get_ranks(rank_data) -> Array[PassivePerk.Rank]:
 					_resolve_attack_range(rank, element[key])
 				"attack_speed":
 					_resolve_attack_speed(rank, element[key])
+				"burst_shot_number":
+					_resolve_burst_shot_number(rank, element[key])
+				"burst_shot_chance":
+					_resolve_burst_shot_chance(rank, element[key])
 				_:
 					print_debug("WARNING: unhandled rank key: %s" % key)
 
@@ -122,4 +120,32 @@ static func _resolve_attack_speed(rank: PassivePerk.Rank, variant):
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
 			tower.tower_stats.add_bonus_attack_speed(variant)
+	)
+
+
+static func _resolve_burst_shot_number(rank: PassivePerk.Rank, variant):
+	if !variant is int:
+		print_debug("Burst shot number is not integer")
+
+		return
+
+	rank.description += "\n+%s burst shot" % variant
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_burst_shot(variant)
+	)
+
+
+static func _resolve_burst_shot_chance(rank: PassivePerk.Rank, variant):
+	if !variant is float:
+		print_debug("Burst shot chance is not float")
+
+		return
+
+	rank.description += "\n+%s%% burst shot chance" % (variant * 100)
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_burst_shot_chance(variant)
 	)

@@ -26,7 +26,7 @@ func start_game(game: Game):
 	game.player.levelled_up.connect(func(): control_level_up.visible = true)
 	game.player.upgrades.upgrade_options_set.connect(
 		func(options):
-			control_level_up.generate_upgrade_option_buttons(options)
+			control_level_up.generate_upgrade_option_buttons(game.player, options)
 	)
 
 	control_level_up.dismissed.connect(

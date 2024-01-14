@@ -31,8 +31,11 @@ var _bonus_attack_speed: float
 var _bonus_attacks_per_second: float
 var _bonus_attack_range: int
 
-var _multi_shot_chance: float
 var _multi_shot_number_of_shots: int
+var _multi_shot_chance: float
+
+var _burst_shot_number_of_shots: int
+var _burst_shot_chance: float
 
 var description: String
 
@@ -97,11 +100,24 @@ func _attack():
 	var multi_shot = _multi_shot_chance >= randf()
 	var number_of_shots = 1 + _multi_shot_number_of_shots if multi_shot else 1
 
+	var burst_shot_proc = _burst_shot_chance >= randf()
+	var number_of_bursts = 1 + _burst_shot_number_of_shots if burst_shot_proc else 1
+
 	var targets = GameUtilities.get_mob_targets_closest_to_main_tower(_cells_in_range, number_of_shots)
 	#var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
 
+	var shoot = func(target: Mob):
+		for shot in number_of_bursts:
+			if !target:
+				break
+
+			_spawn_projectile_to_target(target)
+
+			await get_tree().create_timer(0.1).timeout
+
 	for target in targets:
-		_spawn_projectile_to_target(target)
+		shoot.call(target)
+		#_spawn_projectile_to_target(target)
 
 	if targets.size() == 0 || !attack_sfx:
 		return
@@ -145,12 +161,20 @@ func set_bonus_attack_speed(value: float):
 	_update_description()
 
 
+func set_multi_shot_number_of_shots(value: int):
+	_multi_shot_number_of_shots = value
+
+
 func set_multi_shot_chance(value: float):
 	_multi_shot_chance = value
 
 
-func set_multi_shot_number_of_shots(value: int):
-	_multi_shot_number_of_shots = value
+func set_burst_shot_number_of_shots(value: int):
+	_burst_shot_number_of_shots = value
+
+
+func set_burst_shot_chance(value: float):
+	_burst_shot_chance = value
 
 
 func set_bonus_range(value: int):

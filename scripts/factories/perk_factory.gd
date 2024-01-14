@@ -105,3 +105,18 @@ static func new_tower(tower: Tower, apply_callback: Callable) -> UpgradeOption:
 	option.texture = tower.main_sprite_2d.texture
 
 	return option
+
+
+static func add_core(player: Player) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		"+1 Core",
+		"",
+		"",
+		"",
+		func():
+			player.add_cores(1)
+	)
+
+	option.texture = load("res://sprites/icons/core.tres")
+
+	return option

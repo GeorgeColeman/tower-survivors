@@ -17,23 +17,24 @@ func _ready():
 	_reroll_button.pressed.connect(func(): reroll_requested.emit())
 
 
-func generate_upgrade_option_buttons(upgrade_options: UpgradeOptions):
+func generate_upgrade_option_buttons(player: Player, upgrade_options: UpgradeOptions):
 	for button in _upgrade_options_buttons:
 		button.queue_free()
 
 	_upgrade_options_buttons.clear()
 
 	for upgrade in upgrade_options.options:
-		_instantiate_upgrade_button(upgrade)
+		_instantiate_upgrade_button(player, upgrade)
 
 
-func _instantiate_upgrade_button(upgrade: UpgradeOption):
+func _instantiate_upgrade_button(player: Player, upgrade: UpgradeOption):
 	var button = upgrade_option_button.instantiate() as UpgradeOptionButton
 	upgrade_options_container.add_child(button)
 	_upgrade_options_buttons.append(button)
 	button.set_upgrade_option(upgrade)
 	button.pressed.connect(
 		func():
-			upgrade.apply()
+			player.upgrades.add_upgrade(upgrade)
+			#upgrade.apply()
 			dismissed.emit()
 	)

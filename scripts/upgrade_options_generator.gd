@@ -6,6 +6,9 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 	var options: Array[UpgradeOption] = []
 
 	options.append_array(_get_passive_options(game))
+	
+	if GameRules.CORE_AS_UPGRADE_OPTION:
+		options.append(PerkFactory.add_core(game.player))
 
 	if GameRules.WEAPON_PERKS:
 		# Apply the weapon perks to this tower
@@ -17,7 +20,6 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 				options.append(PerkFactory.rank_up_weapon(main_tower.weapon_dict[weapon.id]))
 			else:
 				options.append(PerkFactory.new_weapon(main_tower, weapon))
-
 
 	if GameRules.TOWER_PERKS:
 		options.append_array(_get_tower_options(game))

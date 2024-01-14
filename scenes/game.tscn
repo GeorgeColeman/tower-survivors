@@ -647,8 +647,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Restart"
 
-[node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box")]
-visible = false
+[node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box", "upgrades_label")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -660,6 +659,7 @@ continue_button = NodePath("VBoxContainer/ContinueButton")
 restart_button = NodePath("VBoxContainer/RestartButton")
 quit_button = NodePath("VBoxContainer/QuitButton")
 sfx_check_box = NodePath("OptionsContainer/VBoxContainer/SFXCheckBox")
+upgrades_label = NodePath("UpgradesLabel")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlPause"]
 layout_mode = 1
@@ -739,6 +739,19 @@ text = "Options"
 layout_mode = 2
 button_pressed = true
 text = "SFX"
+
+[node name="UpgradesLabel" type="Label" parent="CanvasLayer/ControlMain/ControlPause"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -13.0
+offset_right = 123.0
+offset_bottom = 14.0
+grow_vertical = 2
+theme = ExtResource("29_1kk1u")
+text = "Upgrades Label"
 
 [node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("upgrade_options_container", "dismiss_button", "_reroll_button")]
 visible = false
