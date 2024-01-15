@@ -31,7 +31,7 @@ func start_attacking(tower: Tower):
 
 
 func _attack():
-	print_debug("Attacking")
+	#print_debug("Attacking")
 	
 	_attack_cooldown = 1 / _attacks_per_second
 

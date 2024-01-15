@@ -1,48 +1,58 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlb1eubmjg23o"]
+[gd_scene load_steps=13 format=3 uid="uid://dlb1eubmjg23o"]
 
 [ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_seek.gd" id="1_jthhj"]
-[ext_resource type="Texture2D" uid="uid://eit443v34d4c" path="res://sprites/projectiles/proj_crystal_shard_02.png" id="2_1vvy2"]
+[ext_resource type="Texture2D" uid="uid://h46b27nqm14i" path="res://sprites/projectiles/proj_crystal_shard_03.png" id="2_af43t"]
 
 [sub_resource type="Curve" id="Curve_7yni5"]
 _data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v7m3w"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(0, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqhqk"]
+atlas = ExtResource("2_af43t")
+region = Rect2(0, 0, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3mi2e"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(24, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xitf"]
+atlas = ExtResource("2_af43t")
+region = Rect2(12, 0, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bk1io"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(48, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_epdk7"]
+atlas = ExtResource("2_af43t")
+region = Rect2(24, 0, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vjujw"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(72, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b36o"]
+atlas = ExtResource("2_af43t")
+region = Rect2(36, 0, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cpu81"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(96, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3b80"]
+atlas = ExtResource("2_af43t")
+region = Rect2(0, 12, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ktlkp"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(120, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vamk1"]
+atlas = ExtResource("2_af43t")
+region = Rect2(12, 12, 12, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n7vui"]
-atlas = ExtResource("2_1vvy2")
-region = Rect2(144, 0, 24, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpk26"]
+atlas = ExtResource("2_af43t")
+region = Rect2(24, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlpjg"]
+atlas = ExtResource("2_af43t")
+region = Rect2(36, 12, 12, 12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nsm8b"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v7m3w")
+"texture": SubResource("AtlasTexture_aqhqk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3mi2e")
+"texture": SubResource("AtlasTexture_8xitf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epdk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b36o")
 }],
 "loop": true,
 "name": &"default",
@@ -50,19 +60,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bk1io")
+"texture": SubResource("AtlasTexture_q3b80")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vjujw")
+"texture": SubResource("AtlasTexture_vamk1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cpu81")
+"texture": SubResource("AtlasTexture_dpk26")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ktlkp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n7vui")
+"texture": SubResource("AtlasTexture_mlpjg")
 }],
 "loop": false,
 "name": &"die",
@@ -70,6 +77,7 @@ animations = [{
 }]
 
 [node name="Projectile" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
+z_index = 1
 script = ExtResource("1_jthhj")
 animated_sprite_2d = NodePath("AnimatedSprite2D")
 test_curve = SubResource("Curve_7yni5")
@@ -78,4 +86,5 @@ arc_height = 0.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nsm8b")
 autoplay = "default"
-frame_progress = 0.211423
+frame = 1
+frame_progress = 0.46696

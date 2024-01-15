@@ -10,12 +10,14 @@ var center_cell: Cell
 var center: Vector2
 
 var mountains: Array[bool] = []
+var water: Array[bool] = []
 
 var _center_x: int
 var _center_y: int
 
 var _noise: Array[float]
-var _mountain_height: float = 0.75
+var _mountain_height: float = 0.70
+var _water_max_height: float = 0.30
 
 
 func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float]):
@@ -28,7 +30,9 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 	center_cell = get_cell_at(_center_x, _center_y)
 
 	border_cells = []
+
 	mountains.resize(width * height)
+	water.resize(width * height)
 
 	for y in height:
 		for x in width:
@@ -38,8 +42,13 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 				border_cells.append(cells[index])
 
 			mountains[index] = (noise[index] >= _mountain_height)
-			
+
 			if mountains[index]:
+				PathUtilities.update_cell_is_solid(p_cells[index], true)
+
+			water[index] = (noise[index] <= _water_max_height)
+
+			if water[index]:
 				PathUtilities.update_cell_is_solid(p_cells[index], true)
 
 

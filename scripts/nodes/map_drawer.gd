@@ -24,7 +24,14 @@ func draw_map(map: Map):
 			add_child(mountain)
 			mountain.position = cell.scene_position
 			_cell_nodes.append(mountain)
-			#print_debug("TODO: mountain here -- ", cell.i)
+
+		if map.water[cell.i]:
+			var water = Sprite2D.new()
+			water.texture = load("res://sprites/map/water.tres")
+			water.z_index = 1
+			add_child(water)
+			water.position = cell.scene_position
+			_cell_nodes.append(water)
 
 
 func _erase_existing():

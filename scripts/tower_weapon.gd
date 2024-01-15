@@ -37,6 +37,8 @@ var _multi_shot_chance: float
 var _burst_shot_number_of_shots: int
 var _burst_shot_chance: float
 
+var _projectile_speed_mod: float
+
 var description: String
 
 
@@ -103,7 +105,10 @@ func _attack():
 	var burst_shot_proc = _burst_shot_chance >= randf()
 	var number_of_bursts = 1 + _burst_shot_number_of_shots if burst_shot_proc else 1
 
-	var targets = GameUtilities.get_mob_targets_closest_to_main_tower(_cells_in_range, number_of_shots)
+	var targets = GameUtilities.get_mob_targets_closest_to_main_tower(
+		_cells_in_range,
+		number_of_shots
+	)
 	#var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
 
 	var shoot = func(target: Mob):
@@ -139,6 +144,7 @@ func _spawn_projectile_to_target(target: Mob):
 	projectile.set_target(target)
 	projectile.set_damage(damage + _bonus_damage)
 	projectile.set_range(attack_range + _bonus_attack_range)
+	projectile.set_speed(_data.projectile_speed * (1 + _projectile_speed_mod))
 
 	for effect in weapon_effects:
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
@@ -183,3 +189,7 @@ func set_bonus_range(value: int):
 	# Recalculate cells in range
 	_set_cells_in_range()
 	_update_description()
+
+
+func set_projectile_speed_mod(value: float):
+	_projectile_speed_mod = value

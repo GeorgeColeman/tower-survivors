@@ -17,9 +17,9 @@
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
 [ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
-[ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker_24x24.tres" id="13_ei8da"]
+[ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
+[ext_resource type="Texture2D" uid="uid://bed2nxb3jr6fe" path="res://sprites/markers/selection_marker_02.tres" id="14_ggbmm"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
-[ext_resource type="Texture2D" uid="uid://b1b4akgjhn8x4" path="res://sprites/markers.png" id="17_66h4r"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
@@ -64,6 +64,7 @@ script = ExtResource("2_04hs5")
 speed = 500
 
 [node name="PathfindingManager" type="Node2D" parent="."]
+z_index = 2
 script = ExtResource("8_af664")
 
 [node name="MobPathLinesContainer" type="Node2D" parent="PathfindingManager"]
@@ -106,8 +107,7 @@ _marker = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="SelectionDrawer"]
 z_index = 1
-texture = ExtResource("17_66h4r")
-region_enabled = true
+texture = ExtResource("14_ggbmm")
 region_rect = Rect2(0, 0, 16, 16)
 
 [node name="VFXDrawer2D" type="Node2D" parent="."]
@@ -580,10 +580,6 @@ offset_bottom = 251.0
 
 [node name="DebugTogglesContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2"]
 layout_mode = 2
-
-[node name="CheckBoxDrawRangeIndicators" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
-layout_mode = 2
-text = "Draw Range Indicators"
 
 [node name="CheckBoxDrawPathfindingGrid" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
 layout_mode = 2

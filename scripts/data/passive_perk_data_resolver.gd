@@ -53,6 +53,8 @@ static func _get_ranks(rank_data) -> Array[PassivePerk.Rank]:
 					_resolve_burst_shot_number(rank, element[key])
 				"burst_shot_chance":
 					_resolve_burst_shot_chance(rank, element[key])
+				"projectile_speed":
+					_resolve_projectile_speed(rank, element[key])
 				_:
 					print_debug("WARNING: unhandled rank key: %s" % key)
 
@@ -72,7 +74,7 @@ static func _resolve_multi_shot_number(rank: PassivePerk.Rank, variant):
 		return
 
 	#rank.description += "\nIncreases the multi shot number of all towers by %s" % variant
-	rank.description += "\nAll towers +%s multi shot" % variant
+	rank.description += "\n+%s multi shot" % variant
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
@@ -87,7 +89,7 @@ static func _resolve_multi_shot_chance(rank: PassivePerk.Rank, variant):
 		return
 
 	#rank.description += "\nIncreases the multi shot chance of all towers by %s%%" % (variant * 100)
-	rank.description += "\nAll towers +%s%% multi shot chance" % (variant * 100)
+	rank.description += "\n+%s%% multi shot chance" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
@@ -148,4 +150,18 @@ static func _resolve_burst_shot_chance(rank: PassivePerk.Rank, variant):
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
 			tower.tower_stats.add_burst_shot_chance(variant)
+	)
+
+
+static func _resolve_projectile_speed(rank: PassivePerk.Rank, variant):
+	if !variant is float:
+		print_debug("projectile speed is not float")
+
+		return
+
+	rank.description += "\n+%s%% projectile speed" % (variant * 100)
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_projectile_speed_mod(variant)
 	)

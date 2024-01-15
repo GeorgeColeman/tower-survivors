@@ -20,6 +20,7 @@ animations = [{
 }]
 
 [node name="Projectile" type="Node2D"]
+z_index = 1
 script = ExtResource("1_fy4kv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

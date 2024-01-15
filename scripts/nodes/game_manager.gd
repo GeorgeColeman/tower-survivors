@@ -26,7 +26,6 @@ var game_data: GameData
 
 
 func _ready():
-	GameUtilities.set_game_manager(self)
 	Messenger.start_game_requested.connect(_on_request_start_game)
 
 	control_debug.set_game_manager(self)
@@ -49,8 +48,8 @@ func _process(delta):
 
 
 func start_game():
-	var width: int = 32
-	var height: int = 32
+	var width: int = 48
+	var height: int = 48
 
 	var map = _generate_map(width, height)
 
@@ -75,13 +74,14 @@ func start_game():
 	game.entities.spawn_entity(params)
 	game.set_main_tower(params.spawned_entity)
 
+	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
+
 	mob_spawner.start_game(game)
 	main_control.start_game(game)
 	control_in_game.start_game(game)
 	control_debug.start_game(game)
 	control_pause.start_game(game)
 
-	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 	map_drawer.draw_map(map)
 
 	for tower in player_character.starting_towers:

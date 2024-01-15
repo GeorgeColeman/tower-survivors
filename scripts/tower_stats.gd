@@ -13,6 +13,10 @@ var _multi_shot_chance: float
 var _burst_shot: int
 var _burst_shot_chance: float
 
+var _projectile_speed_mod: float
+
+
+
 func _init(weapons: Array[TowerWeapon]):
 	_weapons = weapons
 
@@ -65,3 +69,10 @@ func add_bonus_attack_range(amount: int):
 
 	for weapon in _weapons:
 		weapon.set_bonus_range(_bonus_attack_range)
+
+
+func add_projectile_speed_mod(amount: float):
+	_projectile_speed_mod += amount
+	
+	for weapon in _weapons:
+		weapon.set_projectile_speed_mod(_projectile_speed_mod)

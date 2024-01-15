@@ -37,7 +37,7 @@ func add_upgrade(upgrade: UpgradeOption):
 		if upgrade.rank:
 			upgrades_listed += ", %s" % upgrade.rank
 
-	print_debug(upgrades_listed)
+	#print_debug(upgrades_listed)
 
 
 func can_rank_up_passive(passive_key: String) -> bool:

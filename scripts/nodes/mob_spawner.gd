@@ -78,6 +78,9 @@ func start_game(game: Game):
 	for cell in _map.cells:
 		_cell_mob_dict[cell] = []
 
+	# HACK: because path noded don't seem to be properly updated yet
+	await get_tree().create_timer(0.1).timeout
+
 	_get_valid_spawn_points()
 
 	for spawn_point in starting_spawn_points:
@@ -87,7 +90,7 @@ func start_game(game: Game):
 func _get_valid_spawn_points():
 	var poisson_points = PoissonDiscSampling.generate_points_for_polygon(
 		PackedVector2Array([Vector2(0, 0), Vector2(0, 32), Vector2(32, 32), Vector2(32, 0)]),
-		4,
+		3,
 		30
 	)
 
@@ -96,11 +99,18 @@ func _get_valid_spawn_points():
 	for point in poisson_points:
 		var cell = MapUtilities.get_cell_at_map_position(point)
 
+		if !PathUtilities.get_is_cell_walkable(cell):
+			print_debug("Cell is unwalkable. Cannot be used as spawn point")
+
+			continue
+
 		if cell:
 			var dist_from_tower = cell.position.distance_squared_to(_game.tower.cell.position)
 
 			if dist_from_tower > min_dist_from_tower_sqr:
 				_valid_spawn_point_cells.append(cell)
+
+	print_debug("Found %s valid spawn points" % _valid_spawn_point_cells.size())
 
 	#queue_redraw()
 
@@ -195,13 +205,13 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	new_mob.set_resource(mob_resource)
 
 	new_mob.movement.path_interrupted.connect(func():
-		var new_path = GameUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
+		var new_path = PathUtilities.get_path_from_cell_to_cell(new_mob.cell, _map.center_cell)
 		new_mob.movement.set_path(new_path, _map.center_cell)
 	)
 
 	#await get_tree().create_timer(0.5).timeout
 
-	var path = GameUtilities.get_path_from_cell_to_cell(cell, _map.center_cell)
+	var path = PathUtilities.get_path_from_cell_to_cell(cell, _map.center_cell)
 	new_mob.movement.set_path(path, _map.center_cell)
 
 	new_mob.animated_spawn()

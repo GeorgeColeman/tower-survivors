@@ -78,6 +78,7 @@ animations = [{
 }]
 
 [node name="Projectile" type="Node2D" node_paths=PackedStringArray("animated_sprite_2d")]
+z_index = 1
 script = ExtResource("1_kb4qm")
 animated_sprite_2d = NodePath("AnimatedSprite2D")
 test_curve = SubResource("Curve_7yni5")

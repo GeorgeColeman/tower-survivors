@@ -51,4 +51,4 @@ func _on_mouse_clicked_cell(cell: Cell):
 	if !is_active:
 		return
 
-	_building_option.confirm_build(cell)
+	_building_option.try_build(cell)

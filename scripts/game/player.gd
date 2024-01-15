@@ -68,7 +68,7 @@ func can_afford_building_option(building_option: BuildingOption) -> bool:
 			return false
 
 	if GameRules.CORES_TO_BUILD:
-		var has_cores = cores >= building_option.tower_resource.core_cost
+		var has_cores = cores >= building_option.get_core_cost()
 
 		if !has_cores:
 			#print_debug("Not enough cores")
@@ -83,7 +83,7 @@ func spend_resources_for_building(building_option: BuildingOption):
 		add_gold(-building_option.gold_cost)
 
 	if GameRules.CORES_TO_BUILD:
-		add_cores(-building_option.tower_resource.core_cost)
+		add_cores(-building_option.get_core_cost())
 
 
 func _on_mob_killed(mob: Mob):

@@ -11,6 +11,10 @@ func _init(mob_spawner: MobSpawner):
 	_mob_spawner = mob_spawner
 
 
+static func get_spawn_points_at(cell: Cell) -> Array:
+	return _instance._mob_spawner.get_spawn_points_at(cell)
+
+
 static func spawn_mobs_in_random_neighbouring_tiles(
 	mob_resource: MobResource,
 	number: int,

@@ -6,12 +6,7 @@ var game_is_set: bool:
 	get:
 		return _game != null
 
-var _game_manager: GameManager
 var _game: Game
-
-
-func set_game_manager(game_manager: GameManager):
-	_game_manager = game_manager
 
 
 func set_game(game: Game):
@@ -22,13 +17,20 @@ func try_enter_build_mode(option: BuildingOption):
 	if !_game.player.can_afford_building_option(option):
 		return
 
-	option.on_build_confirmed = func(cell: Cell):
+	option.try_build_callback = func(cell: Cell):
 		if !_game.player.can_afford_building_option(option):
 				return
 
 		# Check cell for existing buildings
 		if _game.entities.get_is_cell_occupied(cell):
 			print_debug("Cell is occupied")
+
+			return
+
+		# Check cell 'buildability'
+		if !PathUtilities.get_is_cell_walkable(cell):
+			print_debug("Cell is solid, cannot build")
+
 			return
 
 		var params = SpawnEntityParams.new()
@@ -37,24 +39,11 @@ func try_enter_build_mode(option: BuildingOption):
 		params.cell = cell
 
 		_game.entities.spawn_entity(params)
-
-		# HACK: we're doing this here because this is the only place we know
-		# about the spawned entity and the building option, which enables us
-		# to set the rank
-		if params.spawned_entity is Tower:
-			params.spawned_entity.set_rank(option.rank)
-
 		_game.player.spend_resources_for_building(option)
+		
+		option.confirm_build(params.spawned_entity)
 
 	control_mode_build_requested.emit(option)
-
-
-func get_point_path(start, end) -> PackedVector2Array:
-	return _game_manager.pathfinding_manager.astar_grid.get_point_path(start, end)
-
-
-func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVector2Array:
-	return _game_manager.pathfinding_manager.get_path_from_cell_to_cell(start_cell, end_cell)
 
 
 func get_distance_between_nodes(node_a: Vector2i, node_b: Vector2i) -> float:
@@ -107,6 +96,9 @@ func get_mob_targets_closest_to_main_tower(
 	if number_of_targets >= all_mobs.size():
 		return all_mobs
 
+	if !_game.tower:
+		return []
+
 	all_mobs.sort_custom(
 		func(mob_a: Mob, mob_b: Mob):
 			var dist_a = mob_a.position.distance_squared_to(_game.tower.position)
@@ -130,8 +122,7 @@ func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 				EntityInfo.new(entity, entity.tower_name, entity.description, entity.position)
 			)
 
-	var spawn_points = _game_manager.mob_spawner.get_spawn_points_at(cell)
-	#all_entities.append_array(spawn_points)
+	var spawn_points = MobSpawnerUtilities.get_spawn_points_at(cell)
 
 	for spawn_point in spawn_points:
 		all_entities.append(

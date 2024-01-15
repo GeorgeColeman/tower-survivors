@@ -11,7 +11,6 @@ var _target_position: Vector2
 var _damage: int
 var _is_destroyed = false
 var _on_hit_callbacks: Array[Callable]
-var _speed: float = 200
 
 var _approx_time_to_hit: float
 var _to_hit_progress: float
@@ -64,11 +63,6 @@ func add_on_hit_callback(on_hit_callback: Callable):
 
 func set_damage(value: int):
 	_damage = value
-
-
-# TODO: use this
-func set_speed(speed: float):
-	_speed = speed
 
 
 func _destroy_with_animation():

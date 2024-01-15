@@ -106,6 +106,10 @@ func get_path_from_cell_to_cell(start_cell: Cell, end_cell: Cell) -> PackedVecto
 	return _get_new_path(start_cell, end_cell)
 
 
+func is_cell_walkable(cell: Cell) -> bool:
+	return !astar_grid.is_point_solid(cell.position)
+
+
 func is_point_walkable(node_scene_position: Vector2i) -> bool:
 	return !astar_grid.is_point_solid(node_scene_position / GameConstants.PIXEL_SCALE)
 
@@ -129,6 +133,17 @@ func _draw():
 
 
 func draw_grid():
+	var walkable_colour: Color = Color.GREEN
+	walkable_colour.a = 0.5
+	var unwalkable_colour: Color = Color.RED
+	unwalkable_colour.a = 0.5
+	
+	for y in grid_size.y:
+		for x in grid_size.x:
+			var is_walkable = !astar_grid.is_point_solid(Vector2i(x, y))
+			var color = walkable_colour if is_walkable else unwalkable_colour
+			draw_circle(Vector2(x * cell_size.x, y * cell_size.y), 5, color)
+
 	for x in grid_size.x + 1:
 		draw_line(Vector2(x * cell_size.x, 0) + offset,
 			Vector2(x * cell_size.x, grid_size.y * cell_size.y) + offset,

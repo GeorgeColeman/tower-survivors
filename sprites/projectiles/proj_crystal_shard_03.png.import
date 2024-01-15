@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eit443v34d4c"
-path="res://.godot/imported/proj_crystal_shard_02.png-758f08624e72a38c993a0a650f6cc2e5.ctex"
+uid="uid://h46b27nqm14i"
+path="res://.godot/imported/proj_crystal_shard_03.png-deb695037cdce8e0b2f2e144dd0e6f69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/projectiles/proj_crystal_shard_02.png"
-dest_files=["res://.godot/imported/proj_crystal_shard_02.png-758f08624e72a38c993a0a650f6cc2e5.ctex"]
+source_file="res://sprites/projectiles/proj_crystal_shard_03.png"
+dest_files=["res://.godot/imported/proj_crystal_shard_03.png-deb695037cdce8e0b2f2e144dd0e6f69.ctex"]
 
 [params]
 
