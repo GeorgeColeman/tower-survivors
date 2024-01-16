@@ -45,14 +45,15 @@ func set_path(new_path: PackedVector2Array):
 
 	current_node = new_path[0]
 
-	entered_node.emit(current_node)
-
 	if new_path.size() <= 1:
 		push_warning("Path size is less than or equal to 1")
+		#entered_node.emit(current_node)			# Not sure if needed
 
 		return
 
 	next_node = new_path[1]
+
+	entered_node.emit(current_node)
 
 	_next_node_index = 1
 	

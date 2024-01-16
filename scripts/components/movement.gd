@@ -67,8 +67,9 @@ func add_move_speed_modifier(amount: float):
 
 
 func set_path(path: PackedVector2Array, target_cell: Cell):
-	_path_follower.set_path(path)
 	_target_cell = target_cell
+
+	_path_follower.set_path(path)
 
 	#await get_tree().create_timer(0.5).timeout
 
@@ -80,10 +81,17 @@ func destroy():
 
 
 func _update_facing_direction():
-	if !cell || !_target_cell:
+	if !_path_follower.current_node || !_path_follower.next_node:
+		print_debug("WARNING: current or next node is null")
+		
 		return
+	
+	#if !cell || !_target_cell:
+		#return
+		
+	var diff = _path_follower.current_node - _path_follower.next_node
 
-	if cell.x >= _target_cell.x:
+	if diff.x >= 0:
 		_facing_direction = FacingDirection.RIGHT
 	else:
 		_facing_direction = FacingDirection.LEFT

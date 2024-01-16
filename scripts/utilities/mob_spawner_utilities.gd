@@ -21,12 +21,19 @@ static func spawn_mobs_in_random_neighbouring_tiles(
 	cell: Cell
 ) -> Array[Mob]:
 	var mobs: Array[Mob] = []
-	for i in number:
-		var neighbours = _instance._mob_spawner._map.get_cell_neighbours(cell)
+	var neighbours = _instance._mob_spawner._map.get_cell_neighbours(cell)
 
+	# Filter: https://github.com/godotengine/godot/pull/38645
+	neighbours.filter(
+		func(cell: Cell):
+			return PathUtilities.get_is_cell_walkable(cell)
+	)
+
+	for i in number:
 		mobs.append(_instance._mob_spawner.spawn_mob(
 			mob_resource,
-			neighbours[randi_range(0, neighbours.size() - 1)]
+			neighbours.pick_random()
+			#neighbours[randi_range(0, neighbours.size() - 1)]
 		))
 
 	return mobs

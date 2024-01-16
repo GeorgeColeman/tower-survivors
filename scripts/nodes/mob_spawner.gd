@@ -3,6 +3,7 @@ extends Node2D
 
 @export var spawn_point_scene: PackedScene
 @export var starting_spawn_points = 3 as int
+@export var spawn_point_here_texture: Texture2D
 
 @export_group("SFX")
 @export var mob_killed_sfx: AudioStream
@@ -12,6 +13,8 @@ var _game: Game
 var _map: Map
 
 var _valid_spawn_point_cells: Array[Cell] = []
+#var _next_spawn_point_cell: Cell
+var _next_spawn_point_dict = {}						# <Cell, Sprite2D>
 
 var _cell_mob_dict = {}
 var _cell_spawn_point_dict = {}
@@ -81,15 +84,20 @@ func start_game(game: Game):
 	# HACK: because path noded don't seem to be properly updated yet
 	await get_tree().create_timer(0.1).timeout
 
-	_get_valid_spawn_points()
+	_get_valid_spawn_points(_map.width, _map.height)
 
 	for spawn_point in starting_spawn_points:
 		_spawn_new_spawn_point()
 
 
-func _get_valid_spawn_points():
+func _get_valid_spawn_points(width: int, height: int):
 	var poisson_points = PoissonDiscSampling.generate_points_for_polygon(
-		PackedVector2Array([Vector2(0, 0), Vector2(0, 32), Vector2(32, 32), Vector2(32, 0)]),
+		PackedVector2Array(
+			[Vector2(0, 0),
+			Vector2(0, height),
+			Vector2(width, height),
+			Vector2(width, 0)]
+		),
 		3,
 		30
 	)
@@ -100,7 +108,7 @@ func _get_valid_spawn_points():
 		var cell = MapUtilities.get_cell_at_map_position(point)
 
 		if !PathUtilities.get_is_cell_walkable(cell):
-			print_debug("Cell is unwalkable. Cannot be used as spawn point")
+			#print_debug("Cell is unwalkable. Cannot be used as spawn point")
 
 			continue
 
@@ -133,12 +141,41 @@ func spawn_new_spawn_point():
 
 
 func _spawn_new_spawn_point():
+	var next: Cell
+
+	if _next_spawn_point_dict.size() == 0:
+		next = _get_valid_spawn_point_cell()
+	else:
+		next = _next_spawn_point_dict.keys().pick_random()
+		_next_spawn_point_dict[next].queue_free()
+		_next_spawn_point_dict.erase(next)
+
 	var new_spawn_point = spawn_point_scene.instantiate() as SpawnPoint
 	new_spawn_point.spawn_triggered.connect(_on_spawn_triggered)
 	add_child(new_spawn_point)
 
+	new_spawn_point.cell = next
+	new_spawn_point.position = next.scene_position
+	_cell_spawn_point_dict[next] = new_spawn_point
+
+	_set_next_spawn_point()
+
+
+func _set_next_spawn_point():
+	var next_cell = _get_valid_spawn_point_cell()
+	var next_marker = Sprite2D.new()
+
+	_next_spawn_point_dict[next_cell] = next_marker
+
+	add_child(next_marker)
+
+	next_marker.texture = spawn_point_here_texture
+	next_marker.position = next_cell.scene_position
+	next_marker.z_index = 1
+
+
+func _get_valid_spawn_point_cell() -> Cell:
 	var cells = Array(_valid_spawn_point_cells)
-	#var cells = Array(_map.border_cells)
 	cells.shuffle()
 
 	for cell in cells:
@@ -146,12 +183,11 @@ func _spawn_new_spawn_point():
 			print_debug("Spawn point already exists at: ", cell)
 			continue
 
-		var chosen_cell = cell
-		new_spawn_point.cell = chosen_cell
-		new_spawn_point.position = chosen_cell.scene_position
-		_cell_spawn_point_dict[chosen_cell] = new_spawn_point
+		return cell
 
-		break
+	print_debug("WARNING: unable to find valid spawn point cell. Returning null")
+
+	return null
 
 
 func _on_spawn_triggered(spawn_point: SpawnPoint):
