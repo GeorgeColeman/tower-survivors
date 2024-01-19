@@ -32,7 +32,7 @@ func start_game(game: Game):
 	control_level_up.dismissed.connect(
 		func():
 			control_level_up.visible = false
-			game.resume_game()
+			game.accept_input_and_resume()
 	)
 
 	control_pre_game.visible = false

@@ -180,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "experience_bar", "gold_label", "time_label", "cores_label", "buy_core_button", "check_box_game_speed_01", "check_box_game_speed_02", "check_box_game_speed_05", "check_box_game_speed_10")]
+[node name="ControlInGame" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("entity_info_panel", "level_label", "experience_bar", "gold_label", "time_label", "cores_label", "buy_core_button", "check_box_game_speed_01", "check_box_game_speed_02", "check_box_game_speed_05", "check_box_game_speed_10")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,6 +190,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("EntityInfoPanel")
+level_label = NodePath("LevelLabel")
 experience_bar = NodePath("ExperienceBar")
 gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
 time_label = NodePath("ResourceElementsContainer/PanelTime/Label")
@@ -346,6 +347,20 @@ offset_top = -40.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_right = -76.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme = ExtResource("29_1kk1u")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level"
+vertical_alignment = 1
 
 [node name="ExperienceBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/ControlInGame"]
 layout_mode = 1
@@ -646,6 +661,7 @@ grow_vertical = 0
 text = "Restart"
 
 [node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box", "upgrades_label")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

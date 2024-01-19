@@ -7,7 +7,7 @@
 script = ExtResource("1_kvcxm")
 name = "Candlestick"
 tower_scene = ExtResource("2_dpud0")
-weapons = Array[String](["pink_shot"])
+weapons = Array[String](["frost_bolt"])
 hit_points = 50
 gold_cost = 20
 core_cost = 1

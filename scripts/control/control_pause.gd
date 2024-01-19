@@ -30,16 +30,26 @@ func _ready():
 func _input(event):
 	if event is InputEventKey:
 		if event.keycode == KEY_ESCAPE && event.is_released():
-			var is_paused = _game.toggle_pause()
-
-			if is_paused:
-				_open()
-			else:
-				_close()
+			_game.toggle_pause()
+			#var is_paused = _game.toggle_pause()
+#
+			#if is_paused:
+				#_open()
+			#else:
+				#_close()
 
 
 func start_game(game: Game):
 	_game = game
+	
+	_game.run_state_changed.connect(
+		func(run_state: Game.RunState):
+			match run_state:
+				Game.RunState.RUNNING:
+					_close()
+				Game.RunState.PAUSED:
+					_open()
+	)
 
 
 func _open():

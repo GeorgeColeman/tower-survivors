@@ -3,6 +3,7 @@ extends RefCounted
 
 signal exited_node(node: Vector2i)
 signal entered_node(node: Vector2i)
+signal enter_node_completed()
 signal path_interrupted()
 signal path_completed()
 
@@ -111,6 +112,8 @@ func _enter_next():
 	# Allows for correct speed when moving along diagonals
 	_dist_to_next = GameUtilities.get_distance_between_nodes(current_node, next_node)
 	_progress_to_next = 0
+	
+	enter_node_completed.emit()
 
 
 func _complete_path():

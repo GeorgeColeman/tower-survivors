@@ -38,9 +38,9 @@ func try_enter_build_mode(option: BuildingOption):
 		params.entity_scene = option.scene
 		params.cell = cell
 
-		_game.entities.spawn_entity(params)
+		_game.entities.spawn_tower(option.tower_resource, params)
 		_game.player.spend_resources_for_building(option)
-		
+
 		option.confirm_build(params.spawned_entity)
 
 	control_mode_build_requested.emit(option)

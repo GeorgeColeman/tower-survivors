@@ -6,9 +6,9 @@ class_name Upgrades
 extends RefCounted
 
 signal upgrade_options_set(options: UpgradeOptions)
-signal passive_rank_added(passive: PassivePerk)
+signal passive_rank_added(passive: PassiveUpgrade)
 
-var passives_dict = {}					# <String, PassivePerk>
+var passives_dict = {}					# <String, PassiveUpgrade>
 var upgrades_listed: String
 
 var _current_upgrade_options: UpgradeOptions
@@ -44,7 +44,7 @@ func can_rank_up_passive(passive_key: String) -> bool:
 	if !passives_dict.has(passive_key):
 		return false
 
-	var passive: PassivePerk = passives_dict[passive_key]
+	var passive: PassiveUpgrade = passives_dict[passive_key]
 
 	if passive.is_at_max_rank:
 		return false
@@ -52,7 +52,7 @@ func can_rank_up_passive(passive_key: String) -> bool:
 	return true
 
 
-func add_passive(passive: PassivePerk):
+func add_passive(passive: PassiveUpgrade):
 	if passives_dict.has(passive.name):
 		push_warning("Passives dict already has key: %s. Aborting" % passive.name)
 

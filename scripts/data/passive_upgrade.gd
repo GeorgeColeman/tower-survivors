@@ -1,4 +1,4 @@
-class_name PassivePerk
+class_name PassiveUpgrade
 
 var name: String
 var texture: Texture2D
@@ -15,8 +15,8 @@ var display_rank:
 var _current_rank_index: int = -1
 
 
-func clone() -> PassivePerk:
-	var passive = PassivePerk.new()
+func clone() -> PassiveUpgrade:
+	var passive = PassiveUpgrade.new()
 
 	passive.name = name
 	passive.texture = texture

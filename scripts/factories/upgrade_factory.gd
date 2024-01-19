@@ -1,8 +1,8 @@
-class_name PerkFactory
+class_name UpgradeFactory
 extends RefCounted
 
 
-static func new_passive(passive: PassivePerk, player: Player) -> UpgradeOption:
+static func new_passive(passive: PassiveUpgrade, player: Player) -> UpgradeOption:
 	var cloned_passive = passive.clone()
 
 	var option = UpgradeOption.new(
@@ -21,7 +21,7 @@ static func new_passive(passive: PassivePerk, player: Player) -> UpgradeOption:
 
 
 static func rank_up_passive(passive_key: String, player: Player) -> UpgradeOption:
-	var passive: PassivePerk = player.upgrades.passives_dict[passive_key]
+	var passive: PassiveUpgrade = player.upgrades.passives_dict[passive_key]
 
 	var option = UpgradeOption.new(
 		passive.name,

@@ -82,6 +82,10 @@ func rank_up():
 	_update_description()
 
 
+func add_weapon_effect(weapon_effect: WeaponEffect):
+	weapon_effects.append(weapon_effect)
+
+
 func _update_description():
 	#description = "Rank %s" % rank
 	#description += "\nDamage: %s" % (damage + _bonus_damage)

@@ -6,7 +6,7 @@ var _markers: Array[Sprite2D]
 
 
 func _ready():
-	Messenger.clicked_on_entity.connect(
+	SelectionManager.entity_selected.connect(
 		func(entity_info: EntityInfo):
 			print_debug("TEMP: we need a more intelligent way of detecting when a tower is selected")
 			if entity_info.entity is Tower:
@@ -15,11 +15,16 @@ func _ready():
 				clear_markers()
 	)
 
-	Messenger.clicked_on_empty.connect(
+	SelectionManager.selection_cleared.connect(
 		func():
 			clear_markers()
 	)
-	
+
+	SelectionManager.selected_entity_freed.connect(
+		func():
+			clear_markers()
+	)
+
 	Messenger.draw_cell_area_requested.connect(draw_cell_area_markers)
 
 

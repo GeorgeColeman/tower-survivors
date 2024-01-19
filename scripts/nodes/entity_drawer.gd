@@ -13,6 +13,7 @@ func set_game(game: Game):
 	_erase_existing()
 
 
+# CURSED
 func _on_building_option_upgraded(option: BuildingOption):
 	if !GameRules.UPGRADE_EXISTING:
 		return
@@ -34,7 +35,7 @@ func _on_requested_spawn_entity(params: SpawnEntityParams):
 		_spawn_node(new_entity, params.cell)
 
 		if new_entity is Tower:
-			_register_as_tower(new_entity, params.cell)
+			_register_as_tower(new_entity)
 	else:
 		print_debug("WARNING: scene is not of type Node2D")
 
@@ -46,14 +47,11 @@ func _spawn_node(node_2d: Node2D, cell: Cell):
 	node_2d.position = cell.scene_position
 
 
-func _register_as_tower(tower: Tower, cell: Cell):
+func _register_as_tower(tower: Tower):
 	if !_tower_dict.has(tower.tower_name):
 		_tower_dict[tower.tower_name] = [tower]
 	else:
 		_tower_dict[tower.tower_name].append(tower)
-
-	tower.init_weapons()
-	tower.set_cell_and_init(cell)
 
 	tower.was_killed.connect(
 		func():

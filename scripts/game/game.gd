@@ -3,6 +3,7 @@ extends RefCounted
 
 signal speed_changed(speed: float)
 signal game_over()
+signal run_state_changed(run_state: RunState)
 
 static var speed: float
 static var speed_scaled_delta: float
@@ -18,8 +19,8 @@ var upgrades_manager: UpgradeOptionsGenerator
 var difficulty: Difficulty
 
 var time: float
-var is_paused: bool
 
+var _run_state: RunState
 var _speed: float
 var _resume_speed: float = _speed
 
@@ -52,25 +53,24 @@ func set_speed(p_speed: float):
 	speed_changed.emit(p_speed)
 
 
-func toggle_pause() -> bool:
-	if is_paused:
-		resume_game()
-	else:
-		pause_game()
-
-	return is_paused
+func toggle_pause():
+	match _run_state:
+		RunState.RUNNING:
+			_pause_game()
+		RunState.PAUSED:
+			_resume_game()
 
 
 func set_player(p_player: Player):
 	player = p_player
 	player.levelled_up.connect(
 		func():
-			pause_game()
+			_pause_game_await_input()
 			generate_new_upgrade_options_for_player()
 	)
 
 	player.upgrades.passive_rank_added.connect(
-		func(passive: PassivePerk):
+		func(passive: PassiveUpgrade):
 			entities.apply_passive_rank_to_existing_towers(passive)
 	)
 
@@ -89,17 +89,36 @@ func generate_new_upgrade_options_for_player():
 	player.upgrades.set_upgrade_options(upgrades_manager.generate_upgrade_options(self, 3))
 
 
-func pause_game():
-	if !is_paused:
-		_resume_speed = _speed
+func accept_input_and_resume():
+	_set_run_state(RunState.RUNNING)
+	set_speed(_resume_speed)
 
-	is_paused = true
+
+func _pause_game():
+	if _run_state == RunState.RUNNING:
+		_resume_speed = _speed
+	
+	_set_run_state(RunState.PAUSED)
 	set_speed(0)
 
 
-func resume_game():
-	is_paused = false
+func _resume_game():
+	if _run_state == RunState.PAUSED_AWATING_INPUT:
+		print_debug("Run state is awaiting input. Cannot resume normally")
+		
+		return
+	
+	_set_run_state(RunState.RUNNING)
 	set_speed(_resume_speed)
+
+
+func _pause_game_await_input():
+	if _run_state == RunState.RUNNING:
+		_resume_speed = _speed
+		
+	_set_run_state(RunState.PAUSED_AWATING_INPUT)
+	
+	set_speed(0)
 
 
 func set_main_tower(p_tower: Tower):
@@ -109,3 +128,16 @@ func set_main_tower(p_tower: Tower):
 
 func _on_main_tower_was_killed():
 	game_over.emit()
+
+
+func _set_run_state(run_state: RunState):
+	_run_state = run_state
+	
+	run_state_changed.emit(run_state)
+
+
+enum RunState {
+	RUNNING,
+	PAUSED,
+	PAUSED_AWATING_INPUT			# GPT suggested 'DECISION TIME'
+}

@@ -8,20 +8,20 @@ func generate_upgrade_options(game: Game, amount: int) -> UpgradeOptions:
 	options.append_array(_get_passive_options(game))
 	
 	if GameRules.CORE_AS_UPGRADE_OPTION:
-		options.append(PerkFactory.add_core(game.player))
+		options.append(UpgradeFactory.add_core(game.player))
 
-	if GameRules.WEAPON_PERKS:
-		# Apply the weapon perks to this tower
+	if GameRules.WEAPON_UPGRADES:
+		# Apply the weapon upgrades to this tower
 		var main_tower = game.tower
 
 		for weapon in game.game_data.tower_weapon_data:
-			# Get rank up perk if tower already has the weapon
+			# Get rank up upgrade if tower already has the weapon
 			if main_tower.weapon_dict.has(weapon.id):
-				options.append(PerkFactory.rank_up_weapon(main_tower.weapon_dict[weapon.id]))
+				options.append(UpgradeFactory.rank_up_weapon(main_tower.weapon_dict[weapon.id]))
 			else:
-				options.append(PerkFactory.new_weapon(main_tower, weapon))
+				options.append(UpgradeFactory.new_weapon(main_tower, weapon))
 
-	if GameRules.TOWER_PERKS:
+	if GameRules.TOWER_UPGRADES:
 		options.append_array(_get_tower_options(game))
 
 	return UpgradeOptions.new(
@@ -36,7 +36,7 @@ func _get_tower_options(game: Game) -> Array[UpgradeOption]:
 	var options: Array[UpgradeOption] = []
 
 	# Add main tower rank up option
-	options.append(PerkFactory.rank_up_specific_tower(game.tower))
+	options.append(UpgradeFactory.rank_up_specific_tower(game.tower))
 
 	for tower_resource: TowerResource in game.game_data.tower_resource_dict.values():
 		var tower_proto = game.game_data.tower_proto_dict[tower_resource.name]
@@ -47,14 +47,14 @@ func _get_tower_options(game: Game) -> Array[UpgradeOption]:
 		)
 
 		if existing_option:
-			options.append(PerkFactory.rank_up_tower(tower_proto, existing_option))
+			options.append(UpgradeFactory.rank_up_tower(tower_proto, existing_option))
 
 			continue
 
-		if !tower_proto.is_possible_new_tower_upgrade_perk:
+		if !tower_resource.can_be_offered_as_new_tower:
 			continue
 
-		options.append(PerkFactory.new_tower(
+		options.append(UpgradeFactory.new_tower(
 			tower_proto,
 			func():
 				game.building_options.add_building_option(
@@ -72,12 +72,12 @@ func _get_passive_options(game: Game) -> Array[UpgradeOption]:
 	var options: Array[UpgradeOption] = []
 
 	for passive_key in game.game_data.passives_dict.keys():
-		var passive: PassivePerk = game.game_data.passives_dict[passive_key]
+		var passive: PassiveUpgrade = game.game_data.passives_dict[passive_key]
 
 		if game.player.upgrades.passives_dict.has(passive_key):
 			if game.player.upgrades.can_rank_up_passive(passive_key):
-				options.append(PerkFactory.rank_up_passive(passive_key, game.player))
+				options.append(UpgradeFactory.rank_up_passive(passive_key, game.player))
 		else:
-			options.append(PerkFactory.new_passive(passive, game.player))
+			options.append(UpgradeFactory.new_passive(passive, game.player))
 
 	return options

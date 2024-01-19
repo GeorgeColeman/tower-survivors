@@ -13,7 +13,6 @@ var _game: Game
 var _map: Map
 
 var _valid_spawn_point_cells: Array[Cell] = []
-#var _next_spawn_point_cell: Cell
 var _next_spawn_point_dict = {}						# <Cell, Sprite2D>
 
 var _cell_mob_dict = {}
@@ -118,7 +117,7 @@ func _get_valid_spawn_points(width: int, height: int):
 			if dist_from_tower > min_dist_from_tower_sqr:
 				_valid_spawn_point_cells.append(cell)
 
-	print_debug("Found %s valid spawn points" % _valid_spawn_point_cells.size())
+	#print_debug("Found %s valid spawn points" % _valid_spawn_point_cells.size())
 
 	#queue_redraw()
 

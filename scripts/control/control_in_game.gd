@@ -2,6 +2,8 @@ class_name ControlInGame
 extends Control
 
 @export var entity_info_panel: EntityInfoPanel
+
+@export var level_label: Label
 @export var experience_bar: TextureProgressBar
 
 @export var gold_label: Label
@@ -18,13 +20,23 @@ extends Control
 
 var _game: Game
 
-var _selected_entity: EntityInfo
-var _entity_is_selected: bool
-
 
 func _ready():
-	Messenger.clicked_on_entity.connect(_on_clicked_on_entity)
-	Messenger.clicked_on_empty.connect(_on_clicked_on_empty)
+	SelectionManager.entity_selected.connect(
+		func(entity_info: EntityInfo):
+			entity_info_panel.set_entity(entity_info)
+			entity_info_panel.visible = true
+	)
+
+	SelectionManager.selection_cleared.connect(
+		func():
+			entity_info_panel.visible = false
+	)
+
+	SelectionManager.selected_entity_freed.connect(
+		func():
+			entity_info_panel.visible = false
+	)
 
 	buy_core_button.pressed.connect(_on_buy_core_button_pressed)
 
@@ -48,11 +60,6 @@ func _process(_delta):
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 
 	#time_text.text = "%.0f" % _game.time
-
-	# The selected entity has become null, most likely because it's been freed
-	if _entity_is_selected && _selected_entity.entity == null:
-		_entity_is_selected = false
-		entity_info_panel.visible = false
 
 
 func start_game(game: Game):
@@ -79,19 +86,8 @@ func start_game(game: Game):
 
 
 func _update_experience_bar():
+	level_label.text = "Level %02d" % _game.player.experience_component.level
 	experience_bar.value = _game.player.experience_component.perc_to_next_level
-
-
-func _on_clicked_on_entity(entity: EntityInfo):
-	_selected_entity = entity
-	_entity_is_selected = true
-
-	entity_info_panel.set_entity(entity)
-	entity_info_panel.visible = true
-
-
-func _on_clicked_on_empty():
-	entity_info_panel.visible = false
 
 
 func _on_buy_core_button_pressed():

@@ -22,22 +22,22 @@ func get_entities_at(cell: Cell) -> Array:
 	return _cell_entity_dict[cell]
 
 
-func apply_passive_rank_to_existing_towers(passive: PassivePerk):
+func apply_passive_rank_to_existing_towers(passive: PassiveUpgrade):
 	for tower in towers:
 		passive.apply_current_rank_to_tower(tower)
 
 
-func spawn_entity(params: SpawnEntityParams):
+func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams):
 	entity_added.emit(params)
 
-	if params.spawned_entity is Tower:
-		_register_tower(params.spawned_entity)
+	_register_tower(tower_resource, params.spawned_entity, params.cell)
 
 
-func _register_tower(tower: Tower):
+func _register_tower(tower_resource: TowerResource, tower: Tower, cell: Cell):
+	tower.set_resource(tower_resource)
+	tower.set_cell_and_init(cell)
+
 	towers.append(tower)
-
-	var cell = tower.cell
 
 	# TEMP: assuming all towers are solid
 	PathUtilities.update_cell_is_solid(cell, true)

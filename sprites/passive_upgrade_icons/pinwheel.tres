@@ -1,6 +1,6 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://d2mmxpfmc7e3i"]
 
-[ext_resource type="Texture2D" uid="uid://2iqc1pwqlbh1" path="res://sprites/passive_upgrade_icons/perk_icons_24x24.png" id="1_54rm1"]
+[ext_resource type="Texture2D" uid="uid://2iqc1pwqlbh1" path="res://sprites/passive_upgrade_icons/passive_upgrade_icons_24x24.png" id="1_54rm1"]
 
 [resource]
 atlas = ExtResource("1_54rm1")

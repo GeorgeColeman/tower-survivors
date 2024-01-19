@@ -2,8 +2,7 @@ class_name GameData
 extends RefCounted
 
 static var tower_weapon_data: Array[TowerWeaponData]
-# <String, TowerWeaponData>
-static var _tower_weapon_data_dict = {}
+static var _tower_weapon_data_dict = {}					# <String, TowerWeaponData>
 
 var mob_resources: Array[MobResource]
 var upgrade_resources: Array[UpgradeResource]
@@ -15,14 +14,10 @@ var elites: Array[MobResource]
 
 var _spawnable_mobs: Array[MobResource]
 
-var tower_resource_dict = {}					# <String, TowerResource>
-var tower_proto_dict = {}						# <String, Tower>
-
-# <String, PassivePerk>
-var passives_dict = {}
-
-# <String, PlayerCharacter>
-var player_character_dict = {}
+var tower_resource_dict = {}							# <String, TowerResource>
+var tower_proto_dict = {}								# <String, Tower>
+var passives_dict = {}									# <String, PassiveUpgrade>
+var player_character_dict = {}							# <String, PlayerCharacter>
 
 func _init():
 	_load_resources()
@@ -57,7 +52,7 @@ func _load_resources():
 
 	_load_towers()
 
-	var passives = PassivePerkDataResolver.get_passive_perk_data()
+	var passives = PassiveUpgradeDataResolver.get_passive_upgrade_data()
 
 	for passive in passives:
 		passives_dict[passive.name] = passive
@@ -78,7 +73,8 @@ func _build_prototypes():
 		var tower_resource = tower_resource_dict[key]
 		var unpacked_tower: Tower = tower_resource.tower_scene.instantiate()
 
-		unpacked_tower.init_weapons()
+		unpacked_tower.set_resource(tower_resource)
+		#unpacked_tower.init_weapons()
 
 		tower_proto_dict[key] = unpacked_tower
 

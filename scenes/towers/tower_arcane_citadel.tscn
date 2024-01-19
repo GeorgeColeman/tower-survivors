@@ -9,11 +9,8 @@ script = ExtResource("1_um7at")
 tower_name = "Arcane Citadel"
 graphics = NodePath("Graphics")
 main_sprite_2d = NodePath("Graphics/Sprite2D")
-weapon_ids = Array[String](["pink_shot"])
-gold_cost = 0
 hit_points_component = NodePath("HitPoints2D")
 firing_point = NodePath("FiringPoint")
-_flags = 1
 
 [node name="HitPoints2D" parent="." instance=ExtResource("2_11lq7")]
 

@@ -11,6 +11,9 @@ var cell: Cell
 
 var speed: float:
 	get:
+		if !_is_mobile:
+			return 0
+
 		return _base_speed * _speed_modifier
 
 var smooth_position: Vector2:
@@ -23,6 +26,7 @@ var is_near_target: bool:
 
 var _base_speed: float
 var _speed_modifier: float = 1
+var _is_mobile: bool = true
 var _path_follower: PathFollower
 var _target_cell: Cell
 var _facing_direction = FacingDirection.LEFT
@@ -36,6 +40,7 @@ func _init(base_speed: float):
 
 	_path_follower.exited_node.connect(_on_exited_node)
 	_path_follower.entered_node.connect(_on_entered_node)
+	_path_follower.enter_node_completed.connect(_update_facing_direction)
 	_path_follower.path_interrupted.connect(_on_path_interrupted)
 	_path_follower.path_completed.connect(_on_path_completed)
 
@@ -51,7 +56,7 @@ func _on_entered_node(node: Vector2i):
 
 	cell = new_cell
 
-	_update_facing_direction()
+	#_update_facing_direction()
 
 	entered_cell.emit(new_cell)
 
@@ -62,6 +67,12 @@ func process(delta):
 
 func add_move_speed_modifier(amount: float):
 	_speed_modifier += amount
+
+	_path_follower.set_move_speed(speed)
+
+
+func set_is_mobile(is_mobile: bool):
+	_is_mobile = is_mobile
 
 	_path_follower.set_move_speed(speed)
 
@@ -83,18 +94,17 @@ func destroy():
 func _update_facing_direction():
 	if !_path_follower.current_node || !_path_follower.next_node:
 		print_debug("WARNING: current or next node is null")
-		
+
 		return
-	
-	#if !cell || !_target_cell:
-		#return
-		
+
 	var diff = _path_follower.current_node - _path_follower.next_node
 
-	if diff.x >= 0:
+	if diff.x > 0:
 		_facing_direction = FacingDirection.RIGHT
-	else:
+	elif diff.x < 0:
 		_facing_direction = FacingDirection.LEFT
+	else:
+		return
 
 	facing_direction_changed.emit(_facing_direction)
 

@@ -48,6 +48,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="Visuals" type="Node2D" parent="."]
+scale = Vector2(-1, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("2_vxffh")

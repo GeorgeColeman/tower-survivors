@@ -64,6 +64,7 @@ func start_game():
 		map.height * GameConstants.PIXEL_SCALE)
 
 	entity_drawer.set_game(game)
+	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 
 	var player_character: PlayerCharacter = game_data.player_character_dict[starting_character]
 
@@ -71,10 +72,8 @@ func start_game():
 	params.entity_scene = player_character.main_tower.tower_scene
 	params.cell = map.center_cell
 
-	game.entities.spawn_entity(params)
+	game.entities.spawn_tower(player_character.main_tower, params)
 	game.set_main_tower(params.spawned_entity)
-
-	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 
 	mob_spawner.start_game(game)
 	main_control.start_game(game)

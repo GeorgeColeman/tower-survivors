@@ -32,6 +32,7 @@ ControlMouseDetector="*res://scripts/autoloads/control_mouse_detector.gd"
 Audio="*res://scripts/autoloads/audio.gd"
 MapUtilities="*res://scripts/autoloads/map_utilities.gd"
 PathUtilities="*res://scripts/autoloads/path_utilities.gd"
+SelectionManager="*res://scripts/selection_manager.gd"
 
 [display]
 
