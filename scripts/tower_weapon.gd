@@ -100,6 +100,16 @@ func _set_cells_in_range():
 
 
 func _attack():
+	match _data.targeting_type:
+		Enums.TargetingType.SEEKING:
+			_projectile_attack()
+		Enums.TargetingType.LINE:
+			_projectile_attack()
+		Enums.TargetingType.AREA:
+			_area_attack()
+
+
+func _projectile_attack():
 	# Reset the attack cooldown
 	_attack_cooldown = 1 / (attacks_per_second + _bonus_attacks_per_second)
 
@@ -113,7 +123,6 @@ func _attack():
 		_cells_in_range,
 		number_of_shots
 	)
-	#var targets = GameUtilities.get_mob_targets(_cells_in_range, number_of_shots)
 
 	var shoot = func(target: Mob):
 		for shot in number_of_bursts:
@@ -134,13 +143,40 @@ func _attack():
 	Audio.play_sfx(attack_sfx)
 
 
-func _spawn_projectile_to_target(target: Mob):
-	#match _data.targeting_type:
-		#Enums.TargetingType.SEEKING:
-			#print_debug("Seeking")
-		#Enums.TargetingType.LINE:
-			#print_debug("Line")
+func _area_attack():
+	#print_debug("TODO: area attack")
+	_attack_cooldown = 1 / (attacks_per_second + _bonus_attacks_per_second)
 
+	var all_targets = GameUtilities.get_all_targets_in_cells(_cells_in_range)
+
+	if all_targets.size() == 0:
+		return
+
+	for target in all_targets:
+		target.take_damage(DamageInfoFactory.new_damage_info(damage + _bonus_damage))
+		_apply_on_hit_weapon_effects(target)
+
+	if !projectile_scene:
+		print_debug("No projectile scene")
+
+		return
+
+	var visual_effects = []
+
+	for cell in _cells_in_range:
+		var vfx = projectile_scene.instantiate()
+		add_child(vfx)
+		vfx.global_position = cell.scene_position
+		visual_effects.append(vfx)
+
+	get_tree().create_timer(1.0).timeout.connect(
+		func():
+			for effect in visual_effects:
+				effect.queue_free()
+	)
+
+
+func _spawn_projectile_to_target(target: Mob):
 	var projectile = projectile_scene.instantiate() as Projectile
 	add_child(projectile)
 
@@ -150,12 +186,16 @@ func _spawn_projectile_to_target(target: Mob):
 	projectile.set_range(attack_range + _bonus_attack_range)
 	projectile.set_speed(_data.projectile_speed * (1 + _projectile_speed_mod))
 
+	projectile.add_on_hit_callback(
+		func():
+			_apply_on_hit_weapon_effects(target)
+	)
+
+
+func _apply_on_hit_weapon_effects(target: Mob):
 	for effect in weapon_effects:
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
-			projectile.add_on_hit_callback(
-				func():
-					effect.apply_to_mob(target)
-			)
+			effect.apply_to_mob(target)
 
 
 func set_bonus_damage(value: int):

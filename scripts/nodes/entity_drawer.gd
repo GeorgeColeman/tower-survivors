@@ -29,6 +29,8 @@ func _on_building_option_upgraded(option: BuildingOption):
 func _on_requested_spawn_entity(params: SpawnEntityParams):
 	var new_entity = params.entity_scene.instantiate()
 
+	params.entity_instantiated.emit(new_entity)
+
 	params.spawned_entity = new_entity
 
 	if new_entity is Node2D:

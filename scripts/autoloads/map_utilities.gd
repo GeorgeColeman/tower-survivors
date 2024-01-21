@@ -17,8 +17,8 @@ func get_random_cell() -> Cell:
 
 
 func get_cell_at_scene_position(vector: Vector2) -> Cell:
-	var x = floori((vector.x + 8) * GameConstants.UNITS_PER_PIXEL)
-	var y = floori((vector.y + 8) * GameConstants.UNITS_PER_PIXEL)
+	var x = floori((vector.x + GameConstants.PIXEL_SCALE * 0.5) * GameConstants.UNITS_PER_PIXEL)
+	var y = floori((vector.y + GameConstants.PIXEL_SCALE * 0.5) * GameConstants.UNITS_PER_PIXEL)
 
 	return _map.get_cell_at(x, y)
 

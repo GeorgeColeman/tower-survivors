@@ -84,14 +84,7 @@ func start_game():
 	map_drawer.draw_map(map)
 
 	for tower in player_character.starting_towers:
-		var tower_proto = game_data.tower_proto_dict[tower.name]
-
-		game.building_options.add_building_option(
-			tower,
-			tower_proto,
-			tower.tower_scene,
-			game.player
-			)
+		game.building_options.add_building_option(tower, game.player)
 
 	game.speed_changed.connect(
 		func(speed: float):

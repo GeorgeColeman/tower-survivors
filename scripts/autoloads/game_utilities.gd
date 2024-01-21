@@ -35,7 +35,7 @@ func try_enter_build_mode(option: BuildingOption):
 
 		var params = SpawnEntityParams.new()
 
-		params.entity_scene = option.scene
+		params.entity_scene = option.tower_resource.tower_scene
 		params.cell = cell
 
 		_game.entities.spawn_tower(option.tower_resource, params)
@@ -55,8 +55,30 @@ func get_distance_between_nodes(node_a: Vector2i, node_b: Vector2i) -> float:
 	return 1.4
 
 
-func draw_cells_in_proto_tower_attack_range(centre_cell: Cell, tower_proto: Tower):
-	var attack_range = tower_proto.get_attack_range() + _game.tower.tower_stats._bonus_attack_range
+func get_tower_weapon_description(tower_resource: TowerResource) -> String:
+	if tower_resource.weapons.size() == 0:
+		return ""
+
+	var first_weapon = _game.game_data.get_tower_weapon_data(
+		tower_resource.weapons[0]
+	)
+
+	return first_weapon.get_description()
+
+
+func highlight_building_cells(centre_cell: Cell, building_option: BuildingOption):
+	if building_option.tower_resource.weapons.size() == 0:
+		return
+
+	var first_weapon = _game.game_data.get_tower_weapon_data(
+		building_option.tower_resource.weapons[0]
+	)
+
+	_highlight_cells_in_tower_weapon_attack_range(centre_cell, first_weapon)
+
+
+func _highlight_cells_in_tower_weapon_attack_range(centre_cell: Cell, tower_weapon_data: TowerWeaponData):
+	var attack_range = tower_weapon_data.attack_range + _game.tower.tower_stats._bonus_attack_range
 
 	Messenger.draw_cell_area_requested.emit(
 		get_cells_in_circle(centre_cell, attack_range)
@@ -76,6 +98,10 @@ func get_cells_in_circle_sorted_by_distance_from(origin_cell: Cell, radius: floa
 	)
 
 	return cells_in_circle
+
+
+func get_all_targets_in_cells(cells: Array[Cell]) -> Array[Mob]:
+	return _game.mob_spawner.get_mob_targets(cells)
 
 
 func get_mob_targets(cells_in_range: Array[Cell], number_of_targets: int) -> Array[Mob]:

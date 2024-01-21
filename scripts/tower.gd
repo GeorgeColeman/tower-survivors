@@ -3,13 +3,18 @@ extends Node2D
 
 signal was_killed()
 
-@export var tower_name: String
+#@export var tower_name: String
 @export var graphics: Node2D
-@export var main_sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent
 @export var animation_player: AnimationPlayer
 @export var firing_point: Marker2D
 @export var show_hit_points_bar: bool = true
+
+var tower_resource: TowerResource
+
+var tower_name: String:
+	get:
+		return tower_resource.name
 
 var kills: int
 var cell: Cell
@@ -44,10 +49,12 @@ func uninstantiate():
 	queue_free()
 
 
-func set_resource(tower_resource: TowerResource):
-	hit_points_component.initialise(tower_resource.hit_points, show_hit_points_bar)
+func set_resource(p_tower_resource: TowerResource):
+	tower_resource = p_tower_resource
 
-	for weapon in tower_resource.weapons:
+	hit_points_component.initialise(p_tower_resource.hit_points, show_hit_points_bar)
+
+	for weapon in p_tower_resource.weapons:
 		var weapon_data: TowerWeaponData = GameData.get_tower_weapon_data(weapon)
 
 		if !weapon_data:
@@ -67,16 +74,9 @@ func set_cell_and_init(p_cell: Cell):
 		_activate_weapon(weapon)
 
 
-func get_attack_range() -> int:
-	if _weapons.size() == 0:
-		return 0
-
-	return _weapons[0].attack_range
-
-
 func get_cells_in_attack_range() -> Array[Cell]:
 	if _weapons.size() == 0:
-		print_debug("No weapons")
+		#print_debug("No weapons")
 
 		return []
 
@@ -123,8 +123,6 @@ func take_damage(amount: int):
 
 	if hit_points_component.is_at_zero:
 		_destroy()
-
-	TweenEffects.flash_white(main_sprite_2d, Color.WHITE)
 
 	if graphics:
 		TweenEffects.flash_white(graphics, Color.WHITE)

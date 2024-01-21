@@ -38,3 +38,13 @@ func _init(
 	weapon_effects = p_weapon_effects
 	proj_scene = p_proj_scene
 	sfx = p_sfx
+
+
+func get_description() -> String:
+	var description: String
+
+	description = "Damage: %s" % damage
+	description += "\nRange: %s" % attack_range
+	description += "\nAttack Speed: %s" % attack_speed
+
+	return description

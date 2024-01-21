@@ -46,7 +46,9 @@
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
+starting_cores = null
 starting_character = "Adept"
+auto_start_game = null
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")

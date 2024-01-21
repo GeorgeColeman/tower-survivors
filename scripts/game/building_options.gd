@@ -12,21 +12,10 @@ signal option_upgraded(option: BuildingOption)
 var _option_dict = {}						# <String, BuildingOption>
 
 
-func add_building_option(
-	tower_resource: TowerResource,
-	tower_proto: Tower,
-	tower_scene: PackedScene,
-	player: Player
-):
-	var option = BuildingOption.new(
-		tower_resource.name,
-		tower_scene,
-		tower_proto.main_sprite_2d.texture,
-		tower_resource.gold_cost
-	)
+func add_building_option(tower_resource: TowerResource, player: Player):
+	var option = BuildingOption.new()
 
 	option.tower_resource = tower_resource
-	option.tower_proto = tower_proto
 
 	_option_dict[tower_resource.name] = option
 

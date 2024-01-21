@@ -2,6 +2,7 @@ class_name TowerResource
 extends Resource
 
 @export var name: String
+@export var texture: Texture2D
 @export var tower_scene: PackedScene
 @export var weapons: Array[String]
 @export var hit_points: int

@@ -6,7 +6,8 @@ enum WeaponEffectApplyType {
 
 enum TargetingType {
 	SEEKING,
-	LINE
+	LINE,
+	AREA
 }
 
 

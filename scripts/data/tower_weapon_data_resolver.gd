@@ -20,6 +20,11 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
 
+		var proj: PackedScene
+
+		if scene_path != "":
+			proj = load(scene_path)
+
 		var sfx: AudioStream
 
 		if sfx_path != "":
@@ -50,7 +55,7 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 			attack_range,
 			projectile_speed,
 			weapon_effects,
-			load(scene_path),
+			proj,
 			sfx
 		))
 

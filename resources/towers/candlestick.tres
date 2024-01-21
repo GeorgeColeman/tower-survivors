@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://xuh4alcfc5bu"]
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://xuh4alcfc5bu"]
 
 [ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_kvcxm"]
 [ext_resource type="PackedScene" uid="uid://d240mk65qdcoo" path="res://scenes/towers/tower_candlestick.tscn" id="2_dpud0"]
+[ext_resource type="Texture2D" uid="uid://cdqg05j8yx3ii" path="res://sprites/towers/candlestick.png" id="2_jblqj"]
 
 [resource]
 script = ExtResource("1_kvcxm")
 name = "Candlestick"
+texture = ExtResource("2_jblqj")
 tower_scene = ExtResource("2_dpud0")
 weapons = Array[String](["frost_bolt"])
 hit_points = 50

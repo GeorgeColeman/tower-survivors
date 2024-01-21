@@ -1,4 +1,4 @@
-class_name UpgradeFactory
+class_name UpgradeOptionFactory
 extends RefCounted
 
 
@@ -63,9 +63,9 @@ static func rank_up_weapon(weapon: TowerWeapon) -> UpgradeOption:
 	return option
 
 
-static func rank_up_tower(tower: Tower, existing: BuildingOption) -> UpgradeOption:
+static func rank_up_tower(existing: BuildingOption) -> UpgradeOption:
 	var option = UpgradeOption.new(
-		tower.tower_name,
+		existing.tower_resource.name,
 		"Rank %s" % (existing.rank + 1),
 		"Rank Up Tower",
 		"TODO: tower rank up description",
@@ -73,7 +73,7 @@ static func rank_up_tower(tower: Tower, existing: BuildingOption) -> UpgradeOpti
 			existing.upgrade()
 	)
 
-	option.texture = tower.main_sprite_2d.texture
+	option.texture = existing.tower_resource.texture
 
 	return option
 
@@ -88,21 +88,21 @@ static func rank_up_specific_tower(tower: Tower) -> UpgradeOption:
 			tower.add_rank(1)
 	)
 
-	option.texture = tower.main_sprite_2d.texture
+	option.texture = tower.tower_resource.texture
 
 	return option
 
 
-static func new_tower(tower: Tower, apply_callback: Callable) -> UpgradeOption:
+static func new_tower(tower_resource: TowerResource, apply_callback: Callable) -> UpgradeOption:
 	var option = UpgradeOption.new(
-			tower.tower_name,
+			tower_resource.name,
 			"New",
 			"New Tower",
-			tower.weapons_description,
+			GameUtilities.get_tower_weapon_description(tower_resource),
 			apply_callback
 	)
 
-	option.texture = tower.main_sprite_2d.texture
+	option.texture = tower_resource.texture
 
 	return option
 

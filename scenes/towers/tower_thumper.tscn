@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://3tds3l2wpokv"]
+
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_yeb84"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_lh2w8"]
+[ext_resource type="Texture2D" uid="uid://blpcuwlsr0t25" path="res://sprites/towers/placeholder_tower.tres" id="3_qep3j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbsvh"]
+atlas = ExtResource("3_qep3j")
+region = Rect2(0, 0, 24, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbsvh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
+script = ExtResource("1_yeb84")
+graphics = NodePath("Graphics")
+hit_points_component = NodePath("HitPoints2D")
+firing_point = NodePath("FiringPoint")
+show_hit_points_bar = false
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_lh2w8")]
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
+sprite_frames = SubResource("SpriteFrames_h5fpv")
+autoplay = "default"
+frame_progress = 0.905189
+offset = Vector2(0, -12)
+
+[node name="FiringPoint" type="Marker2D" parent="."]
+position = Vector2(0, -27)

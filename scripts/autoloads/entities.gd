@@ -28,9 +28,14 @@ func apply_passive_rank_to_existing_towers(passive: PassiveUpgrade):
 
 
 func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams):
+	params.entity_instantiated.connect(
+		func(entity):
+			_register_tower(tower_resource, entity, params.cell)
+	)
+	
 	entity_added.emit(params)
 
-	_register_tower(tower_resource, params.spawned_entity, params.cell)
+	#_register_tower(tower_resource, params.spawned_entity, params.cell)
 
 
 func _register_tower(tower_resource: TowerResource, tower: Tower, cell: Cell):

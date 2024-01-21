@@ -21,7 +21,7 @@ func set_building_option(option: BuildingOption):
 
 	_building_option = option
 
-	_current_preview = option.scene.instantiate()
+	_current_preview = option.tower_resource.tower_scene.instantiate()
 	preview_container.add_child(_current_preview)
 
 
@@ -44,7 +44,7 @@ func _on_mouse_entered_cell(cell: Cell):
 	preview_container.visible = true
 	preview_container.position = cell.scene_position
 
-	GameUtilities.draw_cells_in_proto_tower_attack_range(cell, _building_option.tower_proto)
+	GameUtilities.highlight_building_cells(cell, _building_option)
 
 
 func _on_mouse_clicked_cell(cell: Cell):

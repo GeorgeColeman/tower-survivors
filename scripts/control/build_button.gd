@@ -10,12 +10,12 @@ extends Button
 
 
 func set_building_option(option: BuildingOption):
-	_main_texture.texture = option.texture
-	_gold_label.text = str(option.gold_cost)
+	_main_texture.texture = option.tower_resource.texture
+	_gold_label.text = str(option.tower_resource.gold_cost)
 	_rank_label.text = str(option.rank)
 	_core_cost_label.text = str(option.get_core_cost())
 
-	if option.gold_cost == 0:
+	if option.tower_resource.gold_cost == 0:
 		_gold_cost_area.visible = false
 
 	_no_build_overlay_texture.visible = !option.can_build

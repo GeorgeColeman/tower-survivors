@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="TowerResource" load_steps=3 format=3 uid="uid://c436hf65fej2b"]
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://c436hf65fej2b"]
 
 [ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_sbr31"]
 [ext_resource type="PackedScene" uid="uid://c4367v7nq7pas" path="res://scenes/towers/tower_arcane_citadel.tscn" id="2_gctx0"]
+[ext_resource type="Texture2D" uid="uid://b5ky6gam3vy1y" path="res://sprites/towers/tower_arcane_citadel.png" id="2_lr412"]
 
 [resource]
 script = ExtResource("1_sbr31")
 name = "Arcane Citadel"
+texture = ExtResource("2_lr412")
 tower_scene = ExtResource("2_gctx0")
 weapons = Array[String](["pink_shot"])
 hit_points = 50

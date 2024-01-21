@@ -15,13 +15,11 @@ var elites: Array[MobResource]
 var _spawnable_mobs: Array[MobResource]
 
 var tower_resource_dict = {}							# <String, TowerResource>
-var tower_proto_dict = {}								# <String, Tower>
 var passives_dict = {}									# <String, PassiveUpgrade>
 var player_character_dict = {}							# <String, PlayerCharacter>
 
 func _init():
 	_load_resources()
-	_build_prototypes()
 
 
 func _load_resources():
@@ -66,17 +64,6 @@ func _load_resources():
 
 	for data in tower_weapon_data:
 		_tower_weapon_data_dict[data.id] = data
-
-
-func _build_prototypes():
-	for key in tower_resource_dict:
-		var tower_resource = tower_resource_dict[key]
-		var unpacked_tower: Tower = tower_resource.tower_scene.instantiate()
-
-		unpacked_tower.set_resource(tower_resource)
-		#unpacked_tower.init_weapons()
-
-		tower_proto_dict[key] = unpacked_tower
 
 
 func _load_towers():

@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://r4kgx2midu25"]
+
+[ext_resource type="Texture2D" uid="uid://cprml2g2rxqmb" path="res://sprites/vfx/vfx_quake.png" id="1_nrvop"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkoll"]
+atlas = ExtResource("1_nrvop")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmfp6"]
+atlas = ExtResource("1_nrvop")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3w556"]
+atlas = ExtResource("1_nrvop")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gu8p"]
+atlas = ExtResource("1_nrvop")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gpxbl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkoll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmfp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3w556")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gu8p")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+z_index = -1
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_gpxbl")
+autoplay = "default"

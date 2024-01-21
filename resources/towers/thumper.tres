@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://dujnum4qv77se"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_wtfat"]
+[ext_resource type="Texture2D" uid="uid://blpcuwlsr0t25" path="res://sprites/towers/placeholder_tower.tres" id="2_hqm3i"]
+[ext_resource type="PackedScene" uid="uid://3tds3l2wpokv" path="res://scenes/towers/tower_thumper.tscn" id="3_1eim8"]
+
+[resource]
+script = ExtResource("1_wtfat")
+name = "Thumper"
+texture = ExtResource("2_hqm3i")
+tower_scene = ExtResource("3_1eim8")
+weapons = Array[String](["thump"])
+hit_points = 50
+gold_cost = 20
+core_cost = 1
+_flags = 0
