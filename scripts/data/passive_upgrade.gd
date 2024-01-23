@@ -12,6 +12,10 @@ var display_rank:
 	get:
 		return _current_rank_index + 1
 
+var is_rank_one: bool:
+	get:
+		return _current_rank_index == 0
+
 var _current_rank_index: int = -1
 
 

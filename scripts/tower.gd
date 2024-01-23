@@ -3,10 +3,8 @@ extends Node2D
 
 signal was_killed()
 
-#@export var tower_name: String
 @export var graphics: Node2D
 @export var hit_points_component: HitPointsComponent
-@export var animation_player: AnimationPlayer
 @export var firing_point: Marker2D
 @export var show_hit_points_bar: bool = true
 
@@ -20,6 +18,7 @@ var kills: int
 var cell: Cell
 var tower_stats: TowerStats
 var weapon_dict = {}										# <String, TowerWeapon>
+var passive_upgrades: Array[PassiveUpgrade] = []
 
 var _weapons: Array[TowerWeapon] = []
 var _is_destroyed: bool
@@ -31,6 +30,13 @@ var description: String:
 
 		for weapon in _weapons:
 			d += str("\n\n", weapon.weapon_name, "\n", weapon.description)
+
+		d += "\n"
+
+		for upgrade in passive_upgrades:
+			d += "\n%s: %s" % [upgrade.name, upgrade.display_rank]
+
+		d = d.strip_edges()
 
 		return d
 
@@ -55,7 +61,7 @@ func set_resource(p_tower_resource: TowerResource):
 	hit_points_component.initialise(p_tower_resource.hit_points, show_hit_points_bar)
 
 	for weapon in p_tower_resource.weapons:
-		var weapon_data: TowerWeaponData = GameData.get_tower_weapon_data(weapon)
+		var weapon_data: TowerWeaponData = DataUtilities.get_weapon_data(weapon)
 
 		if !weapon_data:
 			return
@@ -76,8 +82,6 @@ func set_cell_and_init(p_cell: Cell):
 
 func get_cells_in_attack_range() -> Array[Cell]:
 	if _weapons.size() == 0:
-		#print_debug("No weapons")
-
 		return []
 
 	return _weapons[0]._cells_in_range
@@ -133,9 +137,6 @@ func take_damage(amount: int):
 func _destroy():
 	_is_destroyed = true
 	was_killed.emit()
-
-	if animation_player:
-		animation_player.play("destroy")
 
 	# Deactivate weapons
 	for weapon in _weapons:

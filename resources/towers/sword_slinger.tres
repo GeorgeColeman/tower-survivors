@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_d56k2")
 name = "Sword Slinger"
+description = "Flings a deadly sword that passes through enemies."
 texture = ExtResource("2_13n2j")
 tower_scene = ExtResource("2_mjpig")
 weapons = Array[String](["sling_sword"])

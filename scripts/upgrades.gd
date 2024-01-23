@@ -61,7 +61,6 @@ func add_passive(passive: PassiveUpgrade):
 	passives_dict[passive.name] = passive
 
 	passive_rank_added.emit(passive)
-	#print_debug("TODO: apply passive")
 
 
 func rank_up_passive(passive_key: String):

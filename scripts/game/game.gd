@@ -15,8 +15,8 @@ var entities: Entities
 var mob_spawner: MobSpawner
 var game_data: GameData
 var building_options: BuildingOptions
-var upgrades_manager: UpgradeOptionsGenerator
 var difficulty: Difficulty
+var upgrades_manager: UpgradesManager
 
 var time: float
 
@@ -31,7 +31,6 @@ func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
-	upgrades_manager = UpgradeOptionsGenerator.new()
 	difficulty = Difficulty.new()
 
 	set_speed(1)
@@ -66,27 +65,16 @@ func set_player(p_player: Player):
 	player.levelled_up.connect(
 		func():
 			_pause_game_await_input()
-			generate_new_upgrade_options_for_player()
 	)
 
-	player.upgrades.passive_rank_added.connect(
-		func(passive: PassiveUpgrade):
-			entities.apply_passive_rank_to_existing_towers(passive)
+	upgrades_manager = UpgradesManager.new(
+		building_options,
+		player.upgrades,
+		entities
 	)
 
-	player.gold_changed.connect(
-		func(_gold: int):
-			building_options.update_build_options_can_build(player)
-	)
-
-	player.cores_changed.connect(
-		func(_cores: int):
-			building_options.update_build_options_can_build(player)
-	)
-
-
-func generate_new_upgrade_options_for_player():
-	player.upgrades.set_upgrade_options(upgrades_manager.generate_upgrade_options(self, 3))
+	upgrades_manager.game_data = game_data
+	upgrades_manager.set_player(player)
 
 
 func accept_input_and_resume():
@@ -97,7 +85,7 @@ func accept_input_and_resume():
 func _pause_game():
 	if _run_state == RunState.RUNNING:
 		_resume_speed = _speed
-	
+
 	_set_run_state(RunState.PAUSED)
 	set_speed(0)
 
@@ -105,9 +93,9 @@ func _pause_game():
 func _resume_game():
 	if _run_state == RunState.PAUSED_AWATING_INPUT:
 		print_debug("Run state is awaiting input. Cannot resume normally")
-		
+
 		return
-	
+
 	_set_run_state(RunState.RUNNING)
 	set_speed(_resume_speed)
 
@@ -115,10 +103,26 @@ func _resume_game():
 func _pause_game_await_input():
 	if _run_state == RunState.RUNNING:
 		_resume_speed = _speed
-		
+
 	_set_run_state(RunState.PAUSED_AWATING_INPUT)
-	
+
 	set_speed(0)
+
+
+func init_player_character(player_character_name: String):
+	var player_character: PlayerCharacter = game_data.player_character_dict[player_character_name]
+
+	var params = SpawnEntityParams.new()
+	params.entity_scene = player_character.main_tower.tower_scene
+	params.cell = map.center_cell
+
+	entities.spawn_tower(player_character.main_tower, params)
+	set_main_tower(params.spawned_entity)
+
+	building_options.add_building_option(player_character.main_tower, player)
+
+	for tower in player_character.starting_towers:
+		building_options.add_building_option(tower, player)
 
 
 func set_main_tower(p_tower: Tower):
@@ -132,7 +136,7 @@ func _on_main_tower_was_killed():
 
 func _set_run_state(run_state: RunState):
 	_run_state = run_state
-	
+
 	run_state_changed.emit(run_state)
 
 

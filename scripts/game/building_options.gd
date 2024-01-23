@@ -16,11 +16,13 @@ func add_building_option(tower_resource: TowerResource, player: Player):
 	var option = BuildingOption.new()
 
 	option.tower_resource = tower_resource
+	option.is_buildable = !tower_resource.is_main_tower
 
 	_option_dict[tower_resource.name] = option
 
 	option.upgraded.connect(
-		func(): option_upgraded.emit(option)
+		func(): 
+			option_upgraded.emit(option)
 	)
 
 	option.update_can_build(player)

@@ -19,7 +19,7 @@ func start_game(game: Game):
 
 	control_level_up.reroll_requested.connect(
 		func():
-			game.generate_new_upgrade_options_for_player()
+			game.upgrades_manager.generate_new_upgrade_options()
 	)
 
 	game.game_over.connect(_on_game_over)

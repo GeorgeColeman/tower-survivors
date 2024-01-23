@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_cg1wm")
 name = "Crystal Chamber"
+description = ""
 texture = ExtResource("2_dvoo7")
 tower_scene = ExtResource("2_piw2t")
 weapons = Array[String](["crystal_canon"])

@@ -17,6 +17,7 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 		var attack_range = config.get_value(section, "range")
 		var projectile_speed = config.get_value(section, "projectile_speed")
 		var effects = config.get_value(section, "effects")
+		var properties = config.get_value(section, "properties", {})
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
 
@@ -55,6 +56,7 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 			attack_range,
 			projectile_speed,
 			weapon_effects,
+			properties,
 			proj,
 			sfx
 		))

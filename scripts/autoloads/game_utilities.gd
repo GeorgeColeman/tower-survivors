@@ -63,6 +63,9 @@ func get_tower_weapon_description(tower_resource: TowerResource) -> String:
 		tower_resource.weapons[0]
 	)
 
+	if !first_weapon:
+		return ""
+
 	return first_weapon.get_description()
 
 
@@ -73,6 +76,9 @@ func highlight_building_cells(centre_cell: Cell, building_option: BuildingOption
 	var first_weapon = _game.game_data.get_tower_weapon_data(
 		building_option.tower_resource.weapons[0]
 	)
+
+	if !first_weapon:
+		return
 
 	_highlight_cells_in_tower_weapon_attack_range(centre_cell, first_weapon)
 
@@ -145,7 +151,11 @@ func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 	for entity in entities:
 		if entity is Tower:
 			all_entities.append(
-				EntityInfo.new(entity, entity.tower_name, entity.description, entity.position)
+				EntityInfo.new(
+					entity,
+					entity.tower_name,
+					entity.description,
+					entity.position)
 			)
 
 	var spawn_points = MobSpawnerUtilities.get_spawn_points_at(cell)
@@ -169,3 +179,13 @@ func calculate_sprite_offset(sprite_2d: Sprite2D) -> Vector2:
 		(rect.size.x - GameConstants.PIXEL_SCALE) * 0.5,
 		(rect.size.y - GameConstants.PIXEL_SCALE) * 0.5)
 
+
+func get_nearby_tower(cell: Cell) -> Tower:
+	var neighbours = _game.map.get_cell_neighbours(cell)
+
+	for n_cell in neighbours:
+		for entity in _game.entities.get_entities_at(n_cell):
+			if entity is Tower:
+				return entity
+
+	return null

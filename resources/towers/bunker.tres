@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_v4d0h")
 name = "Bunker"
+description = ""
 texture = ExtResource("2_q1ofu")
 tower_scene = ExtResource("2_x2l7b")
 weapons = Array[String](["pea_shooter"])

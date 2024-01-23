@@ -3,7 +3,6 @@ extends Node2D
 
 signal exited_cell(mob: Mob, cell: Cell)
 signal entered_cell(mob: Mob, cell: Cell)
-signal attacked_tower(mob: Mob)
 signal was_hit_not_killed(mob: Mob)
 signal was_killed(mob: Mob)
 
@@ -154,15 +153,21 @@ func take_damage(damage_info: DamageInfo):
 
 
 func _on_path_completed():
-	if movement.is_near_target:
-		_attack_tower()
+	var tower = GameUtilities.get_nearby_tower(cell)
+	
+	if tower:
+		_start_attacking_tower(tower)
 	else:
-		print_debug("WARNING: path complete, but not near target")
+		print_debug("No nearby towers. TODO: get new path to a tower")
+
+	#if movement.is_near_target:
+		#_start_attacking_tower()
+	#else:
+		#print_debug("WARNING: path complete, but not near target")
 
 
-func _attack_tower():
-	attacked_tower.emit(self)
-	#destroy()
+func _start_attacking_tower(tower: Tower):
+	attack_component.start_attacking(tower)
 
 
 func destroy():

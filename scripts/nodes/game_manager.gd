@@ -66,15 +66,6 @@ func start_game():
 	entity_drawer.set_game(game)
 	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 
-	var player_character: PlayerCharacter = game_data.player_character_dict[starting_character]
-
-	var params = SpawnEntityParams.new()
-	params.entity_scene = player_character.main_tower.tower_scene
-	params.cell = map.center_cell
-
-	game.entities.spawn_tower(player_character.main_tower, params)
-	game.set_main_tower(params.spawned_entity)
-
 	mob_spawner.start_game(game)
 	main_control.start_game(game)
 	control_in_game.start_game(game)
@@ -83,8 +74,7 @@ func start_game():
 
 	map_drawer.draw_map(map)
 
-	for tower in player_character.starting_towers:
-		game.building_options.add_building_option(tower, game.player)
+	game.init_player_character(starting_character)
 
 	game.speed_changed.connect(
 		func(speed: float):

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://83v6636oqg5r"]
 
 [ext_resource type="Script" path="res://scripts/tower.gd" id="1_owajj"]
-[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_atex.tres" id="3_gah3k"]
+[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock.tres" id="3_gah3k"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_yfq1q"]
 
 [sub_resource type="Animation" id="Animation_ik65l"]

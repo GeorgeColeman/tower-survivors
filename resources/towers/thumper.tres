@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_wtfat")
 name = "Thumper"
+description = "Damages enemies around it."
 texture = ExtResource("2_hqm3i")
 tower_scene = ExtResource("3_1eim8")
 weapons = Array[String](["thump"])

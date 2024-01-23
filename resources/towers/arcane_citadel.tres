@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_sbr31")
 name = "Arcane Citadel"
+description = ""
 texture = ExtResource("2_lr412")
 tower_scene = ExtResource("2_gctx0")
 weapons = Array[String](["pink_shot"])

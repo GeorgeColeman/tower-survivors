@@ -21,6 +21,10 @@ func _ready():
 			if area is MobBody:
 				#area.take_damage(DamageInfoFactory.new_damage_info(_damage))
 				area.take_damage_deferred(DamageInfoFactory.new_damage_info(_damage))
+
+				if !_does_pass:
+					queue_free()
+
 				#print_debug("Hit mob body")
 	)
 

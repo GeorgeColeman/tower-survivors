@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://bpbwnicukjjh4"]
 
 [ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_752ss"]
-[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock_atex.tres" id="2_qqg2b"]
+[ext_resource type="Texture2D" uid="uid://blli4ijv6hjgu" path="res://sprites/rock.tres" id="2_gmind"]
 [ext_resource type="PackedScene" uid="uid://83v6636oqg5r" path="res://scenes/towers/tower_rock.tscn" id="2_xovg6"]
 
 [resource]
 script = ExtResource("1_752ss")
 name = "Rock"
-texture = ExtResource("2_qqg2b")
+description = "Blocks the path."
+texture = ExtResource("2_gmind")
 tower_scene = ExtResource("2_xovg6")
 weapons = Array[String]([])
 hit_points = 50

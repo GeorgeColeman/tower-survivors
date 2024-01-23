@@ -19,7 +19,7 @@ var attack_sfx: AudioStream
 var is_active = false
 var weapon_effects: Array[WeaponEffect]
 
-var rank: int = 1
+#var rank: int = 1
 
 var _cell: Cell
 var _cells_in_range: Array[Cell] = []
@@ -38,6 +38,7 @@ var _burst_shot_number_of_shots: int
 var _burst_shot_chance: float
 
 var _projectile_speed_mod: float
+var _projectile_pass: bool					# Does the projectile pass through mobs
 
 var description: String
 
@@ -53,6 +54,9 @@ func set_data(data: TowerWeaponData):
 	attack_range = data.attack_range
 	damage = data.damage
 	attack_sfx = data.sfx
+
+	if data.properties.has("pass"):
+		_projectile_pass = data.properties["pass"]
 
 	_update_description()
 
@@ -76,10 +80,10 @@ func set_firing_point(point: Vector2):
 	_firing_point = point
 
 
-func rank_up():
-	rank += 1
-
-	_update_description()
+#func rank_up():
+	#rank += 1
+#
+	#_update_description()
 
 
 func add_weapon_effect(weapon_effect: WeaponEffect):
@@ -185,6 +189,7 @@ func _spawn_projectile_to_target(target: Mob):
 	projectile.set_damage(damage + _bonus_damage)
 	projectile.set_range(attack_range + _bonus_attack_range)
 	projectile.set_speed(_data.projectile_speed * (1 + _projectile_speed_mod))
+	projectile.set_pass(_projectile_pass)
 
 	projectile.add_on_hit_callback(
 		func():

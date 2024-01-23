@@ -46,9 +46,7 @@
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
-starting_cores = null
 starting_character = "Adept"
-auto_start_game = null
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
@@ -769,7 +767,7 @@ grow_vertical = 2
 theme = ExtResource("29_1kk1u")
 text = "Upgrades Label"
 
-[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("upgrade_options_container", "dismiss_button", "_reroll_button")]
+[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("_upgrade_options_container", "_skip_button", "_reroll_button")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -778,9 +776,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_pnssa")
-upgrade_options_container = NodePath("UpgradeOptionsContainer")
-upgrade_option_button = ExtResource("6_wrk1s")
-dismiss_button = NodePath("VBoxContainer/Button")
+_upgrade_options_container = NodePath("UpgradeOptionsContainer")
+_upgrade_option_button = ExtResource("6_wrk1s")
+_skip_button = NodePath("VBoxContainer/SkipButton")
 _reroll_button = NodePath("VBoxContainer/RerollButton")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
@@ -800,6 +798,7 @@ offset_left = -287.0
 offset_right = 287.0
 offset_bottom = 137.0
 grow_horizontal = 2
+theme = ExtResource("29_1kk1u")
 theme_override_font_sizes/font_size = 100
 text = "LEVEL UP"
 horizontal_alignment = 1
@@ -832,12 +831,14 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
+[node name="SkipButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
 layout_mode = 2
-text = "TEMP: Dismiss Level Up"
+theme = ExtResource("29_1kk1u")
+text = "Skip"
 
 [node name="RerollButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("29_1kk1u")
 text = "Reroll"
 
 [node name="SoundEffectsPlayer" type="Node" parent="."]

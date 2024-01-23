@@ -11,6 +11,7 @@ signal can_build_updated(can_build: bool)
 var tower_resource: TowerResource
 var rank: int = 1
 var try_build_callback: Callable = func(_cell: Cell): pass
+var is_buildable: bool
 var can_build: bool
 
 var _build_count: int

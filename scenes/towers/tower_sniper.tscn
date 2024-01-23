@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://cu71m4esqdlom"]
+
+[ext_resource type="Script" path="res://scripts/tower.gd" id="1_3mjcj"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_jdc0o"]
+[ext_resource type="Texture2D" uid="uid://c14438trmia1b" path="res://sprites/towers/tower_sniper.png" id="3_5odfe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvrye"]
+atlas = ExtResource("3_5odfe")
+region = Rect2(0, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_naqdu"]
+atlas = ExtResource("3_5odfe")
+region = Rect2(24, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jw5f"]
+atlas = ExtResource("3_5odfe")
+region = Rect2(48, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h6kl"]
+atlas = ExtResource("3_5odfe")
+region = Rect2(72, 0, 24, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvrye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naqdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jw5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h6kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jw5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naqdu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
+script = ExtResource("1_3mjcj")
+graphics = NodePath("Graphics")
+hit_points_component = NodePath("HitPoints2D")
+firing_point = NodePath("FiringPoint")
+show_hit_points_bar = false
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_jdc0o")]
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
+sprite_frames = SubResource("SpriteFrames_h5fpv")
+autoplay = "default"
+offset = Vector2(0, -12)
+
+[node name="FiringPoint" type="Marker2D" parent="."]
+position = Vector2(0, -27)

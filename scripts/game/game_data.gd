@@ -19,6 +19,7 @@ var passives_dict = {}									# <String, PassiveUpgrade>
 var player_character_dict = {}							# <String, PlayerCharacter>
 
 func _init():
+	DataUtilities.init(self)
 	_load_resources()
 
 
@@ -84,7 +85,7 @@ func _load_towers():
 			towers.append(loaded)
 
 
-static func get_tower_weapon_data(id: String) -> TowerWeaponData:
+func get_tower_weapon_data(id: String) -> TowerWeaponData:
 	if !_tower_weapon_data_dict.has(id):
 		print_debug("No tower weapon data with id: ", id)
 

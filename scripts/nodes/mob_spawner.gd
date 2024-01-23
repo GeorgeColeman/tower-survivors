@@ -18,29 +18,11 @@ var _next_spawn_point_dict = {}						# <Cell, Sprite2D>
 var _cell_mob_dict = {}
 var _cell_spawn_point_dict = {}
 
-var _current_minute: int
-
 var _mob_spawner_utilities: MobSpawnerUtilities
 
 
 func _ready():
 	_mob_spawner_utilities = MobSpawnerUtilities.new(self)
-
-
-func _process(_delta):
-	if !_game:
-		return
-
-	if _game.time > _current_minute * 60:
-		_current_minute += 1
-
-		# Spawning a boss every 2 minutes
-		if _current_minute % 2 == 0:
-			return
-
-		spawn_random_boss()
-		for spawn_point in _cell_spawn_point_dict.values():
-			spawn_point.set_spawn_delay(15)
 
 
 #func _draw():
@@ -71,11 +53,10 @@ func start_game(game: Game):
 	_game = game
 
 	_game.difficulty.changed.connect(_on_difficulty_changed)
-	_game.difficulty.spawn_elite_triggered.connect(spawn_random_elite)
+	_game.difficulty.spawn_boss_triggered.connect(spawn_random_boss)
+	_game.difficulty.spawn_elite_triggered.connect(_spawn_random_elite)
 
 	_map = game.map
-
-	_current_minute = 1
 
 	for cell in _map.cells:
 		_cell_mob_dict[cell] = []
@@ -209,10 +190,11 @@ func spawn_random_boss():
 		_cell_spawn_point_dict.values().pick_random().cell
 	)
 
+	#for spawn_point in _cell_spawn_point_dict.values():
+		#spawn_point.set_spawn_delay(15)
 
-func spawn_random_elite():
-	#print_debug("Spawning random elite")
 
+func _spawn_random_elite():
 	spawn_mob(
 		_game.game_data.elites.pick_random(),
 		_cell_spawn_point_dict.values().pick_random().cell
@@ -227,7 +209,6 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 	new_mob.position = cell.scene_position
 	new_mob.exited_cell.connect(_on_mob_exited_cell)
 	new_mob.entered_cell.connect(_on_mob_entered_cell)
-	new_mob.attacked_tower.connect(_on_mob_attacked_tower)
 	new_mob.was_hit_not_killed.connect(
 		func(_mob: Mob):
 			Audio.play_sfx(mob_hit_sfx)
@@ -264,14 +245,3 @@ func _on_mob_exited_cell(mob: Mob, cell: Cell):
 		return
 
 	_cell_mob_dict[cell].erase(mob)
-
-
-func _on_mob_attacked_tower(mob: Mob):
-	if !_game.tower:
-		print_debug("No tower to attack")
-
-		return
-
-	mob.attack_component.start_attacking(_game.tower)
-
-	#_game.tower.take_damage(mob.damage)

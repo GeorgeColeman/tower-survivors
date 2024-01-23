@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="3_sp5oa"]
 [ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://new_theme.tres" id="4_sbl5d"]
 
-[node name="UpgradeOptionButton" type="Button" node_paths=PackedStringArray("_name_label", "_rank_label", "_description_label", "_main_texure")]
+[node name="UpgradeOptionButton" type="Button" node_paths=PackedStringArray("_name_label", "_rank_label", "_flair_label", "_description_label", "_stats_label", "_main_texure")]
 custom_minimum_size = Vector2(300, 400)
 offset_right = 192.0
 offset_bottom = 256.0
@@ -13,7 +13,9 @@ flat = true
 script = ExtResource("1_ebcko")
 _name_label = NodePath("NameLabel")
 _rank_label = NodePath("RankLabel")
+_flair_label = NodePath("FlairLabel")
 _description_label = NodePath("Control2/DescriptionLabel")
+_stats_label = NodePath("Control2/StatsLabel")
 _main_texure = NodePath("Control/MainTexture")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -35,12 +37,24 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -21.0
+offset_top = 6.0
 offset_right = 21.0
-offset_bottom = 26.0
+offset_bottom = 33.0
 grow_horizontal = 2
+theme = ExtResource("4_sbl5d")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Name"
 horizontal_alignment = 1
+
+[node name="FlairLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 48.0
+offset_bottom = 33.0
+theme = ExtResource("4_sbl5d")
+theme_override_colors/font_color = Color(0.27451, 0.509804, 0.196078, 1)
+text = "Flair"
 
 [node name="RankLabel" type="Label" parent="."]
 layout_mode = 1
@@ -48,10 +62,11 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -23.0
-offset_top = 28.0
+offset_top = 34.0
 offset_right = 24.0
-offset_bottom = 54.0
+offset_bottom = 61.0
 grow_horizontal = 2
+theme = ExtResource("4_sbl5d")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Rank"
 horizontal_alignment = 1
@@ -101,13 +116,33 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 199.0
+offset_top = 192.0
+offset_bottom = -115.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 theme = ExtResource("4_sbl5d")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Description"
+autowrap_mode = 2
+
+[node name="StatsLabel" type="Label" parent="Control2"]
+custom_minimum_size = Vector2(184, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 275.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("4_sbl5d")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Line 01
+Line 02
+Line 03
+Line 04"
 autowrap_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control2"]

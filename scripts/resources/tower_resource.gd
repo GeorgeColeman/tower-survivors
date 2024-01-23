@@ -2,6 +2,7 @@ class_name TowerResource
 extends Resource
 
 @export var name: String
+@export_multiline var description: String
 @export var texture: Texture2D
 @export var tower_scene: PackedScene
 @export var weapons: Array[String]
@@ -11,9 +12,9 @@ extends Resource
 @export_flags("IS_MAIN_TOWER") var _flags
 
 
-var can_be_offered_as_new_tower: bool:
+var is_main_tower: bool:
 	get:
-		return !has_flag(TowerFlags.IS_MAIN_TOWER)
+		return has_flag(TowerFlags.IS_MAIN_TOWER)
 
 
 func has_flag(flag: TowerFlags):

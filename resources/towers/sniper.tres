@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://ddgy7pdm756hk"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_yblmp"]
+[ext_resource type="Texture2D" uid="uid://bjvfphbe87lqg" path="res://sprites/towers/sniper.tres" id="2_vrbtw"]
+[ext_resource type="PackedScene" uid="uid://cu71m4esqdlom" path="res://scenes/towers/tower_sniper.tscn" id="3_3wm0g"]
+
+[resource]
+script = ExtResource("1_yblmp")
+name = "Sniper
+"
+description = "Shoots powerful sniper rounds."
+texture = ExtResource("2_vrbtw")
+tower_scene = ExtResource("3_3wm0g")
+weapons = Array[String](["sniper_shot"])
+hit_points = 50
+gold_cost = 20
+core_cost = 1
+_flags = 0

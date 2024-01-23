@@ -2,6 +2,7 @@ class_name Difficulty
 extends RefCounted
 
 signal changed(difficulty: float)
+signal spawn_boss_triggered()
 signal spawn_elite_triggered()
 
 var _time: float
@@ -39,6 +40,10 @@ func _increase_by(amount: float):
 	changed.emit(_difficulty)
 
 	Messenger.log_game_event("Game difficulty increased. Current difficulty: %s." % str(_difficulty))
+
+
+func _spawn_boss():
+	spawn_boss_triggered.emit()
 
 
 func _spawn_elite():

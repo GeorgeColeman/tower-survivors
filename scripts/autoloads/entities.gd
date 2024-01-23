@@ -1,14 +1,15 @@
 class_name Entities
-extends Node
+extends RefCounted
 
 signal entity_added(params: SpawnEntityParams)
+signal tower_registered(tower: Tower)
 
 var towers: Array[Tower] = []
 
 var _game: Game
 
-# <Cell, Node>
-var _cell_entity_dict = {}
+var _cell_entity_dict = {}					# <Cell, Node>
+var _tower_type_dict = {}					# <String, Array[Tower]>
 
 
 func _init(game: Game):
@@ -22,9 +23,11 @@ func get_entities_at(cell: Cell) -> Array:
 	return _cell_entity_dict[cell]
 
 
-func apply_passive_rank_to_existing_towers(passive: PassiveUpgrade):
-	for tower in towers:
-		passive.apply_current_rank_to_tower(tower)
+func get_towers_of_type(tower_name: String) -> Array[Tower]:
+	if !_tower_type_dict.has(tower_name):
+		return []
+
+	return _tower_type_dict[tower_name]
 
 
 func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams):
@@ -32,10 +35,8 @@ func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams):
 		func(entity):
 			_register_tower(tower_resource, entity, params.cell)
 	)
-	
-	entity_added.emit(params)
 
-	#_register_tower(tower_resource, params.spawned_entity, params.cell)
+	entity_added.emit(params)
 
 
 func _register_tower(tower_resource: TowerResource, tower: Tower, cell: Cell):
@@ -52,15 +53,21 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, cell: Cell):
 
 	_cell_entity_dict[cell].append(tower)
 
-	for passive in _game.player.upgrades.passives_dict.values():
-		passive.apply_all_ranks_to_tower(tower)
-
 	tower.was_killed.connect(
 		func():
 			_cell_entity_dict[cell].erase(tower)
 			PathUtilities.update_cell_is_solid(cell, false)
 			towers.erase(tower)
+			_tower_type_dict.erase(tower)
 	)
+
+	if !_tower_type_dict.has(tower.tower_name):
+		var tower_array: Array[Tower] = [tower]
+		_tower_type_dict[tower.tower_name] = tower_array
+	else:
+		_tower_type_dict[tower.tower_name].append(tower)
+		
+	tower_registered.emit(tower)
 
 
 func get_is_cell_occupied(cell: Cell) -> bool:

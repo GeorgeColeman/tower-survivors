@@ -2,6 +2,7 @@ class_name Projectile
 extends Node2D
 
 var _speed: float
+var _does_pass: bool
 
 
 func set_target(_target_mob: Mob):
@@ -22,3 +23,7 @@ func set_range(_value: int):
 
 func set_speed(speed: float):
 	_speed = speed
+
+
+func set_pass(does_pass: bool):
+	_does_pass = does_pass

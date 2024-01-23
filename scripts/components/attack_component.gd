@@ -31,9 +31,12 @@ func start_attacking(tower: Tower):
 
 
 func _attack():
-	#print_debug("Attacking")
-	
 	_attack_cooldown = 1 / _attacks_per_second
 
-	if _target_tower:
+	if is_instance_valid(_target_tower):
 		_target_tower.take_damage(_damage)
+	else:
+		print_debug("Target tower instance became invalid")
+
+		_enabled = false
+		_target_tower = null
