@@ -36,7 +36,7 @@ func set_player(p_player: Player):
 	)
 
 	player.upgrades.passive_rank_added.connect(
-		_apply_passive_rank_to_existing_towers
+		_on_passive_rank_added
 	)
 
 	player.gold_changed.connect(
@@ -61,21 +61,39 @@ func generate_new_upgrade_options():
 	)
 
 
-func _apply_passive_rank_to_existing_towers(passive: PassiveUpgrade):
+func _on_passive_rank_added(passive: PassiveUpgrade):
 	for tower in _entities.towers:
-		# HACK: get if the passive is new and add to tower
-		if passive.is_rank_one:
-			tower.passive_upgrades.append(passive)
+		var attached_passive: PassiveUpgradeTowerAttached = tower.get_passive_upgrade(passive.name)
 
-		passive.apply_current_rank_to_tower(tower)
+		if !attached_passive:
+			attached_passive = passive.get_passive_upgrade_tower_attached()
+			tower.add_passive_upgrade(attached_passive)
+		#else:
+			#existing_passive.rank_up()
+
+		## HACK: get if the passive is new and add to tower
+		#if passive.is_rank_one:
+			#tower.add_passive_upgrade(cloned_passive)
+
+		if GameRules.PASSIVE_LIMITED_TO_TOWER_RANK:
+			attached_passive.match_tower_rank_and_apply(tower)
+		else:
+			attached_passive.ignore_tower_rank_and_apply_max(tower)
+			#passive.apply_current_rank_to_tower(tower)
 
 
 func _on_tower_registered(tower: Tower):
 	for passive in player.upgrades.passives_dict.values():
-		# Add the passive upgrade to the tower
-		tower.passive_upgrades.append(passive)
+		var attached_passive: PassiveUpgradeTowerAttached = passive.get_passive_upgrade_tower_attached()
 
-		passive.apply_all_ranks_to_tower(tower)
+		# Add the passive upgrade to the tower
+		tower.add_passive_upgrade(attached_passive)
+
+		if GameRules.PASSIVE_LIMITED_TO_TOWER_RANK:
+			attached_passive.match_tower_rank_and_apply(tower)
+		else:
+			attached_passive.ignore_tower_rank_and_apply_max(tower)
+			#passive.apply_all_ranks_to_tower(tower)
 
 
 func _on_building_option_upgraded(option: BuildingOption):

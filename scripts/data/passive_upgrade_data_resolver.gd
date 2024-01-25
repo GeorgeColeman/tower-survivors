@@ -35,6 +35,8 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 	var ranks: Array[PassiveUpgrade.Rank] = []
 	var i: int = 0
 
+	var effect_id: String = name
+
 	for element in rank_data:
 		var rank = PassiveUpgrade.Rank.new()
 
@@ -57,10 +59,18 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 					_resolve_burst_shot_chance(rank, element[key])
 				"projectile_speed":
 					_resolve_projectile_speed(rank, element[key])
+				"stasis_effect":
+					_resolve_stasis_effect(effect_id, rank)
 				"stasis_chance":
-					_resolve_stasis_chance(name, rank, element[key])
+					_resolve_stasis_chance(effect_id, rank, element[key])
 				"stasis_duration":
-					_resolve_stasis_duration(name, rank, element[key])
+					_resolve_stasis_duration(effect_id, rank, element[key])
+				"chill_effect":
+					_resolve_chill_effect(effect_id, rank)
+				"chill_factor":
+					_resolve_chill_factor(effect_id, rank, element[key])
+				"chill_duration":
+					_resolve_chill_duration(effect_id, rank, element[key])
 				_:
 					print_debug("WARNING: unhandled rank key: %s" % key)
 
@@ -74,12 +84,6 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 
 
 static func _resolve_multi_shot_number(rank: PassiveUpgrade.Rank, variant):
-	if !variant is int:
-		print_debug("Multi shot number is not integer")
-
-		return
-
-	#rank.description += "\nIncreases the multi shot number of all towers by %s" % variant
 	rank.description += "\n+%s multi shot" % variant
 
 	rank.apply_to_tower_callbacks.append(
@@ -89,12 +93,6 @@ static func _resolve_multi_shot_number(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_multi_shot_chance(rank: PassiveUpgrade.Rank, variant):
-	if !variant is float:
-		print_debug("Multi shot chance is not float")
-
-		return
-
-	#rank.description += "\nIncreases the multi shot chance of all towers by %s%%" % (variant * 100)
 	rank.description += "\n+%s%% multi shot chance" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
@@ -104,11 +102,6 @@ static func _resolve_multi_shot_chance(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_attack_range(rank: PassiveUpgrade.Rank, variant):
-	if !variant is int:
-		print_debug("Attack range is not integer")
-
-		return
-
 	rank.description += "\n+%s attack range" % variant
 
 	rank.apply_to_tower_callbacks.append(
@@ -118,11 +111,6 @@ static func _resolve_attack_range(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_attack_speed(rank: PassiveUpgrade.Rank, variant):
-	if !variant is float:
-		print_debug("Attack speed is not integer")
-
-		return
-
 	rank.description += "\n+%s attack speed" % variant
 
 	rank.apply_to_tower_callbacks.append(
@@ -132,11 +120,6 @@ static func _resolve_attack_speed(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_burst_shot_number(rank: PassiveUpgrade.Rank, variant):
-	if !variant is int:
-		print_debug("Burst shot number is not integer")
-
-		return
-
 	rank.description += "\n+%s burst shot" % variant
 
 	rank.apply_to_tower_callbacks.append(
@@ -146,11 +129,6 @@ static func _resolve_burst_shot_number(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_burst_shot_chance(rank: PassiveUpgrade.Rank, variant):
-	if !variant is float:
-		print_debug("Burst shot chance is not float")
-
-		return
-
 	rank.description += "\n+%s%% burst shot chance" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
@@ -160,11 +138,6 @@ static func _resolve_burst_shot_chance(rank: PassiveUpgrade.Rank, variant):
 
 
 static func _resolve_projectile_speed(rank: PassiveUpgrade.Rank, variant):
-	if !variant is float:
-		print_debug("projectile speed is not float")
-
-		return
-
 	rank.description += "\n+%s%% projectile speed" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
@@ -173,33 +146,71 @@ static func _resolve_projectile_speed(rank: PassiveUpgrade.Rank, variant):
 	)
 
 
-static func _resolve_stasis_chance(name: String, rank: PassiveUpgrade.Rank, variant):
+static func _resolve_stasis_effect(effect_id: String, rank: PassiveUpgrade.Rank):
+	rank.description += "\nAdds a stasis effect that has a chance to immobilise enemies"
+
+	var stasis_effect = WeaponEffectStasis.new()
+
+	rank.description += "\n%s" % stasis_effect.info
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_weapon_effect(effect_id, WeaponEffectStasis.new())
+	)
+
+
+static func _resolve_stasis_chance(effect_id: String, rank: PassiveUpgrade.Rank, variant):
 	rank.description += "\n+%s%% stasis chance" % (variant * 100)
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
-			var effect: WeaponEffectStasis = tower.tower_stats.try_get_weapon_effect(name)
-
-			if !effect:
-				effect = WeaponEffectStasis.new()
-
-				tower.tower_stats.add_weapon_effect(name, effect)
+			var effect: WeaponEffectStasis = tower.tower_stats.try_get_weapon_effect(effect_id)
 
 			effect.add_chance(variant)
 	)
 
 
-static func _resolve_stasis_duration(name: String, rank: PassiveUpgrade.Rank, variant):
+static func _resolve_stasis_duration(effect_id: String, rank: PassiveUpgrade.Rank, variant):
 	rank.description += "\n+%s stasis duration" % variant
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
-			var effect: WeaponEffectStasis = tower.tower_stats.try_get_weapon_effect(name)
-
-			if !effect:
-				effect = WeaponEffectStasis.new()
-
-				tower.tower_stats.add_weapon_effect(name, effect)
+			var effect: WeaponEffectStasis = tower.tower_stats.try_get_weapon_effect(effect_id)
 
 			effect.add_duration(variant)
+	)
+
+
+static func _resolve_chill_effect(effect_id: String, rank: PassiveUpgrade.Rank):
+	rank.description += "\nAdds a chill effect that slows enemies"
+
+	var chill_effect = WeaponEffectChill.new()
+
+	rank.description += "\n%s" % chill_effect.info
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_weapon_effect(effect_id, WeaponEffectChill.new())
+	)
+
+
+static func _resolve_chill_duration(effect_id: String, rank: PassiveUpgrade.Rank, variant):
+	rank.description += "\n+%s chill duration" % variant
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			var effect: WeaponEffectChill = tower.tower_stats.try_get_weapon_effect(effect_id)
+
+			effect.add_duration(variant)
+	)
+
+
+static func _resolve_chill_factor(effect_id: String, rank: PassiveUpgrade.Rank, variant):
+	rank.description += "\n+%s%% chill strength" % (variant * 100)
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			var effect: WeaponEffectChill = tower.tower_stats.try_get_weapon_effect(effect_id)
+
+			effect.add_factor(variant)
 	)

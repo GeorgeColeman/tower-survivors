@@ -13,7 +13,7 @@ static func new_passive(passive: PassiveUpgrade, player: Player) -> UpgradeOptio
 
 	option.rank = 1
 	option.flair = "New"
-	option.stats = cloned_passive.get_next_rank_description()
+	option.stats = cloned_passive.get_current_rank_description()
 	option.texture = passive.texture
 
 	return option
@@ -67,7 +67,7 @@ static func rank_up_tower(existing: BuildingOption) -> UpgradeOption:
 			existing.upgrade()
 	)
 
-	option.rank = existing.rank + 1
+	option.rank = existing.display_rank + 1
 	option.texture = existing.tower_resource.texture
 
 	return option

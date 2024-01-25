@@ -116,7 +116,7 @@ func init_player_character(player_character_name: String):
 	params.entity_scene = player_character.main_tower.tower_scene
 	params.cell = map.center_cell
 
-	entities.spawn_tower(player_character.main_tower, params)
+	entities.spawn_tower(player_character.main_tower, params, 0)
 	set_main_tower(params.spawned_entity)
 
 	building_options.add_building_option(player_character.main_tower, player)

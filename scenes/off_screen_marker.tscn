@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6ld3gl34qs73"]
+
+[ext_resource type="Script" path="res://off_screen_marker.gd" id="1_l8poc"]
+[ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="2_d28wp"]
+
+[node name="OffScreenMarker" type="Node2D" node_paths=PackedStringArray("_sprite")]
+script = ExtResource("1_l8poc")
+_sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_d28wp")

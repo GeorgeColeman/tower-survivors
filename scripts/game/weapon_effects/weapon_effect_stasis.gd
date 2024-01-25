@@ -1,8 +1,17 @@
 class_name WeaponEffectStasis
 extends WeaponEffect
 
+var info: String:
+	get:
+		var _info = ""
+
+		_info += "Duration %.1f second(s)" % _duration
+		_info += "\nChance %s%%" % (_chance * 100)
+
+		return _info
+
 var _duration: float = 1.0
-var _chance: float
+var _chance: float = 0.05
 
 
 func add_duration(amount: float):

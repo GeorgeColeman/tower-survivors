@@ -1,4 +1,5 @@
 class_name PassiveUpgrade
+extends RefCounted
 
 var name: String
 var texture: Texture2D
@@ -30,6 +31,10 @@ func clone() -> PassiveUpgrade:
 	return passive
 
 
+func get_passive_upgrade_tower_attached() -> PassiveUpgradeTowerAttached:
+	return PassiveUpgradeTowerAttached.new(self)
+
+
 func get_current_rank_description() -> String:
 	if _current_rank_index >= ranks.size():
 		push_warning(
@@ -58,6 +63,13 @@ func get_next_rank_description() -> String:
 
 func rank_up():
 	_current_rank_index += 1
+
+
+func apply_rank_to_tower(index: int, tower: Tower):
+	if index > _current_rank_index:
+		return
+
+	ranks[index].apply_to_tower(tower)
 
 
 func apply_all_ranks_to_tower(tower: Tower):

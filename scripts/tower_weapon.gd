@@ -19,8 +19,6 @@ var attack_sfx: AudioStream
 var is_active = false
 var weapon_effects: Array[WeaponEffect]
 
-#var rank: int = 1
-
 var _cell: Cell
 var _cells_in_range: Array[Cell] = []
 var _attack_cooldown: float
@@ -80,12 +78,6 @@ func set_firing_point(point: Vector2):
 	_firing_point = point
 
 
-#func rank_up():
-	#rank += 1
-#
-	#_update_description()
-
-
 func add_weapon_effect(weapon_effect: WeaponEffect):
 	weapon_effects.append(weapon_effect)
 
@@ -139,7 +131,6 @@ func _projectile_attack():
 
 	for target in targets:
 		shoot.call(target)
-		#_spawn_projectile_to_target(target)
 
 	if targets.size() == 0 || !attack_sfx:
 		return
@@ -148,7 +139,6 @@ func _projectile_attack():
 
 
 func _area_attack():
-	#print_debug("TODO: area attack")
 	_attack_cooldown = 1 / (attacks_per_second + _bonus_attacks_per_second)
 
 	var all_targets = GameUtilities.get_all_targets_in_cells(_cells_in_range)
@@ -157,8 +147,8 @@ func _area_attack():
 		return
 
 	for target in all_targets:
-		target.take_damage(DamageInfoFactory.new_damage_info(damage + _bonus_damage))
 		_apply_on_hit_weapon_effects(target)
+		target.take_damage(DamageInfoFactory.new_damage_info(damage + _bonus_damage))
 
 	if !projectile_scene:
 		print_debug("No projectile scene")

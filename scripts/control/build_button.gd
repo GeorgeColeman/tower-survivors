@@ -12,7 +12,7 @@ extends Button
 func set_building_option(option: BuildingOption):
 	_main_texture.texture = option.tower_resource.texture
 	_gold_label.text = str(option.tower_resource.gold_cost)
-	_rank_label.text = str(option.rank)
+	_rank_label.text = str(option.display_rank)
 	_core_cost_label.text = str(option.get_core_cost())
 
 	if option.tower_resource.gold_cost == 0:
@@ -23,7 +23,7 @@ func set_building_option(option: BuildingOption):
 
 	option.upgraded.connect(
 		func():
-			_rank_label.text = str(option.rank)
+			_rank_label.text = str(option.display_rank)
 	)
 
 	option.can_build_updated.connect(

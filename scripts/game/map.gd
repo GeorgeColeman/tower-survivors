@@ -15,7 +15,7 @@ var water: Array[bool] = []
 var _center_x: int
 var _center_y: int
 
-var _noise: Array[float]
+#var _noise: Array[float]
 var _mountain_height: float = 0.70
 var _water_max_height: float = 0.30
 

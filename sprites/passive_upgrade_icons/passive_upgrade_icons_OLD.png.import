@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2iqc1pwqlbh1"
-path="res://.godot/imported/passive_upgrade_icons_24x24.png-fc132f9ee99dceebc004f074471f5825.ctex"
+uid="uid://dnakkxyn4vkly"
+path="res://.godot/imported/passive_upgrade_icons_OLD.png-07d74f30c3837a3848856a687d0bc3e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/passive_upgrade_icons/passive_upgrade_icons_24x24.png"
-dest_files=["res://.godot/imported/passive_upgrade_icons_24x24.png-fc132f9ee99dceebc004f074471f5825.ctex"]
+source_file="res://sprites/passive_upgrade_icons/passive_upgrade_icons_OLD.png"
+dest_files=["res://.godot/imported/passive_upgrade_icons_OLD.png-07d74f30c3837a3848856a687d0bc3e2.ctex"]
 
 [params]
 

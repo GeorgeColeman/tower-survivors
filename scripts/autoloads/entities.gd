@@ -30,19 +30,20 @@ func get_towers_of_type(tower_name: String) -> Array[Tower]:
 	return _tower_type_dict[tower_name]
 
 
-func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams):
+func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams, rank: int):
 	params.entity_instantiated.connect(
 		func(entity):
-			_register_tower(tower_resource, entity, params.cell)
+			_register_tower(tower_resource, entity, rank, params.cell)
 	)
 
 	entity_added.emit(params)
 
 
-func _register_tower(tower_resource: TowerResource, tower: Tower, cell: Cell):
+func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cell: Cell):
 	tower.set_resource(tower_resource)
 	tower.set_cell_and_init(cell)
-
+	tower.set_rank(rank)
+	
 	towers.append(tower)
 
 	# TEMP: assuming all towers are solid

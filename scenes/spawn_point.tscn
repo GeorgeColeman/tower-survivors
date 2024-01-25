@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ck16naxw6rn0d"]
+[gd_scene load_steps=4 format=3 uid="uid://ck16naxw6rn0d"]
 
 [ext_resource type="Script" path="res://scripts/nodes/spawn_point.gd" id="1_kwstk"]
 [ext_resource type="Texture2D" uid="uid://bjfm2itr0xucj" path="res://sprites/camps/grunt_camp.tres" id="2_6hloq"]
+[ext_resource type="PackedScene" uid="uid://c6ld3gl34qs73" path="res://scenes/off_screen_marker.tscn" id="3_kdd14"]
 
 [node name="SpawnPoint" type="Node2D"]
 script = ExtResource("1_kwstk")
@@ -10,3 +11,5 @@ spawn_rate = 6.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_6hloq")
 region_rect = Rect2(0, 16, 16, 16)
+
+[node name="OffScreenMarker" parent="." instance=ExtResource("3_kdd14")]

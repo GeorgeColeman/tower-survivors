@@ -8,8 +8,12 @@ extends RefCounted
 signal upgraded()
 signal can_build_updated(can_build: bool)
 
+var display_rank:
+	get:
+		return _rank + 1
+
 var tower_resource: TowerResource
-var rank: int = 1
+var _rank: int = 0
 var try_build_callback: Callable = func(_cell: Cell): pass
 var is_buildable: bool
 var can_build: bool
@@ -18,7 +22,7 @@ var _build_count: int
 
 
 func upgrade():
-	rank += 1
+	_rank += 1
 
 	upgraded.emit()
 
@@ -40,8 +44,6 @@ func try_build(cell: Cell):
 
 
 func confirm_build(tower: Tower):
-	tower.set_rank(rank)
-
 	_build_count += 1
 
 	can_build_updated.emit(can_build)

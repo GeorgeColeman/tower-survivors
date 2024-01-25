@@ -14,26 +14,30 @@ var tower_name: String:
 	get:
 		return tower_resource.name
 
+var display_rank:
+	get:
+		return _rank + 1
+
 var kills: int
 var cell: Cell
 var tower_stats: TowerStats
 var weapon_dict = {}										# <String, TowerWeapon>
-var passive_upgrades: Array[PassiveUpgrade] = []
 
 var _weapons: Array[TowerWeapon] = []
+var _passive_upgrade_dict = {}								# <String, PassiveUpgrade>
 var _is_destroyed: bool
-var _rank: int = 1
+var _rank: int = 0
 
 var description: String:
 	get:
-		var d = "Rank %s" % _rank
+		var d = "Rank %s" % display_rank
 
 		for weapon in _weapons:
 			d += str("\n\n", weapon.weapon_name, "\n", weapon.description)
 
 		d += "\n"
 
-		for upgrade in passive_upgrades:
+		for upgrade in _passive_upgrade_dict.values():
 			d += "\n%s: %s" % [upgrade.name, upgrade.display_rank]
 
 		d = d.strip_edges()
@@ -94,6 +98,10 @@ func set_rank(value: int):
 func add_rank(amount: int):
 	_rank += amount
 
+	if GameRules.PASSIVE_LIMITED_TO_TOWER_RANK:
+		for passive in _passive_upgrade_dict.values():
+			passive.match_tower_rank_and_apply(self)
+
 
 func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):
 	var weapon_node = TowerWeapon.new()
@@ -101,6 +109,17 @@ func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):
 
 	_attach_weapon(weapon_node)
 	_activate_weapon(weapon_node)
+
+
+func add_passive_upgrade(passive_upgrade: PassiveUpgradeTowerAttached):
+	_passive_upgrade_dict[passive_upgrade.name] = passive_upgrade
+
+
+func get_passive_upgrade(passive_upgrade_name: String) -> PassiveUpgradeTowerAttached:
+	if !_passive_upgrade_dict.has(passive_upgrade_name):
+		return null
+
+	return _passive_upgrade_dict[passive_upgrade_name]
 
 
 func _attach_weapon(weapon: TowerWeapon):
