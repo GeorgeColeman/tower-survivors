@@ -5,7 +5,6 @@ static var tower_weapon_data: Array[TowerWeaponData]
 static var _tower_weapon_data_dict = {}					# <String, TowerWeaponData>
 
 var mob_resources: Array[MobResource]
-var upgrade_resources: Array[UpgradeResource]
 
 var towers: Array[PackedScene]
 
@@ -40,14 +39,6 @@ func _load_resources():
 
 			if loaded.is_elite():
 				elites.append(loaded)
-
-	var upgrades = dir_contents("res://resources/upgrades/")
-
-	for upgrade in upgrades:
-		var loaded = load(upgrade)
-
-		if loaded is UpgradeResource:
-			upgrade_resources.append(loaded)
 
 	_load_towers()
 

@@ -24,7 +24,6 @@ script = ExtResource("1_yeb84")
 graphics = NodePath("Graphics")
 hit_points_component = NodePath("HitPoints2D")
 firing_point = NodePath("FiringPoint")
-show_hit_points_bar = false
 
 [node name="HitPoints2D" parent="." instance=ExtResource("2_lh2w8")]
 

@@ -9,11 +9,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_w430h"]
 radius = 6.0
 
-[node name="Mob" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hit_points_component", "mob_body")]
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("hit_points_component", "mob_body", "_main_sprite")]
 script = ExtResource("1_e75bf")
-sprite_2d = NodePath("Visuals/Sprite2D")
 hit_points_component = NodePath("HitPoints2D")
 mob_body = NodePath("MobBody")
+_main_sprite = NodePath("Visuals/Sprite2D")
 
 [node name="Features" type="Node" parent="."]
 

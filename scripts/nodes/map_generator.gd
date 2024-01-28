@@ -46,7 +46,7 @@ func generate_map(width: int, height: int) -> Map:
 	return Map.new(width, height, cells, samples)
 
 
-func _radial_gradient(width: int, height: int, max_distance: int) -> Array[float]:
+func _radial_gradient(width: int, height: int, max_distance: float) -> Array[float]:
 	var grad: Array[float] = []
 	grad.resize(width * height)
 	var centre: Vector2 = Vector2(width * 0.5, height * 0.5)

@@ -66,7 +66,7 @@ func _ready():
 		func():
 			if !_game_manager: return
 
-			_game_manager.mob_spawner.spawn_new_spawn_point()
+			_game_manager.spawn_point_manager.spawn_new_spawn_point()
 	)
 
 	visible = false

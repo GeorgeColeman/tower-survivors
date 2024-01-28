@@ -8,7 +8,7 @@ extends Node2D
 
 var _inset: float = 15.0
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var canvas = get_canvas_transform()
 	var top_left = -canvas.origin / canvas.get_scale()
 	var size = get_viewport_rect().size / canvas.get_scale()

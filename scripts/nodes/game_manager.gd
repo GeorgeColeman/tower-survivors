@@ -10,6 +10,7 @@ extends Node
 @export var camera_2d_controller: Camera2DController
 @export var map_drawer: MapDrawer
 @export var mob_spawner: MobSpawner
+@export var spawn_point_manager: SpawnPointManager
 @export var entity_drawer: EntityDrawer
 @export var pathfinding_manager: PathfindingManager
 @export var vfx_drawer_2d: VFXDrawer2D
@@ -67,6 +68,10 @@ func start_game():
 	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
 
 	mob_spawner.start_game(game)
+	spawn_point_manager.start_game(game)
+
+	MobUtilities.init(mob_spawner, spawn_point_manager)
+
 	main_control.start_game(game)
 	control_in_game.start_game(game)
 	control_debug.start_game(game)

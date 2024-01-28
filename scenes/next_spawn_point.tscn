@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://hlkwmrhtoe28"]
+
+[ext_resource type="Texture2D" uid="uid://dh2eujtv0u5wh" path="res://sprites/spawn_point_here.tres" id="1_h7llc"]
+[ext_resource type="PackedScene" uid="uid://c6ld3gl34qs73" path="res://scenes/off_screen_marker.tscn" id="2_cfr57"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("1_h7llc")
+
+[node name="OffScreenMarker" parent="." instance=ExtResource("2_cfr57")]

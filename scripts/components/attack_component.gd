@@ -1,6 +1,8 @@
 class_name AttackComponent
 extends RefCounted
 
+signal target_became_invalid()
+
 var _damage: int
 var _attacks_per_second: float
 var _enabled: bool
@@ -36,7 +38,8 @@ func _attack():
 	if is_instance_valid(_target_tower):
 		_target_tower.take_damage(_damage)
 	else:
-		print_debug("Target tower instance became invalid")
+		target_became_invalid.emit()
+		#print_debug("Target tower instance became invalid")
 
 		_enabled = false
 		_target_tower = null

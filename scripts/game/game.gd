@@ -10,7 +10,7 @@ static var speed_scaled_delta: float
 
 var map: Map
 var player: Player
-var tower: Tower
+var main_tower: Tower
 var entities: Entities
 var mob_spawner: MobSpawner
 var game_data: GameData
@@ -126,7 +126,7 @@ func init_player_character(player_character_name: String):
 
 
 func set_main_tower(p_tower: Tower):
-	tower = p_tower
+	main_tower = p_tower
 	p_tower.was_killed.connect(_on_main_tower_was_killed)
 
 

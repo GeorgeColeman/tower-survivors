@@ -84,7 +84,7 @@ func highlight_building_cells(centre_cell: Cell, building_option: BuildingOption
 
 
 func _highlight_cells_in_tower_weapon_attack_range(centre_cell: Cell, tower_weapon_data: TowerWeaponData):
-	var attack_range = tower_weapon_data.attack_range + _game.tower.tower_stats._bonus_attack_range
+	var attack_range = tower_weapon_data.attack_range
 
 	Messenger.draw_cell_area_requested.emit(
 		get_cells_in_circle(centre_cell, attack_range)
@@ -128,13 +128,13 @@ func get_mob_targets_closest_to_main_tower(
 	if number_of_targets >= all_mobs.size():
 		return all_mobs
 
-	if !_game.tower:
+	if !_game.main_tower:
 		return []
 
 	all_mobs.sort_custom(
 		func(mob_a: Mob, mob_b: Mob):
-			var dist_a = mob_a.position.distance_squared_to(_game.tower.position)
-			var dist_b = mob_b.position.distance_squared_to(_game.tower.position)
+			var dist_a = mob_a.position.distance_squared_to(_game.main_tower.position)
+			var dist_b = mob_b.position.distance_squared_to(_game.main_tower.position)
 			return dist_b > dist_a
 			#return dist_a > dist_b
 	)
@@ -146,7 +146,6 @@ func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 	var all_entities: Array[EntityInfo] = []
 
 	var entities = _game.entities.get_entities_at(cell)
-	#all_entities.append_array(entities)
 
 	for entity in entities:
 		if entity is Tower:
@@ -158,17 +157,10 @@ func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 					entity.position)
 			)
 
-	var spawn_points = MobSpawnerUtilities.get_spawn_points_at(cell)
+	var spawn_points = MobUtilities.get_spawn_points_at(cell)
 
 	for spawn_point in spawn_points:
-		all_entities.append(
-			EntityInfo.new(
-				spawn_point,
-				 "Spawn Point",
-				 "TODO: spawn point description",
-				 spawn_point.position
-			)
-		)
+		all_entities.append(spawn_point.get_entity_info())
 
 	return all_entities
 

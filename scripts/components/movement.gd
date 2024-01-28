@@ -87,6 +87,10 @@ func set_path(path: PackedVector2Array, target_cell: Cell):
 	_path_follower.start_path()
 
 
+func cancel_path():
+	_path_follower.cancel_path()
+
+
 func destroy():
 	_path_follower.exit_current()
 

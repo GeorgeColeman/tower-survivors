@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://b5k0sjnwlm874"]
+
+[ext_resource type="PackedScene" uid="uid://cnbq3iolpt50i" path="res://scenes/mobs/bat.tscn" id="1_d4dw7"]
+[ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="2_mi8e8"]
+
+[resource]
+script = ExtResource("2_mi8e8")
+name = "Bat"
+mob_scene = ExtResource("1_d4dw7")
+move_speed = 1.25
+damage = 1
+hit_points = 15
+gold_value = 1
+experience_value = 1
+mob_flags = 1
+mob_properties = 1

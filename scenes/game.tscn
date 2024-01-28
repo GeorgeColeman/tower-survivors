@@ -1,11 +1,10 @@
-[gd_scene load_steps=43 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=45 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="6_52e18"]
-[ext_resource type="Texture2D" uid="uid://dh2eujtv0u5wh" path="res://sprites/spawn_point_here.tres" id="6_c2je1"]
 [ext_resource type="PackedScene" uid="uid://l13dk6opal54" path="res://scenes/control/upgrade_option_button.tscn" id="6_wrk1s"]
 [ext_resource type="Script" path="res://scripts/control/control_in_game.gd" id="7_j5a5t"]
 [ext_resource type="AudioStream" uid="uid://biyrj4fsaybv4" path="res://sound_effects/mob_hit.wav" id="7_nb2t7"]
@@ -17,7 +16,9 @@
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
+[ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
 [ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
+[ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
 [ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
 [ext_resource type="Texture2D" uid="uid://bed2nxb3jr6fe" path="res://sprites/markers/selection_marker_02.tres" id="14_ggbmm"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
@@ -27,6 +28,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
 [ext_resource type="PackedScene" uid="uid://cck72le1by1qn" path="res://scenes/floating_text.tscn" id="24_27evh"]
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
+[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://new_style_box_texture.tres" id="24_yuuet"]
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
@@ -43,13 +45,14 @@
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
 [ext_resource type="Texture2D" uid="uid://kquk4qc7cxea" path="res://sprites/markers/white_square_24x24.tres" id="42_4nx7t"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
+spawn_point_manager = NodePath("MapObjects/SpawnPointManager")
 entity_drawer = NodePath("MapObjects/EntityDrawer")
 pathfinding_manager = NodePath("PathfindingManager")
 vfx_drawer_2d = NodePath("VFXDrawer2D")
@@ -79,9 +82,6 @@ y_sort_enabled = true
 [node name="MobSpawner" type="Node2D" parent="MapObjects"]
 y_sort_enabled = true
 script = ExtResource("7_nfp22")
-spawn_point_scene = ExtResource("10_ao74v")
-starting_spawn_points = 1
-spawn_point_here_texture = ExtResource("6_c2je1")
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
@@ -93,6 +93,11 @@ cell_type = ExtResource("12_e4ul2")
 [node name="EntityDrawer" type="Node2D" parent="MapObjects"]
 y_sort_enabled = true
 script = ExtResource("10_3qktf")
+
+[node name="SpawnPointManager" type="Node2D" parent="MapObjects"]
+script = ExtResource("10_w58st")
+_spawn_point_scene = ExtResource("10_ao74v")
+_next_spawn_point = ExtResource("12_l2pf0")
 
 [node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")
@@ -300,6 +305,7 @@ anchor_bottom = 1.0
 offset_left = -300.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("24_yuuet")
 script = ExtResource("31_7drxe")
 entity_name_label = NodePath("EntityNameLabel")
 button_container = NodePath("ButtonContainer")
@@ -311,9 +317,12 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -48.0
+offset_top = 8.0
 offset_right = 48.0
-offset_bottom = 23.0
+offset_bottom = 35.0
 grow_horizontal = 2
+theme = ExtResource("29_1kk1u")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Entity Name"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -331,6 +340,8 @@ offset_right = 48.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("29_1kk1u")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Description"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -661,6 +672,7 @@ grow_vertical = 0
 text = "Restart"
 
 [node name="ControlPause" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("continue_button", "restart_button", "quit_button", "sfx_check_box", "upgrades_label")]
+process_mode = 3
 visible = false
 layout_mode = 1
 anchors_preset = 15

@@ -5,11 +5,12 @@ signal exited_cell(mob: Mob, cell: Cell)
 signal entered_cell(mob: Mob, cell: Cell)
 signal was_hit_not_killed(mob: Mob)
 signal was_killed(mob: Mob)
+signal path_to_centre_requested(mob: Mob)
 
 @export var features: Array[MobFeature]
-@export var sprite_2d: Sprite2D
 @export var hit_points_component: HitPointsComponent
 @export var mob_body: MobBody
+@export var _main_sprite: Node2D
 
 var movement: Movement
 var status_effects: StatusEffects
@@ -18,8 +19,6 @@ var attack_component: AttackComponent
 var cell: Cell:
 	get:
 		return movement.cell
-
-var _visuals_container: Node2D = self
 
 var _mob_resource: MobResource
 var _is_initialised: bool
@@ -80,18 +79,15 @@ func set_resource(mob_resource: MobResource):
 			exited_cell.emit(self, new_cell)
 	)
 
-	movement.entered_cell.connect(
-		func(new_cell: Cell):
-			entered_cell.emit(self, new_cell)
-	)
+	movement.entered_cell.connect(_on_entered_cell)
 
 	movement.facing_direction_changed.connect(
 		func(facing_direction: Movement.FacingDirection):
 			match facing_direction:
 				Movement.FacingDirection.LEFT:
-					sprite_2d.flip_h = false
+					_main_sprite.scale.x = 1
 				Movement.FacingDirection.RIGHT:
-					sprite_2d.flip_h = true
+					_main_sprite.scale.x = -1
 	)
 
 	movement.path_completed.connect(_on_path_completed)
@@ -111,12 +107,17 @@ func set_resource(mob_resource: MobResource):
 
 	attack_component = AttackComponent.new(mob_resource.damage, _attacks_per_second)
 
+	attack_component.target_became_invalid.connect(
+		func():
+			path_to_centre_requested.emit(self)
+	)
+
 	_is_initialised = true
 
 
 func set_tint_colour(colour: Color):
 	_tint_colour = colour
-	_visuals_container.modulate = _tint_colour
+	_main_sprite.modulate = _tint_colour
 
 
 func set_invulnerable_time(time: float):
@@ -146,7 +147,7 @@ func take_damage(damage_info: DamageInfo):
 #		destroy()
 		_animated_destroy()
 	else:
-		TweenEffects.flash_white(_visuals_container, _tint_colour)
+		TweenEffects.flash_white(_main_sprite, _tint_colour)
 		was_hit_not_killed.emit(self)
 
 	VFXRequestFactory.request_damage_number(position, str(damage_info.damage_amount))
@@ -154,16 +155,11 @@ func take_damage(damage_info: DamageInfo):
 
 func _on_path_completed():
 	var tower = GameUtilities.get_nearby_tower(cell)
-	
+
 	if tower:
 		_start_attacking_tower(tower)
 	else:
-		print_debug("No nearby towers. TODO: get new path to a tower")
-
-	#if movement.is_near_target:
-		#_start_attacking_tower()
-	#else:
-		#print_debug("WARNING: path complete, but not near target")
+		print_debug("Path completed, but no nearby towers")
 
 
 func _start_attacking_tower(tower: Tower):
@@ -177,15 +173,29 @@ func destroy():
 
 
 func animated_spawn():
-	_visuals_container.modulate.a = 0
+	_main_sprite.modulate.a = 0
 	var tween = get_tree().create_tween()
-	tween.tween_property(_visuals_container, "modulate:a", 1, 0.5)
+	tween.tween_property(_main_sprite, "modulate:a", 1, 0.5)
 
 
 func _animated_destroy():
 	movement.destroy()
 	_is_destroyed = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(_visuals_container, "modulate", Color(0, 0, 0, 0), 0.5)
+	tween.tween_property(_main_sprite, "modulate", Color(0, 0, 0, 0), 0.5)
 	tween.tween_callback(queue_free)
 	was_killed.emit(self)
+
+
+func _on_entered_cell(cell: Cell):
+	entered_cell.emit(self, cell)
+
+	if !_mob_resource.has_properties(MobResource.MobProperties.AGGRESSIVE):
+		return
+
+	var tower = GameUtilities.get_nearby_tower(cell)
+
+	if tower:
+		movement.cancel_path()
+		_start_attacking_tower(tower)
+		#print_debug("TODO: mob entered cell next to tower. Attack tower if agressive type")

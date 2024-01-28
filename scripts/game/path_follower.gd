@@ -48,7 +48,6 @@ func set_path(new_path: PackedVector2Array):
 
 	if new_path.size() <= 1:
 		push_warning("Path size is less than or equal to 1")
-		#entered_node.emit(current_node)			# Not sure if needed
 
 		return
 
@@ -57,10 +56,11 @@ func set_path(new_path: PackedVector2Array):
 	entered_node.emit(current_node)
 
 	_next_node_index = 1
-	
+
 	_dist_to_next = GameUtilities.get_distance_between_nodes(current_node, next_node)
 	_progress_to_next = 0
 
+	enter_node_completed.emit()
 
 
 func start_path():
@@ -72,9 +72,13 @@ func start_path():
 	_has_active_path = true
 
 
+func cancel_path():
+	_has_active_path = false
+
+
 func exit_current():
 	exited_node.emit(current_node)
-	
+
 	#if _node_index >= path.size():
 		#print_debug(_node_index, " :: ", path.size())
 #
@@ -104,7 +108,7 @@ func _enter_next():
 		next_node = path[_next_node_index]
 
 	if !PathUtilities.get_is_next_node_walkable(next_node):
-		exit_current()
+		#exit_current()
 		_interrupt_path()
 
 		return
@@ -112,7 +116,7 @@ func _enter_next():
 	# Allows for correct speed when moving along diagonals
 	_dist_to_next = GameUtilities.get_distance_between_nodes(current_node, next_node)
 	_progress_to_next = 0
-	
+
 	enter_node_completed.emit()
 
 

@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://cnbq3iolpt50i"]
+
+[ext_resource type="Script" path="res://scripts/nodes/mob.gd" id="1_sd055"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_a7b43"]
+[ext_resource type="Texture2D" uid="uid://fjw4pbl5jjsm" path="res://sprites/mobs/bat.png" id="3_rcmcr"]
+[ext_resource type="Texture2D" uid="uid://dxl2sfjwalvj6" path="res://sprites/effects/basic_shadow.tres" id="4_rgh47"]
+[ext_resource type="Script" path="res://scripts/mob_body.gd" id="5_atemr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fpv2"]
+atlas = ExtResource("3_rcmcr")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_un4q1"]
+atlas = ExtResource("3_rcmcr")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ux6mb"]
+atlas = ExtResource("3_rcmcr")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sqeaf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fpv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_un4q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux6mb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux6mb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_un4q1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w430h"]
+radius = 6.0
+
+[node name="Mob" type="Node2D" node_paths=PackedStringArray("hit_points_component", "mob_body", "_main_sprite")]
+script = ExtResource("1_sd055")
+hit_points_component = NodePath("HitPoints2D")
+mob_body = NodePath("MobBody")
+_main_sprite = NodePath("Visuals/AnimatedSprite2D")
+
+[node name="Features" type="Node" parent="."]
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_a7b43")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+sprite_frames = SubResource("SpriteFrames_sqeaf")
+autoplay = "default"
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+z_index = -1
+position = Vector2(0, 2)
+texture = ExtResource("4_rgh47")
+
+[node name="MobBody" type="Area2D" parent="."]
+script = ExtResource("5_atemr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MobBody"]
+shape = SubResource("CircleShape2D_w430h")

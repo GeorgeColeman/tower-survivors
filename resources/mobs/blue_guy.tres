@@ -13,3 +13,4 @@ hit_points = 20
 gold_value = 1
 experience_value = 1
 mob_flags = 1
+mob_properties = 0

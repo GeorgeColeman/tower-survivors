@@ -166,6 +166,9 @@ func _area_attack():
 	get_tree().create_timer(1.0).timeout.connect(
 		func():
 			for effect in visual_effects:
+				if !effect:
+					continue
+
 				effect.queue_free()
 	)
 
