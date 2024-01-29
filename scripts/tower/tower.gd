@@ -70,7 +70,24 @@ func set_resource(p_tower_resource: TowerResource):
 		if !weapon_data:
 			return
 
-		var weapon_node = TowerWeapon.new()
+		var weapon_node: TowerWeapon
+
+		# Determine the type of tower weapon to attach
+		match weapon_data.targeting_type:
+			Enums.TargetingType.SEEKING:
+				weapon_node = TowerWeaponProjectile.new()
+			Enums.TargetingType.LINE:
+				weapon_node = TowerWeaponProjectile.new()
+			Enums.TargetingType.AREA:
+				weapon_node = TowerWeaponArea.new()
+			Enums.TargetingType.MORTAR:
+				weapon_node = TowerWeaponProjectile.new()
+			_:
+				var unknown_type = Enums.TargetingType.get(weapon_data.targeting_type)
+				print_debug("WARNING: unknown targeting type: %s" % unknown_type)
+
+				return
+
 		weapon_node.set_data(weapon_data)
 
 		_attach_weapon(weapon_node)

@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://d04w7os8nbyho"]
+
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_vtf84"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_wnphs"]
+[ext_resource type="Texture2D" uid="uid://cv3f8dmoili6u" path="res://sprites/towers/mortar.png" id="3_bemet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpqn5"]
+atlas = ExtResource("3_bemet")
+region = Rect2(0, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v813t"]
+atlas = ExtResource("3_bemet")
+region = Rect2(24, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph31i"]
+atlas = ExtResource("3_bemet")
+region = Rect2(48, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b37yv"]
+atlas = ExtResource("3_bemet")
+region = Rect2(72, 0, 24, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpqn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v813t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph31i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b37yv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpqn5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
+script = ExtResource("1_vtf84")
+graphics = NodePath("Graphics")
+hit_points_component = NodePath("HitPoints2D")
+firing_point = NodePath("FiringPoint")
+
+[node name="HitPoints2D" parent="." instance=ExtResource("2_wnphs")]
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
+sprite_frames = SubResource("SpriteFrames_h5fpv")
+autoplay = "default"
+frame_progress = 0.361711
+offset = Vector2(0, -12)
+
+[node name="FiringPoint" type="Marker2D" parent="."]
+position = Vector2(0, -27)

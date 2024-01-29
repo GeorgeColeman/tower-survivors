@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4367v7nq7pas"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_um7at"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_um7at"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_11lq7"]
 [ext_resource type="Texture2D" uid="uid://b5ky6gam3vy1y" path="res://sprites/towers/tower_arcane_citadel.png" id="3_x4xaf"]
 

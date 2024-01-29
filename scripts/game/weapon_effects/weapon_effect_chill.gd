@@ -11,7 +11,6 @@ var info: String:
 		return _info
 
 var _duration: float = 1.0
-#var _chance: float = 1.0
 var _factor: float = 0.25
 
 
@@ -19,21 +18,15 @@ func add_duration(amount: float):
 	_duration += amount
 
 
-#func add_chance(amount: float):
-	#_chance += amount
-
-
 func add_factor(amount: float):
 	_factor += amount
 
 
-func apply_to_mob(mob: Mob):
-	#if _chance < randf():
-		#return
+func apply_to_hit(hit_info: TowerWeaponHitInfo):
+	for mob in hit_info.mobs:
+		var status_effect = StatusEffectFactory.new_slow_status_effect(
+			mob,
+			_factor,
+			_duration)
 
-	var status_effect = StatusEffectFactory.new_slow_status_effect(
-		mob,
-		_factor,
-		_duration)
-
-	mob.status_effects.add_status_effect(status_effect)
+		mob.status_effects.add_status_effect(status_effect)

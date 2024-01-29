@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bih8bhv6c60ip"]
+
+[ext_resource type="Script" path="res://scripts/nodes/projectiles/projectile_mortar.gd" id="1_aop6m"]
+[ext_resource type="Texture2D" uid="uid://bklmnb3ov5y8c" path="res://sprites/projectiles/mortar_shell.png" id="1_jasxl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2a2y"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tqnb"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxao7"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k8vl"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dko4g"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rac2e"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idg4o"]
+atlas = ExtResource("1_jasxl")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3mh1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2a2y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tqnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxao7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k8vl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dko4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rac2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idg4o")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}]
+
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("_animated_sprite_2d")]
+script = ExtResource("1_aop6m")
+_die_time = 0.6
+_animated_sprite_2d = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3mh1o")
+animation = &"die"
+autoplay = "default"
+frame = 5
+frame_progress = 1.0

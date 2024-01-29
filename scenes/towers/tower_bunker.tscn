@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dlo18b0teg2ka"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_6d20n"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_6d20n"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="3_gamrs"]
 [ext_resource type="Texture2D" uid="uid://eciubf0mjopx" path="res://sprites/towers/bunker.tres" id="4_6ac6a"]
 

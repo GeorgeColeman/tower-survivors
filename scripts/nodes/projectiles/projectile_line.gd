@@ -22,6 +22,8 @@ func _ready():
 				#area.take_damage(DamageInfoFactory.new_damage_info(_damage))
 				area.take_damage_deferred(DamageInfoFactory.new_damage_info(_damage))
 
+				print_debug("TODO: apply weapon effects")
+
 				if !_does_pass:
 					queue_free()
 
@@ -40,10 +42,6 @@ func _process(_delta):
 
 func set_target(target_mob: Mob):
 	_direction = (target_mob.global_position - global_position).normalized()
-
-
-func add_on_hit_callback(_on_hit_callback: Callable):
-	pass
 
 
 func set_damage(value: int):

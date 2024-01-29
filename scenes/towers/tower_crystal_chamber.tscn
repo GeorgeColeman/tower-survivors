@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://d07hryohekbus"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_lwh8h"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_lwh8h"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_sjuoy"]
 [ext_resource type="Texture2D" uid="uid://bydxmxbo5qgph" path="res://sprites/towers/crystal_chamber.png" id="3_wuoyq"]
 [ext_resource type="Texture2D" uid="uid://cbwdwvy87kn11" path="res://sprites/towers/crystal_chamber.tres" id="4_ffnn6"]

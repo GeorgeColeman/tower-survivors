@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://3tds3l2wpokv"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_yeb84"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_yeb84"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_lh2w8"]
 [ext_resource type="Texture2D" uid="uid://blpcuwlsr0t25" path="res://sprites/towers/placeholder_tower.tres" id="3_qep3j"]
 

@@ -71,6 +71,12 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 					_resolve_chill_factor(effect_id, rank, element[key])
 				"chill_duration":
 					_resolve_chill_duration(effect_id, rank, element[key])
+				"acid_effect":
+					AcidEffectDataResolver._resolve_acid_effect(effect_id, rank)
+				"acid_duration":
+					AcidEffectDataResolver._resolve_acid_duration(effect_id, rank, element[key])
+				"acid_damage":
+					AcidEffectDataResolver._resolve_acid_damage(effect_id, rank, element[key])
 				_:
 					print_debug("WARNING: unhandled rank key: %s" % key)
 

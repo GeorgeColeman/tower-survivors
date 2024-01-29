@@ -1,4 +1,3 @@
-#class_name ProjectileSeek
 extends Projectile
 
 @export var animated_sprite_2d: AnimatedSprite2D
@@ -10,7 +9,6 @@ var _target_mob: Mob
 var _target_position: Vector2
 var _damage: int
 var _is_destroyed = false
-var _on_hit_callbacks: Array[Callable]
 
 var _approx_time_to_hit: float
 var _to_hit_progress: float
@@ -41,8 +39,12 @@ func _process(_delta):
 	if global_position.distance_squared_to(_target_mob.position) < 1:
 		_destroy_with_animation()
 
-		for on_hit in _on_hit_callbacks:
-			on_hit.call()
+		var hit_info = TowerWeaponHitInfo.new()
+
+		hit_info.cells.append(_target_mob.cell)
+		hit_info.mobs.append(_target_mob)
+
+		apply_weapon_effects_to_hit(hit_info)
 
 		_target_mob.take_damage(DamageInfoFactory.new_damage_info(_damage))
 
@@ -55,10 +57,6 @@ func set_target(target_mob: Mob):
 	var distant_to_mob = global_position.distance_to(target_mob.position)
 
 	_approx_time_to_hit = distant_to_mob / _speed
-
-
-func add_on_hit_callback(on_hit_callback: Callable):
-	_on_hit_callbacks.append(on_hit_callback)
 
 
 func set_damage(value: int):

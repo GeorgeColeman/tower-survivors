@@ -67,7 +67,11 @@ static func rank_up_tower(existing: BuildingOption) -> UpgradeOption:
 			existing.upgrade()
 	)
 
-	option.rank = existing.display_rank + 1
+	var new_rank: int = existing.display_rank + 1
+
+	option.rank = new_rank
+	# 'All current and future...'
+	option.description = "Will benefit from passive upgrades up to rank %s" % new_rank
 	option.texture = existing.tower_resource.texture
 
 	return option

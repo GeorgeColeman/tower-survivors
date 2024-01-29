@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dnw7oo20m1hr2"]
 
-[ext_resource type="Script" path="res://scripts/tower.gd" id="1_blqxr"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_blqxr"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_8dru1"]
 [ext_resource type="Texture2D" uid="uid://u0flc6sea6m3" path="res://sprites/towers/sword_slinger.tres" id="3_fm5e3"]
 [ext_resource type="Texture2D" uid="uid://rdoyyef0n4l1" path="res://sprites/towers/sword_slinger.png" id="4_o8cge"]
