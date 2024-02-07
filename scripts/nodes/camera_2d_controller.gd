@@ -17,12 +17,34 @@ func _physics_process(delta):
 	_move_camera(delta)
 
 
-func _process(_delta):
-	_get_keyboard_input()
+#func _process(_delta):
+	#_get_keyboard_input()
+#
+#
+#func _get_keyboard_input():
+	#_keyboard_input = Input.get_vector("left", "right", "up", "down")
 
 
-func _get_keyboard_input():
+func _unhandled_key_input(event):
+	#var x: float
+	#var y: float
+	#
+	#if event.is_action("down"):
+		#y += 1
+	#if event.is_action("up"):
+		#y -= 1
+	#if event.is_action("left"):
+		#x -= 1
+	#if event.is_action("right"):
+		#x += 1
+	#
+	#print_debug(y)
+	#
+	#_keyboard_input = Vector2(x, y)
 	_keyboard_input = Input.get_vector("left", "right", "up", "down")
+	
+	#print_debug(_keyboard_input)
+	#if event is InputEventKey:
 
 
 func _move_camera(delta):

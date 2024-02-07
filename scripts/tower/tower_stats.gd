@@ -17,6 +17,8 @@ var _projectile_speed_mod: float
 
 var _weapon_effect_dict = {}
 
+var _crit_chance: float
+
 
 func _init(weapons: Array[TowerWeapon]):
 	_weapons = weapons
@@ -24,7 +26,7 @@ func _init(weapons: Array[TowerWeapon]):
 
 func add_weapon_effect(name: String, weapon_effect: WeaponEffect):
 	_weapon_effect_dict[name] = weapon_effect
-	
+
 	for weapon in _weapons:
 		weapon.add_weapon_effect(weapon_effect)
 
@@ -78,7 +80,6 @@ func add_burst_shot_chance(amount: float):
 		weapon.set_burst_shot_chance(_burst_shot_chance)
 
 
-
 func add_bonus_attack_range(amount: int):
 	_bonus_attack_range += amount
 
@@ -91,3 +92,10 @@ func add_projectile_speed_mod(amount: float):
 
 	for weapon in _weapons:
 		weapon.set_projectile_speed_mod(_projectile_speed_mod)
+
+
+func add_crit_chance(amount: float):
+	_crit_chance += amount
+
+	for weapon in _weapons:
+		weapon.set_crit_chance(_crit_chance)

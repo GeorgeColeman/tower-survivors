@@ -11,16 +11,13 @@ var _duration: float
 var _direction: Vector2
 var _life_time: float
 
-var _damage: int
-
 
 func _ready():
 	_area_2d.area_entered.connect(
 		func(area: Area2D):
 			#print_debug("Area entered: ", area)
 			if area is MobBody:
-				#area.take_damage(DamageInfoFactory.new_damage_info(_damage))
-				area.take_damage_deferred(DamageInfoFactory.new_damage_info(_damage))
+				area.take_damage_deferred(get_damage.call())
 
 				print_debug("TODO: apply weapon effects")
 
@@ -42,10 +39,6 @@ func _process(_delta):
 
 func set_target(target_mob: Mob):
 	_direction = (target_mob.global_position - global_position).normalized()
-
-
-func set_damage(value: int):
-	_damage = value
 
 
 func set_range(value: int):

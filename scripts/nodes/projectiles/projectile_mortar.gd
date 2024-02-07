@@ -14,8 +14,6 @@ var _duration: float
 var _direction: Vector2
 var _life_time: float
 
-var _damage: int
-
 var _target_mob: Mob
 var _target_cell: Cell
 
@@ -39,11 +37,8 @@ func set_target(target_mob: Mob):
 	_direction = (target_mob.global_position - global_position).normalized()
 
 	_target_mob = target_mob
-	_target_cell = target_mob.cell
-
-
-func set_damage(value: int):
-	_damage = value
+	_target_cell = target_mob.nearest_cell
+	#_target_cell = target_mob.cell
 
 
 func set_range(value: int):
@@ -75,7 +70,7 @@ func _hit_target_cell():
 	apply_weapon_effects_to_hit(hit_info)
 
 	for target in all_targets:
-		target.take_damage(DamageInfoFactory.new_damage_info(_damage))
+		target.take_damage(get_damage.call())
 
 	_destroy_with_animation()
 

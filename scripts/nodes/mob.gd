@@ -19,6 +19,10 @@ var attack_component: AttackComponent
 var cell: Cell:
 	get:
 		return movement.cell
+		
+var nearest_cell: Cell:
+	get:
+		return movement.nearest_cell
 
 var _mob_resource: MobResource
 var _is_initialised: bool
@@ -150,7 +154,7 @@ func take_damage(damage_info: DamageInfo):
 		TweenEffects.flash_white(_main_sprite, _tint_colour)
 		was_hit_not_killed.emit(self)
 
-	VFXRequestFactory.request_damage_number(position, str(damage_info.damage_amount))
+	VFXRequestFactory.request_damage_number(position, damage_info)
 
 
 func _on_path_completed():

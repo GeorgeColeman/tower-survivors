@@ -22,6 +22,13 @@ var _progress_to_next: float
 var current_node: Vector2i
 var next_node: Vector2i
 
+var nearest_node: Vector2i:
+	get:
+		if _progress_to_next < 0.5:
+			return current_node
+		else:
+			return next_node
+
 var _has_active_path: bool
 
 

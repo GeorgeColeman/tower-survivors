@@ -38,6 +38,9 @@ var _burst_shot_chance: float
 var _projectile_speed_mod: float
 var _projectile_pass: bool					# Does the projectile pass through mobs
 
+var _crit_chance: float
+var _crit_multiplier: float = 2.0
+
 var description: String
 
 
@@ -83,8 +86,6 @@ func add_weapon_effect(weapon_effect: WeaponEffect):
 
 
 func _update_description():
-	#description = "Rank %s" % rank
-	#description += "\nDamage: %s" % (damage + _bonus_damage)
 	description = "Damage: %s" % (damage + _bonus_damage)
 	description += "\nRange: %s" % (attack_range + _bonus_attack_range)
 	description += "\nAttack Speed: %s" % (attacks_per_second + _bonus_attacks_per_second)
@@ -105,6 +106,23 @@ func _apply_on_hit_weapon_effects(hit_info: TowerWeaponHitInfo):
 		if effect.apply_type == Enums.WeaponEffectApplyType.ON_HIT:
 			effect.apply_to_hit(hit_info)
 
+
+# NOTE: eventually want to pass the target to get more sophisticated calculations - vulnerabilities, etc.
+func get_calculated_damage() -> DamageInfo:
+	var amount: int = 0
+	var is_crit: bool = false
+
+	if _crit_chance >= randf():
+		amount = (damage + _bonus_damage) * _crit_multiplier
+		is_crit = true
+	else:
+		amount = damage + _bonus_damage
+		is_crit = false
+
+	var damage_info = DamageInfoFactory.new_damage_info(amount)
+	damage_info.is_crit = is_crit
+
+	return damage_info
 
 func set_bonus_damage(value: int):
 	_bonus_damage = value
@@ -145,3 +163,7 @@ func set_bonus_range(value: int):
 
 func set_projectile_speed_mod(value: float):
 	_projectile_speed_mod = value
+
+
+func set_crit_chance(value: float):
+	_crit_chance = value

@@ -9,10 +9,20 @@ signal upgrade_options_set(options: UpgradeOptions)
 signal passive_rank_added(passive: PassiveUpgrade)
 
 var passives_dict = {}					# <String, PassiveUpgrade>
-var upgrades_listed: String
 
 var _current_upgrade_options: UpgradeOptions
-var _added_upgrades: Array[UpgradeOption]
+#var _added_upgrades: Array[UpgradeOption]
+
+var passive_upgrades_listed: String:
+	get:
+		var d = ""
+
+		for upgrade in passives_dict.values():
+			d += "\n%s: %s" % [upgrade.name, upgrade.display_rank]
+
+		d = d.strip_edges()
+
+		return d
 
 
 func set_upgrade_options(options: UpgradeOptions):
@@ -24,20 +34,7 @@ func set_upgrade_options(options: UpgradeOptions):
 func add_upgrade(upgrade: UpgradeOption):
 	upgrade.apply()
 
-	_added_upgrades.append(upgrade)
-
-	if _added_upgrades.size() == 1:
-		upgrades_listed += upgrade.name
-
-		if upgrade.rank:
-			upgrades_listed += ", %s" % upgrade.rank
-	else:
-		upgrades_listed += str("\n%s" % upgrade.name)
-
-		if upgrade.rank:
-			upgrades_listed += ", %s" % upgrade.rank
-
-	#print_debug(upgrades_listed)
+	#_added_upgrades.append(upgrade)
 
 
 func can_rank_up_passive(passive_key: String) -> bool:
@@ -53,12 +50,12 @@ func can_rank_up_passive(passive_key: String) -> bool:
 
 
 func add_passive(passive: PassiveUpgrade):
-	if passives_dict.has(passive.name):
-		push_warning("Passives dict already has key: %s. Aborting" % passive.name)
+	if passives_dict.has(passive.id):
+		push_warning("Passives dict already has key: %s. Aborting" % passive.id)
 
 		return
 
-	passives_dict[passive.name] = passive
+	passives_dict[passive.id] = passive
 
 	passive_rank_added.emit(passive)
 

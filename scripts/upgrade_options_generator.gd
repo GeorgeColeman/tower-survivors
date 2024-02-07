@@ -15,17 +15,6 @@ func generate_upgrade_options(
 	if GameRules.CORE_AS_UPGRADE_OPTION:
 		options.append(UpgradeOptionFactory.add_core(player))
 
-	#if GameRules.WEAPON_UPGRADES:
-		## Apply the weapon upgrades to this tower
-		#var main_tower = game.tower
-#
-		#for weapon in game.game_data.tower_weapon_data:
-			## Get rank up upgrade if tower already has the weapon
-			#if main_tower.weapon_dict.has(weapon.id):
-				#options.append(UpgradeOptionFactory.rank_up_weapon(main_tower.weapon_dict[weapon.id]))
-			#else:
-				#options.append(UpgradeOptionFactory.new_weapon(main_tower, weapon))
-
 	if GameRules.TOWER_UPGRADES:
 		options.append_array(_get_tower_options(game_data, building_options, player))
 

@@ -7,7 +7,6 @@ extends Projectile
 var _target_set = false
 var _target_mob: Mob
 var _target_position: Vector2
-var _damage: int
 var _is_destroyed = false
 
 var _approx_time_to_hit: float
@@ -41,12 +40,12 @@ func _process(_delta):
 
 		var hit_info = TowerWeaponHitInfo.new()
 
-		hit_info.cells.append(_target_mob.cell)
+		hit_info.cells.append(_target_mob.nearest_cell)
+		#hit_info.cells.append(_target_mob.cell)
 		hit_info.mobs.append(_target_mob)
 
 		apply_weapon_effects_to_hit(hit_info)
-
-		_target_mob.take_damage(DamageInfoFactory.new_damage_info(_damage))
+		_target_mob.take_damage(get_damage.call())
 
 
 func set_target(target_mob: Mob):
@@ -57,10 +56,6 @@ func set_target(target_mob: Mob):
 	var distant_to_mob = global_position.distance_to(target_mob.position)
 
 	_approx_time_to_hit = distant_to_mob / _speed
-
-
-func set_damage(value: int):
-	_damage = value
 
 
 func _destroy_with_animation():

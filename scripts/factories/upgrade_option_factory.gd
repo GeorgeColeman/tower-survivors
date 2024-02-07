@@ -6,7 +6,8 @@ static func new_passive(passive: PassiveUpgrade, player: Player) -> UpgradeOptio
 	var cloned_passive = passive.clone()
 
 	var option = UpgradeOption.new(
-		cloned_passive.name,
+		cloned_passive.id,
+		#cloned_passive.name,
 		func():
 			player.upgrades.add_passive(cloned_passive)
 	)
@@ -23,7 +24,8 @@ static func rank_up_passive(passive_key: String, player: Player) -> UpgradeOptio
 	var passive: PassiveUpgrade = player.upgrades.passives_dict[passive_key]
 
 	var option = UpgradeOption.new(
-		passive.name,
+		passive.id,
+		#passive.name,
 		func():
 			player.upgrades.rank_up_passive(passive.name)
 	)

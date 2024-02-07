@@ -40,8 +40,12 @@ func _spawn_projectile_to_target(target: Mob):
 
 	projectile.position = _firing_point
 	projectile.set_target(target)
-	projectile.set_damage(damage + _bonus_damage)
+	#projectile.set_damage(damage + _bonus_damage)
 	projectile.set_range(attack_range + _bonus_attack_range)
 	projectile.set_speed(_data.projectile_speed * (1 + _projectile_speed_mod))
 	projectile.set_pass(_projectile_pass)
 	projectile.set_weapon_effects(weapon_effects)
+	#projectile.set_crit(_crit_chance, _crit_multiplier)
+
+	projectile.get_damage = func() -> DamageInfo:
+		return get_calculated_damage()

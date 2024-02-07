@@ -22,6 +22,7 @@ static func get_passive_upgrade_data() -> Array[PassiveUpgrade]:
 		if !texture:
 			texture = "res://sprites/missing.png"
 
+		passive_upgrade_data.id = section
 		passive_upgrade_data.name = name
 		passive_upgrade_data.texture = load(texture)
 		passive_upgrade_data.ranks = _get_ranks(name, ranks)
@@ -77,6 +78,8 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 					AcidEffectDataResolver._resolve_acid_duration(effect_id, rank, element[key])
 				"acid_damage":
 					AcidEffectDataResolver._resolve_acid_damage(effect_id, rank, element[key])
+				"crit_chance":
+					_resolve_crit_chance(rank, element[key])
 				_:
 					print_debug("WARNING: unhandled rank key: %s" % key)
 
@@ -219,4 +222,13 @@ static func _resolve_chill_factor(effect_id: String, rank: PassiveUpgrade.Rank, 
 			var effect: WeaponEffectChill = tower.tower_stats.try_get_weapon_effect(effect_id)
 
 			effect.add_factor(variant)
+	)
+
+
+static func _resolve_crit_chance(rank: PassiveUpgrade.Rank, variant):
+	rank.description += "\n+%s%% crit chance" % (variant * 100)
+
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_crit_chance(variant)
 	)

@@ -45,7 +45,8 @@ func _load_resources():
 	var passives = PassiveUpgradeDataResolver.get_passive_upgrade_data()
 
 	for passive in passives:
-		passives_dict[passive.name] = passive
+		passives_dict[passive.id] = passive
+		#passives_dict[passive.name] = passive
 
 	var player_characters = PlayerCharacterDataResolver.get_player_characters(self)
 

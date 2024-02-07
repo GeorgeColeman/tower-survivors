@@ -24,4 +24,5 @@ func add_damage(amount: int):
 
 func apply_to_hit(hit_info: TowerWeaponHitInfo):
 	for cell in hit_info.cells:
-		print_debug("TODO: create acid on %s" % cell)
+		ActiveEffects.create_acid_effect(cell)
+		#print_debug("TODO: create acid on %s" % cell)

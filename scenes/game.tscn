@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=48 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -19,8 +19,10 @@
 [ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
 [ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
+[ext_resource type="Script" path="res://scenes/active_effects.gd" id="13_bcpki"]
 [ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
 [ext_resource type="Texture2D" uid="uid://bed2nxb3jr6fe" path="res://sprites/markers/selection_marker_02.tres" id="14_ggbmm"]
+[ext_resource type="SpriteFrames" uid="uid://dym547pop6orn" path="res://sprites/effects/effect_acid.tres" id="14_gsv2l"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
@@ -44,8 +46,9 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
 [ext_resource type="Texture2D" uid="uid://kquk4qc7cxea" path="res://sprites/markers/white_square_24x24.tres" id="42_4nx7t"]
+[ext_resource type="Script" path="res://scenes/dev_console.gd" id="47_ec2qa"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
@@ -61,9 +64,11 @@ main_control = NodePath("CanvasLayer/ControlMain")
 control_in_game = NodePath("CanvasLayer/ControlMain/ControlInGame")
 control_debug = NodePath("CanvasLayer/ControlMain/ControlDebug")
 control_pause = NodePath("CanvasLayer/ControlMain/ControlPause")
+dev_console = NodePath("dev_console")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+position_smoothing_enabled = true
 script = ExtResource("2_04hs5")
 speed = 500
 
@@ -98,6 +103,10 @@ script = ExtResource("10_3qktf")
 script = ExtResource("10_w58st")
 _spawn_point_scene = ExtResource("10_ao74v")
 _next_spawn_point = ExtResource("12_l2pf0")
+
+[node name="ActiveEffects" type="Node2D" parent="MapObjects"]
+script = ExtResource("13_bcpki")
+_acid_sprite_frames = ExtResource("14_gsv2l")
 
 [node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")
@@ -516,7 +525,6 @@ for
 autowrap_mode = 0
 
 [node name="ControlDebug" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("check_box_draw_pathfinding_grid", "check_box_draw_mob_paths", "check_box_show_damage_numbers", "game_events_text", "restart_game_button", "damage_tower_button", "kill_tower_button", "spawn_boss_button", "level_up_button", "add_gold_button", "spawn_new_spawn_point_button")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -525,10 +533,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_vxhso")
-check_box_draw_pathfinding_grid = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawPathfindingGrid")
-check_box_draw_mob_paths = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxDrawMobPaths")
-check_box_show_damage_numbers = NodePath("PanelContainer2/DebugTogglesContainer/CheckBoxShowDamageNumbers")
-game_events_text = NodePath("PanelContainer/ScrollContainer/GameEventsText")
+check_box_draw_pathfinding_grid = NodePath("TogglesContainer/DebugTogglesContainer/CheckBoxDrawPathfindingGrid")
+check_box_draw_mob_paths = NodePath("TogglesContainer/DebugTogglesContainer/CheckBoxDrawMobPaths")
+check_box_show_damage_numbers = NodePath("TogglesContainer/DebugTogglesContainer/CheckBoxShowDamageNumbers")
+game_events_text = NodePath("GameEventLogContainer/ScrollContainer/GameEventsText")
 restart_game_button = NodePath("DebugButtons/RestartGameButton")
 damage_tower_button = NodePath("DebugButtons/DamageTowerButton")
 kill_tower_button = NodePath("DebugButtons/KillTowerButton")
@@ -537,7 +545,8 @@ level_up_button = NodePath("DebugButtons/LevelUpButton")
 add_gold_button = NodePath("DebugButtons/AddGoldButton")
 spawn_new_spawn_point_button = NodePath("DebugButtons/SpawnNewSpawnPointButton")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+[node name="GameEventLogContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -546,10 +555,10 @@ offset_top = -215.0
 offset_right = 384.0
 grow_vertical = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ControlMain/ControlDebug/GameEventLogContainer"]
 layout_mode = 2
 
-[node name="GameEventsText" type="Label" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer/ScrollContainer"]
+[node name="GameEventsText" type="Label" parent="CanvasLayer/ControlMain/ControlDebug/GameEventLogContainer/ScrollContainer"]
 layout_mode = 2
 text = "Debug Text
 And Some More"
@@ -599,27 +608,45 @@ layout_mode = 2
 text = "[DEBUG] Spawn New Spawn Point"
 alignment = 0
 
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
-layout_mode = 0
-offset_left = 161.0
-offset_top = 115.0
-offset_right = 375.0
-offset_bottom = 251.0
+[node name="AddUpgradeButton" type="Button" parent="CanvasLayer/ControlMain/ControlDebug/DebugButtons"]
+layout_mode = 2
+text = "[DEBUG] Add Upgrade"
+alignment = 0
 
-[node name="DebugTogglesContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2"]
+[node name="TogglesContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 346.0
+offset_top = -50.0
+offset_right = 560.0
+offset_bottom = 51.0
+grow_vertical = 2
+
+[node name="DebugTogglesContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlDebug/TogglesContainer"]
 layout_mode = 2
 
-[node name="CheckBoxDrawPathfindingGrid" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
+[node name="CheckBoxDrawPathfindingGrid" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/TogglesContainer/DebugTogglesContainer"]
 layout_mode = 2
 text = "Draw Pathfinding Grid"
 
-[node name="CheckBoxDrawMobPaths" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
+[node name="CheckBoxDrawMobPaths" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/TogglesContainer/DebugTogglesContainer"]
 layout_mode = 2
 text = "Draw Mob Paths"
 
-[node name="CheckBoxShowDamageNumbers" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/PanelContainer2/DebugTogglesContainer"]
+[node name="CheckBoxShowDamageNumbers" type="CheckBox" parent="CanvasLayer/ControlMain/ControlDebug/TogglesContainer/DebugTogglesContainer"]
 layout_mode = 2
 text = "Show Damage Numbers"
+
+[node name="AddUpgradeMenu" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlDebug"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ControlGameOver" type="Control" parent="CanvasLayer/ControlMain"]
 visible = false
@@ -887,3 +914,27 @@ y_sort_enabled = true
 [node name="AreaMarkerDrawer" type="Node2D" parent="."]
 script = ExtResource("41_q0vy1")
 _marker_texture = ExtResource("42_4nx7t")
+
+[node name="dev_console" type="CanvasLayer" parent="." node_paths=PackedStringArray("_console", "_text_input")]
+script = ExtResource("47_ec2qa")
+_console = NodePath("container/contents/console")
+_text_input = NodePath("container/contents/text_input")
+
+[node name="container" type="PanelContainer" parent="dev_console"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -430.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="contents" type="VBoxContainer" parent="dev_console/container"]
+layout_mode = 2
+alignment = 2
+
+[node name="console" type="RichTextLabel" parent="dev_console/container/contents"]
+layout_mode = 2
+fit_content = true
+
+[node name="text_input" type="LineEdit" parent="dev_console/container/contents"]
+layout_mode = 2

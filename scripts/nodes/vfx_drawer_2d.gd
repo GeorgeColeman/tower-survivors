@@ -17,10 +17,15 @@ var show_damage_text = false:
 		show_damage_text = value
 
 
-static func request_vfx(effect_type: EffectType, p_position: Vector2, message: String = ""):
+static func request_vfx(
+	effect_type: EffectType,
+	p_position: Vector2,
+	message: String = "",
+	colour: Color = Color.WHITE
+):
 	match effect_type:
 		EffectType.DAMAGE_NUMBER:
-			_instance._instantiate_floating_text(message, p_position)
+			_instance._instantiate_floating_text(message, p_position, colour)
 		EffectType.FIRE_BURST:
 			_instance._instantiate_vfx(_instance.fire_burst_scene, p_position)
 
@@ -42,12 +47,14 @@ func _instantiate_vfx(scene: PackedScene, p_position: Vector2):
 	)
 
 
-func _instantiate_floating_text(message: String, p_position: Vector2):
+func _instantiate_floating_text(message: String, p_position: Vector2, colour: Color):
 	if !show_damage_text:
 		return
 
 	var new_floating_text = floating_text_scene.instantiate() as Label
 	add_child(new_floating_text)
+	
+	new_floating_text.modulate = colour
 
 	var offset = -Vector2(new_floating_text.size * 0.5)
 	new_floating_text.position = p_position + offset

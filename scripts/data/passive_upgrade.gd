@@ -1,6 +1,7 @@
 class_name PassiveUpgrade
 extends RefCounted
 
+var id: String
 var name: String
 var texture: Texture2D
 var ranks: Array[Rank] = []
@@ -23,6 +24,7 @@ var _current_rank_index: int = -1
 func clone() -> PassiveUpgrade:
 	var passive = PassiveUpgrade.new()
 
+	passive.id = id
 	passive.name = name
 	passive.texture = texture
 	passive.ranks = ranks

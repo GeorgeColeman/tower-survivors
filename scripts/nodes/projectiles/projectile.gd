@@ -1,6 +1,8 @@
 class_name Projectile
 extends Node2D
 
+var get_damage: Callable
+
 var _speed: float
 var _does_pass: bool
 var _effects: Array[WeaponEffect]
@@ -17,10 +19,6 @@ func set_weapon_effects(weapon_effects: Array[WeaponEffect]):
 func apply_weapon_effects_to_hit(hit_info: TowerWeaponHitInfo):
 	for effect in _effects:
 		effect.apply_to_hit(hit_info);
-
-
-func set_damage(_value: int):
-	pass
 
 
 func set_range(_value: int):

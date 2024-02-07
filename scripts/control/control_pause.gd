@@ -49,7 +49,7 @@ func start_game(game: Game):
 
 
 func _open():
-	upgrades_label.text = "Upgrades\n\n%s" % _game.player.upgrades.upgrades_listed
+	upgrades_label.text = "Upgrades\n\n%s" % _game.player.upgrades.passive_upgrades_listed
 
 	visible = true
 

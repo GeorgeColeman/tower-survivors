@@ -61,6 +61,25 @@ func generate_new_upgrade_options():
 	)
 
 
+func add_or_rank_up_passive_upgrade(name: String) -> String:
+	if not game_data.passives_dict.has(name):
+		return "No passive upgrade '%s'" % name
+
+	var passive_upgrade: PassiveUpgrade = game_data.passives_dict[name]
+
+	if player.upgrades.passives_dict.has(name):
+		if player.upgrades.can_rank_up_passive(name):
+			player.upgrades.rank_up_passive(name)
+
+			return "Ranked up passive upgrade"
+		else:
+			return "Unable to rank up passive upgrade (probably max rank)"
+	else:
+		player.upgrades.add_passive(passive_upgrade.clone())
+
+		return "Added new passive upgrade '%s'" % name
+
+
 func _on_passive_rank_added(passive: PassiveUpgrade):
 	for tower in _entities.towers:
 		var attached_passive: PassiveUpgradeTowerAttached = tower.get_passive_upgrade(passive.name)

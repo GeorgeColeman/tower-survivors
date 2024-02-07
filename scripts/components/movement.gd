@@ -9,6 +9,10 @@ signal facing_direction_changed(facing_direction: FacingDirection)
 
 var cell: Cell
 
+var nearest_cell: Cell:
+	get:
+		return MapUtilities.get_cell_at_scene_position(_path_follower.nearest_node)
+
 var speed: float:
 	get:
 		if !_is_mobile:

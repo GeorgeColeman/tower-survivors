@@ -21,6 +21,7 @@ extends Node
 @export var control_in_game: ControlInGame
 @export var control_debug: ControlDebug
 @export var control_pause: ControlPause
+@export var dev_console: DevConsole
 
 var game: Game
 var game_data: GameData
@@ -76,6 +77,7 @@ func start_game():
 	control_in_game.start_game(game)
 	control_debug.start_game(game)
 	control_pause.start_game(game)
+	dev_console.set_game(game)
 
 	map_drawer.draw_map(map)
 
