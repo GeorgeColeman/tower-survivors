@@ -1,17 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://38q1wkrg25ha"]
+[gd_scene load_steps=9 format=3 uid="uid://38q1wkrg25ha"]
 
 [ext_resource type="Script" path="res://scripts/control/build_button.gd" id="1_hxw7i"]
+[ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="1_vwin6"]
 [ext_resource type="Texture2D" uid="uid://b5ky6gam3vy1y" path="res://sprites/towers/tower_arcane_citadel.png" id="2_o4rt7"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="3_bi1fe"]
 [ext_resource type="Texture2D" uid="uid://cwhxgc1ylsjpr" path="res://sprites/icons/core.tres" id="3_epp7o"]
 [ext_resource type="Texture2D" uid="uid://bqrytwuvadvud" path="res://sprites/gui/gui_red.tres" id="3_isknm"]
 [ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://new_theme.tres" id="4_etbcv"]
+[ext_resource type="Texture2D" uid="uid://ktubmyy4vb7h" path="res://sprites/icons/icon_star.tres" id="8_6mxdu"]
 
-[node name="BuildButton" type="Button" node_paths=PackedStringArray("_main_texture", "_gold_label", "_gold_cost_area", "_rank_label", "_core_cost_label", "_no_build_overlay_texture")]
-custom_minimum_size = Vector2(48, 72)
+[node name="BuildButton" type="Button" node_paths=PackedStringArray("_main_texture", "_gold_label", "_gold_cost_area", "_rank_label", "_core_cost_label", "_no_build_overlay_texture", "_rank_icons_container")]
+custom_minimum_size = Vector2(64, 96)
 offset_right = 48.0
 offset_bottom = 72.0
+tooltip_text = "Test"
 focus_mode = 0
+theme_override_styles/normal = ExtResource("1_vwin6")
 script = ExtResource("1_hxw7i")
 _main_texture = NodePath("MainTexture")
 _gold_label = NodePath("GoldCostArea/GoldLabel")
@@ -19,20 +23,22 @@ _gold_cost_area = NodePath("GoldCostArea")
 _rank_label = NodePath("RankLabel")
 _core_cost_label = NodePath("CoreCostElement/CoreCostLabel")
 _no_build_overlay_texture = NodePath("NoBuildOverlayTexture")
+_rank_icons_container = NodePath("rank_icons_container")
+_star_texture = ExtResource("8_6mxdu")
 
 [node name="MainTexture" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
+anchor_bottom = 0.5
 offset_left = -12.0
-offset_top = -50.0
+offset_top = -24.0
 offset_right = 12.0
-offset_bottom = -2.0
+offset_bottom = 24.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 texture = ExtResource("2_o4rt7")
 
 [node name="GoldCostArea" type="Control" parent="."]
@@ -89,9 +95,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
+offset_left = -32.0
 offset_top = -24.0
-offset_right = 4.0
+offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("3_epp7o")
@@ -104,9 +110,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 4.0
+offset_left = -8.0
 offset_top = -24.0
-offset_right = 44.0
+offset_right = 32.0
 offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -122,6 +128,7 @@ theme_override_font_sizes/font_size = 12
 text = "99"
 
 [node name="NoBuildOverlayTexture" type="TextureRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.25098)
 layout_mode = 1
 anchors_preset = 15
@@ -130,3 +137,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_isknm")
+
+[node name="rank_icons_container" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="texture_rank_star" type="TextureRect" parent="rank_icons_container"]
+layout_mode = 2
+texture = ExtResource("8_6mxdu")
+
+[node name="texture_rank_star2" type="TextureRect" parent="rank_icons_container"]
+layout_mode = 2
+texture = ExtResource("8_6mxdu")
+
+[node name="texture_rank_star3" type="TextureRect" parent="rank_icons_container"]
+layout_mode = 2
+texture = ExtResource("8_6mxdu")

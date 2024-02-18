@@ -61,6 +61,7 @@ func add_passive(passive: PassiveUpgrade):
 
 
 func rank_up_passive(passive_key: String):
+	print_debug(passive_key)
 	if !passives_dict.has(passive_key):
 		push_warning("Passives dict doesn't have: %s. Aborting" % passive_key)
 

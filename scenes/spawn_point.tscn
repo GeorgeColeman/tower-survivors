@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bjfm2itr0xucj" path="res://sprites/camps/grunt_camp.tres" id="2_6hloq"]
 [ext_resource type="PackedScene" uid="uid://c6ld3gl34qs73" path="res://scenes/off_screen_marker.tscn" id="3_kdd14"]
 
-[node name="SpawnPoint" type="Node2D"]
+[node name="SpawnPoint" type="Node2D" node_paths=PackedStringArray("_sprite")]
 script = ExtResource("1_kwstk")
-spawn_rate = 6.0
+_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_6hloq")

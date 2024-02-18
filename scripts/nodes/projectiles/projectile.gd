@@ -1,7 +1,7 @@
 class_name Projectile
 extends Node2D
 
-var get_damage: Callable
+var get_damage: Callable				# Returns DamageInfo
 
 var _speed: float
 var _does_pass: bool

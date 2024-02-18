@@ -2,8 +2,7 @@ class_name GameRules
 
 const UPGRADE_EXISTING: bool = true
 const TOWER_UPGRADES: bool = true
-#const WEAPON_UPGRADES: bool = false
-const PASSIVE_LIMITED_TO_TOWER_RANK: bool = true
+const PASSIVE_LIMITED_TO_TOWER_RANK: bool = false
 
 const GOLD_TO_BUILD: bool = false
 const CORES_TO_BUILD: bool = true

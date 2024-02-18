@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxgev8crrae4e"]
+
+[ext_resource type="Script" path="res://scenes/acid_pool.gd" id="1_6rh5m"]
+[ext_resource type="SpriteFrames" uid="uid://dym547pop6orn" path="res://sprites/effects/effect_acid.tres" id="2_dkt6j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kurrl"]
+
+[node name="acid_pool" type="Node2D" node_paths=PackedStringArray("_area")]
+script = ExtResource("1_6rh5m")
+_area = NodePath("area")
+
+[node name="animated_sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_dkt6j")
+autoplay = "default"
+
+[node name="area" type="Area2D" parent="."]
+
+[node name="collision_shape" type="CollisionShape2D" parent="area"]
+shape = SubResource("CircleShape2D_kurrl")

@@ -1,6 +1,7 @@
 class_name Tower
 extends Node2D
 
+signal description_updated(description: String)
 signal was_killed()
 
 @export var graphics: Node2D
@@ -112,12 +113,19 @@ func set_rank(value: int):
 	_rank = value
 
 
+func set_min_rank(value: int):
+	while _rank < value:
+		add_rank(1)
+
+
 func add_rank(amount: int):
 	_rank += amount
 
 	if GameRules.PASSIVE_LIMITED_TO_TOWER_RANK:
 		for passive in _passive_upgrade_dict.values():
 			passive.match_tower_rank_and_apply(self)
+
+	description_updated.emit(description)
 
 
 func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):

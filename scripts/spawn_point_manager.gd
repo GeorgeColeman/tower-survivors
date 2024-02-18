@@ -15,6 +15,8 @@ var _cell_spawn_point_dict = {}
 var _valid_spawn_point_cells: Array[Cell] = []
 var _next_spawn_point_dict = {}						# <Cell, Sprite2D>
 
+var _game: Game
+
 
 func _draw():
 	if !_debug_draw_valid_spawn_points:
@@ -25,6 +27,8 @@ func _draw():
 
 
 func start_game(game: Game):
+	_game = game
+
 	_erase_existing()
 
 	game.difficulty.changed.connect(
@@ -65,9 +69,12 @@ func spawn_new_spawn_point():
 	var new_spawn_point = _spawn_point_scene.instantiate() as SpawnPoint
 	add_child(new_spawn_point)
 
+	new_spawn_point.set_resource(_game.game_data.get_random_mob_camp_resource())
 	new_spawn_point.cell = next
 	new_spawn_point.position = next.scene_position
 	_cell_spawn_point_dict[next] = new_spawn_point
+
+	Messenger.create_alert("New enemy camp appeared!")
 
 	_set_next_spawn_point()
 
@@ -79,7 +86,7 @@ func _set_next_spawn_point():
 	_next_spawn_point_dict[next_cell] = next_marker
 
 	add_child(next_marker)
-	
+
 	next_marker.position = next_cell.scene_position
 
 

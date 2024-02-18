@@ -116,5 +116,9 @@ func _on_building_option_upgraded(option: BuildingOption):
 	if !GameRules.UPGRADE_EXISTING:
 		return
 
+	_rank_up_existing_towers_to_building_option_rank(option)
+
+
+func _rank_up_existing_towers_to_building_option_rank(option: BuildingOption):
 	for tower in _entities.get_towers_of_type(option.tower_resource.name):
-		tower.add_rank(1)
+		tower.set_min_rank(option._rank)

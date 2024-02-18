@@ -18,9 +18,7 @@ extends Node
 
 @export_group("Control")
 @export var main_control: MainControl
-@export var control_in_game: ControlInGame
 @export var control_debug: ControlDebug
-@export var control_pause: ControlPause
 @export var dev_console: DevConsole
 
 var game: Game
@@ -60,7 +58,7 @@ func start_game():
 
 	game.set_player(_create_player())
 
-	camera_2d_controller.position = map.center * GameConstants.PIXEL_SCALE
+	camera_2d_controller.set_position_immediate(map.center * GameConstants.PIXEL_SCALE)
 	camera_2d_controller.set_limits(
 		map.width * GameConstants.PIXEL_SCALE,
 		map.height * GameConstants.PIXEL_SCALE)
@@ -74,9 +72,7 @@ func start_game():
 	MobUtilities.init(mob_spawner, spawn_point_manager)
 
 	main_control.start_game(game)
-	control_in_game.start_game(game)
 	control_debug.start_game(game)
-	control_pause.start_game(game)
 	dev_console.set_game(game)
 
 	map_drawer.draw_map(map)
@@ -90,6 +86,8 @@ func start_game():
 			for tween in tweens:
 				tween.set_speed_scale(speed)
 	)
+
+	Messenger.start_game(game)
 
 
 func _create_player() -> Player:

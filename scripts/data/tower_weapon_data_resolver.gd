@@ -20,6 +20,9 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 		var properties = config.get_value(section, "properties", {})
 		var scene_path = config.get_value(section, "proj_scene_path")
 		var sfx_path = config.get_value(section, "sfx")
+		var ranks = config.get_value(section, "ranks", [])
+
+		_resolve_ranks(ranks)
 
 		var proj: PackedScene
 
@@ -62,3 +65,9 @@ static func get_tower_weapon_data() -> Array[TowerWeaponData]:
 		))
 
 	return data
+
+
+static func _resolve_ranks(ranks: Array):
+	for rank in ranks:
+		for key in rank.keys():
+			print_debug(key)

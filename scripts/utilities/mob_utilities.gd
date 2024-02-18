@@ -43,3 +43,6 @@ static func spawn_mobs_in_random_neighbouring_tiles(
 
 	return mobs
 
+
+static func get_mobs_at(cell: Cell) -> Array[Mob]:
+	return _mob_spawner.get_mobs_at(cell)

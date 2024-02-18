@@ -17,30 +17,18 @@ var tower_resource_dict = {}							# <String, TowerResource>
 var passives_dict = {}									# <String, PassiveUpgrade>
 var player_character_dict = {}							# <String, PlayerCharacter>
 
+var mob_camp_resource_dict = {}						# <String, MobCampResource>
+
+
 func _init():
 	DataUtilities.init(self)
 	_load_resources()
 
 
 func _load_resources():
-	var mobs = dir_contents("res://resources/mobs/")
-
-	for mob in mobs:
-		var loaded = load(mob)
-
-		if loaded is MobResource:
-			mob_resources.append(loaded)
-
-			if loaded.is_in_spawn_pool():
-				_spawnable_mobs.append(loaded)
-
-			if loaded.is_boss():
-				bosses.append(loaded)
-
-			if loaded.is_elite():
-				elites.append(loaded)
-
+	_load_mobs()
 	_load_towers()
+	_load_mob_camps()
 
 	var passives = PassiveUpgradeDataResolver.get_passive_upgrade_data()
 
@@ -59,6 +47,25 @@ func _load_resources():
 		_tower_weapon_data_dict[data.id] = data
 
 
+func _load_mobs():
+	var mobs = dir_contents("res://resources/mobs/")
+
+	for mob in mobs:
+		var loaded = load(mob)
+
+		if loaded is MobResource:
+			mob_resources.append(loaded)
+
+			if loaded.is_in_spawn_pool():
+				_spawnable_mobs.append(loaded)
+
+			if loaded.is_boss():
+				bosses.append(loaded)
+
+			if loaded.is_elite():
+				elites.append(loaded)
+
+
 func _load_towers():
 	var tower_resources = dir_contents("res://resources/towers/")
 
@@ -75,6 +82,22 @@ func _load_towers():
 
 		if loaded is PackedScene:
 			towers.append(loaded)
+
+
+func _load_mob_camps():
+	var mob_camp_resources = dir_contents("res://resources/mob_camps/")
+
+	for mob_camp_resource in mob_camp_resources:
+		var loaded = load(mob_camp_resource)
+
+		if loaded is MobCampResource:
+			mob_camp_resource_dict[loaded.name] = loaded
+		else:
+			print_debug("WARNING: loaded resource is not MobCampResource")
+
+
+func get_random_mob_camp_resource() -> MobCampResource:
+	return mob_camp_resource_dict.values().pick_random()
 
 
 func get_tower_weapon_data(id: String) -> TowerWeaponData:

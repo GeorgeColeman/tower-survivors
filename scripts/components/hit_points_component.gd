@@ -26,6 +26,10 @@ func initialise(hit_points: int, show_hit_points_bar: bool):
 	_update_hit_points_bar()
 
 
+func set_visibility(is_visible: bool):
+	hit_points_bar.visible = is_visible
+
+
 func change_current(amount: int):
 	_current_hit_points = clampi(_current_hit_points + amount, 0, _max_hit_points)
 

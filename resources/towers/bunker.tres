@@ -15,3 +15,4 @@ hit_points = 20
 gold_cost = 20
 core_cost = 1
 _flags = 0
+_rank_upgrades = ""

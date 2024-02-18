@@ -24,18 +24,20 @@ var _game: Game
 func _ready():
 	SelectionManager.entity_selected.connect(
 		func(entity_info: EntityInfo):
+			entity_info_panel.open()
 			entity_info_panel.set_entity(entity_info)
-			entity_info_panel.visible = true
 	)
 
 	SelectionManager.selection_cleared.connect(
 		func():
-			entity_info_panel.visible = false
+			entity_info_panel.close()
+			entity_info_panel.clear_entity()
 	)
 
 	SelectionManager.selected_entity_freed.connect(
 		func():
-			entity_info_panel.visible = false
+			entity_info_panel.close()
+			entity_info_panel.clear_entity()
 	)
 
 	buy_core_button.pressed.connect(_on_buy_core_button_pressed)

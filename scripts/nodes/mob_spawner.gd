@@ -26,6 +26,10 @@ func get_mob_targets(cells: Array[Cell]) -> Array[Mob]:
 	return mob_targets
 
 
+func get_mobs_at(cell: Cell) -> Array[Mob]:
+	return _cell_mob_dict[cell]
+
+
 func start_game(game: Game):
 	_erase_existing()
 
@@ -37,7 +41,7 @@ func start_game(game: Game):
 	_map = game.map
 
 	for cell in _map.cells:
-		_cell_mob_dict[cell] = []
+		_cell_mob_dict[cell] = [] as Array[Mob]
 
 
 func _erase_existing():
@@ -108,6 +112,11 @@ func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:
 
 
 func _on_mob_entered_cell(mob: Mob, cell: Cell):
+	if _cell_mob_dict[cell].has(mob):
+		print_debug("WARNING: cell dict already has mob at this cell")
+
+		return
+
 	_cell_mob_dict[cell].append(mob)
 
 

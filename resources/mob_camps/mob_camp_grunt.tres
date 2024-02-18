@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MobCampResource" load_steps=3 format=3 uid="uid://ogleuol6kb6n"]
+
+[ext_resource type="Script" path="res://scripts/resources/mob_camp_resource.gd" id="1_gp7d8"]
+[ext_resource type="Texture2D" uid="uid://bjfm2itr0xucj" path="res://sprites/camps/grunt_camp.tres" id="1_k43l4"]
+
+[resource]
+script = ExtResource("1_gp7d8")
+name = "Grunt Camp"
+main_texture = ExtResource("1_k43l4")
+spawn_rate = 5.0
+spawn_rate_variance = 0.5

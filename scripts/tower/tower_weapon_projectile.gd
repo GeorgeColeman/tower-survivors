@@ -5,19 +5,13 @@ extends TowerWeapon
 func _attack():
 	super._attack()
 
-	var multi_shot = _multi_shot_chance >= randf()
-	var number_of_shots = 1 + _multi_shot_number_of_shots if multi_shot else 1
-
-	var burst_shot_proc = _burst_shot_chance >= randf()
-	var number_of_bursts = 1 + _burst_shot_number_of_shots if burst_shot_proc else 1
-
 	var targets = GameUtilities.get_mob_targets_closest_to_main_tower(
 		_cells_in_range,
-		number_of_shots
+		weapon_stats.get_multi_shot_number()
 	)
 
 	var shoot = func(target: Mob):
-		for shot in number_of_bursts:
+		for shot in weapon_stats.get_burst_shot_number():
 			if !target:
 				break
 
@@ -40,12 +34,10 @@ func _spawn_projectile_to_target(target: Mob):
 
 	projectile.position = _firing_point
 	projectile.set_target(target)
-	#projectile.set_damage(damage + _bonus_damage)
-	projectile.set_range(attack_range + _bonus_attack_range)
-	projectile.set_speed(_data.projectile_speed * (1 + _projectile_speed_mod))
+	projectile.set_range(weapon_stats.get_total_attack_range())
+	projectile.set_speed(weapon_stats.get_total_projectile_speed())
 	projectile.set_pass(_projectile_pass)
 	projectile.set_weapon_effects(weapon_effects)
-	#projectile.set_crit(_crit_chance, _crit_multiplier)
 
 	projectile.get_damage = func() -> DamageInfo:
-		return get_calculated_damage()
+		return weapon_stats.get_calculated_damage()

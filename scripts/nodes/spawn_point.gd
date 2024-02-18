@@ -1,10 +1,12 @@
 class_name SpawnPoint
 extends Node2D
 
-#signal spawn_triggered(spawn_point: SpawnPoint)
 
-@export var spawn_rate = 5.0
-@export var spawn_rate_variance = 0.5
+@export var _sprite: Sprite2D
+
+var _spawn_rate: float
+var _spawn_rate_variance: float
+
 
 var description: String:
 	get:
@@ -27,7 +29,7 @@ var _spawn_delay: float
 
 
 func _ready():
-	_spawn_cooldown = spawn_rate + randf_range(-spawn_rate_variance, spawn_rate_variance)
+	_spawn_cooldown = _spawn_rate + randf_range(-_spawn_rate_variance, _spawn_rate_variance)
 
 
 func _process(_delta):
@@ -39,9 +41,16 @@ func _process(_delta):
 	_spawn_cooldown -= Game.speed_scaled_delta
 
 	if _spawn_cooldown <= 0:
-		_spawn_cooldown = spawn_rate + randf_range(-spawn_rate_variance, spawn_rate_variance)
+		_spawn_cooldown = _spawn_rate + randf_range(-_spawn_rate_variance, _spawn_rate_variance)
 		MobUtilities.spawn_mob_at(self)
 		#spawn_triggered.emit(self)
+
+
+func set_resource(mob_camp_resource: MobCampResource):
+	#print_debug(mob_camp_resource.name)
+	_sprite.texture = mob_camp_resource.main_texture
+	_spawn_rate = mob_camp_resource.spawn_rate
+	_spawn_rate_variance = mob_camp_resource.spawn_rate_variance
 
 
 func get_entity_info() -> EntityInfo:

@@ -1,5 +1,5 @@
 class_name MapDrawer
-extends Node
+extends Node2D
 
 @export var cell_type: CellTypeResource
 

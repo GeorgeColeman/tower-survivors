@@ -18,7 +18,7 @@ func _attack():
 	_apply_on_hit_weapon_effects(hit_info)
 
 	for target in all_targets:
-		target.take_damage(get_calculated_damage())
+		target.take_damage(weapon_stats.get_calculated_damage())
 
 	# FIXME: we're using the projectile scene as an 'effect'
 	if !projectile_scene:

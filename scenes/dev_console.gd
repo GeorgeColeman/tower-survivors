@@ -2,9 +2,9 @@
 class_name DevConsole
 extends CanvasLayer
 
-
 @export var _console: RichTextLabel
 @export var _text_input: LineEdit
+@export var _exit_button: Button
 
 var _expression = Expression.new()
 
@@ -13,6 +13,8 @@ var _game: Game
 
 func _ready():
 	_text_input.text_submitted.connect(self._on_text_submitted)
+	_exit_button.pressed.connect(exit)
+
 	visible = false
 
 
@@ -39,6 +41,11 @@ func _on_text_submitted(command):
 		_console.text = str(result)
 		#_console.text += str(result)
 		#_console.text += "\n"
+
+
+func exit():
+	visible = false
+	_text_input.release_focus()
 
 
 func add_upgrade(name: String) -> String:

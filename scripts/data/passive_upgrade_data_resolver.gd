@@ -54,6 +54,8 @@ static func _get_ranks(name, rank_data) -> Array[PassiveUpgrade.Rank]:
 					_resolve_attack_range(rank, element[key])
 				"attack_speed":
 					_resolve_attack_speed(rank, element[key])
+				"attack_speed_mod":
+					_resolve_attack_speed_mod(rank, element[key])
 				"burst_shot_number":
 					_resolve_burst_shot_number(rank, element[key])
 				"burst_shot_chance":
@@ -125,6 +127,15 @@ static func _resolve_attack_speed(rank: PassiveUpgrade.Rank, variant):
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
 			tower.tower_stats.add_bonus_attack_speed(variant)
+	)
+	
+
+static func _resolve_attack_speed_mod(rank: PassiveUpgrade.Rank, variant):
+	rank.description += "\n+%s%% attack speed" % (variant * 100)
+	
+	rank.apply_to_tower_callbacks.append(
+		func(tower: Tower):
+			tower.tower_stats.add_attack_speed_mod(variant)
 	)
 
 

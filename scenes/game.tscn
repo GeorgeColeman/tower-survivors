@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=52 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -21,8 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
 [ext_resource type="Script" path="res://scenes/active_effects.gd" id="13_bcpki"]
 [ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
+[ext_resource type="PackedScene" uid="uid://bxgev8crrae4e" path="res://scenes/acid_pool.tscn" id="14_04ocx"]
 [ext_resource type="Texture2D" uid="uid://bed2nxb3jr6fe" path="res://sprites/markers/selection_marker_02.tres" id="14_ggbmm"]
-[ext_resource type="SpriteFrames" uid="uid://dym547pop6orn" path="res://sprites/effects/effect_acid.tres" id="14_gsv2l"]
+[ext_resource type="Script" path="res://debug_drawer.gd" id="15_udb11"]
+[ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="16_0dskt"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
@@ -30,7 +32,7 @@
 [ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
 [ext_resource type="PackedScene" uid="uid://cck72le1by1qn" path="res://scenes/floating_text.tscn" id="24_27evh"]
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
-[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://new_style_box_texture.tres" id="24_yuuet"]
+[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://style_box_test.tres" id="24_yuuet"]
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
@@ -44,11 +46,13 @@
 [ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="32_pnssa"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
+[ext_resource type="Script" path="res://scripts/control/control_alerts.gd" id="41_ck1fr"]
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
 [ext_resource type="Texture2D" uid="uid://kquk4qc7cxea" path="res://sprites/markers/white_square_24x24.tres" id="42_4nx7t"]
-[ext_resource type="Script" path="res://scenes/dev_console.gd" id="47_ec2qa"]
+[ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="42_ri3gm"]
+[ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_in_game", "control_debug", "control_pause", "dev_console")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
@@ -61,9 +65,7 @@ pathfinding_manager = NodePath("PathfindingManager")
 vfx_drawer_2d = NodePath("VFXDrawer2D")
 sound_effects_player = NodePath("SoundEffectsPlayer")
 main_control = NodePath("CanvasLayer/ControlMain")
-control_in_game = NodePath("CanvasLayer/ControlMain/ControlInGame")
 control_debug = NodePath("CanvasLayer/ControlMain/ControlDebug")
-control_pause = NodePath("CanvasLayer/ControlMain/ControlPause")
 dev_console = NodePath("dev_console")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -106,7 +108,12 @@ _next_spawn_point = ExtResource("12_l2pf0")
 
 [node name="ActiveEffects" type="Node2D" parent="MapObjects"]
 script = ExtResource("13_bcpki")
-_acid_sprite_frames = ExtResource("14_gsv2l")
+_acid_pool_scene = ExtResource("14_04ocx")
+
+[node name="debug_drawer" type="Node2D" parent="MapObjects" node_paths=PackedStringArray("_mob_spawner")]
+script = ExtResource("15_udb11")
+font = ExtResource("16_0dskt")
+_mob_spawner = NodePath("../MobSpawner")
 
 [node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")
@@ -203,7 +210,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
-entity_info_panel = NodePath("EntityInfoPanel")
+entity_info_panel = NodePath("entity_info_panel")
 level_label = NodePath("LevelLabel")
 experience_bar = NodePath("ExperienceBar")
 gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
@@ -305,7 +312,7 @@ focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x10"
 
-[node name="EntityInfoPanel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame" node_paths=PackedStringArray("entity_name_label", "button_container", "_description_label")]
+[node name="entity_info_panel" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame" node_paths=PackedStringArray("_entity_name_label", "_button_container", "_description_label")]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -316,11 +323,11 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("24_yuuet")
 script = ExtResource("31_7drxe")
-entity_name_label = NodePath("EntityNameLabel")
-button_container = NodePath("ButtonContainer")
-_description_label = NodePath("DescriptionLabel")
+_entity_name_label = NodePath("entity_name_label")
+_button_container = NodePath("button_container")
+_description_label = NodePath("description_label")
 
-[node name="EntityNameLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+[node name="entity_name_label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/entity_info_panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -336,7 +343,7 @@ text = "Entity Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+[node name="description_label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/entity_info_panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -355,7 +362,7 @@ text = "Description"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/EntityInfoPanel"]
+[node name="button_container" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/entity_info_panel"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -880,6 +887,40 @@ layout_mode = 2
 theme = ExtResource("29_1kk1u")
 text = "Reroll"
 
+[node name="control_alerts" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("_container", "_alert_text", "_alert_timer")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("41_ck1fr")
+_container = NodePath("container")
+_alert_text = NodePath("container/alert_text")
+_alert_timer = NodePath("alert_timer")
+
+[node name="container" type="PanelContainer" parent="CanvasLayer/ControlMain/control_alerts"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -185.0
+offset_right = 320.0
+offset_bottom = -147.0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("42_ri3gm")
+
+[node name="alert_text" type="RichTextLabel" parent="CanvasLayer/ControlMain/control_alerts/container"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("29_1kk1u")
+text = "Alert Text"
+fit_content = true
+
+[node name="alert_timer" type="Timer" parent="CanvasLayer/ControlMain/control_alerts"]
+wait_time = 3.0
+
 [node name="SoundEffectsPlayer" type="Node" parent="."]
 script = ExtResource("25_6tpgp")
 mob_killed_sfx = ExtResource("25_42f42")
@@ -915,26 +956,5 @@ y_sort_enabled = true
 script = ExtResource("41_q0vy1")
 _marker_texture = ExtResource("42_4nx7t")
 
-[node name="dev_console" type="CanvasLayer" parent="." node_paths=PackedStringArray("_console", "_text_input")]
-script = ExtResource("47_ec2qa")
-_console = NodePath("container/contents/console")
-_text_input = NodePath("container/contents/text_input")
-
-[node name="container" type="PanelContainer" parent="dev_console"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -430.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="contents" type="VBoxContainer" parent="dev_console/container"]
-layout_mode = 2
-alignment = 2
-
-[node name="console" type="RichTextLabel" parent="dev_console/container/contents"]
-layout_mode = 2
-fit_content = true
-
-[node name="text_input" type="LineEdit" parent="dev_console/container/contents"]
-layout_mode = 2
+[node name="dev_console" parent="." instance=ExtResource("47_hex7m")]
+visible = false

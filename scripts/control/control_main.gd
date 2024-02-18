@@ -17,6 +17,9 @@ var _game: Game
 func start_game(game: Game):
 	_game = game
 
+	control_in_game.start_game(game)
+	control_pause.start_game(game)
+
 	control_level_up.reroll_requested.connect(
 		func():
 			game.upgrades_manager.generate_new_upgrade_options()

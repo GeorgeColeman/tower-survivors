@@ -47,6 +47,11 @@ func _unhandled_key_input(event):
 	#if event is InputEventKey:
 
 
+func set_position_immediate(p_position: Vector2):
+	position = p_position
+	reset_smoothing()
+
+
 func _move_camera(delta):
 	position += _keyboard_input * delta * speed
 

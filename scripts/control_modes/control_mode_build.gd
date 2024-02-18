@@ -22,6 +22,8 @@ func set_building_option(option: BuildingOption):
 	_building_option = option
 
 	_current_preview = option.tower_resource.tower_scene.instantiate()
+	_current_preview.hit_points_component.set_visibility(false)
+
 	preview_container.add_child(_current_preview)
 
 
@@ -31,10 +33,11 @@ func exit_mode():
 
 
 func _cleanup_existing_preview():
-	if _current_preview:
-		_current_preview.queue_free()
+	if !_current_preview:
+		return
 
-		_current_preview = null
+	_current_preview.queue_free()
+	_current_preview = null
 
 
 func _on_mouse_entered_cell(cell: Cell):

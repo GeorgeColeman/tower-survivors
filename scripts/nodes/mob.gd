@@ -191,13 +191,13 @@ func _animated_destroy():
 	was_killed.emit(self)
 
 
-func _on_entered_cell(cell: Cell):
-	entered_cell.emit(self, cell)
+func _on_entered_cell(p_cell: Cell):
+	entered_cell.emit(self, p_cell)
 
 	if !_mob_resource.has_properties(MobResource.MobProperties.AGGRESSIVE):
 		return
 
-	var tower = GameUtilities.get_nearby_tower(cell)
+	var tower = GameUtilities.get_nearby_tower(p_cell)
 
 	if tower:
 		movement.cancel_path()
