@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="MobResource" load_steps=3 format=3 uid="uid://hl2t6wolbww7"]
+[gd_resource type="Resource" script_class="MobResource" load_steps=4 format=3 uid="uid://hl2t6wolbww7"]
 
 [ext_resource type="PackedScene" uid="uid://r0umfv06co67" path="res://scenes/mobs/slime.tscn" id="1_k7npv"]
 [ext_resource type="Script" path="res://scripts/resources/mob_resource.gd" id="1_q40nv"]
+[ext_resource type="Resource" uid="uid://b7qedl6xrmcnu" path="res://resources/tags/tag_slime.tres" id="3_ghle6"]
 
 [resource]
 script = ExtResource("1_q40nv")
@@ -13,4 +14,5 @@ hit_points = 10
 gold_value = 1
 experience_value = 1
 mob_flags = 1
-mob_properties = null
+mob_properties = 0
+tags = Array[Resource("res://scripts/resources/tag.gd")]([ExtResource("3_ghle6")])

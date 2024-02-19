@@ -8,6 +8,13 @@ var _limit_right: float
 var _limit_bottom: float
 
 
+func _ready():
+	SelectionManager.entity_selected.connect(
+		func(entity_info: EntityInfo):
+			position = entity_info.position
+	)
+
+
 func set_limits(p_limit_right: float, p_limit_bottom: float):
 	_limit_right = p_limit_right
 	_limit_bottom = p_limit_bottom

@@ -14,3 +14,4 @@ gold_value = 1
 experience_value = 1
 mob_flags = 1
 mob_properties = 1
+tags = Array[Resource("res://scripts/resources/tag.gd")]([])

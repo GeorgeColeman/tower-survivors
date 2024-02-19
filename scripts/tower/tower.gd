@@ -15,23 +15,19 @@ var tower_name: String:
 	get:
 		return tower_resource.name
 
-var display_rank:
-	get:
-		return _rank + 1
-
 var kills: int
 var cell: Cell
 var tower_stats: TowerStats
+var rank: Rank
 var weapon_dict = {}										# <String, TowerWeapon>
 
 var _weapons: Array[TowerWeapon] = []
 var _passive_upgrade_dict = {}								# <String, PassiveUpgrade>
 var _is_destroyed: bool
-var _rank: int = 0
 
 var description: String:
 	get:
-		var d = "Rank %s" % display_rank
+		var d = "Rank %s" % rank.display_rank
 
 		for weapon in _weapons:
 			d += str("\n\n", weapon.weapon_name, "\n", weapon.description)
@@ -97,9 +93,24 @@ func set_resource(p_tower_resource: TowerResource):
 func set_cell_and_init(p_cell: Cell):
 	cell = p_cell
 	tower_stats = TowerStats.new(_weapons)
+	rank = Rank.new()
+
+	rank.rank_added.connect(
+		func(current_rank: int):
+			description_updated.emit(description)
+	)
 
 	for weapon in _weapons:
 		_activate_weapon(weapon)
+
+
+func get_entity_info() -> EntityInfo:
+	return EntityInfo.new(
+			self,
+			tower_name,
+			description,
+			position
+	)
 
 
 func get_cells_in_attack_range() -> Array[Cell]:
@@ -107,25 +118,6 @@ func get_cells_in_attack_range() -> Array[Cell]:
 		return []
 
 	return _weapons[0]._cells_in_range
-
-
-func set_rank(value: int):
-	_rank = value
-
-
-func set_min_rank(value: int):
-	while _rank < value:
-		add_rank(1)
-
-
-func add_rank(amount: int):
-	_rank += amount
-
-	if GameRules.PASSIVE_LIMITED_TO_TOWER_RANK:
-		for passive in _passive_upgrade_dict.values():
-			passive.match_tower_rank_and_apply(self)
-
-	description_updated.emit(description)
 
 
 func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):

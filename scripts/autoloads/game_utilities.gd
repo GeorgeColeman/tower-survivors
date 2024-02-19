@@ -149,13 +149,7 @@ func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 
 	for entity in entities:
 		if entity is Tower:
-			all_entities.append(
-				EntityInfo.new(
-					entity,
-					entity.tower_name,
-					entity.description,
-					entity.position)
-			)
+			all_entities.append(entity.get_entity_info())
 
 	var spawn_points = MobUtilities.get_spawn_points_at(cell)
 

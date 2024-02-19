@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="MobCampResource" load_steps=3 format=3 uid="uid://5ijqrb1cvu6"]
+[gd_resource type="Resource" script_class="MobCampResource" load_steps=4 format=3 uid="uid://5ijqrb1cvu6"]
 
+[ext_resource type="Resource" uid="uid://b7qedl6xrmcnu" path="res://resources/tags/tag_slime.tres" id="1_hljqx"]
 [ext_resource type="Texture2D" uid="uid://cob2s77syvxq2" path="res://sprites/camps/slime_den.tres" id="1_u1hfh"]
 [ext_resource type="Script" path="res://scripts/resources/mob_camp_resource.gd" id="1_y53m5"]
 
@@ -9,3 +10,5 @@ name = "Slime Den"
 main_texture = ExtResource("1_u1hfh")
 spawn_rate = 5.0
 spawn_rate_variance = 0.5
+spawns_all = false
+accepted_mob_tags = Array[Resource("res://scripts/resources/tag.gd")]([ExtResource("1_hljqx")])

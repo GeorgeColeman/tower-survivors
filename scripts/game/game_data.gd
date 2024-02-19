@@ -11,7 +11,7 @@ var towers: Array[PackedScene]
 var bosses: Array[MobResource]
 var elites: Array[MobResource]
 
-var _spawnable_mobs: Array[MobResource]
+var spawnable_mobs: Array[MobResource]
 
 var tower_resource_dict = {}							# <String, TowerResource>
 var passives_dict = {}									# <String, PassiveUpgrade>
@@ -57,7 +57,7 @@ func _load_mobs():
 			mob_resources.append(loaded)
 
 			if loaded.is_in_spawn_pool():
-				_spawnable_mobs.append(loaded)
+				spawnable_mobs.append(loaded)
 
 			if loaded.is_boss():
 				bosses.append(loaded)
@@ -118,8 +118,8 @@ func try_get_tower_resource(tower_name: String) -> TowerResource:
 	return tower_resource_dict[tower_name]
 
 
-func get_random_mob_resource() -> MobResource:
-	return _spawnable_mobs[randi_range(0, _spawnable_mobs.size() - 1)]
+#func get_random_mob_resource() -> MobResource:
+	#return spawnable_mobs[randi_range(0, spawnable_mobs.size() - 1)]
 
 
 func dir_contents(path) -> Array:

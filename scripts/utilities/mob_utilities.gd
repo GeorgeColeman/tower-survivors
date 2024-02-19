@@ -17,8 +17,8 @@ static func get_random_spawn_point() -> SpawnPoint:
 	return _spawn_point_manager.get_random_spawn_point()
 
 
-static func spawn_mob_at(spawn_point: SpawnPoint):
-	_mob_spawner.spawn_mob_at(spawn_point)
+static func spawn_mob_at(mob_resource: MobResource, spawn_point: SpawnPoint):
+	_mob_spawner.spawn_mob_at(mob_resource, spawn_point)
 
 
 static func spawn_mobs_in_random_neighbouring_tiles(

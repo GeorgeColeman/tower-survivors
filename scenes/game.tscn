@@ -112,7 +112,7 @@ _acid_pool_scene = ExtResource("14_04ocx")
 
 [node name="debug_drawer" type="Node2D" parent="MapObjects" node_paths=PackedStringArray("_mob_spawner")]
 script = ExtResource("15_udb11")
-font = ExtResource("16_0dskt")
+_font = ExtResource("16_0dskt")
 _mob_spawner = NodePath("../MobSpawner")
 
 [node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]

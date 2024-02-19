@@ -70,6 +70,8 @@ func spawn_new_spawn_point():
 	add_child(new_spawn_point)
 
 	new_spawn_point.set_resource(_game.game_data.get_random_mob_camp_resource())
+	new_spawn_point.set_mob_pool(_game.game_data)
+	
 	new_spawn_point.cell = next
 	new_spawn_point.position = next.scene_position
 	_cell_spawn_point_dict[next] = new_spawn_point

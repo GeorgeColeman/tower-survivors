@@ -34,7 +34,7 @@ func update_can_build(player: Player):
 
 
 func get_core_cost() -> int:
-	var tax = _build_count				# TODO
+	var tax = _build_count if GameRules.MULTIPLE_TOWER_TAX else 0
 
 	return tower_resource.core_cost + tax
 

@@ -52,8 +52,8 @@ func _erase_existing():
 	_cell_mob_dict.clear()
 
 
-func spawn_mob_at(spawn_point: SpawnPoint):
-	var mob_resource = _game.game_data.get_random_mob_resource()
+func spawn_mob_at(mob_resource: MobResource, spawn_point: SpawnPoint):
+	#var mob_resource = _game.game_data.get_random_mob_resource()
 
 	spawn_mob(mob_resource, spawn_point.cell)
 

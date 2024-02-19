@@ -1,7 +1,7 @@
 class_name AcidEffectDataResolver
 
 
-static func _resolve_acid_effect(effect_id: String, rank: PassiveUpgrade.Rank):
+static func _resolve_acid_effect(effect_id: String, rank: PassiveUpgrade.PassiveUpgradeRank):
 	rank.description += "\nSpawn a lingering area of damaging acid after attacking"
 
 	var acid_effect = WeaponEffectAcid.new()
@@ -14,7 +14,7 @@ static func _resolve_acid_effect(effect_id: String, rank: PassiveUpgrade.Rank):
 	)
 
 
-static func _resolve_acid_duration(effect_id: String, rank: PassiveUpgrade.Rank, variant):
+static func _resolve_acid_duration(effect_id: String, rank: PassiveUpgrade.PassiveUpgradeRank, variant):
 	rank.description += "\n+%s acid duration" % variant
 
 	rank.apply_to_tower_callbacks.append(
@@ -25,7 +25,7 @@ static func _resolve_acid_duration(effect_id: String, rank: PassiveUpgrade.Rank,
 	)
 
 
-static func _resolve_acid_damage(effect_id: String, rank: PassiveUpgrade.Rank, variant):
+static func _resolve_acid_damage(effect_id: String, rank: PassiveUpgrade.PassiveUpgradeRank, variant):
 	rank.description += "\n+%s acid damage" % variant
 
 	rank.apply_to_tower_callbacks.append(

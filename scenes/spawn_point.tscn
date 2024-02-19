@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://ck16naxw6rn0d"]
 
 [ext_resource type="Script" path="res://scripts/nodes/spawn_point.gd" id="1_kwstk"]
-[ext_resource type="Texture2D" uid="uid://bjfm2itr0xucj" path="res://sprites/camps/grunt_camp.tres" id="2_6hloq"]
+[ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="2_iugeh"]
 [ext_resource type="PackedScene" uid="uid://c6ld3gl34qs73" path="res://scenes/off_screen_marker.tscn" id="3_kdd14"]
 
-[node name="SpawnPoint" type="Node2D" node_paths=PackedStringArray("_sprite")]
+[node name="mob_camp" type="Node2D" node_paths=PackedStringArray("_sprite")]
 script = ExtResource("1_kwstk")
 _sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_6hloq")
+texture = ExtResource("2_iugeh")
 region_rect = Rect2(0, 16, 16, 16)
 
 [node name="OffScreenMarker" parent="." instance=ExtResource("3_kdd14")]

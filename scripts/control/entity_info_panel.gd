@@ -34,15 +34,21 @@ func set_entity(entity_info: EntityInfo):
 	if entity_info.entity is Tower:
 		entity_info.entity.description_updated.connect(_on_description_updated)
 
+		# TODO: make get these callables from entity.
 		var take_damage = func():
 			entity_info.entity.take_damage(999)
 
 		_add_button("Destroy", take_damage)
 
-		var rank_up = func():
-			entity_info.entity.add_rank(1)
+		var upgrade = func():
+			entity_info.entity.rank.try_upgrade(null)
+			
+		_add_button("Upgrade", upgrade)
 
-		_add_button("Rank Up", rank_up)
+		var rank_up = func():
+			entity_info.entity.rank.add_rank(1)
+
+		_add_button("DEBUG: Rank Up", rank_up)
 
 
 func clear_entity():
@@ -62,7 +68,7 @@ func clear_entity():
 
 
 func _on_description_updated(description: String):
-	print_debug("Description updated")
+	#print_debug("Description updated")
 	_description_label.text = description
 
 

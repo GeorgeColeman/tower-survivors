@@ -10,6 +10,7 @@ extends Resource
 @export var experience_value = 1 as int
 @export_flags("IN_SPAWN_POOL", "BOSS", "ELITE") var mob_flags = 0
 @export_flags("AIRBORNE", "AGGRESSIVE") var mob_properties = 0
+@export var tags: Array[Tag] = []
 
 
 func is_in_spawn_pool():

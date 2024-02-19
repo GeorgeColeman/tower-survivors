@@ -4,7 +4,7 @@ extends RefCounted
 var id: String
 var name: String
 var texture: Texture2D
-var ranks: Array[Rank] = []
+var ranks: Array[PassiveUpgradeRank] = []
 
 var is_at_max_rank: bool:
 	get:
@@ -91,7 +91,7 @@ func apply_current_rank_to_tower(tower: Tower):
 	ranks[_current_rank_index].apply_to_tower(tower)
 
 
-class Rank:
+class PassiveUpgradeRank:
 
 	var number: int
 	var description: String

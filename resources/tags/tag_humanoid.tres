@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="MobRace" load_steps=2 format=3 uid="uid://x3m00186mf32"]
+
+[ext_resource type="Script" path="res://scripts/resources/tag.gd" id="1_7lsvy"]
+
+[resource]
+script = ExtResource("1_7lsvy")
+_name = "Humanoid"

@@ -42,7 +42,7 @@ func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams, rank:
 func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cell: Cell):
 	tower.set_resource(tower_resource)
 	tower.set_cell_and_init(cell)
-	tower.set_rank(rank)
+	tower.rank.set_rank(rank)
 	
 	towers.append(tower)
 
