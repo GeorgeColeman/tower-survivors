@@ -6,10 +6,10 @@
 
 [resource]
 script = ExtResource("1_yblmp")
-name = "Sniper
-"
+name = "Sniper"
 description = "Shoots powerful sniper rounds."
 texture = ExtResource("2_vrbtw")
+base_area = Vector2i(1, 1)
 tower_scene = ExtResource("3_3wm0g")
 weapons = Array[String](["sniper_shot"])
 hit_points = 20

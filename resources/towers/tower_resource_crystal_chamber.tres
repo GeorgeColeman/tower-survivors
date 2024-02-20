@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://fw2ceeriu2xu"]
+
+[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_crbe6"]
+[ext_resource type="Texture2D" uid="uid://cbwdwvy87kn11" path="res://sprites/towers/crystal_chamber.tres" id="2_p4tq8"]
+[ext_resource type="PackedScene" uid="uid://d07hryohekbus" path="res://scenes/towers/tower_crystal_chamber.tscn" id="3_4ojjy"]
+
+[resource]
+script = ExtResource("1_crbe6")
+name = "Crystal Chamber"
+description = ""
+texture = ExtResource("2_p4tq8")
+base_area = Vector2i(2, 2)
+tower_scene = ExtResource("3_4ojjy")
+weapons = Array[String](["crystal_canon"])
+hit_points = 20
+gold_cost = 20
+core_cost = 1
+_flags = 0

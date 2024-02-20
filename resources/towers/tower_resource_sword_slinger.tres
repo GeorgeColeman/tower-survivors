@@ -9,6 +9,7 @@ script = ExtResource("1_d56k2")
 name = "Sword Slinger"
 description = "Flings a deadly sword that passes through enemies."
 texture = ExtResource("2_13n2j")
+base_area = Vector2i(1, 1)
 tower_scene = ExtResource("2_mjpig")
 weapons = Array[String](["sling_sword"])
 hit_points = 20

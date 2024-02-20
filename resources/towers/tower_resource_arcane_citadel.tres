@@ -9,6 +9,7 @@ script = ExtResource("1_sbr31")
 name = "Arcane Citadel"
 description = ""
 texture = ExtResource("2_lr412")
+base_area = Vector2i(2, 2)
 tower_scene = ExtResource("2_gctx0")
 weapons = Array[String](["pink_shot"])
 hit_points = 50

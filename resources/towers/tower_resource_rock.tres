@@ -9,6 +9,7 @@ script = ExtResource("1_752ss")
 name = "Rock"
 description = "Blocks the path."
 texture = ExtResource("2_gmind")
+base_area = Vector2i(1, 1)
 tower_scene = ExtResource("2_xovg6")
 weapons = Array[String]([])
 hit_points = 20

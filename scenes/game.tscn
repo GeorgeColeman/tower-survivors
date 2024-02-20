@@ -11,13 +11,13 @@
 [ext_resource type="Script" path="res://scripts/nodes/mob_spawner.gd" id="7_nfp22"]
 [ext_resource type="Script" path="res://scripts/nodes/pathfinding_manager.gd" id="8_af664"]
 [ext_resource type="Script" path="res://scripts/nodes/cell_inspector.gd" id="8_m46x2"]
+[ext_resource type="Resource" uid="uid://dbdnp6hea1q6u" path="res://resources/environments/environment_resource_forest.tres" id="8_mouf4"]
 [ext_resource type="Texture2D" uid="uid://b2p2u10fovw7" path="res://sprites/hourglass.tres" id="9_6bjfq"]
 [ext_resource type="Script" path="res://scripts/control/control_debug.gd" id="9_vxhso"]
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/mob_camp.tscn" id="10_ao74v"]
 [ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
-[ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
 [ext_resource type="Script" path="res://scenes/active_effects.gd" id="13_bcpki"]
 [ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
@@ -52,12 +52,11 @@
 [ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="42_ri3gm"]
 [ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
 camera_2d_controller = NodePath("Camera2D")
-map_drawer = NodePath("MapObjects/MapDrawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
 spawn_point_manager = NodePath("MapObjects/SpawnPointManager")
 entity_drawer = NodePath("MapObjects/EntityDrawer")
@@ -95,7 +94,7 @@ mob_hit_sfx = ExtResource("7_nb2t7")
 [node name="MapDrawer" type="Node2D" parent="MapObjects"]
 z_index = -1
 script = ExtResource("5_6uqvh")
-cell_type = ExtResource("12_e4ul2")
+default_environment = ExtResource("8_mouf4")
 
 [node name="EntityDrawer" type="Node2D" parent="MapObjects"]
 y_sort_enabled = true

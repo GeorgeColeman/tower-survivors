@@ -9,6 +9,7 @@ script = ExtResource("1_yn6tn")
 name = "Mortar"
 description = "Launches powerful mortar shells that damage enemies in an area."
 texture = ExtResource("2_xhekk")
+base_area = Vector2i(1, 1)
 tower_scene = ExtResource("3_qd1v3")
 weapons = Array[String](["mortar_shell"])
 hit_points = 30

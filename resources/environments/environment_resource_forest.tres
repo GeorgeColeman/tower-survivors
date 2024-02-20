@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnvironmentResource" load_steps=5 format=3 uid="uid://dbdnp6hea1q6u"]
+
+[ext_resource type="Resource" uid="uid://cxucl4iolnd4y" path="res://resources/cell_types/cell_type_forest.tres" id="1_onqu7"]
+[ext_resource type="Script" path="res://scripts/resources/environment_resource.gd" id="2_7u7md"]
+[ext_resource type="Texture2D" uid="uid://dvm74ypa44srh" path="res://sprites/environments/forest/cell_forest_water.tres" id="2_8cdau"]
+[ext_resource type="Texture2D" uid="uid://bb476kudyml0w" path="res://sprites/environments/forest/cell_forest_small_mountain.tres" id="4_wsgnq"]
+
+[resource]
+script = ExtResource("2_7u7md")
+name = "Forest"
+primary_cell_type = ExtResource("1_onqu7")
+small_mountain_texture = ExtResource("4_wsgnq")
+primary_water_texture = ExtResource("2_8cdau")

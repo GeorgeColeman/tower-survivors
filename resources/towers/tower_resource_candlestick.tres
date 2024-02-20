@@ -9,6 +9,7 @@ script = ExtResource("1_kvcxm")
 name = "Candlestick"
 description = ""
 texture = ExtResource("2_jblqj")
+base_area = Vector2i(1, 1)
 tower_scene = ExtResource("2_dpud0")
 weapons = Array[String](["frost_bolt"])
 hit_points = 20
