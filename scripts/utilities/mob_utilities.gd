@@ -13,11 +13,11 @@ static func get_spawn_points_at(cell: Cell) -> Array:
 	return _spawn_point_manager.get_spawn_points_at(cell)
 
 
-static func get_random_spawn_point() -> SpawnPoint:
+static func get_random_spawn_point() -> MobCamp:
 	return _spawn_point_manager.get_random_spawn_point()
 
 
-static func spawn_mob_at(mob_resource: MobResource, spawn_point: SpawnPoint):
+static func spawn_mob_at(mob_resource: MobResource, spawn_point: MobCamp):
 	_mob_spawner.spawn_mob_at(mob_resource, spawn_point)
 
 

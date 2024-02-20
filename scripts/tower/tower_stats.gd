@@ -101,11 +101,11 @@ func add_projectile_speed_mod(amount: float):
 	_projectile_speed_mod += amount
 
 	for weapon in _weapons:
-		weapon.weapon_stats.set_projectile_speed_mod(amount)
+		weapon.weapon_stats.add_projectile_speed_mod(amount)
 
 
 func add_crit_chance(amount: float):
 	_crit_chance += amount
 
 	for weapon in _weapons:
-		weapon.weapon_stats.set_crit_chance(amount)
+		weapon.weapon_stats.add_crit_chance(amount)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ck16naxw6rn0d"]
 
-[ext_resource type="Script" path="res://scripts/nodes/spawn_point.gd" id="1_kwstk"]
+[ext_resource type="Script" path="res://scripts/nodes/mob_camp.gd" id="1_kwstk"]
 [ext_resource type="Texture2D" uid="uid://b6cwmkp2dplxk" path="res://sprites/missing.png" id="2_iugeh"]
 [ext_resource type="PackedScene" uid="uid://c6ld3gl34qs73" path="res://scenes/off_screen_marker.tscn" id="3_kdd14"]
 

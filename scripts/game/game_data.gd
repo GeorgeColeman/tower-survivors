@@ -34,7 +34,6 @@ func _load_resources():
 
 	for passive in passives:
 		passives_dict[passive.id] = passive
-		#passives_dict[passive.name] = passive
 
 	var player_characters = PlayerCharacterDataResolver.get_player_characters(self)
 
@@ -116,10 +115,6 @@ func try_get_tower_resource(tower_name: String) -> TowerResource:
 		return null
 
 	return tower_resource_dict[tower_name]
-
-
-#func get_random_mob_resource() -> MobResource:
-	#return spawnable_mobs[randi_range(0, spawnable_mobs.size() - 1)]
 
 
 func dir_contents(path) -> Array:

@@ -52,7 +52,7 @@ func get_spawn_points_at(cell: Cell) -> Array:
 	return [_cell_spawn_point_dict[cell]]
 
 
-func get_random_spawn_point() -> SpawnPoint:
+func get_random_spawn_point() -> MobCamp:
 	return _cell_spawn_point_dict.values().pick_random()
 
 
@@ -66,7 +66,7 @@ func spawn_new_spawn_point():
 		_next_spawn_point_dict[next].queue_free()
 		_next_spawn_point_dict.erase(next)
 
-	var new_spawn_point = _spawn_point_scene.instantiate() as SpawnPoint
+	var new_spawn_point = _spawn_point_scene.instantiate() as MobCamp
 	add_child(new_spawn_point)
 
 	new_spawn_point.set_resource(_game.game_data.get_random_mob_camp_resource())

@@ -15,7 +15,7 @@
 [ext_resource type="Script" path="res://scripts/control/control_debug.gd" id="9_vxhso"]
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
 [ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
-[ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/spawn_point.tscn" id="10_ao74v"]
+[ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/mob_camp.tscn" id="10_ao74v"]
 [ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
 [ext_resource type="Resource" uid="uid://dbkahic4f5k57" path="res://resources/cell_types/cell_type_wasteland.tres" id="12_e4ul2"]
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
@@ -104,7 +104,9 @@ script = ExtResource("10_3qktf")
 [node name="SpawnPointManager" type="Node2D" parent="MapObjects"]
 script = ExtResource("10_w58st")
 _spawn_point_scene = ExtResource("10_ao74v")
+_starting_spawn_points = null
 _next_spawn_point = ExtResource("12_l2pf0")
+_debug_draw_valid_spawn_points = null
 
 [node name="ActiveEffects" type="Node2D" parent="MapObjects"]
 script = ExtResource("13_bcpki")

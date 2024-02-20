@@ -1,4 +1,4 @@
-class_name SpawnPoint
+class_name MobCamp
 extends Node2D
 
 
