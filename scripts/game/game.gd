@@ -27,7 +27,8 @@ var _resume_speed: float = _speed
 
 func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
 	map = p_map
-	entities = Entities.new(self)
+	#entities = Entities.new(self)
+	entities = Entities.new()
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
@@ -112,9 +113,10 @@ func _pause_game_await_input():
 func init_player_character(player_character_name: String):
 	var player_character: PlayerCharacter = game_data.player_character_dict[player_character_name]
 
-	var params = SpawnEntityParams.new()
-	params.entity_scene = player_character.main_tower.tower_scene
-	params.cell = map.center_cell
+	var params = SpawnEntityParamsFactory.new_spawn_entity_params(
+		player_character.main_tower.tower_scene,
+		map.center_cell
+	)
 
 	entities.spawn_tower(player_character.main_tower, params, 0)
 	set_main_tower(params.spawned_entity)

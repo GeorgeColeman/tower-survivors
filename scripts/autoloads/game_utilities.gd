@@ -33,10 +33,10 @@ func try_enter_build_mode(option: BuildingOption):
 
 			return
 
-		var params = SpawnEntityParams.new()
-
-		params.entity_scene = option.tower_resource.tower_scene
-		params.cell = cell
+		var params = SpawnEntityParamsFactory.new_spawn_entity_params(
+			option.tower_resource.tower_scene,
+			cell
+		)
 
 		_game.entities.spawn_tower(option.tower_resource, params, option._rank)
 		_game.player.spend_resources_for_building(option)

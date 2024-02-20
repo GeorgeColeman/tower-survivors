@@ -32,3 +32,20 @@ func get_cell_at_map_position(vector: Vector2) -> Cell:
 
 func get_cell_neighbours(cell: Cell) -> Array[Cell]:
 	return _map.get_cell_neighbours(cell)
+
+
+func get_base_cells(origin_cell: Cell, base_size: Vector2i) -> Array[Cell]:
+	var base_cells: Array[Cell] = []
+
+	for y in base_size.y:
+		for x in base_size.x:
+			var cell = _map.get_cell_at(origin_cell.x + x, origin_cell.y + y)
+
+			if !cell:
+				print_debug("WARNING: base cell is null")
+
+				continue
+
+			base_cells.append(cell)
+
+	return base_cells

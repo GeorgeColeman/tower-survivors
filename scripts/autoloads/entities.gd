@@ -6,14 +6,14 @@ signal tower_registered(tower: Tower)
 
 var towers: Array[Tower] = []
 
-var _game: Game
+#var _game: Game
 
 var _cell_entity_dict = {}					# <Cell, Node>
 var _tower_type_dict = {}					# <String, Array[Tower]>
 
 
-func _init(game: Game):
-	_game = game
+#func _init(game: Game):
+	#_game = game
 
 
 func get_entities_at(cell: Cell) -> Array:
@@ -34,6 +34,7 @@ func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams, rank:
 	params.entity_instantiated.connect(
 		func(entity):
 			_register_tower(tower_resource, entity, rank, params.cell)
+			params.entity_destroyed = entity.was_killed
 	)
 
 	entity_added.emit(params)
@@ -43,8 +44,12 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cel
 	tower.set_resource(tower_resource)
 	tower.set_cell_and_init(cell)
 	tower.rank.set_rank(rank)
-	
+
 	towers.append(tower)
+
+	# Handle base cells
+	var base_cells = MapUtilities.get_base_cells(cell, tower_resource.base_area)
+	print_debug("TODO: handle base cells. Number of base cells: %s" % base_cells.size())
 
 	# TEMP: assuming all towers are solid
 	PathUtilities.update_cell_is_solid(cell, true)
@@ -67,7 +72,7 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cel
 		_tower_type_dict[tower.tower_name] = tower_array
 	else:
 		_tower_type_dict[tower.tower_name].append(tower)
-		
+
 	tower_registered.emit(tower)
 
 

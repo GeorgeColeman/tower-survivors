@@ -52,11 +52,12 @@
 [ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="42_ri3gm"]
 [ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
 camera_2d_controller = NodePath("Camera2D")
+map_drawer = NodePath("MapObjects/map_drawer")
 mob_spawner = NodePath("MapObjects/MobSpawner")
 spawn_point_manager = NodePath("MapObjects/SpawnPointManager")
 entity_drawer = NodePath("MapObjects/EntityDrawer")
@@ -91,7 +92,7 @@ script = ExtResource("7_nfp22")
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
-[node name="MapDrawer" type="Node2D" parent="MapObjects"]
+[node name="map_drawer" type="Node2D" parent="MapObjects"]
 z_index = -1
 script = ExtResource("5_6uqvh")
 default_environment = ExtResource("8_mouf4")
