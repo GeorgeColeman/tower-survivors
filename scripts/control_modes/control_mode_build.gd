@@ -46,6 +46,10 @@ func _on_mouse_entered_cell(cell: Cell):
 
 	preview_container.visible = true
 	preview_container.position = cell.scene_position
+	preview_container.position = GameUtilities.get_scene_position(
+		cell,
+		_building_option.tower_resource.base_area
+	)
 
 	GameUtilities.highlight_building_cells(cell, _building_option)
 

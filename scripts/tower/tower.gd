@@ -2,7 +2,7 @@ class_name Tower
 extends Node2D
 
 signal description_updated(description: String)
-signal was_killed()
+signal was_killed(tower: Tower)
 
 @export var graphics: Node2D
 @export var hit_points_component: HitPointsComponent
@@ -17,6 +17,7 @@ var tower_name: String:
 
 var kills: int
 var cell: Cell
+var base_cells: Array[Cell]
 var tower_stats: TowerStats
 var rank: Rank
 var weapon_dict = {}										# <String, TowerWeapon>
@@ -49,6 +50,10 @@ var weapons_description: String:
 			s += str(weapon.weapon_name, "\n", weapon.description, "\n\n")
 
 		return s.substr(0, s.length() - 2)
+
+
+func _init():
+	rank = Rank.new()
 
 
 func uninstantiate():
@@ -90,10 +95,11 @@ func set_resource(p_tower_resource: TowerResource):
 		_attach_weapon(weapon_node)
 
 
-func set_cell_and_init(p_cell: Cell):
+func set_cell_and_init(p_cell: Cell, p_base_cells: Array[Cell]):
 	cell = p_cell
+	base_cells = p_base_cells
 	tower_stats = TowerStats.new(_weapons)
-	rank = Rank.new()
+	#rank = Rank.new()
 
 	rank.rank_added.connect(
 		func(current_rank: int):
@@ -172,7 +178,7 @@ func take_damage(amount: int):
 
 func _destroy():
 	_is_destroyed = true
-	was_killed.emit()
+	was_killed.emit(self)
 
 	# Deactivate weapons
 	for weapon in _weapons:

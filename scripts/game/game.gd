@@ -115,7 +115,8 @@ func init_player_character(player_character_name: String):
 
 	var params = SpawnEntityParamsFactory.new_spawn_entity_params(
 		player_character.main_tower.tower_scene,
-		map.center_cell
+		map.center_cell,
+		player_character.main_tower.base_area
 	)
 
 	entities.spawn_tower(player_character.main_tower, params, 0)
@@ -132,7 +133,7 @@ func set_main_tower(p_tower: Tower):
 	p_tower.was_killed.connect(_on_main_tower_was_killed)
 
 
-func _on_main_tower_was_killed():
+func _on_main_tower_was_killed(tower: Tower):
 	game_over.emit()
 
 

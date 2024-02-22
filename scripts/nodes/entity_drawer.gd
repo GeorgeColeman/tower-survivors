@@ -18,30 +18,20 @@ func _on_requested_spawn_entity(params: SpawnEntityParams):
 	params.spawned_entity = new_entity
 
 	if new_entity is Node2D:
-		_spawn_node(new_entity, params.cell)
+		_spawn_node(new_entity, GameUtilities.get_scene_position(params.cell, params.base_area))
 		params.entity_destroyed.connect(
-			func():
+			func(entity):
 				new_entity.queue_free()
 		)
-
-		#if new_entity is Tower:
-			#_register_as_tower(new_entity)
 	else:
 		print_debug("WARNING: scene is not of type Node2D")
 
 
-func _spawn_node(node_2d: Node2D, cell: Cell):
+func _spawn_node(node_2d: Node2D, position: Vector2):
 	add_child(node_2d)
 	_drawn_entities.append(node_2d)
 
-	node_2d.position = cell.scene_position
-
-
-#func _register_as_tower(tower: Tower):
-	#tower.was_killed.connect(
-		#func():
-			#tower.queue_free()
-	#)
+	node_2d.position = position
 
 
 func _erase_existing():

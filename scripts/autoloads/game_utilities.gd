@@ -35,7 +35,8 @@ func try_enter_build_mode(option: BuildingOption):
 
 		var params = SpawnEntityParamsFactory.new_spawn_entity_params(
 			option.tower_resource.tower_scene,
-			cell
+			cell,
+			option.tower_resource.base_area
 		)
 
 		_game.entities.spawn_tower(option.tower_resource, params, option._rank)
@@ -175,3 +176,18 @@ func get_nearby_tower(cell: Cell) -> Tower:
 				return entity
 
 	return null
+
+
+func get_scene_position(cell: Cell, base_area: Vector2i) -> Vector2:
+	if base_area.x != base_area.y:
+		print_debug("WARNING: tower base area is not a square. Returning empty vector")
+
+		return Vector2.ZERO
+
+	if base_area.x * base_area.y == 1:
+		return cell.scene_position
+
+	return cell.scene_position + Vector2(
+		(base_area.x - 1) * 0.5,
+		(base_area.y - 1) * 0.5,
+	) * GameConstants.PIXEL_SCALE

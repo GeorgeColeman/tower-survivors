@@ -1,21 +1,23 @@
 extends Node2D
 
-@export var _marker: Sprite2D
+@export var _sprite_2d: Sprite2D
+@export var _marker_selection: Texture2D
+@export var _marker_selection_big: Texture2D
 
 
 func _ready():
 	SelectionManager.entity_selected.connect(
 		func(entity_info: EntityInfo):
-			_marker.visible = true
-			_marker.position = entity_info.position
+			_sprite_2d.visible = true
+			_sprite_2d.position = entity_info.position
 	)
 
 	SelectionManager.selection_cleared.connect(
 		func():
-			_marker.visible = false
+			_sprite_2d.visible = false
 	)
 
 	SelectionManager.selected_entity_freed.connect(
 		func():
-			_marker.visible = false
+			_sprite_2d.visible = false
 	)

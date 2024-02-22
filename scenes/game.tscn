@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=53 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -20,15 +20,16 @@
 [ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
 [ext_resource type="Script" path="res://scenes/active_effects.gd" id="13_bcpki"]
-[ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/cell_marker.tres" id="13_ei8da"]
+[ext_resource type="Texture2D" uid="uid://bgp15f1folkvq" path="res://sprites/markers/marker_cell.tres" id="13_ei8da"]
 [ext_resource type="PackedScene" uid="uid://bxgev8crrae4e" path="res://scenes/acid_pool.tscn" id="14_04ocx"]
-[ext_resource type="Texture2D" uid="uid://bed2nxb3jr6fe" path="res://sprites/markers/selection_marker_02.tres" id="14_ggbmm"]
 [ext_resource type="Script" path="res://debug_drawer.gd" id="15_udb11"]
 [ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="16_0dskt"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
+[ext_resource type="Texture2D" uid="uid://7x12l54i3lu2" path="res://sprites/markers/marker_selection.tres" id="20_ddqg7"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
+[ext_resource type="Texture2D" uid="uid://dfejal1eurmsr" path="res://sprites/markers/marker_selection_big.tres" id="21_mim7l"]
 [ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
 [ext_resource type="PackedScene" uid="uid://cck72le1by1qn" path="res://scenes/floating_text.tscn" id="24_27evh"]
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
@@ -48,9 +49,9 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="Script" path="res://scripts/control/control_alerts.gd" id="41_ck1fr"]
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
-[ext_resource type="Texture2D" uid="uid://kquk4qc7cxea" path="res://sprites/markers/white_square_24x24.tres" id="42_4nx7t"]
 [ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="42_ri3gm"]
 [ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
+[ext_resource type="Texture2D" uid="uid://bsaxahfft4tjk" path="res://sprites/markers/marker_area.tres" id="50_ejygd"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
@@ -87,6 +88,7 @@ width = 4.0
 y_sort_enabled = true
 
 [node name="MobSpawner" type="Node2D" parent="MapObjects"]
+z_index = 1
 y_sort_enabled = true
 script = ExtResource("7_nfp22")
 mob_killed_sfx = ExtResource("25_42f42")
@@ -98,6 +100,7 @@ script = ExtResource("5_6uqvh")
 default_environment = ExtResource("8_mouf4")
 
 [node name="EntityDrawer" type="Node2D" parent="MapObjects"]
+z_index = 1
 y_sort_enabled = true
 script = ExtResource("10_3qktf")
 
@@ -126,13 +129,15 @@ z_index = 1
 texture = ExtResource("13_ei8da")
 region_rect = Rect2(32, 16, 16, 16)
 
-[node name="SelectionDrawer" type="Node2D" parent="." node_paths=PackedStringArray("_marker")]
+[node name="selection_drawer" type="Node2D" parent="." node_paths=PackedStringArray("_sprite_2d")]
 script = ExtResource("16_frr1h")
-_marker = NodePath("Sprite2D")
+_sprite_2d = NodePath("sprite_2d")
+_marker_selection = ExtResource("20_ddqg7")
+_marker_selection_big = ExtResource("21_mim7l")
 
-[node name="Sprite2D" type="Sprite2D" parent="SelectionDrawer"]
+[node name="sprite_2d" type="Sprite2D" parent="selection_drawer"]
 z_index = 1
-texture = ExtResource("14_ggbmm")
+texture = ExtResource("21_mim7l")
 region_rect = Rect2(0, 0, 16, 16)
 
 [node name="VFXDrawer2D" type="Node2D" parent="."]
@@ -956,7 +961,7 @@ y_sort_enabled = true
 
 [node name="AreaMarkerDrawer" type="Node2D" parent="."]
 script = ExtResource("41_q0vy1")
-_marker_texture = ExtResource("42_4nx7t")
+_marker_texture = ExtResource("50_ejygd")
 
 [node name="dev_console" parent="." instance=ExtResource("47_hex7m")]
 visible = false

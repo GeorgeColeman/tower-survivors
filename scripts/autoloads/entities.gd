@@ -6,14 +6,8 @@ signal tower_registered(tower: Tower)
 
 var towers: Array[Tower] = []
 
-#var _game: Game
-
 var _cell_entity_dict = {}					# <Cell, Node>
 var _tower_type_dict = {}					# <String, Array[Tower]>
-
-
-#func _init(game: Game):
-	#_game = game
 
 
 func get_entities_at(cell: Cell) -> Array:
@@ -42,30 +36,26 @@ func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams, rank:
 
 func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cell: Cell):
 	tower.set_resource(tower_resource)
-	tower.set_cell_and_init(cell)
-	tower.rank.set_rank(rank)
 
 	towers.append(tower)
 
 	# Handle base cells
 	var base_cells = MapUtilities.get_base_cells(cell, tower_resource.base_area)
-	print_debug("TODO: handle base cells. Number of base cells: %s" % base_cells.size())
+	#print_debug("TODO: handle base cells. Number of base cells: %s" % base_cells.size())
 
-	# TEMP: assuming all towers are solid
-	PathUtilities.update_cell_is_solid(cell, true)
+	tower.set_cell_and_init(cell, base_cells)
+	tower.rank.set_rank(rank)
 
-	if !_cell_entity_dict.has(cell):
-		_cell_entity_dict[cell] = []
+	for base_cell in base_cells:
+		# TEMP: assuming all towers are solid
+		PathUtilities.update_cell_is_solid(base_cell, true)
 
-	_cell_entity_dict[cell].append(tower)
+		if !_cell_entity_dict.has(base_cell):
+			_cell_entity_dict[base_cell] = []
 
-	tower.was_killed.connect(
-		func():
-			_cell_entity_dict[cell].erase(tower)
-			PathUtilities.update_cell_is_solid(cell, false)
-			towers.erase(tower)
-			_tower_type_dict.erase(tower)
-	)
+		_cell_entity_dict[base_cell].append(tower)
+
+	tower.was_killed.connect(_unregister_tower)
 
 	if !_tower_type_dict.has(tower.tower_name):
 		var tower_array: Array[Tower] = [tower]
@@ -74,6 +64,15 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cel
 		_tower_type_dict[tower.tower_name].append(tower)
 
 	tower_registered.emit(tower)
+
+
+func _unregister_tower(tower: Tower):
+	for cell in tower.base_cells:
+		_cell_entity_dict[cell].erase(tower)
+		PathUtilities.update_cell_is_solid(cell, false)
+
+	towers.erase(tower)
+	_tower_type_dict.erase(tower)
 
 
 func get_is_cell_occupied(cell: Cell) -> bool:
