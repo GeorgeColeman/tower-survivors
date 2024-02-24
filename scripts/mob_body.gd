@@ -3,22 +3,31 @@ extends Area2D
 
 signal damaged(damage_info: DamageInfo)
 
-var _deferred_damages: Array[DamageInfo] = []
+var mob: Mob
+var is_immune = false
+
+var _immune_time = 0.0
 
 
-func _process(_delta):
-	if _deferred_damages.size() > 0:
-		for damage in _deferred_damages:
-			damaged.emit(damage)
+func _process(delta):
+	if _immune_time > 0:
+		_immune_time -= Game.speed_scaled_delta
 
-	_deferred_damages.clear()
-
-
-#func take_damage(damage_info: DamageInfo):
-	#damaged.emit(damage_info)
+		if _immune_time <= 0:
+			is_immune = false
 
 
-# Avoid adding new collision areas as a result collision triggers (on the same frame).
-# Apply the damage on the frame after the collision occurs.
-func take_damage_deferred(damage_info: DamageInfo):
-	_deferred_damages.append(damage_info)
+func set_invulnerable_time(time: float):
+	_immune_time = time
+
+	if time > 0:
+		is_immune = true
+
+
+func take_damage(damage_info: DamageInfo):
+	if is_immune:
+		print_debug("Mob body is invulnerable")
+
+		return
+
+	damaged.emit(damage_info)

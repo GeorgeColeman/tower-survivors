@@ -4,7 +4,7 @@
 
 extends Projectile
 
-@export var _die_time: float
+#@export var _die_time: float
 @export var _animated_sprite_2d: AnimatedSprite2D
 
 var _area_radius: int = 2				# FIXME: magic number

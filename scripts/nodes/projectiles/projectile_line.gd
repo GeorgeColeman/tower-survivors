@@ -17,15 +17,22 @@ func _ready():
 		func(area: Area2D):
 			#print_debug("Area entered: ", area)
 			if area is MobBody:
-				area.take_damage_deferred(get_damage.call())
-
-				print_debug("TODO: apply weapon effects")
-
-				if !_does_pass:
-					queue_free()
-
-				#print_debug("Hit mob body")
+				call_deferred("_hit_mob_body", area)
 	)
+
+
+func _hit_mob_body(mob_body: MobBody):
+	if mob_body.is_immune:
+		return
+
+	mob_body.take_damage(get_damage.call())
+
+	var hit_info = TowerWeaponHitInfo.new()
+
+	hit_info.cells.append(mob_body.mob.nearest_cell)
+	hit_info.mobs.append(mob_body.mob)
+
+	apply_weapon_effects_to_hit(hit_info)
 
 
 func _process(_delta):

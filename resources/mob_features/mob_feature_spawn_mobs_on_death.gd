@@ -16,5 +16,5 @@ func register_owner(p_mob: Mob):
 			)
 
 			for new_mob in new_mobs:
-				new_mob.set_invulnerable_time(0.5)
+				new_mob.mob_body.set_invulnerable_time(0.5)
 	)

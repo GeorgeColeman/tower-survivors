@@ -19,16 +19,13 @@ var attack_component: AttackComponent
 var cell: Cell:
 	get:
 		return movement.cell
-		
+
 var nearest_cell: Cell:
 	get:
 		return movement.nearest_cell
 
 var _mob_resource: MobResource
 var _is_initialised: bool
-
-var _invulnerable_time = 0.0
-var _is_invulnerable = false
 
 var _is_destroyed = false
 var _tint_colour = Color.WHITE
@@ -56,12 +53,6 @@ func _process(_delta):
 
 	if !_is_initialised:
 		return
-
-	if _invulnerable_time > 0:
-		_invulnerable_time -= Game.speed_scaled_delta
-
-		if _invulnerable_time <= 0:
-			_is_invulnerable = false
 
 	movement.process(Game.speed_scaled_delta)
 	position = movement.smooth_position
@@ -101,6 +92,8 @@ func set_resource(mob_resource: MobResource):
 	for feature in features:
 		feature.register_owner(self)
 
+	mob_body.mob = self
+
 	mob_body.damaged.connect(
 		func(damage_info: DamageInfo):
 			take_damage(damage_info)
@@ -124,19 +117,9 @@ func set_tint_colour(colour: Color):
 	_main_sprite.modulate = _tint_colour
 
 
-func set_invulnerable_time(time: float):
-	_invulnerable_time = time
-
-	if time > 0:
-		_is_invulnerable = true
-
-
 func take_damage(damage_info: DamageInfo):
 	# Prevent the mob from exiting its node twice if it takes damage and is destroyed on the same frame
 	if _is_destroyed:
-		return
-
-	if _is_invulnerable:
 		return
 
 	hit_points_component.change_current(-damage_info.damage_amount)
