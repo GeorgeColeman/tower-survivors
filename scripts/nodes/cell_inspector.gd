@@ -26,7 +26,6 @@ func _unhandled_input(event):
 	if event is InputEventMouse:
 		_get_hovered_cell()
 
-	# By doing this check we get type completion within the block. Handy!
 	if event is InputEventMouseButton:
 		if event.button_index != 1:
 			return
@@ -35,9 +34,6 @@ func _unhandled_input(event):
 			return
 
 		MapUtilities.mouse_clicked_cell.emit(_current_cell)
-#		print_debug("Mouse button released over cell: ", _current_cell)
-
-		#print_debug(MapUtilities.get_cell_neighbours(_current_cell))
 
 
 func _get_hovered_cell():

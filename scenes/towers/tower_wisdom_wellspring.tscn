@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu71m4esqdlom"]
+[gd_scene load_steps=5 format=3 uid="uid://chvbulix468tl"]
 
-[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_3mjcj"]
-[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_jdc0o"]
-[ext_resource type="Texture2D" uid="uid://duc8lkp3x05bw" path="res://sprites/towers/tower_sniper_placeholder.png" id="3_ogvkv"]
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_ne0xj"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_o5rgq"]
+[ext_resource type="Texture2D" uid="uid://dv5d6u3icyudr" path="res://sprites/towers/tower_wisdom_wellspring_placeholder.png" id="3_bbyun"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_ogvkv")
+"texture": ExtResource("3_bbyun")
 }],
 "loop": true,
 "name": &"default",
@@ -16,22 +16,21 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
-script = ExtResource("1_3mjcj")
+script = ExtResource("1_ne0xj")
 graphics = NodePath("Graphics")
 hit_points_component = NodePath("HitPoints2D")
 firing_point = NodePath("focus_point")
 
-[node name="HitPoints2D" parent="." instance=ExtResource("2_jdc0o")]
-position = Vector2(0, -4)
+[node name="HitPoints2D" parent="." instance=ExtResource("2_o5rgq")]
+position = Vector2(0, 4)
 
 [node name="Graphics" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
-position = Vector2(0, -4)
+position = Vector2(0, 12)
 sprite_frames = SubResource("SpriteFrames_h5fpv")
 autoplay = "default"
 frame_progress = 0.385403
 offset = Vector2(0, -12)
 
 [node name="focus_point" type="Marker2D" parent="."]
-position = Vector2(0, -32)

@@ -133,7 +133,7 @@ func set_main_tower(p_tower: Tower):
 	p_tower.was_killed.connect(_on_main_tower_was_killed)
 
 
-func _on_main_tower_was_killed(tower: Tower):
+func _on_main_tower_was_killed(_tower: Tower):
 	game_over.emit()
 
 

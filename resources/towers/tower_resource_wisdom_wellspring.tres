@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=6 format=3 uid="uid://blaeoqb5msctx"]
+
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_resource.gd" id="1_0210b"]
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_ability_resource_generate_experience.gd" id="2_6ct5n"]
+[ext_resource type="Texture2D" uid="uid://dtdw587ipuig4" path="res://sprites/towers/tower_wisdom_wellspring_placeholder.tres" id="2_im20e"]
+[ext_resource type="PackedScene" uid="uid://chvbulix468tl" path="res://scenes/towers/tower_wisdom_wellspring.tscn" id="4_1014c"]
+
+[sub_resource type="Resource" id="Resource_kvbq7"]
+script = ExtResource("2_6ct5n")
+name = ""
+
+[resource]
+script = ExtResource("1_0210b")
+name = "Wisdom Wellspring"
+description = "Gives the player experience."
+texture = ExtResource("2_im20e")
+base_area = Vector2i(2, 2)
+tower_scene = ExtResource("4_1014c")
+weapons = Array[String]([])
+hit_points = 0
+gold_cost = 0
+core_cost = 0
+_flags = 0
+tower_abilities = Array[Resource("res://scripts/resources/towers/tower_ability_resource.gd")]([SubResource("Resource_kvbq7")])

@@ -1,3 +1,7 @@
+# ------------------------------------------------
+# Contains information about an instance of damage
+# ------------------------------------------------
+
 class_name DamageInfo
 extends RefCounted
 

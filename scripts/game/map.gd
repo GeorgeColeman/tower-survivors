@@ -37,8 +37,6 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 	mountains.resize(width * height)
 	water.resize(width * height)
 
-	var number_of_mountains: int
-
 	for y in height:
 		for x in width:
 			var index = x + y * width
@@ -48,9 +46,6 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 
 			mountains[index] = (noise[index] >= _mountain_height)
 
-			if noise[index] >= _mountain_height:
-				number_of_mountains += 1
-
 			if mountains[index]:
 				PathUtilities.update_cell_is_solid(p_cells[index], true)
 
@@ -59,7 +54,6 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 			if water[index]:
 				PathUtilities.update_cell_is_solid(p_cells[index], true)
 
-	print_debug("Number of mountains: %s" % number_of_mountains)
 	_get_big_mountains()
 
 
@@ -96,26 +90,19 @@ func _get_big_mountains():
 			if !mountains[north.i] || !mountains[north_east.i] || !mountains[east.i]:
 				continue
 
-			if _get_is_mountain_at(north.i) || _get_is_mountain_at(north_east.i) || _get_is_mountain_at(east.i):
-				#print_debug("hi")
+			if _get_is_big_mountain_at(north.i) || _get_is_big_mountain_at(north_east.i) || _get_is_big_mountain_at(east.i):
 				continue
 
 			if randf() < 0.5:
 				continue
 
-			#print_debug("Found big mountain")
-
-			#number_of_big_mountains += 1
 			_big_mountains[index] = true
 			_big_mountain_bases[north.i] = true
 			_big_mountain_bases[north_east.i] = true
 			_big_mountain_bases[east.i] = true
 
-	#print_debug("Number of big mountains: %s" % number_of_big_mountains)
 
-
-func _get_is_mountain_at(index: int) -> bool:
-	#if mountains[index] || _big_mountains[index] || _big_mountain_bases[index]:
+func _get_is_big_mountain_at(index: int) -> bool:
 	if _big_mountains[index] || _big_mountain_bases[index]:
 		return true
 
@@ -189,7 +176,6 @@ func get_map_feature_at(cell: Cell) -> MapFeature:
 		return MapFeature.SMALL_MOUNTAIN
 
 	return MapFeature.NONE
-
 
 
 enum MapFeature {

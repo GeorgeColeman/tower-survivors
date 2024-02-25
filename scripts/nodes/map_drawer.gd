@@ -17,7 +17,6 @@ func draw_map(map: Map):
 	_erase_existing()
 
 	for cell in map.cells:
-		var position = map.index_to_coordinates(cell.i)
 		var new_cell = Sprite2D.new()
 		new_cell.texture = default_environment.primary_cell_type.get_random_texture()
 		add_child(new_cell)
@@ -37,19 +36,20 @@ func draw_map(map: Map):
 		if map.water[cell.i]:
 			var water = Sprite2D.new()
 			water.texture = default_environment.primary_water_texture
-			water.z_index = 1
+			#water.z_index = 1
 			add_child(water)
 			water.position = cell.scene_position
 			_cell_nodes.append(water)
 
 
 func _draw_feature(cell: Cell, texture: Texture2D, offset: Vector2):
-		var mountain = Sprite2D.new()
-		mountain.texture = texture
-		mountain.z_index = 1
-		add_child(mountain)
-		mountain.position = cell.scene_position + offset
-		_cell_nodes.append(mountain)
+	var feature = Sprite2D.new()
+	feature.texture = texture
+	feature.z_index = 1
+	add_child(feature)
+	feature.position = cell.scene_position + offset
+	_cell_nodes.append(feature)
+
 
 func _erase_existing():
 	for cell in _cell_nodes:

@@ -1,8 +1,6 @@
 extends Node2D
 
 @export var _sprite_2d: Sprite2D
-@export var _marker_selection: Texture2D
-@export var _marker_selection_big: Texture2D
 
 
 func _ready():

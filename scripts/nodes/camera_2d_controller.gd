@@ -32,7 +32,7 @@ func _physics_process(delta):
 	#_keyboard_input = Input.get_vector("left", "right", "up", "down")
 
 
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	#var x: float
 	#var y: float
 	#

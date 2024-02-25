@@ -43,7 +43,7 @@ func try_build(cell: Cell):
 	try_build_callback.call(cell)
 
 
-func confirm_build(tower: Tower):
+func confirm_build(_tower: Tower):
 	_build_count += 1
 
 	can_build_updated.emit(can_build)

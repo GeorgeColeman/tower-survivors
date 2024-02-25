@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://fw2ceeriu2xu"]
 
-[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_crbe6"]
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_resource.gd" id="1_crbe6"]
 [ext_resource type="Texture2D" uid="uid://cbwdwvy87kn11" path="res://sprites/towers/crystal_chamber.tres" id="2_p4tq8"]
 [ext_resource type="PackedScene" uid="uid://d07hryohekbus" path="res://scenes/towers/tower_crystal_chamber.tscn" id="3_4ojjy"]
 

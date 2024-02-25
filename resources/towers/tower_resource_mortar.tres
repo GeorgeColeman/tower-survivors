@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TowerResource" load_steps=4 format=3 uid="uid://dbm5w6qaqlgsw"]
 
-[ext_resource type="Script" path="res://scripts/resources/tower_resource.gd" id="1_yn6tn"]
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_resource.gd" id="1_yn6tn"]
 [ext_resource type="Texture2D" uid="uid://b6ormg3q7eel3" path="res://sprites/towers/mortar.tres" id="2_xhekk"]
 [ext_resource type="PackedScene" uid="uid://d04w7os8nbyho" path="res://scenes/towers/tower_mortar.tscn" id="3_qd1v3"]
 

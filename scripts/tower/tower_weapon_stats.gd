@@ -68,7 +68,7 @@ func get_calculated_damage() -> DamageInfo:
 	var is_crit: bool = false
 
 	if _crit_chance >= randf():
-		amount = (_base_damage + _bonus_damage) * _crit_multiplier
+		amount = floori((_base_damage + _bonus_damage) * _crit_multiplier)
 		is_crit = true
 	else:
 		amount = _base_damage + _bonus_damage
@@ -82,8 +82,8 @@ func get_calculated_damage() -> DamageInfo:
 
 func get_total_attack_range() -> int:
 	return _base_attack_range + _bonus_attack_range
-	
-	
+
+
 func get_total_projectile_speed() -> float:
 	return _base_projectile_speed * 1 + _projectile_speed_mod
 

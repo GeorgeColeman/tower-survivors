@@ -10,7 +10,8 @@ extends Resource
 @export var hit_points: int
 @export var gold_cost: int
 @export var core_cost: int
-@export_flags("IS_MAIN_TOWER") var _flags
+@export_flags("IS_MAIN_TOWER") var _flags = 0
+@export var tower_abilities: Array[TowerAbilityResource]
 
 
 var is_main_tower: bool:

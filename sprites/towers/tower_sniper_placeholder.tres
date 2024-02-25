@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://i5e501i0dc54"]
+
+[ext_resource type="Texture2D" uid="uid://duc8lkp3x05bw" path="res://sprites/towers/tower_sniper_placeholder.png" id="1_c7reb"]
+
+[resource]
+atlas = ExtResource("1_c7reb")
+region = Rect2(0, 0, 16, 48)

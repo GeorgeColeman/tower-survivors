@@ -102,7 +102,7 @@ func set_cell_and_init(p_cell: Cell, p_base_cells: Array[Cell]):
 	#rank = Rank.new()
 
 	rank.rank_added.connect(
-		func(current_rank: int):
+		func(_current_rank: int):
 			description_updated.emit(description)
 	)
 

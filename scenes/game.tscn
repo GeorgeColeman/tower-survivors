@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=52 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -27,7 +27,6 @@
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
-[ext_resource type="Texture2D" uid="uid://7x12l54i3lu2" path="res://sprites/markers/marker_selection.tres" id="20_ddqg7"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
 [ext_resource type="Texture2D" uid="uid://dfejal1eurmsr" path="res://sprites/markers/marker_selection_big.tres" id="21_mim7l"]
 [ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
@@ -58,10 +57,10 @@ script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = "Adept"
 camera_2d_controller = NodePath("Camera2D")
-map_drawer = NodePath("MapObjects/map_drawer")
-mob_spawner = NodePath("MapObjects/MobSpawner")
-spawn_point_manager = NodePath("MapObjects/SpawnPointManager")
-entity_drawer = NodePath("MapObjects/EntityDrawer")
+map_drawer = NodePath("map_objects/map_drawer")
+mob_spawner = NodePath("map_objects/mob_spawner")
+spawn_point_manager = NodePath("map_objects/SpawnPointManager")
+entity_drawer = NodePath("map_objects/EntityDrawer")
 pathfinding_manager = NodePath("PathfindingManager")
 vfx_drawer_2d = NodePath("VFXDrawer2D")
 sound_effects_player = NodePath("SoundEffectsPlayer")
@@ -84,47 +83,48 @@ script = ExtResource("8_af664")
 [node name="Line2D" type="Line2D" parent="PathfindingManager/MobPathLinesContainer"]
 width = 4.0
 
-[node name="MapObjects" type="Node2D" parent="."]
+[node name="map_objects" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="MobSpawner" type="Node2D" parent="MapObjects"]
+[node name="mob_spawner" type="Node2D" parent="map_objects"]
 z_index = 1
 y_sort_enabled = true
 script = ExtResource("7_nfp22")
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
-[node name="map_drawer" type="Node2D" parent="MapObjects"]
+[node name="map_drawer" type="Node2D" parent="map_objects"]
 z_index = -1
+y_sort_enabled = true
 script = ExtResource("5_6uqvh")
 default_environment = ExtResource("8_mouf4")
 
-[node name="EntityDrawer" type="Node2D" parent="MapObjects"]
+[node name="EntityDrawer" type="Node2D" parent="map_objects"]
 z_index = 1
 y_sort_enabled = true
 script = ExtResource("10_3qktf")
 
-[node name="SpawnPointManager" type="Node2D" parent="MapObjects"]
+[node name="SpawnPointManager" type="Node2D" parent="map_objects"]
 script = ExtResource("10_w58st")
 _spawn_point_scene = ExtResource("10_ao74v")
 _starting_spawn_points = null
 _next_spawn_point = ExtResource("12_l2pf0")
 _debug_draw_valid_spawn_points = null
 
-[node name="ActiveEffects" type="Node2D" parent="MapObjects"]
+[node name="ActiveEffects" type="Node2D" parent="map_objects"]
 script = ExtResource("13_bcpki")
 _acid_pool_scene = ExtResource("14_04ocx")
 
-[node name="debug_drawer" type="Node2D" parent="MapObjects" node_paths=PackedStringArray("_mob_spawner")]
+[node name="debug_drawer" type="Node2D" parent="map_objects" node_paths=PackedStringArray("_mob_spawner")]
 script = ExtResource("15_udb11")
 _font = ExtResource("16_0dskt")
-_mob_spawner = NodePath("../MobSpawner")
+_mob_spawner = NodePath("../mob_spawner")
 
-[node name="CellInspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
+[node name="cell_inspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")
 cell_marker_sprite = NodePath("CellMarkerSprite")
 
-[node name="CellMarkerSprite" type="Sprite2D" parent="CellInspector"]
+[node name="CellMarkerSprite" type="Sprite2D" parent="cell_inspector"]
 z_index = 1
 texture = ExtResource("13_ei8da")
 region_rect = Rect2(32, 16, 16, 16)
@@ -132,8 +132,6 @@ region_rect = Rect2(32, 16, 16, 16)
 [node name="selection_drawer" type="Node2D" parent="." node_paths=PackedStringArray("_sprite_2d")]
 script = ExtResource("16_frr1h")
 _sprite_2d = NodePath("sprite_2d")
-_marker_selection = ExtResource("20_ddqg7")
-_marker_selection_big = ExtResource("21_mim7l")
 
 [node name="sprite_2d" type="Sprite2D" parent="selection_drawer"]
 z_index = 1
@@ -224,10 +222,10 @@ gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
 time_label = NodePath("ResourceElementsContainer/PanelTime/Label")
 cores_label = NodePath("ResourceElementsContainer/PanelCores/Label")
 buy_core_button = NodePath("BuyCoreButton")
-check_box_game_speed_01 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed01")
-check_box_game_speed_02 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed02")
-check_box_game_speed_05 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed05")
-check_box_game_speed_10 = NodePath("GameSpeedControls/VBoxContainer/CheckBoxGameSpeed10")
+check_box_game_speed_01 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed01")
+check_box_game_speed_02 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed02")
+check_box_game_speed_05 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed05")
+check_box_game_speed_10 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed10")
 
 [node name="REFERENCE_ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/ControlInGame"]
 visible = false
@@ -282,38 +280,38 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="GameSpeedControls" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlInGame"]
+[node name="game_speed_controls" type="PanelContainer" parent="CanvasLayer/ControlMain/ControlInGame"]
 layout_mode = 0
 offset_right = 97.0
 offset_bottom = 136.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls/VBoxContainer"]
 layout_mode = 2
 text = "Game Speed"
 
-[node name="CheckBoxGameSpeed01" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
+[node name="CheckBoxGameSpeed01" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 button_pressed = true
 button_group = ExtResource("21_5fiwn")
 text = "x1"
 
-[node name="CheckBoxGameSpeed02" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
+[node name="CheckBoxGameSpeed02" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x2"
 
-[node name="CheckBoxGameSpeed05" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
+[node name="CheckBoxGameSpeed05" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
 text = "x5"
 
-[node name="CheckBoxGameSpeed10" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/GameSpeedControls/VBoxContainer"]
+[node name="CheckBoxGameSpeed10" type="CheckBox" parent="CanvasLayer/ControlMain/ControlInGame/game_speed_controls/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 button_group = ExtResource("21_5fiwn")
@@ -428,6 +426,7 @@ offset_bottom = 28.0
 grow_horizontal = 2
 
 [node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/ControlInGame/ResourceElementsContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -512,6 +511,7 @@ text = "Cores"
 vertical_alignment = 1
 
 [node name="BuyCoreButton" type="Button" parent="CanvasLayer/ControlMain/ControlInGame"]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
