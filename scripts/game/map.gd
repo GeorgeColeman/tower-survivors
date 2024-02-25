@@ -12,6 +12,9 @@ var center: Vector2
 var mountains: Array[bool] = []
 var water: Array[bool] = []
 
+var _big_mountains: Array[bool] = []
+var _big_mountain_bases: Array[bool] = []
+
 var _center_x: int
 var _center_y: int
 
@@ -34,6 +37,8 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 	mountains.resize(width * height)
 	water.resize(width * height)
 
+	var number_of_mountains: int
+
 	for y in height:
 		for x in width:
 			var index = x + y * width
@@ -43,6 +48,9 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 
 			mountains[index] = (noise[index] >= _mountain_height)
 
+			if noise[index] >= _mountain_height:
+				number_of_mountains += 1
+
 			if mountains[index]:
 				PathUtilities.update_cell_is_solid(p_cells[index], true)
 
@@ -50,6 +58,68 @@ func _init(p_width: int, p_height: int, p_cells: Array[Cell], noise: Array[float
 
 			if water[index]:
 				PathUtilities.update_cell_is_solid(p_cells[index], true)
+
+	print_debug("Number of mountains: %s" % number_of_mountains)
+	_get_big_mountains()
+
+
+func _get_big_mountains():
+	_big_mountains.resize(width * height)
+	_big_mountain_bases.resize(width * height)
+
+	for y in height:
+		for x in width:
+			var index = x + y * width
+
+			_big_mountains[index] = false
+			_big_mountain_bases[index] = false
+
+	var number_of_big_mountains: int
+
+	for y in height:
+		for x in width:
+			var index = x + y * width
+
+			if !mountains[index]:
+				continue
+
+			if _big_mountain_bases[index]:
+				continue
+
+			var north = get_cell_at(x, y + 1)
+			var north_east = get_cell_at(x + 1, y + 1)
+			var east = get_cell_at(x + 1, y)
+
+			if !north || !north_east || !east:
+				continue
+
+			if !mountains[north.i] || !mountains[north_east.i] || !mountains[east.i]:
+				continue
+
+			if _get_is_mountain_at(north.i) || _get_is_mountain_at(north_east.i) || _get_is_mountain_at(east.i):
+				#print_debug("hi")
+				continue
+
+			if randf() < 0.5:
+				continue
+
+			#print_debug("Found big mountain")
+
+			#number_of_big_mountains += 1
+			_big_mountains[index] = true
+			_big_mountain_bases[north.i] = true
+			_big_mountain_bases[north_east.i] = true
+			_big_mountain_bases[east.i] = true
+
+	#print_debug("Number of big mountains: %s" % number_of_big_mountains)
+
+
+func _get_is_mountain_at(index: int) -> bool:
+	#if mountains[index] || _big_mountains[index] || _big_mountain_bases[index]:
+	if _big_mountains[index] || _big_mountain_bases[index]:
+		return true
+
+	return false
 
 
 func index_to_coordinates(index: int):
@@ -106,3 +176,25 @@ func get_cell_neighbours(centre_cell: Cell) -> Array[Cell]:
 
 func distance_between(cell_a: Cell, cell_b: Cell) -> float:
 	return sqrt((cell_b.x - cell_a.x) ** 2 + (cell_b.y - cell_a.y) ** 2)
+
+
+func get_map_feature_at(cell: Cell) -> MapFeature:
+	if _big_mountains[cell.i]:
+		return MapFeature.BIG_MOUNTAIN
+
+	if _big_mountain_bases[cell.i]:
+		return MapFeature.MOUNTAIN_BASE
+
+	if mountains[cell.i]:
+		return MapFeature.SMALL_MOUNTAIN
+
+	return MapFeature.NONE
+
+
+
+enum MapFeature {
+	NONE,
+	SMALL_MOUNTAIN,
+	MOUNTAIN_BASE,
+	BIG_MOUNTAIN
+}

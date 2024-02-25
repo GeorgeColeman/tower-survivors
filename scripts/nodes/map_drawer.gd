@@ -24,13 +24,15 @@ func draw_map(map: Map):
 		new_cell.position = cell.scene_position
 		_cell_nodes.append(new_cell)
 
-		if map.mountains[cell.i]:
-			var mountain = Sprite2D.new()
-			mountain.texture = default_environment.small_mountain_texture
-			mountain.z_index = 1
-			add_child(mountain)
-			mountain.position = cell.scene_position + Vector2.UP * GameConstants.PIXEL_SCALE * 0.5
-			_cell_nodes.append(mountain)
+		var map_feature: Map.MapFeature = map.get_map_feature_at(cell)
+
+		match map_feature:
+			Map.MapFeature.SMALL_MOUNTAIN:
+				var offset: Vector2 = Vector2.UP * GameConstants.PIXEL_SCALE * 0.5
+				_draw_feature(cell, default_environment.small_mountain_texture, offset)
+			Map.MapFeature.BIG_MOUNTAIN:
+				var offset: Vector2 = Vector2(GameConstants.PIXEL_SCALE * 0.5, 0)
+				_draw_feature(cell, default_environment.big_mountain_texture, offset)
 
 		if map.water[cell.i]:
 			var water = Sprite2D.new()
@@ -40,6 +42,14 @@ func draw_map(map: Map):
 			water.position = cell.scene_position
 			_cell_nodes.append(water)
 
+
+func _draw_feature(cell: Cell, texture: Texture2D, offset: Vector2):
+		var mountain = Sprite2D.new()
+		mountain.texture = texture
+		mountain.z_index = 1
+		add_child(mountain)
+		mountain.position = cell.scene_position + offset
+		_cell_nodes.append(mountain)
 
 func _erase_existing():
 	for cell in _cell_nodes:

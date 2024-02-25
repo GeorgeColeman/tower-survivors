@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="CellTypeResource" load_steps=6 format=3 uid="uid://cxucl4iolnd4y"]
 
-[ext_resource type="Texture2D" uid="uid://bnfc05at4tsuk" path="res://sprites/environments/forest/cell_forest_alt_01.tres" id="1_b0kxw"]
-[ext_resource type="Texture2D" uid="uid://dniuw2m6whq0k" path="res://sprites/environments/forest/cell_forest_alt_02.tres" id="2_j34p3"]
-[ext_resource type="Texture2D" uid="uid://chway1chxs0u3" path="res://sprites/environments/forest/cell_forest_alt_03.tres" id="3_tuv7a"]
-[ext_resource type="Texture2D" uid="uid://dkwt0kkh662ek" path="res://sprites/environments/forest/cell_forest_primary.tres" id="4_db8ht"]
+[ext_resource type="Texture2D" uid="uid://bnfc05at4tsuk" path="res://sprites/environments/forest/forest_cell_alt_01.tres" id="1_b0kxw"]
+[ext_resource type="Texture2D" uid="uid://dniuw2m6whq0k" path="res://sprites/environments/forest/forest_cell_alt_02.tres" id="2_j34p3"]
+[ext_resource type="Texture2D" uid="uid://chway1chxs0u3" path="res://sprites/environments/forest/forest_cell_alt_03.tres" id="3_tuv7a"]
+[ext_resource type="Texture2D" uid="uid://dkwt0kkh662ek" path="res://sprites/environments/forest/forest_cell_primary.tres" id="4_db8ht"]
 [ext_resource type="Script" path="res://scripts/resources/cell_type_resource.gd" id="6_rkq4i"]
 
 [resource]

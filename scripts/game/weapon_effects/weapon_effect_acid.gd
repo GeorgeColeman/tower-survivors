@@ -26,21 +26,9 @@ func add_damage(amount: int):
 
 func apply_to_hit(hit_info: TowerWeaponHitInfo):
 	for cell in hit_info.cells:
-		#var acid_pool = AcidPool.new(
-			#_duration,
-			#_damage,
-			#_tick_speed,
-			#cell
-		#)
-#
-		#acid_pool.position = cell.scene_position
-#
-		#ActiveEffects.add_effect(acid_pool)
-
 		ActiveEffects.create_acid_effect(
 			_duration,
 			_damage,
 			_tick_speed,
 			cell
 		)
-		#print_debug("TODO: create acid on %s" % cell)

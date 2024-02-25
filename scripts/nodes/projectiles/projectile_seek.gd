@@ -41,7 +41,6 @@ func _process(_delta):
 		var hit_info = TowerWeaponHitInfo.new()
 
 		hit_info.cells.append(_target_mob.nearest_cell)
-		#hit_info.cells.append(_target_mob.cell)
 		hit_info.mobs.append(_target_mob)
 
 		apply_weapon_effects_to_hit(hit_info)
