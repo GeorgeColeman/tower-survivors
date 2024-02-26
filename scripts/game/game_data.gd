@@ -29,6 +29,7 @@ func _load_resources():
 	_load_mobs()
 	_load_towers()
 	_load_mob_camps()
+	_load_passive_upgrade_resources()
 
 	var passives = PassiveUpgradeDataResolver.get_passive_upgrade_data()
 
@@ -93,6 +94,18 @@ func _load_mob_camps():
 			mob_camp_resource_dict[loaded.name] = loaded
 		else:
 			print_debug("WARNING: loaded resource is not MobCampResource")
+
+
+func _load_passive_upgrade_resources():
+	var passive_upgrade_resources = dir_contents("res://resources/upgrades/")
+
+	for passive_upgrade in passive_upgrade_resources:
+		var loaded = load(passive_upgrade)
+
+		if loaded is PassiveUpgradeResource:
+			var passive = loaded.get_passive_upgrade()
+
+			passives_dict[passive.id] = passive
 
 
 func get_random_mob_camp_resource() -> MobCampResource:

@@ -60,8 +60,8 @@ starting_character = ExtResource("2_jpm67")
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("map_objects/map_drawer")
 mob_spawner = NodePath("map_objects/mob_spawner")
-spawn_point_manager = NodePath("map_objects/SpawnPointManager")
-entity_drawer = NodePath("map_objects/EntityDrawer")
+spawn_point_manager = NodePath("map_objects/spawn_point_manager")
+entity_drawer = NodePath("map_objects/entity_drawer")
 pathfinding_manager = NodePath("PathfindingManager")
 vfx_drawer_2d = NodePath("VFXDrawer2D")
 sound_effects_player = NodePath("SoundEffectsPlayer")
@@ -100,19 +100,19 @@ y_sort_enabled = true
 script = ExtResource("5_6uqvh")
 default_environment = ExtResource("8_mouf4")
 
-[node name="EntityDrawer" type="Node2D" parent="map_objects"]
+[node name="entity_drawer" type="Node2D" parent="map_objects"]
 z_index = 1
 y_sort_enabled = true
 script = ExtResource("10_3qktf")
 
-[node name="SpawnPointManager" type="Node2D" parent="map_objects"]
+[node name="spawn_point_manager" type="Node2D" parent="map_objects"]
 script = ExtResource("10_w58st")
 _spawn_point_scene = ExtResource("10_ao74v")
 _starting_spawn_points = null
 _next_spawn_point = ExtResource("12_l2pf0")
 _debug_draw_valid_spawn_points = null
 
-[node name="ActiveEffects" type="Node2D" parent="map_objects"]
+[node name="active_effects" type="Node2D" parent="map_objects"]
 script = ExtResource("13_bcpki")
 _acid_pool_scene = ExtResource("14_04ocx")
 

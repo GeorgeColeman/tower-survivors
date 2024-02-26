@@ -25,7 +25,7 @@ var game: Game
 var game_data: GameData
 
 
-func _ready():
+func _ready():	
 	Messenger.start_game_requested.connect(_on_request_start_game)
 
 	control_debug.set_game_manager(self)
