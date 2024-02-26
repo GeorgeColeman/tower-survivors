@@ -4,7 +4,7 @@ extends Node
 @export var starting_gold: int = 50
 @export var starting_cores: int = 1
 
-@export var starting_character: String
+@export var starting_character: PlayerCharacterResource
 @export var auto_start_game: bool = true
 
 @export var camera_2d_controller: Camera2DController
@@ -80,7 +80,7 @@ func start_game():
 
 	map_drawer.draw_map(map)
 
-	game.init_player_character(starting_character)
+	game.set_player_character(starting_character.get_player_character())
 
 	game.speed_changed.connect(
 		func(speed: float):

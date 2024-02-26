@@ -1,8 +1,7 @@
-[gd_scene load_steps=53 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=52 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
-[ext_resource type="Resource" uid="uid://cnv546dnyhrsr" path="res://resources/player_characters/player_character_resource_adept.tres" id="2_jpm67"]
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="6_52e18"]
@@ -56,7 +55,6 @@
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
-starting_character = ExtResource("2_jpm67")
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("map_objects/map_drawer")
 mob_spawner = NodePath("map_objects/mob_spawner")

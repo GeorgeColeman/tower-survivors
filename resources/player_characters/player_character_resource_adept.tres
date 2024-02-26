@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerCharacterResource" load_steps=5 format=3 uid="uid://cnv546dnyhrsr"]
+
+[ext_resource type="Resource" uid="uid://c436hf65fej2b" path="res://resources/towers/tower_resource_arcane_citadel.tres" id="1_laurs"]
+[ext_resource type="Script" path="res://scripts/resources/player_character_resource.gd" id="1_vlcp2"]
+[ext_resource type="Resource" uid="uid://fw2ceeriu2xu" path="res://resources/towers/tower_resource_crystal_chamber.tres" id="3_o45mh"]
+[ext_resource type="Resource" uid="uid://blaeoqb5msctx" path="res://resources/towers/tower_resource_wisdom_wellspring.tres" id="4_e3yta"]
+
+[resource]
+script = ExtResource("1_vlcp2")
+name = "Adept"
+main_tower = ExtResource("1_laurs")
+starting_towers = Array[Resource("res://scripts/resources/towers/tower_resource.gd")]([ExtResource("3_o45mh"), ExtResource("4_e3yta")])

@@ -110,6 +110,22 @@ func _pause_game_await_input():
 	set_speed(0)
 
 
+func set_player_character(player_character: PlayerCharacter):
+	var params = SpawnEntityParamsFactory.new_spawn_entity_params(
+		player_character.main_tower.tower_scene,
+		map.center_cell,
+		player_character.main_tower.base_area
+	)
+
+	entities.spawn_tower(player_character.main_tower, params, 0)
+	set_main_tower(params.spawned_entity)
+
+	building_options.add_building_option(player_character.main_tower, player)
+
+	for tower in player_character.starting_towers:
+		building_options.add_building_option(tower, player)
+
+
 func init_player_character(player_character_name: String):
 	var player_character: PlayerCharacter = game_data.player_character_dict[player_character_name]
 

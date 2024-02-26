@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dapwx6u6u2q2r" path="res://sprites/DawnLike/as_resource/slime_02.tres" id="3_vjp73"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="4_01jio"]
 [ext_resource type="Script" path="res://resources/mob_features/mob_feature_spawn_mobs_on_death.gd" id="4_7difo"]
-[ext_resource type="Resource" uid="uid://nopdf2mv28j8" path="res://resources/mobs/small_slime.tres" id="5_es0lf"]
+[ext_resource type="Resource" uid="uid://nopdf2mv28j8" path="res://resources/mobs/mob_resource_small_slime.tres" id="5_es0lf"]
 [ext_resource type="Script" path="res://scripts/mob_body.gd" id="6_lp6tt"]
 [ext_resource type="Texture2D" uid="uid://klictefv2t0u" path="res://sprites/small_shadow.tres" id="7_qu5an"]
 

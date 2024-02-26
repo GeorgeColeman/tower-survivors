@@ -15,7 +15,7 @@ var spawnable_mobs: Array[MobResource]
 
 var tower_resource_dict = {}							# <String, TowerResource>
 var passives_dict = {}									# <String, PassiveUpgrade>
-var player_character_dict = {}							# <String, PlayerCharacter>
+#var player_character_dict = {}							# <String, PlayerCharacter>
 
 var mob_camp_resource_dict = {}						# <String, MobCampResource>
 
@@ -35,10 +35,10 @@ func _load_resources():
 	for passive in passives:
 		passives_dict[passive.id] = passive
 
-	var player_characters = PlayerCharacterDataResolver.get_player_characters(self)
+	# TODO: load player characters
 
-	for character in player_characters:
-		player_character_dict[character.name] = character
+	#for character in player_characters:
+		#player_character_dict[character.name] = character
 
 	tower_weapon_data = TowerWeaponDataResolver.get_tower_weapon_data()
 
