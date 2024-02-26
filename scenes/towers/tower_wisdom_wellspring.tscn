@@ -1,36 +1,88 @@
-[gd_scene load_steps=5 format=3 uid="uid://chvbulix468tl"]
+[gd_scene load_steps=10 format=3 uid="uid://chvbulix468tl"]
 
 [ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_ne0xj"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_o5rgq"]
+[ext_resource type="Script" path="res://scripts/tower/tower_graphics.gd" id="2_tvk1h"]
 [ext_resource type="Texture2D" uid="uid://dv5d6u3icyudr" path="res://sprites/towers/tower_wisdom_wellspring_placeholder.png" id="3_bbyun"]
+[ext_resource type="Theme" uid="uid://c873uevg3vpc2" path="res://themes/main_theme.tres" id="4_fsnji"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iywct"]
+atlas = ExtResource("3_bbyun")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhw4m"]
+atlas = ExtResource("3_bbyun")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ogxl"]
+atlas = ExtResource("3_bbyun")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_bbyun")
+"texture": SubResource("AtlasTexture_iywct")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhw4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ogxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhw4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ogxl")
+}],
+"loop": false,
+"name": &"flash_twice",
+"speed": 10.0
 }]
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
+[node name="tower" type="Node2D" node_paths=PackedStringArray("_tower_graphics", "_hit_points_component")]
 script = ExtResource("1_ne0xj")
-graphics = NodePath("Graphics")
-hit_points_component = NodePath("HitPoints2D")
-firing_point = NodePath("focus_point")
+_tower_graphics = NodePath("graphics")
+_hit_points_component = NodePath("hit_points_bar")
 
-[node name="HitPoints2D" parent="." instance=ExtResource("2_o5rgq")]
-position = Vector2(0, 4)
+[node name="graphics" type="Node2D" parent="." node_paths=PackedStringArray("_animated_sprite_2d")]
+script = ExtResource("2_tvk1h")
+_animated_sprite_2d = NodePath("animated_sprite_2d")
 
-[node name="Graphics" type="Node2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
+[node name="animated_sprite_2d" type="AnimatedSprite2D" parent="graphics"]
 position = Vector2(0, 12)
 sprite_frames = SubResource("SpriteFrames_h5fpv")
+animation = &"flash_twice"
 autoplay = "default"
-frame_progress = 0.385403
 offset = Vector2(0, -12)
 
 [node name="focus_point" type="Marker2D" parent="."]
+
+[node name="hit_points_bar" parent="." instance=ExtResource("2_o5rgq")]
+position = Vector2(0, 4)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -32.0
+offset_right = 9.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_fsnji")
+bbcode_enabled = true
+text = "+1"
+fit_content = true
+autowrap_mode = 0

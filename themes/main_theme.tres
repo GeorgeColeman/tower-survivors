@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c873uevg3vpc2"]
+
+[ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="1_uri7c"]
+
+[resource]
+default_base_scale = 1.0
+default_font = ExtResource("1_uri7c")
+default_font_size = 16
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/outline_size = 4

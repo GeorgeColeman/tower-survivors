@@ -4,10 +4,9 @@ extends Node2D
 signal description_updated(description: String)
 signal was_killed(tower: Tower)
 
-@export var graphics: Node2D
-@export var hit_points_component: HitPointsComponent
-@export var firing_point: Marker2D
-@export var show_hit_points_bar: bool = true
+@export var _tower_graphics: TowerGraphics
+@export var _hit_points_component: HitPointsComponent
+@export var _focus_point: Marker2D
 
 var tower_resource: TowerResource
 
@@ -22,6 +21,7 @@ var tower_stats: TowerStats
 var rank: Rank
 var weapon_dict = {}										# <String, TowerWeapon>
 
+var _abilities: Array[TowerAbility] = []
 var _weapons: Array[TowerWeapon] = []
 var _passive_upgrade_dict = {}								# <String, PassiveUpgrade>
 var _is_destroyed: bool
@@ -56,6 +56,11 @@ func _init():
 	rank = Rank.new()
 
 
+func _process(delta):
+	for ability in _abilities:
+		ability.process(Game.speed_scaled_delta)
+
+
 func uninstantiate():
 	# TODO: kill tweens (if any)
 	queue_free()
@@ -64,7 +69,12 @@ func uninstantiate():
 func set_resource(p_tower_resource: TowerResource):
 	tower_resource = p_tower_resource
 
-	hit_points_component.initialise(p_tower_resource.hit_points, show_hit_points_bar)
+	_hit_points_component.initialise(p_tower_resource.hit_points)
+
+	for ability_resource in p_tower_resource.tower_abilities:
+		var ability = ability_resource.get_tower_ability()
+		ability.set_tower_graphics(_tower_graphics)
+		_abilities.append(ability)
 
 	for weapon in p_tower_resource.weapons:
 		var weapon_data: TowerWeaponData = DataUtilities.get_weapon_data(weapon)
@@ -159,21 +169,18 @@ func _attach_weapon(weapon: TowerWeapon):
 
 func _activate_weapon(weapon: TowerWeapon):
 	weapon.set_cell(cell)
-	weapon.set_firing_point(firing_point.position)
+	weapon.set_firing_point(_focus_point.position)
 
 	weapon.is_active = true
 
 
 func take_damage(amount: int):
-	hit_points_component.change_current(-amount)
+	_hit_points_component.change_current(-amount)
 
-	if hit_points_component.is_at_zero:
+	if _hit_points_component.is_at_zero:
 		_destroy()
 
-	if graphics:
-		TweenEffects.flash_white(graphics, Color.WHITE)
-	else:
-		print_debug("TODO: graphics node for tower: %s" % tower_name)
+	_tower_graphics.take_damage(amount)
 
 
 func _destroy():

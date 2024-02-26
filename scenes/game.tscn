@@ -32,11 +32,11 @@
 [ext_resource type="Script" path="res://scripts/nodes/vfx_drawer_2d.gd" id="23_aqxf2"]
 [ext_resource type="PackedScene" uid="uid://cck72le1by1qn" path="res://scenes/floating_text.tscn" id="24_27evh"]
 [ext_resource type="Script" path="res://scripts/control/control_pause.gd" id="24_ri8gj"]
-[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://style_box_test.tres" id="24_yuuet"]
+[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://themes/style_box_test.tres" id="24_yuuet"]
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
-[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://new_theme.tres" id="29_1kk1u"]
+[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://themes/new_theme.tres" id="29_1kk1u"]
 [ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="29_bsd1r"]
 [ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="30_dsdif"]
 [ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="31_7drxe"]
@@ -48,14 +48,16 @@
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
 [ext_resource type="Script" path="res://scripts/control/control_alerts.gd" id="41_ck1fr"]
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
-[ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://style_box_basic_mid.tres" id="42_ri3gm"]
+[ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://themes/style_box_basic_mid.tres" id="42_ri3gm"]
 [ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
 [ext_resource type="Texture2D" uid="uid://bsaxahfft4tjk" path="res://sprites/markers/marker_area.tres" id="50_ejygd"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
+starting_cores = null
 starting_character = "Adept"
+auto_start_game = null
 camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("map_objects/map_drawer")
 mob_spawner = NodePath("map_objects/mob_spawner")

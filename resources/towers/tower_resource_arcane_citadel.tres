@@ -16,3 +16,4 @@ hit_points = 50
 gold_cost = 0
 core_cost = 1
 _flags = 1
+tower_abilities = Array[Resource("res://scripts/resources/towers/tower_ability_resource.gd")]([])

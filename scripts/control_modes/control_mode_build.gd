@@ -22,7 +22,6 @@ func set_building_option(option: BuildingOption):
 	_building_option = option
 
 	_current_preview = option.tower_resource.tower_scene.instantiate()
-	_current_preview.hit_points_component.set_visibility(false)
 
 	preview_container.add_child(_current_preview)
 

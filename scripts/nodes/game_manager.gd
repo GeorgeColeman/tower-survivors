@@ -56,7 +56,9 @@ func start_game():
 	game = Game.new(map, mob_spawner, game_data)
 	GameUtilities.set_game(game)
 
-	game.set_player(_create_player())
+	var player = _create_player()
+
+	game.set_player(player)
 
 	camera_2d_controller.set_position_immediate(map.center * GameConstants.PIXEL_SCALE)
 	camera_2d_controller.set_limits(
@@ -69,6 +71,7 @@ func start_game():
 	mob_spawner.start_game(game)
 	spawn_point_manager.start_game(game)
 
+	PlayerUtilities.set_player(player)
 	MobUtilities.init(mob_spawner, spawn_point_manager)
 
 	main_control.start_game(game)

@@ -7,6 +7,8 @@
 
 [sub_resource type="Resource" id="Resource_kvbq7"]
 script = ExtResource("2_6ct5n")
+amount = 1
+frequency = 5.0
 name = ""
 
 [resource]
@@ -17,8 +19,8 @@ texture = ExtResource("2_im20e")
 base_area = Vector2i(2, 2)
 tower_scene = ExtResource("4_1014c")
 weapons = Array[String]([])
-hit_points = 0
-gold_cost = 0
-core_cost = 0
+hit_points = 20
+gold_cost = 20
+core_cost = 1
 _flags = 0
 tower_abilities = Array[Resource("res://scripts/resources/towers/tower_ability_resource.gd")]([SubResource("Resource_kvbq7")])

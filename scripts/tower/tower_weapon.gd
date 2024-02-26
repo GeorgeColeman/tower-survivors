@@ -14,8 +14,6 @@ var description: String:
 		return weapon_stats.description
 
 var projectile_scene: PackedScene
-#var attack_range: int
-#var damage: int
 var attack_sfx: AudioStream
 
 var is_active = false
@@ -37,9 +35,6 @@ func set_data(data: TowerWeaponData):
 	weapon_name = data.name
 	weapon_effects = data.weapon_effects
 	projectile_scene = data.proj_scene
-	#attacks_per_second = data.attack_speed
-	#attack_range = data.attack_range
-	#damage = data.damage
 	attack_sfx = data.sfx
 
 	if data.properties.has("pass"):
