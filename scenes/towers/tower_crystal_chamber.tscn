@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://d07hryohekbus"]
 
 [ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_lwh8h"]
+[ext_resource type="Script" path="res://scripts/tower/tower_graphics.gd" id="2_547kx"]
 [ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="2_sjuoy"]
 [ext_resource type="Texture2D" uid="uid://bydxmxbo5qgph" path="res://sprites/towers/crystal_chamber.png" id="3_wuoyq"]
-[ext_resource type="Texture2D" uid="uid://cbwdwvy87kn11" path="res://sprites/towers/crystal_chamber.tres" id="4_ffnn6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yr7l3"]
 atlas = ExtResource("3_wuoyq")
@@ -37,28 +37,23 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Root" type="Node2D" node_paths=PackedStringArray("graphics", "hit_points_component", "firing_point")]
+[node name="tower" type="Node2D" node_paths=PackedStringArray("_tower_graphics", "_hit_points_component", "_focus_point")]
 script = ExtResource("1_lwh8h")
-graphics = NodePath("Graphics")
-hit_points_component = NodePath("HitPoints2D")
-firing_point = NodePath("FiringPoint")
+_tower_graphics = NodePath("graphics")
+_hit_points_component = NodePath("hit_points_bar")
+_focus_point = NodePath("focus_point")
 
-[node name="HitPoints2D" parent="." instance=ExtResource("2_sjuoy")]
+[node name="graphics" type="Node2D" parent="." node_paths=PackedStringArray("_animated_sprite_2d")]
+script = ExtResource("2_547kx")
+_animated_sprite_2d = NodePath("animated_sprite_2d")
 
-[node name="Graphics" type="Node2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Graphics"]
+[node name="animated_sprite_2d" type="AnimatedSprite2D" parent="graphics"]
 sprite_frames = SubResource("SpriteFrames_h5fpv")
 autoplay = "default"
 frame_progress = 0.905189
 offset = Vector2(0, -12)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("4_ffnn6")
-offset = Vector2(0, -12)
-region_enabled = true
-region_rect = Rect2(0, 0, 24, 48)
-
-[node name="FiringPoint" type="Marker2D" parent="."]
+[node name="focus_point" type="Marker2D" parent="."]
 position = Vector2(0, -19)
+
+[node name="hit_points_bar" parent="." instance=ExtResource("2_sjuoy")]

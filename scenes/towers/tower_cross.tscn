@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://dakut0p62wa5g"]
+
+[ext_resource type="Script" path="res://scripts/tower/tower.gd" id="1_h7axt"]
+[ext_resource type="Script" path="res://scripts/tower/tower_graphics.gd" id="2_g88fs"]
+[ext_resource type="Texture2D" uid="uid://60qy6fgoy5vi" path="res://sprites/towers/tower_cross_placeholder.png" id="3_75piq"]
+[ext_resource type="PackedScene" uid="uid://b5gud02u8ef3f" path="res://scenes/components/hit_points_2d.tscn" id="4_jjk6v"]
+[ext_resource type="Theme" uid="uid://c873uevg3vpc2" path="res://themes/main_theme.tres" id="5_w0jj5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpd51"]
+atlas = ExtResource("3_75piq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wctbo"]
+atlas = ExtResource("3_75piq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75tnv"]
+atlas = ExtResource("3_75piq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h5fpv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpd51")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wctbo")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75tnv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="tower" type="Node2D" node_paths=PackedStringArray("_tower_graphics", "_hit_points_component", "_focus_point")]
+script = ExtResource("1_h7axt")
+_tower_graphics = NodePath("graphics")
+_hit_points_component = NodePath("hit_points_bar")
+_focus_point = NodePath("focus_point")
+
+[node name="graphics" type="Node2D" parent="." node_paths=PackedStringArray("_animated_sprite_2d")]
+script = ExtResource("2_g88fs")
+_animated_sprite_2d = NodePath("animated_sprite_2d")
+
+[node name="animated_sprite_2d" type="AnimatedSprite2D" parent="graphics"]
+position = Vector2(0, 12)
+sprite_frames = SubResource("SpriteFrames_h5fpv")
+autoplay = "default"
+offset = Vector2(0, -12)
+
+[node name="focus_point" type="Marker2D" parent="."]
+
+[node name="hit_points_bar" parent="." instance=ExtResource("4_jjk6v")]
+position = Vector2(0, 4)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -32.0
+offset_right = 9.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_w0jj5")
+bbcode_enabled = true
+text = "+1"
+fit_content = true
+autowrap_mode = 0

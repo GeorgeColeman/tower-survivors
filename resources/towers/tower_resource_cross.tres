@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="TowerResource" load_steps=6 format=3 uid="uid://5bfm8xtrnlmu"]
+
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_resource.gd" id="1_e362v"]
+[ext_resource type="Texture2D" uid="uid://bqrbspw2velf5" path="res://sprites/towers/tower_cross_placeholder.tres" id="2_mw55a"]
+[ext_resource type="Script" path="res://scripts/resources/towers/tower_ability_resource_weapon_four_direction.gd" id="3_fkcya"]
+[ext_resource type="PackedScene" uid="uid://dakut0p62wa5g" path="res://scenes/towers/tower_cross.tscn" id="3_kj2ah"]
+
+[sub_resource type="Resource" id="Resource_ve37r"]
+script = ExtResource("3_fkcya")
+damage = 0
+attack_speed = 0.0
+range = 0
+projectile_speed = 0
+name = ""
+
+[resource]
+script = ExtResource("1_e362v")
+name = "Cross"
+description = "Fires in four directions."
+texture = ExtResource("2_mw55a")
+base_area = Vector2i(2, 2)
+tower_scene = ExtResource("3_kj2ah")
+weapons = Array[String]([])
+hit_points = 20
+gold_cost = 20
+core_cost = 1
+_flags = 0
+tower_abilities = Array[Resource("res://scripts/resources/towers/tower_ability_resource.gd")]([SubResource("Resource_ve37r")])
