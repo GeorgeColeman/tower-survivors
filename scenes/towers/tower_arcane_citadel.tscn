@@ -16,10 +16,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="tower" type="Node2D" node_paths=PackedStringArray("_tower_graphics", "_hit_points_component", "_focus_point")]
+[node name="tower" type="Node2D" node_paths=PackedStringArray("hit_points_component", "_tower_graphics", "_focus_point")]
 script = ExtResource("1_um7at")
+hit_points_component = NodePath("HitPoints2D")
 _tower_graphics = NodePath("graphics")
-_hit_points_component = NodePath("HitPoints2D")
 _focus_point = NodePath("focus_point")
 
 [node name="HitPoints2D" parent="." instance=ExtResource("2_11lq7")]

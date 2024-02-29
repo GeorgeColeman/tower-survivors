@@ -4,8 +4,9 @@ extends Node2D
 signal description_updated(description: String)
 signal was_killed(tower: Tower)
 
+@export var hit_points_component: HitPointsComponent
+
 @export var _tower_graphics: TowerGraphics
-@export var _hit_points_component: HitPointsComponent
 @export var _focus_point: Marker2D
 
 var tower_resource: TowerResource
@@ -69,7 +70,7 @@ func uninstantiate():
 func set_resource(p_tower_resource: TowerResource):
 	tower_resource = p_tower_resource
 
-	_hit_points_component.initialise(p_tower_resource.hit_points)
+	hit_points_component.initialise(p_tower_resource.hit_points)
 
 	for ability_resource in p_tower_resource.tower_abilities:
 		var ability = ability_resource.get_tower_ability()
@@ -175,9 +176,9 @@ func _activate_weapon(weapon: TowerWeapon):
 
 
 func take_damage(amount: int):
-	_hit_points_component.change_current(-amount)
+	hit_points_component.change_current(-amount)
 
-	if _hit_points_component.is_at_zero:
+	if hit_points_component.is_at_zero:
 		_destroy()
 
 	_tower_graphics.take_damage(amount)

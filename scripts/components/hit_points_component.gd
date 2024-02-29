@@ -1,9 +1,17 @@
 class_name HitPointsComponent
 extends Node
 
-#signal hit_points_changed()
+signal hit_points_changed(hit_points: HitPointsComponent)
 
 @export var hit_points_bar: TextureProgressBar
+
+var as_text: String:
+	get:
+		return "%s/%s" % [_current_hit_points, _max_hit_points]
+
+var bar_value: float:
+	get:
+		return _perc_hit_points * hit_points_bar.max_value
 
 var is_at_zero: bool:
 	get:
@@ -20,7 +28,7 @@ var _perc_hit_points:
 func initialise(hit_points: int, is_visibile: bool = true):
 	_max_hit_points = hit_points
 	_current_hit_points = hit_points
-	
+
 	hit_points_bar.visible = is_visibile
 
 	_update_hit_points_bar()
@@ -35,6 +43,8 @@ func change_current(amount: int):
 
 	_update_hit_points_bar()
 
+	hit_points_changed.emit(self)
+
 
 func _update_hit_points_bar():
-	hit_points_bar.value = _perc_hit_points * hit_points_bar.max_value
+	hit_points_bar.value = bar_value

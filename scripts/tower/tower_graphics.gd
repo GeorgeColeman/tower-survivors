@@ -11,7 +11,7 @@ func _ready():
 		_anim_dict[anim.name] = anim
 
 
-func take_damage(amount: int):
+func take_damage(_amount: int):
 	TweenEffects.flash_white(_animated_sprite_2d, Color.WHITE)
 
 

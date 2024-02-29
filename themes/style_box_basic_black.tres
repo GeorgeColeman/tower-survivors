@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://b737k4jerea0o"]
+
+[ext_resource type="Texture2D" uid="uid://i1v3pfi3y3kl" path="res://sprites/gui/gui_basic_panel_black.tres" id="1_rbcfu"]
+
+[resource]
+texture = ExtResource("1_rbcfu")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0

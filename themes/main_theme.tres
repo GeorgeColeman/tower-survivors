@@ -1,10 +1,12 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c873uevg3vpc2"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c873uevg3vpc2"]
 
 [ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="1_uri7c"]
+[ext_resource type="StyleBox" uid="uid://b737k4jerea0o" path="res://themes/style_box_basic_black.tres" id="1_yd4lt"]
 
 [resource]
 default_base_scale = 1.0
 default_font = ExtResource("1_uri7c")
 default_font_size = 16
+PanelContainer/styles/panel = ExtResource("1_yd4lt")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/constants/outline_size = 4

@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqleashdxg7by"]
+
+[ext_resource type="StyleBox" uid="uid://dq0xl7u4drys5" path="res://themes/style_box_test.tres" id="1_5vhxs"]
+[ext_resource type="Script" path="res://scripts/control/entity_info_panel.gd" id="2_6e4jh"]
+[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://themes/new_theme.tres" id="3_hl23v"]
+[ext_resource type="Theme" uid="uid://c873uevg3vpc2" path="res://themes/main_theme.tres" id="4_y2dnm"]
+[ext_resource type="Texture2D" uid="uid://dnlrtp3aweov4" path="res://sprites/control/under.tres" id="5_11ut3"]
+[ext_resource type="Texture2D" uid="uid://bs5m7yp8hqm1" path="res://sprites/control/progress_red.tres" id="6_v8o50"]
+
+[node name="entity_info_panel" type="Panel" node_paths=PackedStringArray("_entity_name_label", "_button_container", "_description_label", "_container_hit_points", "_label_hit_points", "_bar_hit_points")]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_5vhxs")
+script = ExtResource("2_6e4jh")
+_entity_name_label = NodePath("entity_name_label")
+_button_container = NodePath("button_container")
+_description_label = NodePath("description_label")
+_container_hit_points = NodePath("container_hit_points")
+_label_hit_points = NodePath("container_hit_points/VBoxContainer/label_hit_points")
+_bar_hit_points = NodePath("container_hit_points/VBoxContainer/bar_hit_points")
+
+[node name="entity_name_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme = ExtResource("3_hl23v")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Entity Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="description_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -11.5
+offset_right = 48.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_hl23v")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Description"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="button_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="container_hit_points" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 64.0
+offset_right = 32.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme = ExtResource("4_y2dnm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="container_hit_points"]
+layout_mode = 2
+
+[node name="label_hit_points" type="RichTextLabel" parent="container_hit_points/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_y2dnm")
+bbcode_enabled = true
+text = "[center]20/20"
+fit_content = true
+
+[node name="bar_hit_points" type="TextureProgressBar" parent="container_hit_points/VBoxContainer"]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+mouse_filter = 2
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("5_11ut3")
+texture_progress = ExtResource("6_v8o50")
