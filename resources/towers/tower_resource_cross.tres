@@ -7,10 +7,10 @@
 
 [sub_resource type="Resource" id="Resource_ve37r"]
 script = ExtResource("3_fkcya")
-damage = 0
-attack_speed = 0.0
-range = 0
-projectile_speed = 0
+damage = 5
+attack_speed = 0.5
+range = 10
+projectile_speed = 2
 name = ""
 
 [resource]

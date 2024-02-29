@@ -85,7 +85,7 @@ func get_total_attack_range() -> int:
 
 
 func get_total_projectile_speed() -> float:
-	return _base_projectile_speed * 1 + _projectile_speed_mod
+	return _base_projectile_speed * (1 + _projectile_speed_mod) * GameConstants.PIXEL_SCALE
 
 
 func add_bonus_damage(value: int):
