@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://byfjk376rtjum"]
+[gd_scene load_steps=56 format=3 uid="uid://byfjk376rtjum"]
 
 [ext_resource type="Script" path="res://scripts/nodes/game_manager.gd" id="1_l43p6"]
 [ext_resource type="Script" path="res://scripts/nodes/camera_2d_controller.gd" id="2_04hs5"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/nodes/map_drawer.gd" id="5_6uqvh"]
 [ext_resource type="Script" path="res://scripts/control/control_main.gd" id="5_c3t0l"]
 [ext_resource type="Texture2D" uid="uid://dmkbp4txtjs5j" path="res://sprites/coin.tres" id="6_52e18"]
-[ext_resource type="PackedScene" uid="uid://l13dk6opal54" path="res://scenes/control/upgrade_option_button.tscn" id="6_wrk1s"]
 [ext_resource type="Script" path="res://scripts/control/control_in_game.gd" id="7_j5a5t"]
 [ext_resource type="AudioStream" uid="uid://biyrj4fsaybv4" path="res://sound_effects/mob_hit.wav" id="7_nb2t7"]
 [ext_resource type="Script" path="res://scripts/nodes/mob_spawner.gd" id="7_nfp22"]
@@ -36,21 +35,39 @@
 [ext_resource type="Script" path="res://scripts/nodes/sound_effects_player.gd" id="25_6tpgp"]
 [ext_resource type="AudioStream" uid="uid://pgh3b0kbrcqc" path="res://sound_effects/mob_die.wav" id="25_42f42"]
 [ext_resource type="Script" path="res://scripts/control/control_build_menu.gd" id="27_yobp5"]
-[ext_resource type="Theme" uid="uid://bexoxx45nvox1" path="res://themes/new_theme.tres" id="29_1kk1u"]
 [ext_resource type="Texture2D" uid="uid://can01su4j7a2o" path="res://sprites/control/box.tres" id="29_bsd1r"]
 [ext_resource type="Texture2D" uid="uid://drmcwklq3qfee" path="res://sprites/control/over.tres" id="30_dsdif"]
 [ext_resource type="PackedScene" uid="uid://dqleashdxg7by" path="res://scenes/control/entity_info_panel.tscn" id="30_g0l3t"]
+[ext_resource type="StyleBox" uid="uid://4xxmbd7rhqaq" path="res://themes/style_box_basic_white.tres" id="31_ci5ud"]
 [ext_resource type="Texture2D" uid="uid://dii44tqul4dka" path="res://sprites/control/blue_atex.tres" id="31_igcql"]
 [ext_resource type="Texture2D" uid="uid://cwhxgc1ylsjpr" path="res://sprites/icons/core.tres" id="31_n0d7l"]
+[ext_resource type="Theme" uid="uid://c873uevg3vpc2" path="res://themes/main_theme.tres" id="31_vmlws"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_manager.gd" id="32_1p01p"]
-[ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="32_pnssa"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_default.gd" id="33_nxceh"]
 [ext_resource type="Script" path="res://scripts/control_modes/control_mode_build.gd" id="34_v1kfp"]
+[ext_resource type="Texture2D" uid="uid://b35v0sroen5mu" path="res://sprites/gui/gui_basic_panel_white_outline.tres" id="35_3ybqn"]
 [ext_resource type="Script" path="res://scripts/control/control_alerts.gd" id="41_ck1fr"]
 [ext_resource type="Script" path="res://scenes/area_marker_drawer.gd" id="41_q0vy1"]
-[ext_resource type="StyleBox" uid="uid://c3g0bioerqi0f" path="res://themes/style_box_basic_mid.tres" id="42_ri3gm"]
+[ext_resource type="PackedScene" uid="uid://bf13fdoe1mlp8" path="res://scenes/control/control_level_up.tscn" id="42_6gvhc"]
 [ext_resource type="PackedScene" uid="uid://cbcsv2bbq2u1p" path="res://scenes/dev_console.tscn" id="47_hex7m"]
 [ext_resource type="Texture2D" uid="uid://bsaxahfft4tjk" path="res://sprites/markers/marker_area.tres" id="50_ejygd"]
+[ext_resource type="Texture2D" uid="uid://c52asirmb6olq" path="res://apollo-32x.png" id="52_tkryq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ksg8"]
+texture = ExtResource("35_3ybqn")
+
+[sub_resource type="Theme" id="Theme_1dhll"]
+default_base_scale = 1.0
+default_font = ExtResource("16_0dskt")
+default_font_size = 16
+Panel/styles/panel = ExtResource("31_ci5ud")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_2ksg8")
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/outline_size = 0
+
+[sub_resource type="Theme" id="Theme_u7ynn"]
+default_font = ExtResource("16_0dskt")
+default_font_size = 18
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
@@ -93,11 +110,16 @@ script = ExtResource("7_nfp22")
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
 
-[node name="map_drawer" type="Node2D" parent="map_objects"]
+[node name="map_drawer" type="Node2D" parent="map_objects" node_paths=PackedStringArray("_map_features_container")]
 z_index = -1
 y_sort_enabled = true
 script = ExtResource("5_6uqvh")
-default_environment = ExtResource("8_mouf4")
+_default_environment = ExtResource("8_mouf4")
+_map_features_container = NodePath("map_features_container")
+
+[node name="map_features_container" type="Node2D" parent="map_objects/map_drawer"]
+z_index = 1
+y_sort_enabled = true
 
 [node name="entity_drawer" type="Node2D" parent="map_objects"]
 z_index = 1
@@ -160,7 +182,7 @@ control_pre_game = NodePath("ControlPreGame")
 control_in_game = NodePath("control_in_game")
 control_game_over = NodePath("ControlGameOver")
 control_pause = NodePath("ControlPause")
-control_level_up = NodePath("ControlLevelUp")
+control_level_up = NodePath("control_level_up")
 control_build_menu = NodePath("ControlBuildMenu")
 
 [node name="ControlPreGame" type="Control" parent="CanvasLayer/ControlMain"]
@@ -216,8 +238,8 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_j5a5t")
 entity_info_panel = NodePath("entity_info_panel")
-level_label = NodePath("LevelLabel")
-experience_bar = NodePath("ExperienceBar")
+level_label = NodePath("experience_bar/level_label")
+experience_bar = NodePath("experience_bar")
 gold_label = NodePath("ResourceElementsContainer/PanelGold/Label")
 time_label = NodePath("ResourceElementsContainer/PanelTime/Label")
 cores_label = NodePath("ResourceElementsContainer/PanelCores/Label")
@@ -226,59 +248,6 @@ check_box_game_speed_01 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGa
 check_box_game_speed_02 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed02")
 check_box_game_speed_05 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed05")
 check_box_game_speed_10 = NodePath("game_speed_controls/VBoxContainer/CheckBoxGameSpeed10")
-
-[node name="REFERENCE_ControlUpgradeOptions" type="Control" parent="CanvasLayer/ControlMain/control_in_game"]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions/PanelContainer"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
-layout_mode = 1
-offset_right = 124.0
-offset_bottom = 26.0
-text = "Pick an upgrade"
-
-[node name="RerollUpgradesButton" type="Button" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer/Control"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -54.0
-offset_bottom = 31.0
-grow_horizontal = 0
-text = "Reroll
-"
-
-[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/control_in_game/REFERENCE_ControlUpgradeOptions/PanelContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
 
 [node name="game_speed_controls" type="PanelContainer" parent="CanvasLayer/ControlMain/control_in_game"]
 layout_mode = 0
@@ -322,30 +291,15 @@ custom_minimum_size = Vector2(320, 0)
 layout_mode = 1
 offset_left = 0.0
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer/ControlMain/control_in_game"]
+[node name="experience_bar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/control_in_game"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -116.0
-offset_right = -76.0
-offset_bottom = 27.0
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 32.0
 grow_horizontal = 2
-theme = ExtResource("29_1kk1u")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Level"
-vertical_alignment = 1
-
-[node name="ExperienceBar" type="TextureProgressBar" parent="CanvasLayer/ControlMain/control_in_game"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.0
-offset_right = 25.0
-offset_bottom = 10.0
-grow_horizontal = 2
-scale = Vector2(2, 2)
 pivot_offset = Vector2(25, 0)
 value = 50.0
 nine_patch_stretch = true
@@ -357,20 +311,33 @@ texture_under = ExtResource("29_bsd1r")
 texture_over = ExtResource("30_dsdif")
 texture_progress = ExtResource("31_igcql")
 
+[node name="level_label" type="Label" parent="CanvasLayer/ControlMain/control_in_game/experience_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1dhll")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ResourceElementsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/control_in_game"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 58.0
-offset_right = 319.0
+offset_left = -422.0
+offset_right = -161.0
 offset_bottom = 28.0
 grow_horizontal = 2
 
 [node name="PanelGold" type="Panel" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("31_vmlws")
 
 [node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer/PanelGold"]
 layout_mode = 1
@@ -392,13 +359,14 @@ anchor_bottom = 1.0
 offset_left = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("29_1kk1u")
+theme = ExtResource("31_vmlws")
 text = "Gold"
 vertical_alignment = 1
 
 [node name="PanelTime" type="Panel" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("31_vmlws")
 
 [node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer/PanelTime"]
 layout_mode = 1
@@ -420,13 +388,14 @@ anchor_bottom = 1.0
 offset_left = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("29_1kk1u")
+theme = ExtResource("31_vmlws")
 text = "Time"
 vertical_alignment = 1
 
 [node name="PanelCores" type="Panel" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("31_vmlws")
 
 [node name="Texture" type="TextureRect" parent="CanvasLayer/ControlMain/control_in_game/ResourceElementsContainer/PanelCores"]
 layout_mode = 1
@@ -448,7 +417,7 @@ anchor_bottom = 1.0
 offset_left = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("29_1kk1u")
+theme = ExtResource("31_vmlws")
 text = "Cores"
 vertical_alignment = 1
 
@@ -461,7 +430,7 @@ anchor_bottom = 1.0
 offset_top = -96.0
 offset_right = 96.0
 grow_vertical = 0
-theme = ExtResource("29_1kk1u")
+theme = SubResource("Theme_u7ynn")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/ControlMain/control_in_game/BuyCoreButton"]
 clip_contents = false
@@ -472,7 +441,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("29_1kk1u")
+theme = SubResource("Theme_u7ynn")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[center]1[img]res://sprites/icons/core.tres[/img]
@@ -759,82 +728,11 @@ offset_top = -13.0
 offset_right = 123.0
 offset_bottom = 14.0
 grow_vertical = 2
-theme = ExtResource("29_1kk1u")
+theme = SubResource("Theme_u7ynn")
 text = "Upgrades Label"
 
-[node name="ControlLevelUp" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("_upgrade_options_container", "_skip_button", "_reroll_button")]
-visible = false
+[node name="control_level_up" parent="CanvasLayer/ControlMain" instance=ExtResource("42_6gvhc")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("32_pnssa")
-_upgrade_options_container = NodePath("UpgradeOptionsContainer")
-_upgrade_option_button = ExtResource("6_wrk1s")
-_skip_button = NodePath("VBoxContainer/SkipButton")
-_reroll_button = NodePath("VBoxContainer/RerollButton")
-
-[node name="Panel" type="Panel" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -287.0
-offset_right = 287.0
-offset_bottom = 137.0
-grow_horizontal = 2
-theme = ExtResource("29_1kk1u")
-theme_override_font_sizes/font_size = 100
-text = "LEVEL UP"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ControlMain/ControlLevelUp"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="SkipButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("29_1kk1u")
-text = "Skip"
-
-[node name="RerollButton" type="Button" parent="CanvasLayer/ControlMain/ControlLevelUp/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("29_1kk1u")
-text = "Reroll"
 
 [node name="control_alerts" type="Control" parent="CanvasLayer/ControlMain" node_paths=PackedStringArray("_container", "_alert_text", "_alert_timer")]
 layout_mode = 1
@@ -858,12 +756,12 @@ offset_top = -185.0
 offset_right = 320.0
 offset_bottom = -147.0
 grow_vertical = 0
-theme_override_styles/panel = ExtResource("42_ri3gm")
+theme = ExtResource("31_vmlws")
 
 [node name="alert_text" type="RichTextLabel" parent="CanvasLayer/ControlMain/control_alerts/container"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
-theme = ExtResource("29_1kk1u")
+theme = ExtResource("31_vmlws")
 text = "Alert Text"
 fit_content = true
 
@@ -907,3 +805,7 @@ _marker_texture = ExtResource("50_ejygd")
 
 [node name="dev_console" parent="." instance=ExtResource("47_hex7m")]
 visible = false
+
+[node name="Apollo-32x" type="Sprite2D" parent="."]
+position = Vector2(-381, -494)
+texture = ExtResource("52_tkryq")

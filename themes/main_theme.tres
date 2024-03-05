@@ -1,12 +1,49 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c873uevg3vpc2"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://c873uevg3vpc2"]
 
+[ext_resource type="StyleBox" uid="uid://4xxmbd7rhqaq" path="res://themes/style_box_basic_white.tres" id="1_dd7ej"]
 [ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="1_uri7c"]
-[ext_resource type="StyleBox" uid="uid://b737k4jerea0o" path="res://themes/style_box_basic_black.tres" id="1_yd4lt"]
+[ext_resource type="Texture2D" uid="uid://b8dc5lpj0540p" path="res://sprites/gui/buttons/gui_basic_button_hover.tres" id="1_yrhxd"]
+[ext_resource type="Texture2D" uid="uid://c680h3fqb22pd" path="res://sprites/gui/buttons/gui_basic_button_normal.tres" id="2_4oe0m"]
+[ext_resource type="Texture2D" uid="uid://dujjxydexo2n4" path="res://sprites/gui/buttons/gui_basic_button_pressed.tres" id="3_hnrhl"]
+[ext_resource type="Texture2D" uid="uid://b35v0sroen5mu" path="res://sprites/gui/gui_basic_panel_white_outline.tres" id="4_yymdd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_008a8"]
+texture = ExtResource("1_yrhxd")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ausc3"]
+texture = ExtResource("2_4oe0m")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s1btl"]
+texture = ExtResource("3_hnrhl")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w0wrs"]
+texture = ExtResource("4_yymdd")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
 
 [resource]
 default_base_scale = 1.0
 default_font = ExtResource("1_uri7c")
 default_font_size = 16
-PanelContainer/styles/panel = ExtResource("1_yd4lt")
-RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
-RichTextLabel/constants/outline_size = 4
+Button/colors/font_color = Color(0.0352941, 0.0392157, 0.0784314, 1)
+Button/styles/hover = SubResource("StyleBoxTexture_008a8")
+Button/styles/normal = SubResource("StyleBoxTexture_ausc3")
+Button/styles/pressed = SubResource("StyleBoxTexture_s1btl")
+Label/colors/font_color = Color(0.0352941, 0.0392157, 0.0784314, 1)
+Panel/styles/panel = SubResource("StyleBoxTexture_w0wrs")
+PanelContainer/styles/panel = ExtResource("1_dd7ej")
+RichTextLabel/colors/default_color = Color(0.0352941, 0.0392157, 0.0784314, 1)

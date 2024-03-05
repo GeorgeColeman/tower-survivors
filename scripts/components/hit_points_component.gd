@@ -7,7 +7,7 @@ signal hit_points_changed(hit_points: HitPointsComponent)
 
 var as_text: String:
 	get:
-		return "%s/%s" % [_current_hit_points, _max_hit_points]
+		return "%s/%s" % [_current_hit_points, _modified_max_hit_points]
 
 var bar_value: float:
 	get:
@@ -17,17 +17,22 @@ var is_at_zero: bool:
 	get:
 		return _current_hit_points <= 0
 
-var _max_hit_points: int
+var _base_max_hit_points: int
 var _current_hit_points: int
 
 var _perc_hit_points:
 	get:
-		return _current_hit_points as float / _max_hit_points
+		return _current_hit_points as float / _modified_max_hit_points
+
+var _max_modifier: float = 1.0
+var _modified_max_hit_points: int
 
 
 func initialise(hit_points: int, is_visibile: bool = true):
-	_max_hit_points = hit_points
+	_base_max_hit_points = hit_points
 	_current_hit_points = hit_points
+
+	_modified_max_hit_points = floori(_base_max_hit_points * _max_modifier)
 
 	hit_points_bar.visible = is_visibile
 
@@ -39,7 +44,11 @@ func set_visibility(is_visible: bool):
 
 
 func change_current(amount: int):
-	_current_hit_points = clampi(_current_hit_points + amount, 0, _max_hit_points)
+	_current_hit_points = clampi(
+		_current_hit_points + amount,
+		0,
+		_modified_max_hit_points
+	)
 
 	_update_hit_points_bar()
 
@@ -48,3 +57,10 @@ func change_current(amount: int):
 
 func _update_hit_points_bar():
 	hit_points_bar.value = bar_value
+
+
+func add_max_modifier(amount: float):
+	_max_modifier += amount
+	_modified_max_hit_points = floori(_base_max_hit_points * _max_modifier)
+	var recomp = floori(_base_max_hit_points * amount)
+	change_current(recomp)

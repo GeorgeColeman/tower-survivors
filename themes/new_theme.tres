@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bexoxx45nvox1"]
-
-[ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="1_yftki"]
-
-[resource]
-default_font = ExtResource("1_yftki")
-default_font_size = 18

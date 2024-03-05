@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://bf13fdoe1mlp8"]
+
+[ext_resource type="Script" path="res://scripts/control/control_level_up.gd" id="1_osp7v"]
+[ext_resource type="PackedScene" uid="uid://l13dk6opal54" path="res://scenes/control/upgrade_option_button.tscn" id="2_btix3"]
+[ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="3_jcr8q"]
+
+[sub_resource type="Theme" id="Theme_u7ynn"]
+default_font = ExtResource("3_jcr8q")
+default_font_size = 18
+
+[node name="control_level_up" type="Control" node_paths=PackedStringArray("_upgrade_options_container", "_skip_button", "_reroll_button")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_osp7v")
+_upgrade_options_container = NodePath("UpgradeOptionsContainer")
+_upgrade_option_button = ExtResource("2_btix3")
+_skip_button = NodePath("VBoxContainer/SkipButton")
+_reroll_button = NodePath("VBoxContainer/RerollButton")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -287.0
+offset_right = 287.0
+offset_bottom = 137.0
+grow_horizontal = 2
+theme = SubResource("Theme_u7ynn")
+theme_override_font_sizes/font_size = 100
+text = "LEVEL UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptionsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SkipButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_u7ynn")
+text = "Skip"
+
+[node name="RerollButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_u7ynn")
+text = "Reroll"

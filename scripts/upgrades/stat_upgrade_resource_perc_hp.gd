@@ -9,5 +9,5 @@ func add_to_passive_upgrade_rank(rank: PassiveUpgrade.PassiveUpgradeRank):
 
 	rank.apply_to_tower_callbacks.append(
 		func(tower: Tower):
-			print_debug("TODO: apply max hp to tower")
+			tower.hit_points_component.add_max_modifier(amount)
 	)

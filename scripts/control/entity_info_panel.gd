@@ -5,6 +5,8 @@
 class_name EntityInfoPanel
 extends Panel
 
+@export var _theme: Theme
+
 @export var _entity_name_label: Label
 @export var _button_container: VBoxContainer
 @export var _description_label: Label
@@ -101,6 +103,7 @@ func _set_hit_points_elements(hit_points: HitPointsComponent):
 
 func _add_button(text: String, pressed_callback: Callable):
 		var button = Button.new()
+		button.theme = _theme
 		button.text = text
 		button.focus_mode = Control.FOCUS_NONE
 		button.pressed.connect(pressed_callback)
