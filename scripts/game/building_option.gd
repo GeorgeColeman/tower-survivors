@@ -43,9 +43,7 @@ func try_build(cell: Cell):
 	try_build_callback.call(cell)
 
 
-func confirm_build(_tower: Tower):
+func confirm_build():
 	_build_count += 1
 
 	can_build_updated.emit(can_build)
-
-	#print_debug("%s has been built %s time(s)" % [tower_resource.name, _build_count])

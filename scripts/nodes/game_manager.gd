@@ -11,7 +11,7 @@ extends Node
 @export var map_drawer: MapDrawer
 @export var mob_spawner: MobSpawner
 @export var spawn_point_manager: SpawnPointManager
-@export var entity_drawer: EntityDrawer
+@export var towers: Towers
 @export var pathfinding_manager: PathfindingManager
 @export var vfx_drawer_2d: VFXDrawer2D
 @export var sound_effects_player: SoundEffectsPlayer
@@ -25,7 +25,7 @@ var game: Game
 var game_data: GameData
 
 
-func _ready():	
+func _ready():
 	Messenger.start_game_requested.connect(_on_request_start_game)
 
 	control_debug.set_game_manager(self)
@@ -53,7 +53,7 @@ func start_game():
 
 	var map = _generate_map(width, height)
 
-	game = Game.new(map, mob_spawner, game_data)
+	game = Game.new(map, mob_spawner, game_data, towers)
 	GameUtilities.set_game(game)
 
 	var player = _create_player()
@@ -65,8 +65,8 @@ func start_game():
 		map.width * GameConstants.PIXEL_SCALE,
 		map.height * GameConstants.PIXEL_SCALE)
 
-	entity_drawer.set_game(game)
 	pathfinding_manager.initialize_grid(width, height, GameConstants.PIXEL_SCALE)
+	#pathfinding_manager.update_walkable_regions()
 
 	mob_spawner.start_game(game)
 	spawn_point_manager.start_game(game)

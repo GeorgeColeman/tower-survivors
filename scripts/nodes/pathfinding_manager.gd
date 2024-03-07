@@ -19,6 +19,9 @@ var _find_existing_path: bool = false
 var _node_update_dict = {}
 var _update_nodes = false
 
+var _walkable_regions: WalkableRegions
+var _initial_walkable_regions_established: bool
+
 
 var draw_pathfinding_grid = false:
 	set(value):
@@ -52,6 +55,13 @@ func _process(_delta):
 
 	_node_update_dict.clear()
 
+	if _initial_walkable_regions_established:
+		return
+
+	_initial_walkable_regions_established = true
+
+	update_walkable_regions()
+
 
 func initialize_grid(width: int, height: int, pixel_scale: int):
 	cell_size = Vector2i(pixel_scale, pixel_scale)
@@ -65,6 +75,28 @@ func initialize_grid(width: int, height: int, pixel_scale: int):
 	astar_grid.update()
 
 	queue_redraw()
+
+
+func update_walkable_regions():
+	var get_is_walkable = func(x: int, y: int) -> bool:
+		return !astar_grid.is_point_solid(Vector2i(x, y))
+		#return _is_point_within_grid(x, y) && !astar_grid.is_point_solid(Vector2i(x, y))
+
+	_walkable_regions = WalkableRegions.new(
+		grid_size.x,
+		grid_size.y,
+		get_is_walkable)
+
+	_walkable_regions.establish_regions()
+	
+	PathUtilities.walkable_regions_updated.emit(_walkable_regions)
+
+
+#func _is_point_within_grid(x: int, y: int) -> bool:
+	#if x < 0 || x >= grid_size.x || y < 0 || y >= grid_size.y:
+		#return false
+#
+	#return true
 
 
 func _get_walkable_neighbour(cell: Cell) -> Cell:
@@ -137,7 +169,7 @@ func draw_grid():
 	walkable_colour.a = 0.5
 	var unwalkable_colour: Color = Color.RED
 	unwalkable_colour.a = 0.5
-	
+
 	for y in grid_size.y:
 		for x in grid_size.x:
 			var is_walkable = !astar_grid.is_point_solid(Vector2i(x, y))

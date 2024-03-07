@@ -1,6 +1,7 @@
 extends Node
 
 signal updated_cell_is_solid(cell: Cell, is_solid: bool)
+signal walkable_regions_updated(walkable_regions: WalkableRegions)
 
 var _pathfinding_manager: PathfindingManager
 
@@ -23,3 +24,7 @@ func update_cell_is_solid(cell: Cell, is_solid: bool):
 
 func get_is_cell_walkable(cell: Cell) -> bool:
 	return _pathfinding_manager.is_cell_walkable(cell)
+
+
+#func update_walkable_regions():
+	#_pathfinding_manager.update_walkable_regions()

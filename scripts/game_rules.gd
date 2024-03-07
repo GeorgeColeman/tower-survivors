@@ -11,3 +11,5 @@ const CORES_TO_BUILD: bool = true
 const MOBS_DROP_CORES: bool = false
 const CORE_ON_LEVEL_UP: bool = true
 const CORE_AS_UPGRADE_OPTION: bool = false
+
+const USE_SPAWN_POINTS: bool = false

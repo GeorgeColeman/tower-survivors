@@ -22,6 +22,7 @@ var weapon_effects: Array[WeaponEffect]
 var weapon_stats: TowerWeaponStats
 
 var _cell: Cell
+var _base_cells: Array[Cell]
 var _cells_in_range: Array[Cell] = []
 var _attack_cooldown: float
 var _firing_point: Vector2
@@ -62,8 +63,9 @@ func _process(_delta: float):
 		_attack()
 
 
-func set_cell(cell: Cell):
+func set_cell(cell: Cell, base_cells: Array[Cell]):
 	_cell = cell
+	_base_cells = base_cells
 	_set_cells_in_range()
 
 
@@ -76,9 +78,14 @@ func add_weapon_effect(weapon_effect: WeaponEffect):
 
 
 func _set_cells_in_range():
-	_cells_in_range = GameUtilities.get_cells_in_circle_sorted_by_distance_from(
-		_cell,
-		weapon_stats.get_total_attack_range()
+	#_cells_in_range = GameUtilities.get_cells_in_circle_sorted_by_distance_from(
+		#_cell,
+		#weapon_stats.get_total_attack_range()
+	#)
+	
+	_cells_in_range = GameUtilities.get_cells_in_radius_from_base(
+		weapon_stats.get_total_attack_range(),
+		_base_cells
 	)
 
 

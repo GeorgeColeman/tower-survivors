@@ -5,6 +5,10 @@
 class_name Utilities
 
 
+static func distance_between(point_a: Vector2, point_b: Vector2) -> float:
+	return sqrt((point_b.x - point_a.x) ** 2 + (point_b.y - point_a.y) ** 2)
+
+
 static func get_random_unique_elements(array: Array, number_of_elements: int) -> Array:
 	var unique_elements = []
 	var seen = {}

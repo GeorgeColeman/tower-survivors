@@ -11,7 +11,7 @@ static var speed_scaled_delta: float
 var map: Map
 var player: Player
 var main_tower: Tower
-var entities: Entities
+var towers: Towers
 var mob_spawner: MobSpawner
 var game_data: GameData
 var building_options: BuildingOptions
@@ -25,10 +25,14 @@ var _speed: float
 var _resume_speed: float = _speed
 
 
-func _init(p_map: Map, p_mob_spawner: MobSpawner, p_game_data: GameData):
+func _init(
+	p_map: Map,
+	p_mob_spawner: MobSpawner,
+	p_game_data: GameData,
+	p_towers: Towers
+):
 	map = p_map
-	#entities = Entities.new(self)
-	entities = Entities.new()
+	towers = p_towers
 	mob_spawner = p_mob_spawner
 	game_data = p_game_data
 	building_options = BuildingOptions.new()
@@ -71,7 +75,7 @@ func set_player(p_player: Player):
 	upgrades_manager = UpgradesManager.new(
 		building_options,
 		player.upgrades,
-		entities
+		towers
 	)
 
 	upgrades_manager.game_data = game_data
@@ -117,8 +121,8 @@ func set_player_character(player_character: PlayerCharacter):
 		player_character.main_tower.base_area
 	)
 
-	entities.spawn_tower(player_character.main_tower, params, 0)
-	set_main_tower(params.spawned_entity)
+	var main_tower = towers.spawn_tower(player_character.main_tower, params, 0)
+	set_main_tower(main_tower)
 
 	building_options.add_building_option(player_character.main_tower, player)
 

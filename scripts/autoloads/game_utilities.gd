@@ -22,7 +22,7 @@ func try_enter_build_mode(option: BuildingOption):
 				return
 
 		# Check cell for existing buildings
-		if _game.entities.get_is_cell_occupied(cell):
+		if _game.towers.get_is_cell_occupied(cell):
 			print_debug("Cell is occupied")
 
 			return
@@ -39,10 +39,10 @@ func try_enter_build_mode(option: BuildingOption):
 			option.tower_resource.base_area
 		)
 
-		_game.entities.spawn_tower(option.tower_resource, params, option._rank)
+		_game.towers.spawn_tower(option.tower_resource, params, option._rank)
 		_game.player.spend_resources_for_building(option)
 
-		option.confirm_build(params.spawned_entity)
+		option.confirm_build()
 
 	control_mode_build_requested.emit(option)
 
@@ -107,6 +107,16 @@ func get_cells_in_circle_sorted_by_distance_from(origin_cell: Cell, radius: floa
 	return cells_in_circle
 
 
+func get_cells_in_radius_from_base(
+	radius: float,
+	base: Array[Cell]
+	) -> Array[Cell]:
+	var cells_in_radius = _game.map.get_cells_in_radius_from_base(radius, base)
+
+	return cells_in_radius
+
+
+
 func get_all_targets_in_cells(cells: Array[Cell]) -> Array[Mob]:
 	return _game.mob_spawner.get_mob_targets(cells)
 
@@ -146,11 +156,8 @@ func get_mob_targets_closest_to_main_tower(
 func get_entity_info_at(cell: Cell) -> Array[EntityInfo]:
 	var all_entities: Array[EntityInfo] = []
 
-	var entities = _game.entities.get_entities_at(cell)
-
-	for entity in entities:
-		if entity is Tower:
-			all_entities.append(entity.get_entity_info())
+	for tower in _game.towers.get_towers_at(cell):
+		all_entities.append(tower.get_entity_info())
 
 	var spawn_points = MobUtilities.get_spawn_points_at(cell)
 
@@ -171,9 +178,8 @@ func get_nearby_tower(cell: Cell) -> Tower:
 	var neighbours = _game.map.get_cell_neighbours(cell)
 
 	for n_cell in neighbours:
-		for entity in _game.entities.get_entities_at(n_cell):
-			if entity is Tower:
-				return entity
+		for tower in _game.towers.get_towers_at(n_cell):
+			return tower
 
 	return null
 

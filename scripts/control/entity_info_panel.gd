@@ -83,12 +83,13 @@ func clear_entity():
 
 	if _entity_info.entity is Tower:
 		_entity_info.entity.description_updated.disconnect(_on_description_updated)
+		_entity_info.entity.hit_points_component.hit_points_changed.disconnect(_on_hit_points_changed)
+
 
 	_entity_info = null
 
 
 func _on_description_updated(description: String):
-	#print_debug("Description updated")
 	_description_label.text = description
 
 

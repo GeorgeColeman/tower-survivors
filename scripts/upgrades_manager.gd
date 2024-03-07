@@ -10,21 +10,21 @@ var player: Player
 
 var _building_options: BuildingOptions
 var _upgrades: Upgrades							# Actually 'PassiveUpgrades'
-var _entities: Entities							# Need this to upgrade existing entities
+var _towers: Towers								# Need this to upgrade existing towers
 
 var _upgrade_options_generator: UpgradeOptionsGenerator
 
 
-func _init(building_options: BuildingOptions, upgrades: Upgrades, entities: Entities):
+func _init(building_options: BuildingOptions, upgrades: Upgrades, towers: Towers):
 	_building_options = building_options
 	_upgrades = upgrades
-	_entities = entities
+	_towers = towers
 
 	_upgrade_options_generator = UpgradeOptionsGenerator.new()
 
 	building_options.option_upgraded.connect(_on_building_option_upgraded)
 
-	_entities.tower_registered.connect(_on_tower_registered)
+	_towers.tower_registered.connect(_on_tower_registered)
 
 
 func set_player(p_player: Player):
@@ -81,7 +81,7 @@ func add_or_rank_up_passive_upgrade(name: String) -> String:
 
 
 func _on_passive_rank_added(passive: PassiveUpgrade):
-	for tower in _entities.towers:
+	for tower in _towers.towers:
 		var attached_passive: PassiveUpgradeTowerAttached = tower.get_passive_upgrade(passive.name)
 
 		# HACK: get if the passive is new and add to tower
@@ -120,5 +120,5 @@ func _on_building_option_upgraded(option: BuildingOption):
 
 
 func _rank_up_existing_towers_to_building_option_rank(option: BuildingOption):
-	for tower in _entities.get_towers_of_type(option.tower_resource.name):
+	for tower in _towers.get_towers_of_type(option.tower_resource.name):
 		tower.rank.set_min_rank(option._rank)

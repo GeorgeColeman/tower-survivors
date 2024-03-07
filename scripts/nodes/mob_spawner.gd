@@ -10,6 +10,20 @@ var _map: Map
 
 var _cell_mob_dict = {}
 
+var _valid_border_spawn_cells: Array[Cell]
+
+@export var _spawn_frequency: float = 2.0
+var _spawn_timer: float
+
+
+func _process(_delta):
+	_spawn_timer += Game.speed_scaled_delta
+
+	if _spawn_timer >= _spawn_frequency:
+		_spawn_timer = _spawn_timer - _spawn_frequency
+
+		spawn_random_mob()
+
 
 func get_mob_targets(cells: Array[Cell]) -> Array[Mob]:
 	var mob_targets: Array[Mob] = []
@@ -43,6 +57,20 @@ func start_game(game: Game):
 	for cell in _map.cells:
 		_cell_mob_dict[cell] = [] as Array[Mob]
 
+	PathUtilities.walkable_regions_updated.connect(_set_valid_border_spawn_cells)
+
+
+func _set_valid_border_spawn_cells(walkable_regions: WalkableRegions):
+	for region in walkable_regions._regions:
+		if !region.is_largest_region:
+			continue
+
+		for cell in _map.border_cells:
+			if region.has_point(cell.position):
+				_valid_border_spawn_cells.append(cell)
+
+	print_debug("Valid border spawn cells set. Number of cells: %s" % _valid_border_spawn_cells.size())
+
 
 func _erase_existing():
 	for mobs in _cell_mob_dict.values():
@@ -56,18 +84,32 @@ func spawn_mob_at(mob_resource: MobResource, spawn_point: MobCamp):
 	spawn_mob(mob_resource, spawn_point.cell)
 
 
+func spawn_random_mob():
+	spawn_mob(
+		_game.game_data.spawnable_mobs.pick_random(),
+		_get_random_spawn_cell()
+	)
+
+
 func spawn_random_boss():
 	spawn_mob(
 		_game.game_data.bosses.pick_random(),
-		MobUtilities.get_random_spawn_point().cell
+		_get_random_spawn_cell()
 	)
 
 
 func _spawn_random_elite():
 	spawn_mob(
 		_game.game_data.elites.pick_random(),
-		MobUtilities.get_random_spawn_point().cell
+		_get_random_spawn_cell()
 	)
+
+
+func _get_random_spawn_cell() -> Cell:
+	if GameRules.USE_SPAWN_POINTS:
+		return MobUtilities.get_random_spawn_point().cell
+	else:
+		return _valid_border_spawn_cells.pick_random()
 
 
 func spawn_mob(mob_resource: MobResource, cell: Cell) -> Mob:

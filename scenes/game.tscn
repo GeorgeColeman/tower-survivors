@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://b2p2u10fovw7" path="res://sprites/hourglass.tres" id="9_6bjfq"]
 [ext_resource type="Script" path="res://scripts/control/control_debug.gd" id="9_vxhso"]
 [ext_resource type="Script" path="res://scripts/control/control_game_over.gd" id="10_1em41"]
-[ext_resource type="Script" path="res://scripts/nodes/entity_drawer.gd" id="10_3qktf"]
 [ext_resource type="PackedScene" uid="uid://ck16naxw6rn0d" path="res://scenes/mob_camp.tscn" id="10_ao74v"]
 [ext_resource type="Script" path="res://scripts/spawn_point_manager.gd" id="10_w58st"]
 [ext_resource type="PackedScene" uid="uid://hlkwmrhtoe28" path="res://scenes/next_spawn_point.tscn" id="12_l2pf0"]
@@ -25,6 +24,7 @@
 [ext_resource type="Script" path="res://debug_drawer.gd" id="15_udb11"]
 [ext_resource type="FontFile" uid="uid://h6ggvsdwhqio" path="res://fonts/Renogare-Regular.otf" id="16_0dskt"]
 [ext_resource type="Script" path="res://scripts/nodes/selection_drawer.gd" id="16_frr1h"]
+[ext_resource type="Script" path="res://scripts/towers.gd" id="18_6dole"]
 [ext_resource type="PackedScene" uid="uid://diy4r2ea45ict" path="res://scenes/vfx/fire_burst.tscn" id="19_7l3ok"]
 [ext_resource type="PackedScene" uid="uid://38q1wkrg25ha" path="res://scenes/control/build_button.tscn" id="20_2lk4p"]
 [ext_resource type="ButtonGroup" uid="uid://bam2t2nbxoj6t" path="res://button_group_game_speed.tres" id="21_5fiwn"]
@@ -69,7 +69,7 @@ RichTextLabel/constants/outline_size = 0
 default_font = ExtResource("16_0dskt")
 default_font_size = 18
 
-[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "entity_drawer", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
+[node name="Game" type="Node" node_paths=PackedStringArray("camera_2d_controller", "map_drawer", "mob_spawner", "spawn_point_manager", "towers", "pathfinding_manager", "vfx_drawer_2d", "sound_effects_player", "main_control", "control_debug", "dev_console")]
 script = ExtResource("1_l43p6")
 starting_gold = 0
 starting_character = ExtResource("2_jpm67")
@@ -77,7 +77,7 @@ camera_2d_controller = NodePath("Camera2D")
 map_drawer = NodePath("map_objects/map_drawer")
 mob_spawner = NodePath("map_objects/mob_spawner")
 spawn_point_manager = NodePath("map_objects/spawn_point_manager")
-entity_drawer = NodePath("map_objects/entity_drawer")
+towers = NodePath("map_objects/towers")
 pathfinding_manager = NodePath("PathfindingManager")
 vfx_drawer_2d = NodePath("VFXDrawer2D")
 sound_effects_player = NodePath("SoundEffectsPlayer")
@@ -109,6 +109,7 @@ y_sort_enabled = true
 script = ExtResource("7_nfp22")
 mob_killed_sfx = ExtResource("25_42f42")
 mob_hit_sfx = ExtResource("7_nb2t7")
+_spawn_frequency = 5.0
 
 [node name="map_drawer" type="Node2D" parent="map_objects" node_paths=PackedStringArray("_map_features_container")]
 z_index = -1
@@ -121,17 +122,10 @@ _map_features_container = NodePath("map_features_container")
 z_index = 1
 y_sort_enabled = true
 
-[node name="entity_drawer" type="Node2D" parent="map_objects"]
-z_index = 1
-y_sort_enabled = true
-script = ExtResource("10_3qktf")
-
 [node name="spawn_point_manager" type="Node2D" parent="map_objects"]
 script = ExtResource("10_w58st")
 _spawn_point_scene = ExtResource("10_ao74v")
-_starting_spawn_points = null
 _next_spawn_point = ExtResource("12_l2pf0")
-_debug_draw_valid_spawn_points = null
 
 [node name="active_effects" type="Node2D" parent="map_objects"]
 script = ExtResource("13_bcpki")
@@ -141,6 +135,9 @@ _acid_pool_scene = ExtResource("14_04ocx")
 script = ExtResource("15_udb11")
 _font = ExtResource("16_0dskt")
 _mob_spawner = NodePath("../mob_spawner")
+
+[node name="towers" type="Node2D" parent="map_objects"]
+script = ExtResource("18_6dole")
 
 [node name="cell_inspector" type="Node2D" parent="." node_paths=PackedStringArray("cell_marker_sprite")]
 script = ExtResource("8_m46x2")

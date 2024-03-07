@@ -38,8 +38,7 @@ func process(delta: float):
 func _increase_by(amount: float):
 	_difficulty += amount
 
-	var spawn_point = MobUtilities.get_random_spawn_point()
-	spawn_point.add_rank(1)
+	MobUtilities.upgrade_random_spawn_point()
 
 	changed.emit(_difficulty)
 

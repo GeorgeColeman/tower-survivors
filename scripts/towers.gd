@@ -1,20 +1,20 @@
-class_name Entities
-extends RefCounted
+class_name Towers
+extends Node2D
 
 signal entity_added(params: SpawnEntityParams)
 signal tower_registered(tower: Tower)
 
 var towers: Array[Tower] = []
 
-var _cell_entity_dict = {}					# <Cell, Node>
+var _cell_tower_dict = {}					# <Cell, Tower>
 var _tower_type_dict = {}					# <String, Array[Tower]>
 
 
-func get_entities_at(cell: Cell) -> Array:
-	if !_cell_entity_dict.has(cell):
+func get_towers_at(cell: Cell) -> Array:
+	if !_cell_tower_dict.has(cell):
 		return []
 
-	return _cell_entity_dict[cell]
+	return _cell_tower_dict[cell]
 
 
 func get_towers_of_type(tower_name: String) -> Array[Tower]:
@@ -24,19 +24,29 @@ func get_towers_of_type(tower_name: String) -> Array[Tower]:
 	return _tower_type_dict[tower_name]
 
 
-func spawn_tower(tower_resource: TowerResource, params: SpawnEntityParams, rank: int):
-	params.entity_instantiated.connect(
-		func(entity):
-			_register_tower(tower_resource, entity, rank, params.cell)
-			params.entity_destroyed = entity.was_killed
-	)
+func spawn_tower(
+	tower_resource: TowerResource,
+	params: SpawnEntityParams,
+	rank: int
+) -> Tower:
+	var tower: Tower = params.entity_scene.instantiate()
 
-	entity_added.emit(params)
+	add_child(tower)
+	var position = GameUtilities.get_scene_position(params.cell, params.base_area)
+	tower.position = position
+
+	_register_tower(tower_resource, tower, rank, params.cell)
+
+	return tower
 
 
-func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cell: Cell):
+func _register_tower(
+	tower_resource: TowerResource,
+	tower: Tower,
+	rank: int,
+	cell: Cell
+):
 	tower.set_resource(tower_resource)
-
 	towers.append(tower)
 
 	# Handle base cells
@@ -50,10 +60,10 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cel
 		# TEMP: assuming all towers are solid
 		PathUtilities.update_cell_is_solid(base_cell, true)
 
-		if !_cell_entity_dict.has(base_cell):
-			_cell_entity_dict[base_cell] = []
+		if !_cell_tower_dict.has(base_cell):
+			_cell_tower_dict[base_cell] = []
 
-		_cell_entity_dict[base_cell].append(tower)
+		_cell_tower_dict[base_cell].append(tower)
 
 	tower.was_killed.connect(_unregister_tower)
 
@@ -68,7 +78,7 @@ func _register_tower(tower_resource: TowerResource, tower: Tower, rank: int, cel
 
 func _unregister_tower(tower: Tower):
 	for cell in tower.base_cells:
-		_cell_entity_dict[cell].erase(tower)
+		_cell_tower_dict[cell].erase(tower)
 		PathUtilities.update_cell_is_solid(cell, false)
 
 	towers.erase(tower)
@@ -76,4 +86,4 @@ func _unregister_tower(tower: Tower):
 
 
 func get_is_cell_occupied(cell: Cell) -> bool:
-	return _cell_entity_dict.has(cell)
+	return _cell_tower_dict.has(cell)

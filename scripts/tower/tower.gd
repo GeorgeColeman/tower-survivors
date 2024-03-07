@@ -131,18 +131,20 @@ func get_entity_info() -> EntityInfo:
 
 
 func get_cells_in_attack_range() -> Array[Cell]:
+	#print_debug(cell.position)
+
 	if _weapons.size() == 0:
 		return []
 
 	return _weapons[0]._cells_in_range
 
 
-func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):
-	var weapon_node = TowerWeapon.new()
-	weapon_node.set_data(weapon_data)
-
-	_attach_weapon(weapon_node)
-	_activate_weapon(weapon_node)
+#func attach_weapon_from_weapon_data(weapon_data: TowerWeaponData):
+	#var weapon_node = TowerWeapon.new()
+	#weapon_node.set_data(weapon_data)
+#
+	#_attach_weapon(weapon_node)
+	#_activate_weapon(weapon_node)
 
 
 func add_passive_upgrade(passive_upgrade: PassiveUpgradeTowerAttached):
@@ -158,6 +160,7 @@ func get_passive_upgrade(passive_upgrade_name: String) -> PassiveUpgradeTowerAtt
 
 func _attach_weapon(weapon: TowerWeapon):
 	add_child(weapon)
+	#weapon.global_position = global_position
 	_weapons.append(weapon)
 
 	if weapon_dict.has(weapon.id):
@@ -169,7 +172,7 @@ func _attach_weapon(weapon: TowerWeapon):
 
 
 func _activate_weapon(weapon: TowerWeapon):
-	weapon.set_cell(cell)
+	weapon.set_cell(cell, base_cells)
 	weapon.set_firing_point(_focus_point.position)
 
 	weapon.is_active = true

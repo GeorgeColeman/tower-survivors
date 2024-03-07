@@ -133,16 +133,50 @@ func get_cell_at_world(x: int, y: int) -> Cell:
 	return get_cell_at(local_x, local_y)
 
 
-func get_cells_in_circle(centre_cell: Cell, radius: float) -> Array[Cell]:
+func get_cells_in_circle(origin_cell: Cell, radius: float) -> Array[Cell]:
 	var cells_in_circle: Array[Cell] = []
 
 	for cell in cells:
-		if distance_between(centre_cell, cell) > radius:
+		if Utilities.distance_between(origin_cell.position, cell.position) > radius:
 			continue
 
 		cells_in_circle.append(cell)
 
 	return cells_in_circle
+
+
+func get_cells_in_radius_from_base(radius: float, base: Array[Cell]) -> Array[Cell]:
+	var cells_in_radius: Array[Cell] = []
+	var cells_to_check: Array[Cell] = base.duplicate()			# Make sure you use this
+	var checked_cells: Array[Cell] = []
+
+	while cells_to_check.size() > 0:
+		var cell_to_check = cells_to_check.pop_back()
+		var cell_in_radius: bool = false
+
+		checked_cells.append(cell_to_check)
+
+		for base_cell in base:
+			if Utilities.distance_between(base_cell.position, cell_to_check.position) <= radius:
+				cell_in_radius = true
+
+				break
+
+		if !cell_in_radius:
+			continue
+
+		cells_in_radius.append(cell_to_check)
+
+		for n_cell in get_cell_neighbours(cell_to_check):
+			if checked_cells.has(n_cell):
+				continue
+
+			if cells_to_check.has(n_cell):
+				continue
+
+			cells_to_check.append(n_cell)
+
+	return cells_in_radius
 
 
 func get_cell_neighbours(centre_cell: Cell) -> Array[Cell]:
@@ -159,10 +193,6 @@ func get_cell_neighbours(centre_cell: Cell) -> Array[Cell]:
 	if west_neighbour: neighbours.append(west_neighbour)
 
 	return neighbours
-
-
-func distance_between(cell_a: Cell, cell_b: Cell) -> float:
-	return sqrt((cell_b.x - cell_a.x) ** 2 + (cell_b.y - cell_a.y) ** 2)
 
 
 func get_map_feature_at(cell: Cell) -> MapFeature:

@@ -31,6 +31,9 @@ func start_game(game: Game):
 
 	_erase_existing()
 
+	if !GameRules.USE_SPAWN_POINTS:
+		return
+
 	game.difficulty.changed.connect(
 		func(_difficulty: int):
 			spawn_new_spawn_point()
@@ -71,7 +74,7 @@ func spawn_new_spawn_point():
 
 	new_spawn_point.set_resource(_game.game_data.get_random_mob_camp_resource())
 	new_spawn_point.set_mob_pool(_game.game_data)
-	
+
 	new_spawn_point.cell = next
 	new_spawn_point.position = next.scene_position
 	_cell_spawn_point_dict[next] = new_spawn_point

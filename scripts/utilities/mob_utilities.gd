@@ -17,6 +17,14 @@ static func get_random_spawn_point() -> MobCamp:
 	return _spawn_point_manager.get_random_spawn_point()
 
 
+static func upgrade_random_spawn_point():
+	if !GameRules.USE_SPAWN_POINTS:
+		return
+
+	var spawn_point = get_random_spawn_point()
+	spawn_point.add_rank(1)
+
+
 static func spawn_mob_at(mob_resource: MobResource, spawn_point: MobCamp):
 	_mob_spawner.spawn_mob_at(mob_resource, spawn_point)
 
