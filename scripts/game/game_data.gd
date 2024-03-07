@@ -7,7 +7,7 @@ static var _tower_weapon_data_dict = {}					# <String, TowerWeaponData>
 var mob_resources: Array[MobResource]
 
 var towers: Array[PackedScene]
-
+var items: Array[ItemResource]
 var bosses: Array[MobResource]
 var elites: Array[MobResource]
 
@@ -30,6 +30,7 @@ func _load_resources():
 	_load_towers()
 	_load_mob_camps()
 	_load_passive_upgrade_resources()
+	_load_items()
 
 	var passives = PassiveUpgradeDataResolver.get_passive_upgrade_data()
 
@@ -106,6 +107,16 @@ func _load_passive_upgrade_resources():
 			var passive = loaded.get_passive_upgrade()
 
 			passives_dict[passive.id] = passive
+
+
+func _load_items():
+	var item_resources = dir_contents("res://resources/items/")
+	
+	for item_resource in item_resources:
+		var loaded = load(item_resource)
+		
+		if loaded is ItemResource:
+			items.append(loaded)
 
 
 func get_random_mob_camp_resource() -> MobCampResource:

@@ -20,6 +20,10 @@
       "resource_local_to_scene": true,
       "resource_name": true
     },
+    "res://resources/items/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    },
     "res://resources/mobs/": {
       "resource_local_to_scene": true,
       "resource_name": true
@@ -47,7 +51,8 @@
     "res://scenes/mobs/",
     "res://resources/towers/",
     "res://resources/upgrades/",
-    "res://resources/mobs/"
+    "res://resources/mobs/",
+    "res://resources/items/"
   ],
   "table_functions": {
     "filter": [

@@ -11,6 +11,7 @@ func generate_upgrade_options(
 	var options: Array[UpgradeOption] = []
 
 	options.append_array(_get_passive_options(game_data, player))
+	options.append_array(_get_item_options(game_data, player))
 
 	if GameRules.CORE_AS_UPGRADE_OPTION:
 		options.append(UpgradeOptionFactory.add_core(player))
@@ -67,5 +68,14 @@ func _get_passive_options(game_data: GameData, player: Player) -> Array[UpgradeO
 				options.append(UpgradeOptionFactory.rank_up_passive(passive_key, player))
 		else:
 			options.append(UpgradeOptionFactory.new_passive(passive, player))
+
+	return options
+
+
+func _get_item_options(game_data: GameData, player: Player):
+	var options: Array[UpgradeOption] = []
+
+	for item in game_data.items:
+		options.append(UpgradeOptionFactory.TEST_get_item_option(item))
 
 	return options

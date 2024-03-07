@@ -116,3 +116,15 @@ static func add_core(player: Player) -> UpgradeOption:
 	option.texture = load("res://sprites/icons/core.tres")
 
 	return option
+
+
+static func TEST_get_item_option(item_resource: ItemResource) -> UpgradeOption:
+	var option = UpgradeOption.new(
+		item_resource.name,
+		func():
+			print_debug("TODO")
+	)
+
+	option.description = item_resource.get_description()
+
+	return option
